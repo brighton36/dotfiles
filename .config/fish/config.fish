@@ -7,3 +7,5 @@ bind -M insert \cW backward-kill-word
 bind -M insert \e\[1\;5C forward-word
 bind -M insert \e\[1\;5D backward-word
 
+# Dotfile management:
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
