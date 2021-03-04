@@ -14,18 +14,9 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
-
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
-
--- Adding My personal hotkeys additions
--- dofile(awful.util.getdir("config") .. "keys/init.lua")
-require("keys")
-
--- Load Debian menu entries
-local debian = require("debian.menu")
-local has_fdo, freedesktop = pcall(require, "freedesktop")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -54,14 +45,11 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
--- beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
-beautiful.init( awful.util.getdir("config") .. "themes/awesome-solarized/dark/theme.lua" )
+beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "x-terminal-emulator"
--- TODO: This is dist:
-editor = os.getenv("EDITOR") or "editor"
--- editor = "/usr/bin/vim"
+terminal = "/usr/bin/urxvt"
+editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
@@ -69,24 +57,23 @@ editor_cmd = terminal .. " -e " .. editor
 -- If you do not like this or do not have such a key,
 -- I suggest you to remap Mod4 to another key using xmodmap or other tools.
 -- However, you can use another modifier like Mod1, but it may interact with others.
--- TODO: alt? 
 modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
     awful.layout.suit.floating,
     awful.layout.suit.tile,
-    -- awful.layout.suit.tile.left,
+    awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
-    -- awful.layout.suit.tile.top,
+    awful.layout.suit.tile.top,
     awful.layout.suit.fair,
-    -- awful.layout.suit.fair.horizontal,
-    -- awful.layout.suit.spiral,
-    -- awful.layout.suit.spiral.dwindle,
+    awful.layout.suit.fair.horizontal,
+    awful.layout.suit.spiral,
+    awful.layout.suit.spiral.dwindle,
     awful.layout.suit.max,
-    -- awful.layout.suit.max.fullscreen,
+    awful.layout.suit.max.fullscreen,
     awful.layout.suit.magnifier,
-    -- awful.layout.suit.corner.nw,
+    awful.layout.suit.corner.nw,
     -- awful.layout.suit.corner.ne,
     -- awful.layout.suit.corner.sw,
     -- awful.layout.suit.corner.se,
@@ -96,31 +83,17 @@ awful.layout.layouts = {
 -- {{{ Menu
 -- Create a launcher widget and a main menu
 myawesomemenu = {
-   { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused(), {show_awesome_keys = true}) end },
+   { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
    { "manual", terminal .. " -e man awesome" },
    { "edit config", editor_cmd .. " " .. awesome.conffile },
    { "restart", awesome.restart },
    { "quit", function() awesome.quit() end },
 }
 
-local menu_awesome = { "awesome", myawesomemenu, beautiful.awesome_icon }
-local menu_terminal = { "open terminal", terminal }
-
-if has_fdo then
-    mymainmenu = freedesktop.menu.build({
-        before = { menu_awesome },
-        after =  { menu_terminal }
-    })
-else
-    mymainmenu = awful.menu({
-        items = {
-                  menu_awesome,
-                  { "Debian", debian.menu.Debian_menu.Debian },
-                  menu_terminal,
-                }
-    })
-end
-
+mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
+                                    { "open terminal", terminal }
+                                  }
+                        })
 
 mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                      menu = mymainmenu })
@@ -191,39 +164,12 @@ end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
 
--- Random Wallpaper every hour
-wp_timeout  = 60*60
-wp_timer = gears.timer { timeout = wp_timeout }
-wp_timer:connect_signal("timeout", function()
-  -- set wallpaper to current index for all screens
-  for s = 1, screen.count() do
-    gears.wallpaper.maximized(beautiful.wallpaper(), s, true)
-  end
- 
-  -- stop the timer (we don't need multiple instances running at the same time)
-  wp_timer:stop()
- 
-  --restart the timer
-  wp_timer.timeout = wp_timeout
-  wp_timer:start()
-end)
- 
-wp_timer:start()
-
--- Chris' widgets 
-local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
-local volume_widget = require("awesome-wm-widgets.volume-widget.volume")
-local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
-local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
-local weather_widget = require("awesome-wm-widgets.weather-widget.weather")
-
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    -- Chris: Note that layouts[1] is the default ('floating')
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[2])
+    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -244,56 +190,9 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Create a tasklist widget
     s.mytasklist = awful.widget.tasklist {
-			screen  = s,
-			filter  = awful.widget.tasklist.filter.currenttags,
-			buttons = tasklist_buttons,
-			style    = {
-					border_width = 1,
-					border_color = '#777777',
-					shape        = gears.shape.rounded_bar,
-			},
-			layout   = {
-					spacing = 10,
-					spacing_widget = {
-							{
-									forced_width = 5,
-									shape        = gears.shape.circle,
-									color        = beautiful.titlebar_bg_normal,
-									widget       = wibox.widget.separator
-							},
-							valign = 'center',
-							halign = 'center',
-							widget = wibox.container.place,
-					},
-					layout  = wibox.layout.flex.horizontal
-			},
-			-- Notice that there is *NO* wibox.wibox prefix, it is a template,
-			-- not a widget instance.
-			widget_template = {
-					{
-							{
-									{
-											{
-													id     = 'icon_role',
-													widget = wibox.widget.imagebox,
-											},
-											margins = 2,
-											widget  = wibox.container.margin,
-									},
-									{
-											id     = 'text_role',
-											widget = wibox.widget.textbox,
-									},
-									layout = wibox.layout.fixed.horizontal,
-							},
-							left  = 10,
-							right = 10,
-							widget = wibox.container.margin
-					},
-					id     = 'background_role',
-					widget = wibox.container.background,
-			},
-
+        screen  = s,
+        filter  = awful.widget.tasklist.filter.currenttags,
+        buttons = tasklist_buttons
     }
 
     -- Create the wibox
@@ -313,17 +212,6 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             mykeyboardlayout,
             wibox.widget.systray(),
-            weather_widget({
-							api_key='96f77eee7c4ee02cd718d638f8ffae6d',
-							coordinates = {26.135097, -80.127261},
-              units = 'imperial',
-							show_hourly_forecast = true,
-							show_daily_forecast = true,
-            }),
-            volume_widget({display_notification = true}),
-            battery_widget({path_to_icons = awful.util.getdir("config") .. "icons/Arc/"} ),
-            cpu_widget({width = 70, step_width = 2, step_spacing = 0, color = '#859900'}),
-            ram_widget(),
             mytextclock,
             s.mylayoutbox,
         },
@@ -422,41 +310,23 @@ globalkeys = gears.table.join(
               end,
               {description = "restore minimized", group = "client"}),
 
-    awful.key({ modkey, "Control" }, "r", awesome.restart,
-              {description = "reload awesome", group = "awesome"}),
-
-    -- Chris' Add-ons:
-    awful.key({ }, 'F9', function () awful.util.spawn("thunar") end, 
-			{description = "Open Home Folder (thunar)", group = "awesome"}),
-    awful.key({ }, 'F10', function () awful.util.spawn("amixer sset -D pulse Master toggle") end,
-			{description = "Toggle Mute", group = "awesome"}),
-    awful.key({ }, 'F11', function () awful.util.spawn("amixer sset -D pulse Master 5%-") end,
-			{description = "Decrease Volume 5%", group = "awesome"}),
-    awful.key({ }, 'F12', function () awful.util.spawn("amixer sset -D pulse Master 5%+") end,
-			{description = "Increase Volume 5%", group = "awesome"}),
-    awful.key({ }, 'Scroll_Lock', function () awful.util.spawn("xscreensaver-command -lock") end,
-			{description = "Lock Screen", group = "awesome"}),
-    -- We may want to switch to : xfce4-screenshooter
-    awful.key({ }, "Print", function () awful.util.spawn("bash -c \"sleep 0.25 && scrot -q 90 -s -e 'mv $f ~/Pictures/Screenshots/'\"") end,
-			{description = "Select Screen Capture", group = "awesome"}),
-
     -- Prompt
-    awful.key({ modkey }, "r", function () awful.screen.focused().mypromptbox:run() end,
-			{description = "run prompt", group = "launcher"}),
+    awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
+              {description = "run prompt", group = "launcher"}),
 
     awful.key({ modkey }, "x",
-			function ()
-					awful.prompt.run {
-						prompt       = "Run Lua code: ",
-						textbox      = awful.screen.focused().mypromptbox.widget,
-						exe_callback = awful.util.eval,
-						history_path = awful.util.get_cache_dir() .. "/history_eval"
-					}
-			end,
-			{description = "lua execute prompt", group = "awesome"}),
+              function ()
+                  awful.prompt.run {
+                    prompt       = "Run Lua code: ",
+                    textbox      = awful.screen.focused().mypromptbox.widget,
+                    exe_callback = awful.util.eval,
+                    history_path = awful.util.get_cache_dir() .. "/history_eval"
+                  }
+              end,
+              {description = "lua execute prompt", group = "awesome"}),
     -- Menubar
     awful.key({ modkey }, "p", function() menubar.show() end,
-			{description = "show the menubar", group = "launcher"})
+              {description = "show the menubar", group = "launcher"})
 )
 
 clientkeys = gears.table.join(
@@ -685,12 +555,10 @@ client.connect_signal("request::titlebars", function(c)
 end)
 
 -- Enable sloppy focus, so that focus follows mouse.
--- client.connect_signal("mouse::enter", function(c)
---    c:emit_signal("request::activate", "mouse_enter", {raise = false})
--- end)
+client.connect_signal("mouse::enter", function(c)
+    c:emit_signal("request::activate", "mouse_enter", {raise = false})
+end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
-
-awful.spawn("xscreensaver -no-splash")

@@ -1,3 +1,7 @@
 #!/usr/bin/env bash 
 
-compton -b
+#setxkbmap -layout 'us(dvorak)' -option 'ctrl:nocaps,ctrl:lctrl_meta'
+setxkbmap -layout 'us(dvorak)' -option -option 'ctrl:nocaps,altwin:ctrl_win,ctrl:lctrl_meta,altwin:left_meta_win'
+
+# picom -b
+# /usr/bin/awesomewm
