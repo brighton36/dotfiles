@@ -14,9 +14,14 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
+
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
+
+-- Adding My personal hotkeys additions
+-- dofile(awful.util.getdir("config") .. "keys/init.lua")
+require("keys")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -46,6 +51,8 @@ end
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+-- @chris todo: 
+-- beautiful.init( awful.util.getdir("config") .. "themes/awesome-solarized/dark/theme.lua" )
 
 -- This is used later as the default terminal and editor to run.
 terminal = "/usr/bin/urxvt"
@@ -63,17 +70,17 @@ modkey = "Mod4"
 awful.layout.layouts = {
     awful.layout.suit.floating,
     awful.layout.suit.tile,
-    awful.layout.suit.tile.left,
+    -- awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
-    awful.layout.suit.tile.top,
+    -- awful.layout.suit.tile.top,
     awful.layout.suit.fair,
-    awful.layout.suit.fair.horizontal,
-    awful.layout.suit.spiral,
-    awful.layout.suit.spiral.dwindle,
+    -- awful.layout.suit.fair.horizontal,
+    -- awful.layout.suit.spiral,
+    -- awful.layout.suit.spiral.dwindle,
     awful.layout.suit.max,
-    awful.layout.suit.max.fullscreen,
+    -- awful.layout.suit.max.fullscreen,
     awful.layout.suit.magnifier,
-    awful.layout.suit.corner.nw,
+    -- awful.layout.suit.corner.nw,
     -- awful.layout.suit.corner.ne,
     -- awful.layout.suit.corner.sw,
     -- awful.layout.suit.corner.se,
@@ -164,6 +171,33 @@ end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
 
+-- Random Wallpaper every hour
+wp_timeout  = 60*60
+wp_timer = gears.timer { timeout = wp_timeout }
+wp_timer:connect_signal("timeout", function()
+  -- set wallpaper to current index for all screens
+  for s = 1, screen.count() do
+    gears.wallpaper.maximized(beautiful.wallpaper(), s, true)
+  end
+ 
+  -- stop the timer (we don't need multiple instances running at the same time)
+  wp_timer:stop()
+ 
+  --restart the timer
+  wp_timer.timeout = wp_timeout
+  wp_timer:start()
+end)
+ 
+wp_timer:start()
+
+-- Chris' widgets 
+local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
+local volume_widget = require("awesome-wm-widgets.volume-widget.volume")
+local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
+local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
+-- TODO:
+-- local weather_widget = require("awesome-wm-widgets.weather-widget.weather")
+
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     set_wallpaper(s)
@@ -212,6 +246,17 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             mykeyboardlayout,
             wibox.widget.systray(),
+--            weather_widget({
+--							api_key='96f77eee7c4ee02cd718d638f8ffae6d',
+--							coordinates = {26.135097, -80.127261},
+--              units = 'imperial',
+--							show_hourly_forecast = true,
+--							show_daily_forecast = true,
+--            }),
+            volume_widget({display_notification = true}),
+            battery_widget({path_to_icons = awful.util.getdir("config") .. "icons/Arc/"} ),
+            cpu_widget({width = 70, step_width = 2, step_spacing = 0, color = '#859900'}),
+            ram_widget(),
             mytextclock,
             s.mylayoutbox,
         },
@@ -309,6 +354,21 @@ globalkeys = gears.table.join(
                   end
               end,
               {description = "restore minimized", group = "client"}),
+
+    -- Chris' Add-ons:
+    awful.key({ }, 'F9', function () awful.util.spawn("thunar") end, 
+			{description = "Open Home Folder (thunar)", group = "awesome"}),
+    awful.key({ }, 'F10', function () awful.util.spawn("amixer sset Master toggle") end,
+			{description = "Toggle Mute", group = "awesome"}),
+    awful.key({ }, 'F11', function () awful.util.spawn("amixer sset Master 5%-") end,
+			{description = "Decrease Volume 5%", group = "awesome"}),
+    awful.key({ }, 'F12', function () awful.util.spawn("amixer sset Master 5%+") end,
+			{description = "Increase Volume 5%", group = "awesome"}),
+    awful.key({ }, 'Scroll_Lock', function () awful.util.spawn("xscreensaver-command -lock") end,
+			{description = "Lock Screen", group = "awesome"}),
+    -- We may want to switch to : xfce4-screenshooter
+    awful.key({ }, "Print", function () awful.util.spawn("bash -c \"sleep 0.25 && scrot -q 90 -s -e 'mv $f ~/Pictures/Screenshots/'\"") end,
+			{description = "Select Screen Capture", group = "awesome"}),
 
     -- Prompt
     awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
@@ -511,6 +571,11 @@ client.connect_signal("manage", function (c)
       and not c.size_hints.program_position then
         -- Prevent clients from being unreachable after screen count changes.
         awful.placement.no_offscreen(c)
+    end
+
+    -- @chris - Rounded Window corners:
+    c.shape = function(cr,w,h)
+      gears.shape.rounded_rect(cr,w,h,10)
     end
 end)
 
