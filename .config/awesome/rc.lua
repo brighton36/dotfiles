@@ -256,7 +256,7 @@ awful.screen.connect_for_each_screen(function(s)
 							show_daily_forecast = true,
             }),
             volume_widget({display_notification = true}),
-            battery_widget({path_to_icons = awful.util.getdir("config") .. "icons/Arc/"} ),
+            battery_widget(),
             cpu_widget({width = 70, step_width = 2, step_spacing = 0, color = '#859900'}),
             ram_widget(),
             mytextclock,
