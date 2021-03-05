@@ -1,1 +1,1 @@
--layout us(dvorak) -option -option ctrl:nocaps,altwin:ctrl_win,ctrl:lctrl_meta,altwin:left_meta_win
+-layout us(dvorak) -option -option ctrl:nocaps
