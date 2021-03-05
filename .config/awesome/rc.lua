@@ -50,9 +50,12 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+-- beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 -- @chris todo: 
 -- beautiful.init( awful.util.getdir("config") .. "themes/awesome-solarized/dark/theme.lua" )
+beautiful.init(awful.util.getdir("config") .. "chris-theme.lua")
+beautiful.useless_gap = 4
+
 
 -- This is used later as the default terminal and editor to run.
 terminal = "/usr/bin/urxvt"
@@ -191,12 +194,11 @@ end)
 wp_timer:start()
 
 -- Chris' widgets 
-local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
-local volume_widget = require("awesome-wm-widgets.volume-widget.volume")
-local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
-local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
--- TODO:
--- local weather_widget = require("awesome-wm-widgets.weather-widget.weather")
+local cpu_widget = require("widgets.cpu-widget.cpu-widget")
+local volume_widget = require("widgets.volume-widget.volume")
+local battery_widget = require("widgets.battery-widget.battery")
+local ram_widget = require("widgets.ram-widget.ram-widget")
+local weather_widget = require("widgets.weather-widget.weather")
 
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
@@ -246,13 +248,13 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             mykeyboardlayout,
             wibox.widget.systray(),
---            weather_widget({
---							api_key='96f77eee7c4ee02cd718d638f8ffae6d',
---							coordinates = {26.135097, -80.127261},
---              units = 'imperial',
---							show_hourly_forecast = true,
---							show_daily_forecast = true,
---            }),
+            weather_widget({
+							api_key='96f77eee7c4ee02cd718d638f8ffae6d',
+							coordinates = {26.135097, -80.127261},
+              units = 'imperial',
+							show_hourly_forecast = true,
+							show_daily_forecast = true,
+            }),
             volume_widget({display_notification = true}),
             battery_widget({path_to_icons = awful.util.getdir("config") .. "icons/Arc/"} ),
             cpu_widget({width = 70, step_width = 2, step_spacing = 0, color = '#859900'}),
@@ -356,8 +358,8 @@ globalkeys = gears.table.join(
               {description = "restore minimized", group = "client"}),
 
     -- Chris' Add-ons:
-    awful.key({ }, 'F9', function () awful.util.spawn("thunar") end, 
-			{description = "Open Home Folder (thunar)", group = "awesome"}),
+    awful.key({ }, 'F9', function () awful.util.spawn("pcmanfm") end, 
+			{description = "Open Home Folder (pcmanfm)", group = "awesome"}),
     awful.key({ }, 'F10', function () awful.util.spawn("amixer sset Master toggle") end,
 			{description = "Toggle Mute", group = "awesome"}),
     awful.key({ }, 'F11', function () awful.util.spawn("amixer sset Master 5%-") end,
@@ -619,10 +621,11 @@ client.connect_signal("request::titlebars", function(c)
     }
 end)
 
+-- @chris disable:
 -- Enable sloppy focus, so that focus follows mouse.
-client.connect_signal("mouse::enter", function(c)
-    c:emit_signal("request::activate", "mouse_enter", {raise = false})
-end)
+-- client.connect_signal("mouse::enter", function(c)
+--     c:emit_signal("request::activate", "mouse_enter", {raise = false})
+-- end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
