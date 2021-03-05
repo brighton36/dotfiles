@@ -1,0 +1,166 @@
+! Xft settings ---------------------------------------------------------------
+
+! From:  https://dpi.lv/
+Xft.dpi:        96
+Xft.antialias:  true
+Xft.rgba:       rgb
+Xft.hinting:    true
+Xft.hintstyle:  hintfull
+Xft.lcdfilter:  lcddefault
+
+!-------------------------------------------------------------------------------
+!! URxvt settings
+!! Colours lifted from Solarized (http://ethanschoonover.com/solarized)
+!! More info at:
+!! http://pod.tst.eu/http://cvs.schmorp.de/rxvt-unicode/doc/rxvt.1.pod
+!!-------------------------------------------------------------------------------
+
+URxvt.depth:                32
+URxvt.geometry:             90x30
+URxvt.transparent:          false
+URxvt.fading:               0
+! URxvt.urgentOnBell:         true
+! URxvt.visualBell:           true
+URxvt.loginShell:           true
+URxvt.saveLines:            50
+URxvt.internalBorder:       3
+URxvt.lineSpace:            0
+
+
+! Fonts
+URxvt.allow_bold:           false
+/* URxvt.font:                 -*-terminus-medium-r-normal-*-12-120-72-72-c-60-iso8859-1 */
+! URxvt*font: xft:Monospace:pixelsize=12
+! URxvt*boldFont: xft:Monospace:pixelsize=12
+URxvt.font:     xft:ubuntu mono:size=11:antialias=true
+URxvt.boldFont: xft:ubuntu mono:bold:size=11:antialias=true
+
+
+! Fix font space
+URxvt*letterSpace: -1
+
+! Scrollbar
+URxvt.scrollStyle:          rxvt
+URxvt.scrollBar:            false
+
+! Perl extensions
+URxvt.perl-ext-common:      default,matcher
+! Loads the version in our home directory, with a 'fixed' ctrl hack
+! URxvt.perl-ext:             tabbed,clipboard-paste-on-right-click
+URxvt.perl-ext:             tabbedex,clipboard-paste-on-right-click
+URXvt.tabbed.reopen-on-close: yes
+URxvt.matcher.button:       1
+URxvt.url-launcher:          chromium-browser
+
+URxvt.clipboard.autocopy: true
+
+! Keys
+URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
+URxvt.keysym.Shift-Control-V: eval:paste_clipboard
+URxvt.keysym.Control-Meta-c: builtin-string:
+URxvt.keysym.Control-Meta-v: builtin-string:
+
+! Tab Settings
+URxvt.tabbed.tabbar-fg: 2
+URxvt.tabbed.tabbar-bg: 0
+URxvt.tabbed.tab-fg: 3
+URxvt.tabbed.tab-bg: 0
+
+! From https://wiki.archlinux.org/index.php/Rxvt-unicode
+! do not scroll with output
+URxvt*scrollTtyOutput: false
+
+! scroll in relation to buffer (with mouse scroll or Shift+Page Up)
+URxvt*scrollWithBuffer: true
+
+! scroll back to the bottom on keypress
+URxvt*scrollTtyKeypress: true
+
+! Disable Scrollback for pagers (less)
+URxvt.secondaryScreen: 1
+URxvt.secondaryScroll: 0
+
+! Decrease the space between letters
+URxvt.letterSpace: -1
+
+! Disable printing the terminal contents when pressing PrintScreen.
+URxvt.print-pipe: "cat > /dev/null"
+
+! This binding is useless to us, and takes up the ctrl-shift
+URxvt.iso14755: false
+URxvt.iso14755_52: false
+
+
+! Cursor
+URxvt.cursorBlink:          true
+URxvt.cursorColor:          #657b83
+URxvt.cursorUnderline:      false
+
+! Pointer
+URxvt.pointerBlank:         true
+
+! Solarized color scheme for the X Window System
+!
+! https://github.com/altercation/solarized/blob/master/xresources/solarized
+
+! To only apply colors to your terminal, for example, prefix
+! the color assignment statement with its name. Example:
+!
+! URxvt*background:            #fdf6e3
+
+*background:              #fdf6e3
+*foreground:              #657b83
+*fading:                  40
+*fadeColor:               #fdf6e3
+*cursorColor:             #586e75
+*pointerColorBackground:  #93a1a1
+*pointerColorForeground:  #586e75
+
+*color0:                  #eee8d5
+*color1:                  #dc322f
+*color2:                  #859900
+*color3:                  #b58900
+*color4:                  #268bd2
+*color5:                  #d33682
+*color6:                  #2aa198
+*color7:                  #073642
+*color9:                  #cb4b16
+*color8:                  #fdf6e3
+*color10:                 #93a1a1
+*color11:                 #839496
+*color12:                 #657b83
+*color13:                 #6c71c4
+*color14:                 #586e75
+*color15:                 #002b36
+
+
+! xscreensaver ---------------------------------------------------------------
+
+!font settings
+xscreensaver.Dialog.headingFont:        -*-liberation-sans-bold-r-*-*-10-*-*-*-*-*-*-*
+xscreensaver.Dialog.bodyFont:           -*-liberation-sans-medium-r-*-*-10-*-*-*-*-*-*-*
+xscreensaver.Dialog.labelFont:          -*-liberation-sans-medium-r-*-*-10-*-*-*-*-*-*-*
+xscreensaver.Dialog.unameFont:          -*-liberation-sans-medium-r-*-*-10-*-*-*-*-*-*-*
+xscreensaver.Dialog.buttonFont:         -*-liberation-sans-bold-r-*-*-10-*-*-*-*-*-*-*
+xscreensaver.Dialog.dateFont:           -*-liberation-sans-medium-r-*-*-10-*-*-*-*-*-*-*
+xscreensaver.passwd.passwdFont:         -*-liberation-sans-bold-r-*-*-10-*-*-*-*-*-*-*
+!general dialog box (affects main hostname, username, password text)
+xscreensaver.Dialog.foreground:         #EDEDED
+xscreensaver.Dialog.background:         #202020
+xscreensaver.Dialog.topShadowColor:     #202024
+xscreensaver.Dialog.bottomShadowColor:  #202024
+xscreensaver.Dialog.Button.foreground:  #EDEDFF
+xscreensaver.Dialog.Button.background:  #444
+!username/password input box and date text colour
+xscreensaver.Dialog.text.foreground:    #EDEDFF
+xscreensaver.Dialog.text.background:    #444
+xscreensaver.Dialog.internalBorderWidth:24
+xscreensaver.Dialog.borderWidth:        20
+xscreensaver.Dialog.shadowThickness:    2
+!timeout bar (background is actually determined by Dialog.text.background)
+xscreensaver.passwd.thermometer.foreground:  #A9B7C4
+xscreensaver.passwd.thermometer.background:  #202020
+xscreensaver.passwd.thermometer.width:       8
+!datestamp format--see the strftime(3) manual page for details
+xscreensaver.dateFormat:    %I:%M%P %a %b %d, %Y
+
