@@ -1,11 +1,11 @@
 # XScreenSaver Preferences File
-# Written by xscreensaver-demo 5.42 for cderose on Mon Sep 14 17:43:08 2020.
+# Written by xscreensaver-demo 5.44 for cderose on Mon Mar  8 22:41:57 2021.
 # https://www.jwz.org/xscreensaver/
 
-timeout:	0:10:00
+timeout:	1:30:00
 cycle:		0:10:00
 lock:		True
-lockTimeout:	0:00:00
+lockTimeout:	0:30:00
 passwdTimeout:	0:00:30
 visualID:	default
 installColormap:    True
@@ -17,7 +17,7 @@ demoCommand:	xscreensaver-demo
 prefsCommand:	xscreensaver-demo -prefs
 nice:		10
 memoryLimit:	0
-fade:		False
+fade:		True
 unfade:		True
 fadeSeconds:	0:00:03
 fadeTicks:	20
@@ -35,12 +35,12 @@ chooseRandomImages: True
 imageDirectory:	/home/cderose/Pictures/Wallpapers
 
 mode:		random
-selected:	-1
+selected:	86
 
-textMode:	url
+textMode:	program
 textLiteral:	XScreenSaver
 textFile:	
-textProgram:	fortune
+textProgram:	misfortune
 textURL:	http://fridge.ubuntu.com/node/feed
 
 programs:								      \
@@ -67,7 +67,7 @@ programs:								      \
 				coral -root				    \n\
 				deco -root				    \n\
 				drift -root				    \n\
--				fadeplot -root				    \n\
+				fadeplot -root				    \n\
 				galaxy -root				    \n\
 				goop -root				    \n\
 				grav -root				    \n\
@@ -103,7 +103,7 @@ programs:								      \
 				distort -root				    \n\
 				epicycle -root				    \n\
 				flow -root				    \n\
-- GL: 				glplanet -root				    \n\
+  GL: 				glplanet -root				    \n\
 				interference -root			    \n\
 				kumppa -root				    \n\
   GL: 				lament -root				    \n\
@@ -130,7 +130,7 @@ programs:								      \
 				spotlight -root				    \n\
 				squiral -root				    \n\
 				wander -root				    \n\
--				webcollage -root			    \n\
+- Best: 			webcollage -root			    \n\
 				xflame -root				    \n\
 				xmatrix -root				    \n\
   GL: 				gflux -root				    \n\
@@ -188,7 +188,7 @@ programs:								      \
   GL: 				glmatrix -root				    \n\
 - GL: 				glslideshow -root			    \n\
   GL: 				hypertorus -root			    \n\
-- GL: 				jigglypuff -root			    \n\
+  GL: 				jigglypuff -root			    \n\
 				metaballs -root				    \n\
   GL: 				mirrorblob -root			    \n\
 				piecewise -root				    \n\
@@ -209,7 +209,7 @@ programs:								      \
 				pacman -root				    \n\
   GL: 				pinion -root				    \n\
   GL: 				polyhedra -root				    \n\
-- GL: 				providence -root			    \n\
+  GL: 				providence -root			    \n\
 				substrate -root				    \n\
 				wormhole -root				    \n\
 - GL: 				antmaze -root				    \n\
@@ -252,31 +252,37 @@ programs:								      \
 				binaryring -root			    \n\
 - GL: 				cityflow -root				    \n\
 - GL: 				geodesicgears -root			    \n\
-- GL: 				projectiveplane -root			    \n\
+  GL: 				projectiveplane -root			    \n\
 - GL: 				romanboy -root				    \n\
 				tessellimage -root			    \n\
-- GL: 				winduprobot -root			    \n\
-- GL: 				splitflap -root				    \n\
+  GL: 				winduprobot -root			    \n\
+  GL: 				splitflap -root				    \n\
 - GL: 				cubestack -root				    \n\
 - GL: 				cubetwist -root				    \n\
 - GL: 				discoball -root				    \n\
 - GL: 				dymaxionmap -root			    \n\
-- GL: 				energystream -root			    \n\
-- GL: 				hexstrut -root				    \n\
-- GL: 				hydrostat -root				    \n\
+  GL: 				energystream -root			    \n\
+  GL: 				hexstrut -root				    \n\
+  GL: 				hydrostat -root				    \n\
 - GL: 				raverhoop -root				    \n\
-- GL: 				splodesic -root				    \n\
+  GL: 				splodesic -root				    \n\
 - GL: 				unicrud -root				    \n\
 - GL: 				esper -root				    \n\
-- GL: 				vigilance -root				    \n\
+  GL: 				vigilance -root				    \n\
 - GL: 				crumbler -root				    \n\
 				filmleader -root			    \n\
 				glitchpeg -root				    \n\
-- GL: 				handsy -root				    \n\
-- GL: 				maze3d -root				    \n\
-- GL: 				peepers -root				    \n\
+  GL: 				handsy -root				    \n\
+  GL: 				maze3d -root				    \n\
+  GL: 				peepers -root				    \n\
 - GL: 				razzledazzle -root			    \n\
 				vfeedback -root				    \n\
+- GL: 				dnalogo -root				    \n\
+				scooter -root				    \n\
+  GL: 				deepstars -root				    \n\
+  GL: 				gravitywell -root			    \n\
+  GL: 				etruscanvenus -root			    \n\
+  GL: 				gibson -root				    \n\
 
 
 pointerPollTime:    0:00:05

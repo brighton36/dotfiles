@@ -1,5 +1,7 @@
 #!/usr/bin/bash
 
+setxkbmap `cat "$HOME/.Xkbmap"`
+
 # This mostly just bind's l_control to super
 xmodmap "$HOME/.Xmodmap"
 

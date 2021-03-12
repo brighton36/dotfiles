@@ -53,11 +53,8 @@ end
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 -- beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
--- @chris todo: 
--- beautiful.init( awful.util.getdir("config") .. "themes/awesome-solarized/dark/theme.lua" )
 beautiful.init(awful.util.getdir("config") .. "chris-theme.lua")
-beautiful.useless_gap = 4
-
+beautiful.useless_gap = 16
 
 -- This is used later as the default terminal and editor to run.
 terminal = "/usr/bin/urxvt"
@@ -213,7 +210,7 @@ local cpu_widget = require("widgets.cpu-widget.cpu-widget")
 local volume_widget = require("widgets.volume-widget.volume")
 local battery_widget = require("widgets.battery-widget.battery")
 local ram_widget = require("widgets.ram-widget.ram-widget")
-local weather_widget = require("widgets.weather-widget.weather")
+-- local weather_widget = require("widgets.weather-widget.weather")
 
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
@@ -263,14 +260,14 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             mykeyboardlayout,
             wibox.widget.systray(),
-            weather_widget({
-							api_key='96f77eee7c4ee02cd718d638f8ffae6d',
-							coordinates = {26.135097, -80.127261},
-              units = 'imperial',
-							show_hourly_forecast = true,
-							show_daily_forecast = true,
-            }),
-            volume_widget({display_notification = true}),
+--            weather_widget({
+--							api_key='96f77eee7c4ee02cd718d638f8ffae6d',
+--							coordinates = {26.135097, -80.127261},
+--              units = 'imperial',
+--							show_hourly_forecast = true,
+--							show_daily_forecast = true,
+--            }),
+--            volume_widget({display_notification = true}),
             battery_widget(),
             cpu_widget({width = 70, step_width = 2, step_spacing = 0, color = '#859900'}),
             ram_widget(),
@@ -386,6 +383,10 @@ globalkeys = gears.table.join(
     -- We may want to switch to : xfce4-screenshooter
     awful.key({ }, "Print", function () awful.util.spawn("bash -c \"sleep 0.25 && scrot -q 90 -s -e 'mv $f ~/Pictures/Screenshots/'\"") end,
 			{description = "Select Screen Capture", group = "awesome"}),
+      --
+    -- Laptop pre-empted Binding:
+    awful.key({modkey}, "Escape", function () awful.util.spawn("xscreensaver-command -lock") end,
+			{description = "Lock Screen", group = "awesome"}),
 
     -- Prompt
     awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
@@ -642,6 +643,7 @@ end)
 --     c:emit_signal("request::activate", "mouse_enter", {raise = false})
 -- end)
 
-client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
-client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+--@chris todo: enable
+--client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
+--client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
