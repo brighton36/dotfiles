@@ -206,11 +206,11 @@ end)
 wp_timer:start()
 
 -- Chris' widgets 
-local cpu_widget = require("widgets.cpu-widget.cpu-widget")
-local volume_widget = require("widgets.volume-widget.volume")
-local battery_widget = require("widgets.battery-widget.battery")
-local ram_widget = require("widgets.ram-widget.ram-widget")
--- local weather_widget = require("widgets.weather-widget.weather")
+local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
+local volume_widget = require("awesome-wm-widgets.volume-widget.volume")
+local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
+local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
+-- local weather_widget = require("awesome-wm-widgets.weather-widget.weather")
 
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
