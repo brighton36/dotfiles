@@ -7,6 +7,9 @@
 --  * http://awesome.naquadah.org/wiki/Nice_Icons
 
 local lfs = require("lfs")
+local xresources = require("beautiful.xresources")
+
+local dpi = xresources.apply_dpi
 
 function images_in_dir (path)
   ret = {}
@@ -67,10 +70,11 @@ theme.bg_systray = theme.bg_normal
 -- }}}
 
 -- {{{ Borders
-theme.border_width  = "2"
+theme.border_width  = dpi(1)
 theme.border_normal = theme.bg_normal
 theme.border_focus  = theme.bg_focus
 theme.border_marked = theme.bg_urgent
+theme.useless_gap = dpi(4)
 -- }}}
 
 -- {{{ Titlebars
@@ -87,8 +91,8 @@ theme.mouse_finder_color = theme.colors.green
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]
 -- menu_[border_color|border_width]
-theme.menu_height = "15"
-theme.menu_width  = "100"
+theme.menu_height = dpi(15)
+theme.menu_width  = dpi(100)
 -- }}}
 
 -- {{{ Icons

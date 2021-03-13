@@ -11,3 +11,6 @@ autocutsel -fork -selection PRIMARY
 
 /usr/bin/xscreensaver -no-splash &
 /usr/bin/picom -b
+
+/usr/bin/nm-applet &
+/usr/bin/pnmixer &

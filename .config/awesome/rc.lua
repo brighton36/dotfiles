@@ -54,7 +54,6 @@ end
 -- Themes define colours, icons, font and wallpapers.
 -- beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 beautiful.init(awful.util.getdir("config") .. "chris-theme.lua")
-beautiful.useless_gap = 16
 
 -- This is used later as the default terminal and editor to run.
 terminal = "/usr/bin/urxvt"
@@ -125,7 +124,7 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- }}}
 
 -- Keyboard map indicator and switcher
-mykeyboardlayout = awful.widget.keyboardlayout()
+--mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Create a textclock widget
@@ -207,10 +206,10 @@ wp_timer:start()
 
 -- Chris' widgets 
 local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
-local volume_widget = require("awesome-wm-widgets.volume-widget.volume")
+--local volume_widget = require("awesome-wm-widgets.volume-widget.volume")
 local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
 local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
--- local weather_widget = require("awesome-wm-widgets.weather-widget.weather")
+local weather_widget = require("awesome-wm-widgets.weather-widget.weather")
 
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
@@ -258,15 +257,15 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            mykeyboardlayout,
+--            mykeyboardlayout,
             wibox.widget.systray(),
---            weather_widget({
---							api_key='96f77eee7c4ee02cd718d638f8ffae6d',
---							coordinates = {26.135097, -80.127261},
---              units = 'imperial',
---							show_hourly_forecast = true,
---							show_daily_forecast = true,
---            }),
+            weather_widget({
+							api_key='96f77eee7c4ee02cd718d638f8ffae6d',
+							coordinates = {26.135097, -80.127261},
+              units = 'imperial',
+							show_hourly_forecast = true,
+							show_daily_forecast = true,
+            }),
 --            volume_widget({display_notification = true}),
             battery_widget(),
             cpu_widget({width = 70, step_width = 2, step_spacing = 0, color = '#859900'}),
@@ -611,7 +610,8 @@ client.connect_signal("request::titlebars", function(c)
         end)
     )
 
-    awful.titlebar(c) : setup {
+    -- @Chris size:
+    awful.titlebar(c, {size = 50}) : setup {
         { -- Left
             awful.titlebar.widget.iconwidget(c),
             buttons = buttons,
