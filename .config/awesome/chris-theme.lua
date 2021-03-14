@@ -71,7 +71,7 @@ theme.bg_systray = theme.bg_normal
 
 -- {{{ Borders
 theme.border_width  = dpi(1)
-theme.border_normal = theme.bg_normal
+theme.border_normal = theme.bg_normal.."00"
 theme.border_focus  = theme.bg_focus
 theme.border_marked = theme.bg_urgent
 theme.useless_gap = dpi(4)
@@ -79,7 +79,8 @@ theme.useless_gap = dpi(4)
 
 -- {{{ Titlebars
 theme.titlebar_bg_focus  = theme.bg_focus
-theme.titlebar_bg_normal = theme.bg_normal
+-- The 00 is the alpha
+theme.titlebar_bg_normal = theme.bg_normal.."00"
 -- }}}
 
 -- {{{ Mouse finder
