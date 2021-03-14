@@ -207,9 +207,9 @@ wp_timer:start()
 -- Chris' widgets 
 local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
 --local volume_widget = require("awesome-wm-widgets.volume-widget.volume")
-local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
-local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
-local weather_widget = require("awesome-wm-widgets.weather-widget.weather")
+-- local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
+-- local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
+-- local weather_widget = require("awesome-wm-widgets.weather-widget.weather")
 
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
@@ -259,17 +259,17 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
 --            mykeyboardlayout,
             wibox.widget.systray(),
-            weather_widget({
-							api_key='96f77eee7c4ee02cd718d638f8ffae6d',
-							coordinates = {26.135097, -80.127261},
-              units = 'imperial',
-							show_hourly_forecast = true,
-							show_daily_forecast = true,
-            }),
+--            weather_widget({
+--							api_key='96f77eee7c4ee02cd718d638f8ffae6d',
+--							coordinates = {26.135097, -80.127261},
+--              units = 'imperial',
+--							show_hourly_forecast = true,
+--							show_daily_forecast = true,
+--            }),
 --            volume_widget({display_notification = true}),
-            battery_widget(),
+--            battery_widget(),
             cpu_widget({width = 70, step_width = 2, step_spacing = 0, color = '#859900'}),
-            ram_widget(),
+--            ram_widget(),
             mytextclock,
             s.mylayoutbox,
         },
@@ -371,12 +371,16 @@ globalkeys = gears.table.join(
     -- Chris' Add-ons:
     awful.key({ }, 'F9', function () awful.util.spawn("pcmanfm") end, 
 			{description = "Open Home Folder (pcmanfm)", group = "awesome"}),
-    awful.key({ }, 'F10', function () awful.util.spawn("amixer sset Master toggle") end,
+    awful.key({ }, 'F1', function () awful.util.spawn("amixer sset Master toggle") end,
 			{description = "Toggle Mute", group = "awesome"}),
-    awful.key({ }, 'F11', function () awful.util.spawn("amixer sset Master 5%-") end,
+    awful.key({ }, 'F2', function () awful.util.spawn("amixer sset Master 5%-") end,
 			{description = "Decrease Volume 5%", group = "awesome"}),
-    awful.key({ }, 'F12', function () awful.util.spawn("amixer sset Master 5%+") end,
+    awful.key({ }, 'F3', function () awful.util.spawn("amixer sset Master 5%+") end,
 			{description = "Increase Volume 5%", group = "awesome"}),
+    awful.key({ }, 'F11', function () awful.util.spawn("/usr/bin/xbacklight -dec 10") end,
+			{description = "Decrease Brightness 5%", group = "awesome"}),
+    awful.key({ }, 'F12', function () awful.util.spawn("/usr/bin/xbacklight -inc 10") end,
+			{description = "Increase Brightness 5%", group = "awesome"}),
     awful.key({ }, 'Scroll_Lock', function () awful.util.spawn("xscreensaver-command -lock") end,
 			{description = "Lock Screen", group = "awesome"}),
     -- We may want to switch to : xfce4-screenshooter
@@ -643,7 +647,13 @@ end)
 --     c:emit_signal("request::activate", "mouse_enter", {raise = false})
 -- end)
 
---@chris todo: enable
---client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
---client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+client.connect_signal("focus", function(c) 
+  c.border_color = beautiful.border_focus
+  c.opacity = 1
+end)
+
+client.connect_signal("unfocus", function(c) 
+  c.border_color = beautiful.border_normal
+  c.opacity = 0.8
+end)
 -- }}}

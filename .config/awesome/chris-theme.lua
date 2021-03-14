@@ -55,7 +55,7 @@ theme.colors.green   = "#859900ff"
 -- }}}
 
 -- {{{ Styles
-theme.font      = "Liberation Sans Bold 10"
+theme.font      = "Liberation Sans Bold 8"
 
 -- {{{ Colors
 theme.fg_normal  = theme.colors.base02
