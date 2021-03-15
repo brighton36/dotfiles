@@ -27,7 +27,7 @@ autocutsel -fork -selection PRIMARY
 
 /usr/bin/nm-applet &
 /usr/bin/pnmixer &
-/usr/bin/blueman-manager &
+/usr/bin/blueman-applet &
 /usr/bin/cbatticon -l 20 -c 10 &
 /usr/bin/psensor &
 
