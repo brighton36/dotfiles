@@ -14,7 +14,7 @@ local dpi = xresources.apply_dpi
 function images_in_dir (path)
   ret = {}
   for file in lfs.dir(path) do
-                local ext = file:match("[^.]+$")
+    local ext = file:match("[^.]+$")
     if ext == "jpg" or ext == "png" then
       table.insert(ret, path..'/'..file)
     end
@@ -81,6 +81,7 @@ theme.useless_gap = dpi(4)
 theme.titlebar_bg_focus  = theme.bg_focus
 -- The 00 is the alpha
 theme.titlebar_bg_normal = theme.bg_normal.."00"
+theme.titlebar_height  = dpi(20)
 -- }}}
 
 -- {{{ Mouse finder

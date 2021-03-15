@@ -1,7 +1,7 @@
 ! Xft settings ---------------------------------------------------------------
 
 ! From:  https://dpi.lv/
-Xft.dpi:        276
+!Xft.dpi:        276
 Xft.antialias:  true
 Xft.rgba:       rgb
 Xft.hinting:    true
