@@ -12,7 +12,7 @@ URxvt.fading:               0
 !!URxvt.urgentOnBell:         true
 !!URxvt.visualBell:           true
 URxvt.loginShell:           true
-URxvt.saveLines:            50
+URxvt.saveLines:            200000
 URxvt.internalBorder:       3
 URxvt.lineSpace:            0
 
@@ -31,7 +31,8 @@ URxvt*letterSpace: -1
 
 !!Scrollbar
 URxvt.scrollStyle:          rxvt
-URxvt.scrollBar:            false
+URxvt.scrollBar:            true
+URxvt.scrollBar_right:      true
 
 !!Perl extensions
 URxvt.perl-ext-common:      default,matcher

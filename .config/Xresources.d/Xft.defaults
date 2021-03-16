@@ -1,12 +1,16 @@
 !! From:  https://dpi.lv/
+!! 1. xdpyinfo | grep -B 2 resolution
+!! 2. Convert mm, to inches
+!! 3. Divide the resolution by the dimension
+
 #ifdef HIDPI
-!! Laptop:
+!! Laptop: 3200x1800 @ 11.56"x6.51"
 Xft.dpi:        276
 #else
-!! desktop: 
-!! 1920x1080 20" x 11.22"
+!! Desktop: 1920x1080 @ 20"x11.22"
 Xft.dpi:        96
 #endif
+#
 Xft.antialias:  true
 Xft.rgba:       rgb
 Xft.hinting:    true

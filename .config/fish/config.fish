@@ -15,15 +15,16 @@ bind -M insert \cW backward-kill-word
 #bind -M insert \e\[D 'prevd-or-backward-word'
 
 # Note: The .inputrc might be required to make this work:
-if [ $TERM = 'linux' ]
-  # This is for the tty consoles:
-  bind -M insert '[C' forward-word
-  bind -M insert '[D' backward-word
-else
-  # This is for urxt, and really any other term:
-  bind -M insert \eOd backward-word
-  bind -M insert \eOc forward-word
-end
+
+# This stopped working, so I commented it out for now
+# if $TERM = 'linux'
+# This is for the tty consoles:
+# bind -M insert '[C' forward-word
+# bind -M insert '[D' backward-word
+
+# This is for urxt, and really any other term:
+bind -M insert \eOd backward-word
+bind -M insert \eOc forward-word
 
 # Our config alias to manage our dotfiles in git:
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
