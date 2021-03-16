@@ -384,7 +384,7 @@ globalkeys = gears.table.join(
     awful.key({ }, 'Scroll_Lock', function () awful.util.spawn("xscreensaver-command -lock") end,
 			{description = "Lock Screen", group = "awesome"}),
     -- We may want to switch to : xfce4-screenshooter
-    awful.key({ }, "Print", function () awful.util.spawn("bash -c \"sleep 0.25 && scrot -q 90 -s -e 'mv $f ~/Pictures/Screenshots/'\"") end,
+    awful.key({ }, "Print", function () awful.util.spawn(os.getenv("HOME").."/bin/screenshot.sh") end,
 			{description = "Select Screen Capture", group = "awesome"}),
       --
     -- Laptop pre-empted Binding:

@@ -1,0 +1,8 @@
+#ifdef SRVR_link
+#define HIDPI 1
+#endif
+
+#include ".config/Xresources.d/Xft.defaults"
+#include ".config/Xresources.d/URxvt.defaults"
+#include ".config/Xresources.d/Xresources.light"
+#include ".config/Xresources.d/xscreensaver.defaults"

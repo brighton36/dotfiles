@@ -1,0 +1,14 @@
+!! From:  https://dpi.lv/
+#ifdef HIDPI
+!! Laptop:
+Xft.dpi:        276
+#else
+!! desktop: 
+!! 1920x1080 20" x 11.22"
+Xft.dpi:        96
+#endif
+Xft.antialias:  true
+Xft.rgba:       rgb
+Xft.hinting:    true
+Xft.hintstyle:  hintfull
+Xft.lcdfilter:  lcddefault
