@@ -9,6 +9,9 @@ if [$hostname == "link"]; then
   export GDK_SCALE=2
 fi
 
+# This adds image previews to telegram's sendfile:
+export XDG_CURRENT_DESKTOP=gnome
+
 # This will synchronize the urxt (and other X programs) clipboards 
 #autocutsel -fork -selection CLIPBOARD
 #autocutsel -fork -selection PRIMARY
