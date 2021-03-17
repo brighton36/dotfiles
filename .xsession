@@ -11,7 +11,7 @@ fi
 
 # This will synchronize the urxt (and other X programs) clipboards 
 #autocutsel -fork -selection CLIPBOARD
-autocutsel -fork -selection PRIMARY
+#autocutsel -fork -selection PRIMARY
 
 /usr/bin/xscreensaver -no-splash &
 /usr/bin/picom -b

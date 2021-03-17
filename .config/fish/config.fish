@@ -9,22 +9,22 @@ bind -M insert \cA beginning-of-line
 bind -M insert \cE end-of-line
 bind -M insert \cW backward-kill-word
 
-# Alt-left and Alt-right:
-# TODO: This is screwing up our left/right
-#bind -M insert \e\[C 'nextd-or-forward-word'
-#bind -M insert \e\[D 'prevd-or-backward-word'
-
 # Note: The .inputrc might be required to make this work:
 
-# This stopped working, so I commented it out for now
-# if $TERM = 'linux'
-# This is for the tty consoles:
-# bind -M insert '[C' forward-word
-# bind -M insert '[D' backward-word
+if [ "$TERM" = 'linux' ]
+  # tty
+  bind -M insert \e\[D backward-word
+  bind -M insert \e\[C forward-word
+  bind \e\[D backward-word
+  bind \e\[C forward-word
+else
+  # This is for urxt:
+  bind -M insert \e\[1\;5D backward-word
+  bind -M insert \e\[1\;5C forward-word
+  bind \e\[1\;5D backward-word
+  bind \e\[1\;5C forward-word
+end
 
-# This is for urxt, and really any other term:
-bind -M insert \eOd backward-word
-bind -M insert \eOc forward-word
 
 # Our config alias to manage our dotfiles in git:
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
