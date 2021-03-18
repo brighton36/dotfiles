@@ -12,9 +12,9 @@ fi
 # This adds image previews to telegram's sendfile:
 export XDG_CURRENT_DESKTOP=gnome
 
-# This will synchronize the urxt (and other X programs) clipboards 
-#autocutsel -fork -selection CLIPBOARD
-#autocutsel -fork -selection PRIMARY
+# This should enable the liberation font in xscreensaver:
+xset +fp /usr/share/fonts/liberation/
+xset -fp rehash
 
 /usr/bin/xscreensaver -no-splash &
 /usr/bin/picom -b
@@ -24,3 +24,4 @@ export XDG_CURRENT_DESKTOP=gnome
 /usr/bin/blueman-applet &
 /usr/bin/cbatticon -l 20 -c 10 &
 /usr/bin/psensor &
+
