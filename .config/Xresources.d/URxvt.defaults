@@ -19,15 +19,13 @@ URxvt.lineSpace:            0
 
 !!Fonts
 URxvt.allow_bold:           false
-/* URxvt.font:                 -*-terminus-medium-r-normal-*-12-120-72-72-c-60-iso8859-1 */
-!!URxvt*font: xft:Monospace:pixelsize=12
-!!URxvt*boldFont: xft:Monospace:pixelsize=12
-URxvt.font:     xft:ubuntu mono:size=9:antialias=true
-URxvt.boldFont: xft:ubuntu mono:bold:size=9:antialias=true
+URxvt.font:                 xft:Ubuntu Mono:size=9:antialias=true,xft:Braille:size=9:antialias=true
+URxvt.boldFont:             xft:Ubuntu Mono:bold:size=9:antialias=true,xft:Braille:size=9:antialias=true
 
 
 !!Fix font space
-URxvt*letterSpace: -1
+!! NOTE: that the braille doesnt actually work with letterSpace < 1
+URxvt.letterSpace: -1
 
 !!Scrollbar
 URxvt.scrollStyle:          rxvt
@@ -71,8 +69,6 @@ URxvt*scrollTtyKeypress: true
 URxvt.secondaryScreen: 1
 URxvt.secondaryScroll: 0
 
-!!Decrease the space between letters
-URxvt.letterSpace: -1
 
 !!Disable printing the terminal contents when pressing PrintScreen.
 URxvt.print-pipe: "cat > /dev/null"
@@ -90,11 +86,5 @@ URxvt.cursorUnderline:      false
 !!Pointer
 URxvt.pointerBlank:         true
 
-!!Solarized color scheme for the X Window System
-!
-!!https://github.com/altercation/solarized/blob/master/xresources/solarized
-
-!!To only apply colors to your terminal, for example, prefix
-!!the color assignment statement with its name. Example:
-!
-!!URxvt*background:            #fdf6e3
+!! Selection:
+Urxvt.selection.pattern-0: ([ ]+)

@@ -13,8 +13,8 @@ fi
 export XDG_CURRENT_DESKTOP=gnome
 
 # This should enable the liberation font in xscreensaver:
-xset +fp /usr/share/fonts/liberation/
-xset -fp rehash
+xset +fp /usr/share/fonts/ubuntu/
+xset fp rehash
 
 /usr/bin/xscreensaver -no-splash &
 /usr/bin/picom -b

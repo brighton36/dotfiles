@@ -1,13 +1,13 @@
 !!xscreensaver ---------------------------------------------------------------
 
 !font settings
-xscreensaver.Dialog.headingFont:        -*-liberation sans-bold-r-*-*-36-*-*-*-*-*-*-*
-xscreensaver.Dialog.bodyFont:           -*-liberation sans-medium-r-*-*-36-*-*-*-*-*-*-*
-xscreensaver.Dialog.labelFont:          -*-liberation sans-medium-r-*-*-36-*-*-*-*-*-*-*
-xscreensaver.Dialog.unameFont:          -*-liberation sans-medium-r-*-*-36-*-*-*-*-*-*-*
-xscreensaver.Dialog.buttonFont:         -*-liberation sans-bold-r-*-*-36-*-*-*-*-*-*-*
-xscreensaver.Dialog.dateFont:           -*-liberation sans-medium-r-*-*-36-*-*-*-*-*-*-*
-xscreensaver.passwd.passwdFont:         -*-liberation sans-bold-r-*-*-36-*-*-*-*-*-*-*
+xscreensaver.Dialog.headingFont:        -*-ubuntu mono-bold-r-*-*-36-*-*-*-*-*-*-*
+xscreensaver.Dialog.bodyFont:           -*-ubuntu mono-medium-r-*-*-36-*-*-*-*-*-*-*
+xscreensaver.Dialog.labelFont:          -*-ubuntu mono-medium-r-*-*-36-*-*-*-*-*-*-*
+xscreensaver.Dialog.unameFont:          -*-ubuntu mono-medium-r-*-*-36-*-*-*-*-*-*-*
+xscreensaver.Dialog.buttonFont:         -*-ubuntu mono-bold-r-*-*-36-*-*-*-*-*-*-*
+xscreensaver.Dialog.dateFont:           -*-ubuntu mono-medium-r-*-*-36-*-*-*-*-*-*-*
+xscreensaver.passwd.passwdFont:         -*-ubuntu mono-bold-r-*-*-36-*-*-*-*-*-*-*
 !general dialog box (affects main hostname, username, password text)
 !!Dist:
 !xscreensaver.Dialog.internalBorderWidth:24
