@@ -16,12 +16,10 @@ URxvt.saveLines:            200000
 URxvt.internalBorder:       3
 URxvt.lineSpace:            0
 
-
 !!Fonts
 URxvt.allow_bold:           false
-URxvt.font:                 xft:Ubuntu Mono:size=9:antialias=true,xft:Braille:size=9:antialias=true
-URxvt.boldFont:             xft:Ubuntu Mono:bold:size=9:antialias=true,xft:Braille:size=9:antialias=true
-
+URxvt.font:                 xft:Ubuntu Mono:size=9:antialias=true
+URxvt.boldFont:             xft:Ubuntu Mono:bold:size=9:antialias=true
 
 !!Fix font space
 !! NOTE: that the braille doesnt actually work with letterSpace < 1
@@ -33,21 +31,34 @@ URxvt.scrollBar:            true
 URxvt.scrollBar_right:      true
 
 !!Perl extensions
-URxvt.perl-ext-common:      default,matcher
-!!Loads the version in our home directory, with a 'fixed' ctrl hack
-!!URxvt.perl-ext:             tabbed,clipboard-paste-on-right-click
+URxvt.perl-ext-common:      default,matcher,keyboard-select,resize-font
+!! Loads the version in our home directory, with a 'fixed' ctrl hack
 URxvt.perl-ext:             tabbedex,clipboard-paste-on-right-click
-URXvt.tabbed.reopen-on-close: yes
-URxvt.matcher.button:       1
-URxvt.url-launcher:          chromium-browser
 
-URxvt.clipboard.autocopy: true
+URXvt.tabbed.reopen-on-close:    yes
+URxvt.matcher.button:            1
+URxvt.url-launcher:              google-chrome-stable
+URxvt.clipboard.autocopy:        true
+URxvt.keyboard-select.clipboard: true
+
+!! Unbind Keys:
+URxvt.keysym.Control-Meta-c:   builtin-string:
+URxvt.keysym.Control-Meta-v:   builtin-string:
+URxvt.keysym.Control-minus:    builtin-string:
+URxvt.keysym.Control-plus:     builtin-string:
+URxvt.keysym.Control-equal:    builtin-string:
+URxvt.iso14755:    false
+URxvt.iso14755_52: false
 
 !!Keys
-URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
-URxvt.keysym.Shift-Control-V: eval:paste_clipboard
-URxvt.keysym.Control-Meta-c: builtin-string:
-URxvt.keysym.Control-Meta-v: builtin-string:
+URxvt.keysym.Control-underscore:    resize-font:smaller
+URxvt.keysym.Shift-Control-plus:    resize-font:bigger
+
+URxvt.keysym.Shift-Control-Return:  perl:keyboard-select:activate
+URxvt.keysym.Control-question:      perl:keyboard-select:search
+
+URxvt.keysym.Shift-Control-C:       eval:selection_to_clipboard
+URxvt.keysym.Shift-Control-V:       eval:paste_clipboard
 
 !!Tab Settings
 URxvt.tabbed.tabbar-fg: 2
@@ -55,7 +66,6 @@ URxvt.tabbed.tabbar-bg: 0
 URxvt.tabbed.tab-fg: 3
 URxvt.tabbed.tab-bg: 0
 
-!!From https://wiki.archlinux.org/index.php/Rxvt-unicode
 !!do not scroll with output
 URxvt.scrollTtyOutput: false
 
@@ -73,11 +83,6 @@ URxvt.secondaryScroll: 0
 !!Disable printing the terminal contents when pressing PrintScreen.
 URxvt.print-pipe: "cat > /dev/null"
 
-!!This binding is useless to us, and takes up the ctrl-shift
-URxvt.iso14755: false
-URxvt.iso14755_52: false
-
-
 !!Cursor
 URxvt.cursorBlink:          true
 URxvt.cursorColor:          #657b83
@@ -86,5 +91,5 @@ URxvt.cursorUnderline:      false
 !!Pointer
 URxvt.pointerBlank:         true
 
-!! Selection:
+!! Double-click Selection:
 Urxvt.selection.pattern-0: ([ ]+)
