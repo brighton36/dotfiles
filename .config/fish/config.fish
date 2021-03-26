@@ -10,19 +10,25 @@ bind -M insert \cE end-of-line
 bind -M insert \cW backward-kill-word
 
 # Note: The .inputrc might be required to make this work:
-
-if [ "$TERM" = 'linux' ]
+if string match -qr '^(?:linux|screen-256color)' "$TERM";
+  # A linux console, or tmux in linux console. Same as term above
   # tty
   bind -M insert \e\[D backward-word
   bind -M insert \e\[C forward-word
   bind \e\[D backward-word
   bind \e\[C forward-word
-else
-  # This is for urxt:
+else if [ -n "$TMUX" ]
+  # urxt with tmux:
   bind -M insert \e\[1\;5D backward-word
   bind -M insert \e\[1\;5C forward-word
   bind \e\[1\;5D backward-word
   bind \e\[1\;5C forward-word
+else
+  # This is for urxt sans tmux:
+  bind \eOd backward-word
+  bind \eOc forward-word
+  bind -M insert \eOd backward-word
+  bind -M insert \eOc forward-word
 end
 
 

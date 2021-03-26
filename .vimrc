@@ -58,7 +58,7 @@ set pastetoggle=<F2>
 " I'm testing this at the moment:
 :set colorcolumn=80
 
-set background=dark
+set background=light
 colorscheme solarized
 
 " I seem to have a knack for mis-typing the Q key. this is annoying

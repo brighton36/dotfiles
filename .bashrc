@@ -59,7 +59,7 @@ alias l='ls -CF'
 export CVS_RSH=ssh
 
 # Path stuff:
-export PATH="$PATH:~/bin"
+export PATH="$PATH:/home/cderose/.gem/ruby/2.7.0/bin:~/bin"
 
 DEBEMAIL="chris@chrisderose.com"
 DEBFULLNAME="Chris DeRose"
