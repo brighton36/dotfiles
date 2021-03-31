@@ -1,0 +1,23 @@
+TODO: 
+* We were using F2 for vim insert mode paste...
+  * Maybe pause-F2 should send F2. And, on the laptop, function F2
+* The attach fopen broke in telegram .. 
+* in vim: YCM Restart Server... hmmm. I think the compile failed
+
+* Awesome Help strings worth adding, if you want:
+  * The urxvt keys that I added (see the Xresources.d)
+  * Meta-s URXVT shortcuts: https://wiki.archlinux.org/index.php/Rxvt-unicode
+  * urxvt keyboard select: https://github.com/muennich/urxvt-perls
+
+
+NOTE: 
+  * New system: 
+    $ alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+    $ echo ".cfg" >> .gitignore
+    # scp the ~/.ssh over, or use an http address, depending on the server...
+    $ git clone --bare git@github.com:brighton36/home $HOME/.cfg
+    $ config checkout --force
+    $ config config --local status.showUntrackedFiles no
+
+  * the /usr/local/share/kbd/keymaps/dvorak-chris.map and /etc/vconsole.conf and lightdm.conf...
+    isn't in the config

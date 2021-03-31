@@ -9,9 +9,6 @@ if [$hostname == "link"]; then
   export GDK_SCALE=2
 fi
 
-# This adds image previews to telegram's sendfile:
-export XDG_CURRENT_DESKTOP=gnome
-
 # This should enable the liberation font in xscreensaver:
 xset +fp /usr/share/fonts/ubuntu/
 xset fp rehash
