@@ -1,4 +1,5 @@
 TODO: 
+* We need to add ctrl-keycode to c and d . I bet that fixes our left/right. 
 * We were using F2 for vim insert mode paste...
   * Maybe pause-F2 should send F2. And, on the laptop, function F2
 * The attach fopen broke in telegram .. 
