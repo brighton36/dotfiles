@@ -17,13 +17,6 @@ if [ -n "$TMUX" ]
   bind \e\[1\;5D backward-word
   bind \e\[1\;5C forward-word
 else
-  # This seems to be the left key, without ctrl. I think the tty needs to send \eOd
-  #bind -M insert \e\[D backward-word
-  #bind -M insert \e\[C forward-word
-  #bind \e\[D backward-word
-  #bind \e\[C forward-word
-
-  # Ubuntu:
   bind -M insert \eOd backward-word
   bind -M insert \eOc forward-word
   bind \eOd backward-word
