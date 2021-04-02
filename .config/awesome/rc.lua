@@ -286,6 +286,11 @@ root.buttons(gears.table.join(
 -- }}}
 
 -- {{{ Key bindings
+-- Chris Function:
+function shift_function_key(key)
+  return awful.key({"Shift"}, key, function () awful.util.spawn("/usr/bin/xdotool sleep 0.1 getactivewindow keyup shift key --clearmodifiers " .. key) end)
+end
+
 globalkeys = gears.table.join(
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
@@ -369,6 +374,21 @@ globalkeys = gears.table.join(
               {description = "restore minimized", group = "client"}),
 
     -- Chris' Add-ons:
+    -- These keys will be sent to the active window, if the shift key
+    -- is held down, while hitting the function key
+		shift_function_key('F1'),
+		shift_function_key('F2'),
+		shift_function_key('F3'),
+		shift_function_key('F4'),
+		shift_function_key('F5'),
+		shift_function_key('F6'),
+		shift_function_key('F7'),
+		shift_function_key('F8'),
+		shift_function_key('F9'),
+		shift_function_key('F10'),
+		shift_function_key('F11'),
+		shift_function_key('F12'),
+
     awful.key({ }, 'F9', function () awful.util.spawn("pcmanfm") end, 
 			{description = "Open Home Folder (pcmanfm)", group = "awesome"}),
     awful.key({ }, 'F1', function () awful.util.spawn("amixer sset Master toggle") end,
