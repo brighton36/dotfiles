@@ -1,8 +1,9 @@
 TODO: 
-* Shift f2-fwhatever
-  * We were using F2 for vim insert mode paste...
-    * Maybe pause-F2 should send F2. And, on the laptop, function F2
 * What is control-space doing in tmux? Maybe that should be copy mode...
+* kitty instead of urxvt?
+  * Fix that OSC code 50 issue
+  * Add the kitty config to the repo, with the external module
+  * https://github.com/kovidgoyal/kitty/issues/1698
 * The attach fopen broke in telegram .. 
 * in vim: YCM Restart Server... hmmm. I think the compile failed
 

@@ -1,3 +1,6 @@
 [submodule ".config/awesome/awesome-wm-widgets"]
 	path = .config/awesome/awesome-wm-widgets
 	url = https://github.com/streetturtle/awesome-wm-widgets.git
+[submodule "/home/cderose/.config/kitty/kitty-themes"]
+	path = /home/cderose/.config/kitty/kitty-themes
+	url = git@github.com:dexpota/kitty-themes.git

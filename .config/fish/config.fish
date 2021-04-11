@@ -1,5 +1,28 @@
 # NOTE: fish_key_reader generates these binding codes:
 
+# This fixes weird shape output on kitty terminal:
+function fish_vi_cursor --on-variable fish_bind_mode
+    if set -q __last_fish_bind_mode
+        and test $__last_fish_bind_mode = $fish_bind_mode
+        return
+    end
+    set -g __last_fish_bind_mode $fish_bind_mode
+    switch $fish_bind_mode
+        case insert
+            printf '\e]50;CursorShape=1\x7'
+        case default
+            printf '\e]50;CursorShape=0\x7'
+        case "*"
+            printf '\e]50;CursorShape=0\x7'
+    end
+end
+
+set -x fish_cursor_default block
+set -x fish_cursor_visual block
+set -x fish_cursor_insert line
+set -x fish_cursor_replace_one underscore
+# /kitty
+
 fish_vi_key_bindings --no-erase
 
 bind -M insert \cB backward-word
