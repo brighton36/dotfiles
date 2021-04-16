@@ -56,7 +56,14 @@ end
 beautiful.init(awful.util.getdir("config") .. "chris-theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "/usr/bin/urxvt"
+-- @chris:
+if lfs.attributes("/usr/bin/kitty") then
+  -- file exists
+  terminal = "/usr/bin/kitty"
+else
+  terminal = "/usr/bin/urxvt"
+end
+
 editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -591,7 +598,7 @@ awful.rules.rules = {
 
     -- Add titlebars to normal clients and dialogs
     { rule_any = {type = { "normal", "dialog" }
-      }, properties = { titlebars_enabled = true }
+      }, properties = { titlebars_enabled = false }
     },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.

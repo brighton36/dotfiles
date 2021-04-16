@@ -58,8 +58,10 @@ set pastetoggle=<F2>
 " I'm testing this at the moment:
 :set colorcolumn=80
 
-set background=light
-colorscheme solarized
+" I'm trying this out without a scheme rn, to see if the kitty/urvxt pick this
+" up better:
+"set background=dark
+"colorscheme solarized
 
 " I seem to have a knack for mis-typing the Q key. this is annoying
 map Q <Nop>

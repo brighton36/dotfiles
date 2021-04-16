@@ -71,5 +71,3 @@ export VISUAL='vim'
 # Dotfile management:
 alias config='/usr/bin/git --git-dir=/home/cderose/.cfg/ --work-tree=/home/cderose'
 
-# This adds image previews to telegram's sendfile:
-export XDG_CURRENT_DESKTOP=gnome

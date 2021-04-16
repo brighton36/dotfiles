@@ -1,9 +1,19 @@
 TODO: 
-* What is control-space doing in tmux? Maybe that should be copy mode...
-* kitty instead of urxvt?
-  * Fix that OSC code 50 issue
-  * Add the kitty config to the repo, with the external module
-  * https://github.com/kovidgoyal/kitty/issues/1698
+
+* Let's make the tab and tmux colors a bit closer together
+  * maybe fix the window titles to show what path tmux was launched from?
+  * Kitty's pane separator color should probably be the blue...
+  * Let's remove the date from the tmux status bar...
+* Kitty : 
+  * Let's start porting the tmux bindings over for - and | and pane-change
+  * change ctrl-shift-l to ctrl-shift-space
+  * Change the double-click to match the urxvt regex
+  * Unicode: https://paul-nameless.com/mastering-kitty.html
+
+* fish:
+  * and even let's get the green out of fish, with oh my fish...
+
+* Get vim's copy to copy to system clipboard, so we can kitty copy better...
 * The attach fopen broke in telegram .. 
 * in vim: YCM Restart Server... hmmm. I think the compile failed
 
