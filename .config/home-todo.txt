@@ -6,9 +6,6 @@ TODO:
   * Change the double-click to match the urxvt regex
   * Unicode: https://paul-nameless.com/mastering-kitty.html
 
-* fish:
-  * and even let's get the green out of fish, with oh my fish...
-
 * Get vim's copy to copy to system clipboard, so we can kitty copy better...
 * The attach fopen broke in telegram .. 
 * in vim: YCM Restart Server... hmmm. I think the compile failed

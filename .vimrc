@@ -61,7 +61,7 @@ set pastetoggle=<F2>
 " I'm trying this out without a scheme rn, to see if the kitty/urvxt pick this
 " up better:
 "set background=dark
-"colorscheme solarized
+colorscheme solarized
 
 " I seem to have a knack for mis-typing the Q key. this is annoying
 map Q <Nop>

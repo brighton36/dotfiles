@@ -52,5 +52,7 @@ else
   bind \eOc forward-word
 end
 
+set -g theme_color_scheme solarized-light
+
 # Our config alias to manage our dotfiles in git:
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
