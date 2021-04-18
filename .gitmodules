@@ -3,4 +3,4 @@
 	url = https://github.com/streetturtle/awesome-wm-widgets.git
 [submodule "/home/cderose/.local/share/omf"]
 	path = /home/cderose/.local/share/omf
-	url = git@github.com:oh-my-fish/oh-my-fish.git
+	url = https://github.com/oh-my-fish/oh-my-fish.git
