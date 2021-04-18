@@ -1,23 +1,17 @@
 TODO: 
 
+* Awesome : 
+  * I like the  ctrl-shift-[ and ] from kitty, let's use it with awesome's meta too
+
 * Kitty : 
-  * Let's start porting the tmux bindings over for - and | and pane-change
-  * change ctrl-shift-l to ctrl-shift-space
   * Change the double-click to match the urxvt regex
   * Unicode: https://paul-nameless.com/mastering-kitty.html
 
 * Get vim's copy to copy to system clipboard, so we can kitty copy better...
 * The attach fopen broke in telegram .. 
-* in vim: YCM Restart Server... hmmm. I think the compile failed
-
-* Awesome Help strings worth adding, if you want:
-  * The urxvt keys that I added (see the Xresources.d)
-  * Meta-s URXVT shortcuts: https://wiki.archlinux.org/index.php/Rxvt-unicode
-  * urxvt keyboard select: https://github.com/muennich/urxvt-perls
-
 
 NOTE: 
-  * New system: 
+  * New system... make this into a ./bin/move-in.sh ?
     $ alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
     $ echo ".cfg" >> .gitignore
     # scp the ~/.ssh over, or use an http address, depending on the server...

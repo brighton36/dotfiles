@@ -26,6 +26,7 @@ if [ "$TERM" = "xterm-kitty" ]
 
   alias icat="/usr/bin/kitty +kitten icat --align=left"
   alias clipboard="/usr/bin/kitty +kitten clipboard"
+  alias ssh="kitty +kitten ssh use-python"
 end
 
 fish_vi_key_bindings --no-erase
