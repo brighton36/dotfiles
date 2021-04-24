@@ -39,7 +39,6 @@ call pathogen#infect('~/.vim/bundle/{}')
 " Filetypes
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-
 " C++
 let g:ycm_confirm_extra_conf = 0
 

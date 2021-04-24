@@ -1,20 +1,11 @@
-TODO: 
+TODO:
 
-* Autocomplete in vim?
-  * Let's maybe switch to: https://github.com/amix/vimrc
-
-* Awesome : 
-  * I like the  ctrl-(shift/no-shift)-[ and ] from kitty, let's use it with awesome's meta too
-
-* Kitty : 
-  * Change the double-click to match the urxvt regex
+* Kitty :
   * Unicode: https://paul-nameless.com/mastering-kitty.html
 
-
 * Get vim's copy to copy to system clipboard, so we can kitty copy better...
-* The attach fopen broke in telegram .. 
 
-NOTE: 
+NOTE:
   * New system... make this into a ./bin/move-in.sh ?
     $ alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
     $ echo ".cfg" >> .gitignore
