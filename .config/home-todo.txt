@@ -1,11 +1,15 @@
 TODO: 
 
+* Autocomplete in vim?
+  * Let's maybe switch to: https://github.com/amix/vimrc
+
 * Awesome : 
-  * I like the  ctrl-shift-[ and ] from kitty, let's use it with awesome's meta too
+  * I like the  ctrl-(shift/no-shift)-[ and ] from kitty, let's use it with awesome's meta too
 
 * Kitty : 
   * Change the double-click to match the urxvt regex
   * Unicode: https://paul-nameless.com/mastering-kitty.html
+
 
 * Get vim's copy to copy to system clipboard, so we can kitty copy better...
 * The attach fopen broke in telegram .. 
