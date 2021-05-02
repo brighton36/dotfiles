@@ -28,6 +28,10 @@ colorscheme solarized
 " Lightline statusbar
 let g:lightline = { 'colorscheme': 'solarized' }
 
+" Tab:
+set tabstop=2
+set shiftwidth=2
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
