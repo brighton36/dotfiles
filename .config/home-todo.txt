@@ -2,6 +2,7 @@ TODO:
 
 * Vim's using tabwidth of like 4... we want 2?
 
+* Maybe switch to : https://github.com/thestinger/termite
 * Kitty :
   * Maybe we should set tmux to dark...
     * In any case, fix vim on the vm
@@ -17,6 +18,8 @@ NOTE:
     $ git clone --bare git@github.com:brighton36/home $HOME/.cfg
     $ config checkout --force
     $ config config --local status.showUntrackedFiles no
+    $ infocmp -x xterm-kitty | /usr/bin/ssh 192.168.122.130 tic -x -o \~/.terminfo /dev/stdin
+    $ config submodule update --init --recursive
 
   * the /usr/local/share/kbd/keymaps/dvorak-chris.map and /etc/vconsole.conf and lightdm.conf...
     isn't in the config

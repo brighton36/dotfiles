@@ -57,7 +57,10 @@ beautiful.init(awful.util.getdir("config") .. "chris-theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 -- @chris:
-if lfs.attributes("/usr/bin/kitty") then
+if lfs.attributes("/usr/bin/alacritty") then
+  -- file exists
+  terminal = "/usr/bin/alacritty"
+elseif lfs.attributes("/usr/bin/kitty") then
   -- file exists
   terminal = "/usr/bin/kitty"
 else

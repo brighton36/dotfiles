@@ -1,5 +1,5 @@
 # XScreenSaver Preferences File
-# Written by xscreensaver-demo 5.44 for cderose on Wed Mar 17 21:04:19 2021.
+# Written by xscreensaver-settings 6.00 for cderose on Tue May 18 16:35:21 2021.
 # https://www.jwz.org/xscreensaver/
 
 timeout:	1:30:00
@@ -10,18 +10,13 @@ passwdTimeout:	0:00:30
 visualID:	default
 installColormap:    True
 verbose:	False
-timestamp:	True
 splash:		False
 splashDuration:	0:00:00
 demoCommand:	xscreensaver-demo
-prefsCommand:	xscreensaver-demo -prefs
 nice:		10
-memoryLimit:	0
-fade:		True
-unfade:		True
+fade:		False
+unfade:		False
 fadeSeconds:	0:00:03
-fadeTicks:	20
-captureStderr:	True
 ignoreUninstalledPrograms:False
 font:		*-medium-r-*-140-*-m-*
 dpmsEnabled:	False
@@ -42,6 +37,7 @@ textLiteral:	XScreenSaver
 textFile:	
 textProgram:	misfortune
 textURL:	http://fridge.ubuntu.com/node/feed
+dialogTheme:	borderless
 
 programs:								      \
 				maze -root				    \n\
@@ -225,7 +221,7 @@ programs:								      \
   GL: 				tangram -root				    \n\
   GL: 				timetunnel -root			    \n\
   GL: 				glschool -root				    \n\
-  GL: 				topblock -root				    \n\
+  GL: 				topblock -root -resolution 20		    \n\
   GL: 				cubicgrid -root				    \n\
 				cwaves -root				    \n\
   GL: 				gears -root				    \n\
@@ -250,7 +246,7 @@ programs:								      \
 - GL: 				quasicrystal -root			    \n\
 - GL: 				unknownpleasures -root			    \n\
 				binaryring -root			    \n\
-- GL: 				cityflow -root				    \n\
+  GL: 				cityflow -root -waves 5			    \n\
 - GL: 				geodesicgears -root			    \n\
   GL: 				projectiveplane -root			    \n\
 - GL: 				romanboy -root				    \n\
@@ -269,7 +265,7 @@ programs:								      \
 - GL: 				unicrud -root				    \n\
 - GL: 				esper -root				    \n\
   GL: 				vigilance -root				    \n\
-- GL: 				crumbler -root				    \n\
+  GL: 				crumbler -root -fracture 16		    \n\
 				filmleader -root			    \n\
 				glitchpeg -root				    \n\
   GL: 				handsy -root				    \n\
@@ -289,13 +285,6 @@ programs:								      \
   GL: 				sphereeversion -root			    \n\
 
 
-pointerPollTime:    0:00:05
 pointerHysteresis:  10
-windowCreationTimeout:0:00:30
-initialDelay:	0:00:00
-GetViewPortIsFullOfLies:False
-procInterrupts:	True
-xinputExtensionDev: False
-overlayStderr:	True
 authWarningSlack:   20
 

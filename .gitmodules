@@ -8,5 +8,5 @@
 	path = .vim_runtime
 	url = https://github.com/amix/vimrc.git
 [submodule "/home/cderose/.vim/bundle/vim-ledger"]
-	path = /home/cderose/.vim/bundle/vim-ledger
+	path = .vim/bundle/vim-ledger
 	url = https://github.com/ledger/vim-ledger.git
