@@ -1,24 +1,24 @@
 # XScreenSaver Preferences File
-# Written by xscreensaver-settings 6.00 for cderose on Tue May 18 16:35:21 2021.
+# Written by xscreensaver-settings 6.00 for cderose on Fri May 28 15:05:33 2021.
 # https://www.jwz.org/xscreensaver/
 
-timeout:	1:30:00
+timeout:	0:40:00
 cycle:		0:10:00
-lock:		True
-lockTimeout:	0:30:00
+lock:		False
+lockTimeout:	0:00:00
 passwdTimeout:	0:00:30
 visualID:	default
 installColormap:    True
 verbose:	False
-splash:		False
-splashDuration:	0:00:00
-demoCommand:	xscreensaver-demo
+splash:		True
+splashDuration:	0:00:05
+demoCommand:	xscreensaver-settings
 nice:		10
 fade:		False
 unfade:		False
 fadeSeconds:	0:00:03
 ignoreUninstalledPrograms:False
-font:		*-medium-r-*-140-*-m-*
+font:		
 dpmsEnabled:	False
 dpmsQuickOff:	False
 dpmsStandby:	2:00:00
@@ -27,16 +27,16 @@ dpmsOff:	4:00:00
 grabDesktopImages:  False
 grabVideoFrames:    False
 chooseRandomImages: True
-imageDirectory:	/home/cderose/Pictures/Wallpapers
+imageDirectory:	/usr/share/backgrounds
 
 mode:		random
-selected:	86
+selected:	-1
 
 textMode:	program
 textLiteral:	XScreenSaver
 textFile:	
 textProgram:	misfortune
-textURL:	http://fridge.ubuntu.com/node/feed
+textURL:	https://en.wikipedia.org/w/index.php?title=Special:NewPages&feed=rss
 dialogTheme:	borderless
 
 programs:								      \
@@ -63,7 +63,7 @@ programs:								      \
 				coral -root				    \n\
 				deco -root				    \n\
 				drift -root				    \n\
-				fadeplot -root				    \n\
+-				fadeplot -root				    \n\
 				galaxy -root				    \n\
 				goop -root				    \n\
 				grav -root				    \n\
@@ -114,7 +114,7 @@ programs:								      \
 				compass -root				    \n\
 				deluxe -root				    \n\
 -				demon -root				    \n\
-  GL: 				extrusion -root				    \n\
+- GL: 				extrusion -root				    \n\
 -				loop -root				    \n\
 				penetrate -root				    \n\
 				petri -root				    \n\
@@ -126,7 +126,7 @@ programs:								      \
 				spotlight -root				    \n\
 				squiral -root				    \n\
 				wander -root				    \n\
-- Best: 			webcollage -root			    \n\
+-				webcollage -root			    \n\
 				xflame -root				    \n\
 				xmatrix -root				    \n\
   GL: 				gflux -root				    \n\
@@ -135,12 +135,14 @@ programs:								      \
 				xspirograph -root			    \n\
   GL: 				circuit -root				    \n\
   GL: 				dangerball -root			    \n\
+- GL: 				dnalogo -root				    \n\
   GL: 				engine -root				    \n\
   GL: 				flipscreen3d -root			    \n\
   GL: 				gltext -root				    \n\
   GL: 				menger -root				    \n\
   GL: 				molecule -root				    \n\
 				rotzoomer -root				    \n\
+				scooter -root				    \n\
 				speedmine -root				    \n\
   GL: 				starwars -root				    \n\
   GL: 				stonerview -root			    \n\
@@ -184,7 +186,7 @@ programs:								      \
   GL: 				glmatrix -root				    \n\
 - GL: 				glslideshow -root			    \n\
   GL: 				hypertorus -root			    \n\
-  GL: 				jigglypuff -root			    \n\
+- GL: 				jigglypuff -root			    \n\
 				metaballs -root				    \n\
   GL: 				mirrorblob -root			    \n\
 				piecewise -root				    \n\
@@ -193,7 +195,7 @@ programs:								      \
 				popsquares -root			    \n\
   GL: 				surfaces -root				    \n\
 				xanalogtv -root				    \n\
--				abstractile -root			    \n\
+				abstractile -root			    \n\
 				anemotaxis -root			    \n\
 - GL: 				antinspect -root			    \n\
 				fireworkx -root				    \n\
@@ -205,7 +207,7 @@ programs:								      \
 				pacman -root				    \n\
   GL: 				pinion -root				    \n\
   GL: 				polyhedra -root				    \n\
-  GL: 				providence -root			    \n\
+- GL: 				providence -root			    \n\
 				substrate -root				    \n\
 				wormhole -root				    \n\
 - GL: 				antmaze -root				    \n\
@@ -221,7 +223,7 @@ programs:								      \
   GL: 				tangram -root				    \n\
   GL: 				timetunnel -root			    \n\
   GL: 				glschool -root				    \n\
-  GL: 				topblock -root -resolution 20		    \n\
+  GL: 				topblock -root				    \n\
   GL: 				cubicgrid -root				    \n\
 				cwaves -root				    \n\
   GL: 				gears -root				    \n\
@@ -236,51 +238,48 @@ programs:								      \
   GL: 				photopile -root				    \n\
   GL: 				skytentacles -root			    \n\
   GL: 				rubikblocks -root			    \n\
-				unicode -root				    \n\
-- GL: 				companioncube -root			    \n\
-- GL: 				hilbert -root				    \n\
-- GL: 				tronbit -root				    \n\
-- GL: 				geodesic -root				    \n\
+  GL: 				companioncube -root			    \n\
+  GL: 				hilbert -root				    \n\
+  GL: 				tronbit -root				    \n\
+  GL: 				geodesic -root				    \n\
 				hexadrop -root				    \n\
-- GL: 				kaleidocycle -root			    \n\
-- GL: 				quasicrystal -root			    \n\
-- GL: 				unknownpleasures -root			    \n\
+  GL: 				kaleidocycle -root			    \n\
+  GL: 				quasicrystal -root			    \n\
+  GL: 				unknownpleasures -root			    \n\
 				binaryring -root			    \n\
-  GL: 				cityflow -root -waves 5			    \n\
-- GL: 				geodesicgears -root			    \n\
+  GL: 				cityflow -root				    \n\
+  GL: 				geodesicgears -root			    \n\
   GL: 				projectiveplane -root			    \n\
-- GL: 				romanboy -root				    \n\
+  GL: 				romanboy -root				    \n\
 				tessellimage -root			    \n\
   GL: 				winduprobot -root			    \n\
   GL: 				splitflap -root				    \n\
-- GL: 				cubestack -root				    \n\
-- GL: 				cubetwist -root				    \n\
-- GL: 				discoball -root				    \n\
-- GL: 				dymaxionmap -root			    \n\
+  GL: 				cubestack -root				    \n\
+  GL: 				cubetwist -root				    \n\
+  GL: 				discoball -root				    \n\
+  GL: 				dymaxionmap -root			    \n\
   GL: 				energystream -root			    \n\
   GL: 				hexstrut -root				    \n\
   GL: 				hydrostat -root				    \n\
-- GL: 				raverhoop -root				    \n\
+  GL: 				raverhoop -root				    \n\
   GL: 				splodesic -root				    \n\
-- GL: 				unicrud -root				    \n\
-- GL: 				esper -root				    \n\
+  GL: 				unicrud -root				    \n\
+  GL: 				esper -root				    \n\
   GL: 				vigilance -root				    \n\
-  GL: 				crumbler -root -fracture 16		    \n\
+  GL: 				crumbler -root				    \n\
 				filmleader -root			    \n\
 				glitchpeg -root				    \n\
   GL: 				handsy -root				    \n\
   GL: 				maze3d -root				    \n\
   GL: 				peepers -root				    \n\
-- GL: 				razzledazzle -root			    \n\
+  GL: 				razzledazzle -root			    \n\
 				vfeedback -root				    \n\
-- GL: 				dnalogo -root				    \n\
-				scooter -root				    \n\
   GL: 				deepstars -root				    \n\
   GL: 				gravitywell -root			    \n\
-  GL: 				etruscanvenus -root			    \n\
-  GL: 				gibson -root				    \n\
   GL: 				beats -root				    \n\
   GL: 				covid19 -root				    \n\
+  GL: 				etruscanvenus -root			    \n\
+  GL: 				gibson -root				    \n\
   GL: 				headroom -root				    \n\
   GL: 				sphereeversion -root			    \n\
 

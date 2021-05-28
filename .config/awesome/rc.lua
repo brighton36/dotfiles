@@ -296,10 +296,37 @@ root.buttons(gears.table.join(
 -- }}}
 
 -- {{{ Key bindings
--- Chris Function:
-function shift_function_key(key)
-  return awful.key({"Shift"}, key, function () awful.util.spawn("/usr/bin/xdotool sleep 0.1 getactivewindow keyup shift key --clearmodifiers " .. key) end)
+-- Chris Variables and Function:
+hostname = io.popen("/usr/bin/uname -n"):read()
+
+if hostname == "link" then
+  -- This is the laptop, which has an ... extended, keyboard
+  -- I got this out of: xmodmap -pke
+  fkey_volume_mute = '#121'
+  fkey_volume_down = '#122'
+  fkey_volume_up = '#123'
+  fkey_file_manager = '#225'
+  fkey_brightness_down = '#232'
+  fkey_brightness_up = '#233'
+
+  -- This is superceeded by the Fn key on the laptop
+  function shift_function_key(key)
+    return {}
+  end
+else
+  fkey_volume_mute = 'F1'
+  fkey_volume_down = 'F2'
+  fkey_volume_up = 'F3'
+  fkey_file_manager = 'F9'
+  fkey_brightness_down = 'F11'
+  fkey_brightness_up = 'F12'
+
+  function shift_function_key(key)
+    return awful.key({"Shift"}, key, function () awful.util.spawn("/usr/bin/xdotool sleep 0.1 getactivewindow keyup shift key --clearmodifiers " .. key) end)
+  end
 end
+
+
 
 globalkeys = gears.table.join(
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
@@ -308,8 +335,9 @@ globalkeys = gears.table.join(
               {description = "view previous", group = "tag"}),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext,
               {description = "view next", group = "tag"}),
-    awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
-              {description = "go back", group = "tag"}),
+-- This was causing problems with the screen locking, so, I disabled it
+--    awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
+--              {description = "go back", group = "tag"}),
 
     awful.key({ modkey,           }, "]",
         function ()
@@ -395,26 +423,36 @@ globalkeys = gears.table.join(
 		shift_function_key('F11'),
 		shift_function_key('F12'),
 
-    awful.key({ }, 'F9', function () awful.util.spawn("pcmanfm") end, 
-			{description = "Open Home Folder (pcmanfm)", group = "awesome"}),
-    awful.key({ }, 'F1', function () awful.util.spawn("amixer sset Master toggle") end,
+    awful.key({ }, fkey_volume_mute, 
+    function () awful.util.spawn("amixer sset Master toggle") end,
 			{description = "Toggle Mute", group = "awesome"}),
-    awful.key({ }, 'F2', function () awful.util.spawn("amixer sset Master 5%-") end,
+    awful.key({ }, fkey_volume_down, 
+      function () awful.util.spawn("amixer sset Master 5%-") end,
 			{description = "Decrease Volume 5%", group = "awesome"}),
-    awful.key({ }, 'F3', function () awful.util.spawn("amixer sset Master 5%+") end,
+    awful.key({ }, fkey_volume_up, 
+      function () awful.util.spawn("amixer sset Master 5%+") end,
 			{description = "Increase Volume 5%", group = "awesome"}),
-    awful.key({ }, 'F11', function () awful.util.spawn("/usr/bin/xbacklight -dec 10") end,
+    awful.key({ }, fkey_file_manager, 
+      function () awful.util.spawn("pcmanfm") end, 
+			{description = "Open Home Folder (pcmanfm)", group = "awesome"}),
+    awful.key({ }, fkey_brightness_down, 
+      function () awful.util.spawn("/usr/bin/xbacklight -dec 10") end,
 			{description = "Decrease Brightness 5%", group = "awesome"}),
-    awful.key({ }, 'F12', function () awful.util.spawn("/usr/bin/xbacklight -inc 10") end,
+    awful.key({ }, fkey_brightness_up, 
+      function () awful.util.spawn("/usr/bin/xbacklight -inc 10") end,
 			{description = "Increase Brightness 5%", group = "awesome"}),
-    awful.key({ }, 'Scroll_Lock', function () awful.util.spawn("xscreensaver-command -lock") end,
+    -- This just doesn't do anything on the laptop...
+    awful.key({ }, 'Scroll_Lock',
+      function () awful.util.spawn("xscreensaver-command -lock") end,
 			{description = "Lock Screen", group = "awesome"}),
     -- We may want to switch to : xfce4-screenshooter
-    awful.key({ }, "Print", function () awful.util.spawn(os.getenv("HOME").."/bin/screenshot.sh") end,
+    awful.key({ }, "Print", 
+      function () awful.util.spawn(os.getenv("HOME").."/bin/screenshot.sh") end,
 			{description = "Select Screen Capture", group = "awesome"}),
       --
     -- Laptop pre-empted Binding:
-    awful.key({modkey}, "Escape", function () awful.util.spawn("xscreensaver-command -lock") end,
+    awful.key({modkey}, "Escape", 
+      function () awful.util.spawn("xscreensaver-command -lock") end,
 			{description = "Lock Screen", group = "awesome"}),
 
     -- Prompt

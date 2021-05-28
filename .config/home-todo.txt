@@ -1,14 +1,9 @@
 TODO:
 
-* Vim's using tabwidth of like 4... we want 2?
-
+* alacritty fonts
+* Better alacritty shortcuts, and maybe even auto-start tmux?
+  * Also try out hints/links clicking
 * Maybe switch to : https://github.com/thestinger/termite
-* Kitty :
-  * Maybe we should set tmux to dark...
-    * In any case, fix vim on the vm
-  * Unicode: https://paul-nameless.com/mastering-kitty.html
-
-* Get vim's copy to copy to system clipboard, so we can kitty copy better...
 
 NOTE:
   * New system... make this into a ./bin/move-in.sh ?
