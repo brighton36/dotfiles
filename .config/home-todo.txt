@@ -1,9 +1,12 @@
 TODO:
 
-* alacritty fonts
-* Better alacritty shortcuts, and maybe even auto-start tmux?
-  * Also try out hints/links clicking
-* Maybe switch to : https://github.com/thestinger/termite
+* font symbols are still tbd...
+* Ensure that the awesome shortcuts we use, work in tmux, now that we're not using kitty. mostly the ['s  and maybe the vim mode for copy?
+* gtk-ish hidpi issues with checkboxes and toolbars, etc
+* test sleep/xss-lock
+  xss-lock -- i3lock -n -i background_image.png &
+
+* xmonad
 
 NOTE:
   * New system... make this into a ./bin/move-in.sh ?
