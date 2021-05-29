@@ -99,9 +99,11 @@ theme.menu_width  = dpi(100)
 
 -- {{{ Icons
 -- {{{ Taglist
-theme.taglist_squares_sel   = theme.default_themes_path.."/zenburn/taglist/squarefz.png"
-theme.taglist_squares_unsel = theme.default_themes_path.."/zenburn/taglist/squarez.png"
---theme.taglist_squares_resize = "false"
+theme.taglist_squares_resize = "false"
+theme.taglist_squares_sel   = "/home/cderose/.config/awesome/bar-sel.png"
+theme.taglist_squares_unsel = "/home/cderose/.config/awesome/bar-unsel.png"
+--theme.taglist_squares_sel   = theme.default_themes_path.."/zenburn/taglist/squarefz.png"
+--theme.taglist_squares_unsel = theme.default_themes_path.."/zenburn/taglist/squarez.png"
 -- }}}
 
 -- {{{ Misc
