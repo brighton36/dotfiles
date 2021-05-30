@@ -1,12 +1,16 @@
 TODO:
-
-* font symbols are still tbd...
-* Ensure that the awesome shortcuts we use, work in tmux, now that we're not using kitty. mostly the ['s  and maybe the vim mode for copy?
+* in the bios , disable wireless switch/hotkey: https://www.dell.com/community/Laptops-General-Read-Only/Disabling-quot-wireless-radio-button-quot-key/td-p/3781737
+* That workspace red is too loud, make it something similar to solarized
 * gtk-ish hidpi issues with checkboxes and toolbars, etc
+
+* Ensure that the awesome shortcuts we use, work in tmux,
+  * The copy mode
+  * the [] and shift []
+  * ctrl-u and ctrl-d as page-up and page-down
+  * what to do about space...
+
 * test sleep/xss-lock
   xss-lock -- i3lock -n -i background_image.png &
-
-* xmonad
 
 NOTE:
   * New system... make this into a ./bin/move-in.sh ?

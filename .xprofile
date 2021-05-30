@@ -1,0 +1,8 @@
+#!/usr/bin/bash
+# The .xprofile appears to run before awesome, by lightdm, and makes it useful
+# for setting environment variables
+
+if [ $(hostname) == "link" ]; then
+  export GDK_SCALE=2
+  export GDK_DPI_SCALE=0.5
+fi
