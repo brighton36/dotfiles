@@ -1,7 +1,5 @@
 TODO:
 
-* Maybe dt animations and/or better terminal welcome in fish
-
 General:
   * Viewnior toolbar
   * gtk-ish hidpi issues with checkboxes and toolbars, etc

@@ -53,6 +53,8 @@ else
   bind \eOc forward-word
 end
 
+set fish_greeting
+
 set -g theme_color_scheme solarized-light
 
 # Our config alias to manage our dotfiles in git:
