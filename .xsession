@@ -10,7 +10,9 @@ xset +fp /usr/share/fonts/ubuntu/
 xset fp rehash
 
 /usr/bin/xscreensaver -no-splash &
-/usr/bin/picom -b
+# NOTE: The no-fading-openclose *should* prevent the desktop from displaying
+# on resume.
+/usr/bin/picom -b --no-fading-openclose
 
 /usr/bin/nm-applet &
 /usr/bin/pnmixer &

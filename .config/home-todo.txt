@@ -1,13 +1,20 @@
 TODO:
-* in the bios , disable wireless switch/hotkey: https://www.dell.com/community/Laptops-General-Read-Only/Disabling-quot-wireless-radio-button-quot-key/td-p/3781737
-* That workspace red is too loud, make it something similar to solarized
-* gtk-ish hidpi issues with checkboxes and toolbars, etc
 
-* Ensure that the awesome shortcuts we use, work in tmux,
-  * The copy mode
-  * the [] and shift []
-  * ctrl-u and ctrl-d as page-up and page-down
-  * what to do about space...
+* Maybe dt animations and/or better terminal welcome in fish
+
+General:
+  * Viewnior toolbar
+  * gtk-ish hidpi issues with checkboxes and toolbars, etc
+
+alacritty:
+  * Maybe we switch up alactritty's ctrl-shift spacebar with control shift b
+
+telegram:
+  * We screwed up the file attach dialog with previews in telegram
+
+awesome:
+* That workspace red is too loud, make it something similar to solarized
+
 
 * test sleep/xss-lock
   xss-lock -- i3lock -n -i background_image.png &
