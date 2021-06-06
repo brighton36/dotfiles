@@ -4,15 +4,8 @@ General:
   * Viewnior toolbar
   * gtk-ish hidpi issues with checkboxes and toolbars, etc
 
-telegram:
-  * We screwed up the file attach dialog with previews in telegram
-
 awesome:
 * That workspace red is too loud, make it something similar to solarized
-
-
-* test sleep/xss-lock
-  xss-lock -- i3lock -n -i background_image.png &
 
 NOTE:
   * New system... make this into a ./bin/move-in.sh ?

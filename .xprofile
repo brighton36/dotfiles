@@ -6,3 +6,6 @@ if [ $(hostname) == "link" ]; then
   export GDK_SCALE=2
   export GDK_DPI_SCALE=0.5
 fi
+
+# We want Telegram to use gtk dialogs:
+export TDESKTOP_USE_GTK_FILE_DIALOG=1
