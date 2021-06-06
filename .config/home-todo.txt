@@ -1,9 +1,5 @@
 TODO:
 
-General:
-  * Viewnior toolbar
-  * gtk-ish hidpi issues with checkboxes and toolbars, etc
-
 awesome:
 * That workspace red is too loud, make it something similar to solarized
 

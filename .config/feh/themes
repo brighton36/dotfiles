@@ -1,0 +1,3 @@
+feh --borderless --scale-down --conversion-timeout 1 \
+  --fontpath /usr/share/fonts/ubuntu --menu-font Ubuntu-R/24
+
