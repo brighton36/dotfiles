@@ -4,9 +4,6 @@ General:
   * Viewnior toolbar
   * gtk-ish hidpi issues with checkboxes and toolbars, etc
 
-alacritty:
-  * Maybe we switch up alactritty's ctrl-shift spacebar with control shift b
-
 telegram:
   * We screwed up the file attach dialog with previews in telegram
 
