@@ -299,9 +299,10 @@ root.buttons(gears.table.join(
 -- Chris Variables and Function:
 hostname = io.popen("/usr/bin/uname -n"):read()
 
-if hostname == "link" then
-  -- This is the laptop, which has an ... extended, keyboard
-  -- I got this out of: xmodmap -pke
+if hostname == "link-with-keycode" then
+  -- I'm keeping this here for posterity. At some point, the fn key started
+  -- to work differently. Maybe the kernel did it? 
+  -- I got these numbers out of: xmodmap -pke
   fkey_volume_mute = '#121'
   fkey_volume_down = '#122'
   fkey_volume_up = '#123'
@@ -646,20 +647,25 @@ awful.rules.rules = {
 
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
-client.connect_signal("manage", function (c)
+client.connect_signal("manage", function (client)
     -- Set the windows at the slave,
     -- i.e. put it at the end of others instead of setting it master.
     -- if not awesome.startup then awful.client.setslave(c) end
 
     if awesome.startup
-      and not c.size_hints.user_position
-      and not c.size_hints.program_position then
-        -- Prevent clients from being unreachable after screen count changes.
-        awful.placement.no_offscreen(c)
+     and not client.size_hints.user_position
+     and not client.size_hints.program_position then
+       -- Prevent clients from being unreachable after screen count changes.
+       awful.placement.no_offscreen(client)
+    end
+
+    if client.floating then
+      awful.placement.centered(client)
+      awful.placement.no_overlap(client)
     end
 
     -- @chris - Rounded Window corners:
-    c.shape = function(cr,w,h)
+    client.shape = function(cr,w,h)
       gears.shape.rounded_rect(cr,w,h,10)
     end
 end)

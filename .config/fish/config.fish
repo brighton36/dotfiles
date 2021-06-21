@@ -59,3 +59,6 @@ set -g theme_color_scheme solarized-light
 
 # Our config alias to manage our dotfiles in git:
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+
+# Ledger:
+export LEDGER_FILE=$HOME/ledger/chris-derose.journal

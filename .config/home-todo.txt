@@ -2,8 +2,13 @@ TODO:
 
 * Is there an easy way to center the gtk3 modal dialogs, instead of them going to the upper left...
 
+
 * I'm not sure about the dpms. if I walk away, the screen goes blank, and
   xscreensaver never kicks in
+
+Chrome:
+  * ctrl-shift [ and ] to move tabs
+  * What's up with ctrl-u and ctrl-d...
 
 awesome:
 * That workspace red is too loud, make it something similar to solarized
