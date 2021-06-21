@@ -1,28 +1,29 @@
 TODO:
 
-* Is there an easy way to center the gtk3 modal dialogs, instead of them going to the upper left...
-
-
-* I'm not sure about the dpms. if I walk away, the screen goes blank, and
-  xscreensaver never kicks in
+System:
+  * I'm not sure about the dpms. if I walk away, the screen goes blank, and
+    xscreensaver never kicks in
+      * see if a restart fixes this
+  * Let's do this, if the screensaver is running, and we're not plugged in:
+      https://wiki.archlinux.org/title/Laptop#Hibernate_on_low_battery_level
 
 Chrome:
   * ctrl-shift [ and ] to move tabs
   * What's up with ctrl-u and ctrl-d...
 
 awesome:
-* That workspace red is too loud, make it something similar to solarized
+  * That workspace red is too loud, make it something similar to solarized
 
+---------------------
 NOTE:
-  * New system... make this into a ./bin/move-in.sh ?
+  * Make this into a ./bin/move-in.rb ?
     $ alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
     $ echo ".cfg" >> .gitignore
     # scp the ~/.ssh over, or use an http address, depending on the server...
     $ git clone --bare git@github.com:brighton36/home $HOME/.cfg
     $ config checkout --force
     $ config config --local status.showUntrackedFiles no
-    $ infocmp -x xterm-kitty | /usr/bin/ssh 192.168.122.130 tic -x -o \~/.terminfo /dev/stdin
+    # $ infocmp -x xterm-kitty | /usr/bin/ssh 192.168.122.130 tic -x -o \~/.terminfo /dev/stdin
     $ config submodule update --init --recursive
 
-  * the /usr/local/share/kbd/keymaps/dvorak-chris.map and /etc/vconsole.conf and lightdm.conf...
-    isn't in the config
+  * the /usr/local/share/kbd/keymaps/dvorak-chris.map and /etc/vconsole.conf and lightdm.conf... isn't in the config
