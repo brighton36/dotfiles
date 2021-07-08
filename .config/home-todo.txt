@@ -1,16 +1,12 @@
 TODO:
 
-tmux:
-  * alt-j/k should resize the pane down, the same way it does with h/l
-  * Do the same in awesome: https://stackoverflow.com/questions/17705888/resizing-window-vertically
-    * h/l works here too, btw
-  * let's assign alt-] and alt-[ to where ctrl-[/] is
-    * alt p would be nice too...
-    * alt-shift and hjkl for resize..
-
-* Awesome:
+Awesome:
+  * Why doesn't resize up and down work?: https://stackoverflow.com/questions/17705888/resizing-window-vertically
   * Do we really need 9 workspaces?
   * How to (better?) open minimized windows
+
+vim:
+  https://github.com/svermeulen/vim-easyclip
 
 System:
   * I'm not sure about the dpms. if I walk away, the screen goes blank, and
