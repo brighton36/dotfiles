@@ -23,10 +23,15 @@ set invnumber
 
 " Colors:
 set background=light
+
+
 colorscheme solarized
 
 " Lightline statusbar
-let g:lightline = { 'colorscheme': 'solarized' }
+let g:lightline = { 'colorscheme': 'wombat' }
+
+" Set the background to be transparent
+hi Normal guibg=NONE ctermbg=NONE
 
 " Tab:
 set tabstop=2
@@ -47,3 +52,4 @@ call pathogen#infect('~/.vim/bundle/{}')
 let g:ycm_confirm_extra_conf = 0
 
 autocmd BufEnter *.cc :setlocal filetype=cpp
+
