@@ -1,11 +1,16 @@
 TODO:
 
+tmux:
+  Maybe ctrl-tab?
+  * https://superuser.com/questions/493048/how-to-convert-2-horizontal-panes-to-vertical-panes-in-tmux
 Awesome:
+  * Let's change meta-space to meta... tab?
   * Why doesn't resize up and down work?: https://stackoverflow.com/questions/17705888/resizing-window-vertically
   * Do we really need 9 workspaces?
   * How to (better?) open minimized windows
 
 vim:
+  maybe ctrl-[ and ctrl-]  to buffer next/prev https://vim.fandom.com/wiki/Easier_buffer_switching
   https://github.com/svermeulen/vim-easyclip
 
 System:
