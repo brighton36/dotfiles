@@ -27,11 +27,15 @@ set background=light
 
 colorscheme solarized
 
-" Lightline statusbar
-let g:lightline = { 'colorscheme': 'wombat' }
-
 " Set the background to be transparent
 hi Normal guibg=NONE ctermbg=NONE
+
+" Lightline statusbar
+" Note that I had to create a custom scheme, in order to support the light 
+" colors, with a transparent background. (though it only required a two-line
+" change)
+source ~/.vim/colorscheme/solarized_light.vim
+let g:lightline = { 'colorscheme': 'solarized_light' }
 
 " Tab:
 set tabstop=2

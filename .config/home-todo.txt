@@ -6,9 +6,7 @@ tmux:
     * h/l works here too, btw
   * let's assign alt-] and alt-[ to where ctrl-[/] is
     * alt p would be nice too...
-* vim
-  * Can we disable the background color? seems like vim is overriding the active
-    window preference...
+    * alt-shift and hjkl for resize..
 
 * Awesome:
   * Do we really need 9 workspaces?
