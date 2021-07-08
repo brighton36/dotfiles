@@ -1,7 +1,6 @@
 TODO:
 
 tmux:
-  * It'd be nice to get that darker-gold(see vim) to be the background on inactive panes
   * alt-j/k should resize the pane down, the same way it does with h/l
   * Do the same in awesome: https://stackoverflow.com/questions/17705888/resizing-window-vertically
     * h/l works here too, btw
