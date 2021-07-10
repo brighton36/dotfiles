@@ -24,7 +24,6 @@ set invnumber
 " Colors:
 set background=light
 
-
 colorscheme solarized
 
 " Set the background to be transparent
@@ -40,6 +39,10 @@ let g:lightline = { 'colorscheme': 'solarized_light' }
 " Tab:
 set tabstop=2
 set shiftwidth=2
+
+" Buffer Navigation using ctrl-[ and ctrl-]
+nnoremap <silent> <C-[> :bp<CR>
+nnoremap <silent> <C-]> :bn<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugins
