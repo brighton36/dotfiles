@@ -44,6 +44,13 @@ set shiftwidth=2
 nnoremap <silent> <C-[> :bp<CR>
 nnoremap <silent> <C-]> :bn<CR>
 
+" Maybe we can use ctrl-space instead of escape, to exit insert mode...
+:inoremap <esc> <NOP>
+:nnoremap <C-@> i
+:inoremap <C-@> <Esc>
+:xnoremap <C-@> <Esc>
+
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""

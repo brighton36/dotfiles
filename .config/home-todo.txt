@@ -1,5 +1,7 @@
 TODO:
 
+* Putty/windows:
+  * Ctrl-left / ctrl-right nav
 tmux:
   Maybe ctrl-tab?
   * https://superuser.com/questions/493048/how-to-convert-2-horizontal-panes-to-vertical-panes-in-tmux
@@ -10,7 +12,9 @@ Awesome:
   * How to (better?) open minimized windows
 
 vim:
-  maybe ctrl-[ and ctrl-]  to buffer next/prev https://vim.fandom.com/wiki/Easier_buffer_switching
+  * I think we ned to implemet the ctrl-space on visual mode
+  * Can we disable the auto-close on brackets and such?
+  * the new remaps are causing escape to bp
   https://github.com/svermeulen/vim-easyclip
 
 System:
