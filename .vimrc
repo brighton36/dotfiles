@@ -1,6 +1,10 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Amix's vim:
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" I really don't like this plugin, installed by Amix. So, I disabled it
+let g:pathogen_disabled = []
+call add(g:pathogen_disabled, 'auto-pairs')
+
 set runtimepath+=~/.vim_runtime
 
 source ~/.vim_runtime/vimrcs/basic.vim
@@ -40,12 +44,11 @@ let g:lightline = { 'colorscheme': 'solarized_light' }
 set tabstop=2
 set shiftwidth=2
 
-" Buffer Navigation using ctrl-[ and ctrl-]
-nnoremap <silent> <C-[> :bp<CR>
-nnoremap <silent> <C-]> :bn<CR>
+" Buffer Navigation using ctrl-p and ctrl-n
+nnoremap <silent> <C-p> :bp<CR>
+nnoremap <silent> <C-n> :bn<CR>
 
-" Maybe we can use ctrl-space instead of escape, to exit insert mode...
-:inoremap <esc> <NOP>
+" Map ctrl-space to escape, and insert in normal, insert, and visual mode:
 :nnoremap <C-@> i
 :inoremap <C-@> <Esc>
 :xnoremap <C-@> <Esc>
@@ -54,6 +57,7 @@ nnoremap <silent> <C-]> :bn<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 
 " atm, this just includes the ledger syntax highlighting plugin:
 call pathogen#infect('~/.vim/bundle/{}')
