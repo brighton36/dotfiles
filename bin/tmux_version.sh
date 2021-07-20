@@ -1,7 +1,7 @@
 #!/bin/bash
 
-ECHO="/usr/bin/echo"
-SED="/usr/bin/sed"
+ECHO="echo"
+SED="sed"
 BC="/usr/bin/bc"
 TMUX="/usr/bin/tmux"
 
