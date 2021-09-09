@@ -62,3 +62,6 @@ alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
 # Ledger:
 export LEDGER_FILE=$HOME/ledger/chris-derose.journal
+
+# Add ruby gem path: 
+set -x PATH $PATH $HOME/.gem/ruby/3.0.0/bin
