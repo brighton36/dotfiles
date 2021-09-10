@@ -6,6 +6,7 @@ let g:pathogen_disabled = []
 call add(g:pathogen_disabled, 'auto-pairs')
 call add(g:pathogen_disabled, 'vim-fugitive')
 call add(g:pathogen_disabled, 'tlib')
+call add(g:pathogen_disabled, 'vim-snipmate')
 
 set runtimepath+=~/.vim_runtime
 
