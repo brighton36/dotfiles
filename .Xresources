@@ -1,7 +1,9 @@
 !! https://www.x.org/archive/X11R7.5/doc/man/man1/xrdb.1.html
-#ifdef SRVR_link
-#define HIDPI 1
-#endif
+!! I guess that on the new system76 laptop, also hostname link, we don't need
+!! this
+!! #ifdef SRVR_link
+!! #define HIDPI 1
+!! #endif
 
 #include ".config/Xresources.d/Xft.defaults"
 #include ".config/Xresources.d/URxvt.defaults"

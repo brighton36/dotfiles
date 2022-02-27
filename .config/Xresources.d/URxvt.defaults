@@ -18,8 +18,8 @@ URxvt.lineSpace:            0
 
 !!Fonts
 URxvt.allow_bold:           false
-URxvt.font:                 xft:Ubuntu Mono:size=9:antialias=true
-URxvt.boldFont:             xft:Ubuntu Mono:bold:size=9:antialias=true
+URxvt.font:                 xft:Ubuntu Mono:size=11:antialias=true
+URxvt.boldFont:             xft:Ubuntu Mono:bold:size=11:antialias=true
 
 !!Fix font space
 !! NOTE: that the braille doesnt actually work with letterSpace < 1
