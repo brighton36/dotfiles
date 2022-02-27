@@ -89,32 +89,31 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   [((m .|. modMask, k), windows $ f i)
       | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
       , (f, m) <- [(XMonad.StackSet.greedyView, 0), (XMonad.StackSet.shift, shiftMask)]]
-  ++
-  -- mod-{w,e,r} %! Switch to physical/Xinerama screens 1, 2, or 3
-  -- mod-shift-{w,e,r} %! Move client to screen 1, 2, or 3
-  [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
-      | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
-      , (f, m) <- [(XMonad.StackSet.view, 0), (XMonad.StackSet.shift, shiftMask)]]
 
 --managehook
-myManageHook =
-  composeAll
-    [ manageDocks,
-      className =? "Steam" --> doFloat,
-      className =? "Lutris" --> doFloat,
-      className =? "Pavucontrol" --> doFloat,
-      className =? "mpv" --> doFloat,
-      title     =? "Picture-in-Picture" --> doFloat,
-      className =? "Freetube" --> doFloat,
-      className =? "VirtualBox Manager" --> doFloat
+myManageHook = composeAll
+    [ className =? "Gimp"     --> doFloat
+    , className =? "Steam"    --> doFloat
+    , className =? "rdesktop" --> doFloat
     ]
 
+-- xmobar --------------------------------------------------------------------
+xmobarEscape = concatMap doubleLts
+  where doubleLts '<' = "<<"
+        doubleLts x   = [x]
+
+myWorkspaces :: [String]        
+myWorkspaces = clickable . (Prelude.map xmobarEscape) $ ["1","2","3","4","5", "6", "7", "8", "9"]
+  where                                                                       
+    clickable l = [ "<action=xdotool key alt+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
+      (i,ws) <- zip [1..5] l,                                        
+      let n = i ]
 
 -- Main ----------------------------------------------------------------------
 main :: IO ()
 main = do
-  myXmobar <- spawnPipe "xmobar -x 0 ~/.xmonad/xmobar.config"
-  xmonad $ docks $ ewmh def
+  xmproc <- spawnPipe ("xmobar -x 0 ~/.xmonad/xmobar.config")
+  xmonad $ desktopConfig
     { XMonad.terminal = myTerminal
     , XMonad.modMask = myModMask
     , XMonad.keys = myKeys
@@ -122,6 +121,16 @@ main = do
     , XMonad.borderWidth = myBorderWidth
     , XMonad.focusedBorderColor = myFocusedBorderColor
     , XMonad.normalBorderColor = myUnFocusedBorderColor
+    , XMonad.manageHook = manageDocks <+> myManageHook 
+                        <+> manageHook desktopConfig
     , XMonad.layoutHook = avoidStruts $ mySpacing $ smartBorders (layoutHook desktopConfig)
-    , XMonad.manageHook = myManageHook
+    , XMonad.workspaces = myWorkspaces
+    , logHook = dynamicLogWithPP xmobarPP
+      { ppOutput = hPutStrLn xmproc
+      , ppCurrent = xmobarColor (blue myColor) "" . wrap "[" "]"
+      , ppHiddenNoWindows = xmobarColor (gray myColor) ""
+      , ppTitle   = xmobarColor (green myColor)  "" . shorten 40
+      , ppVisible = wrap "(" ")"
+      , ppUrgent  = xmobarColor (red myColor) (yellow myColor)
+      }
     }
