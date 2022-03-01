@@ -8,8 +8,10 @@ import XMonad
 import XMonad.StackSet
 import XMonad.Config.Desktop
 import XMonad.Prompt.ConfirmPrompt
-import XMonad.Layout.NoBorders (smartBorders)
+import XMonad.Layout.NoBorders (smartBorders, noBorders)
 import XMonad.Layout.Spacing
+import XMonad.Layout.Renamed (renamed, Rename(Replace, CutWordsLeft))
+import XMonad.Layout.WindowNavigation
 import XMonad.Util.Run (spawnPipe)
 import XMonad.Util.NamedScratchpad
 import XMonad.Hooks.EwmhDesktops
@@ -46,13 +48,6 @@ myUnFocusedBorderColor = gray myColor :: String
 myTerminal             = "alacritty"  :: String
 myFilemanager          = "pcmanfm"    :: String
 
-mySpacing = spacingRaw True             -- Only for >1 window
-  -- The bottom edge seems to look narrower than it is
-  (Border 0 15 10 10) -- Size of screen edge gaps
-  True             -- Enable screen edge gaps
-  (Border 10 10 10 10) -- Size of window gaps
-  True             -- Enable window gaps
-
 -- Keys -----------------------------------------------------------------------
 myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   -- xmonad commands:
@@ -72,7 +67,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   , ((modMask, xK_F7 ), spawn "amixer -q -D pulse sset Master 5%-") -- Vol-
   , ((modMask, xK_F8 ), spawn "/usr/bin/xbacklight -dec 10") -- Bright-
   , ((modMask, xK_F9 ), spawn "/usr/bin/xbacklight -inc 10") -- Bright+
-  , ((modMask, xK_F10 ), spawn "/home/cderose/bin/screenshot.sh")
+  , ((modMask, xK_F10 ), spawn "$HOME/bin/screenshot.sh")
 
   -- Layouts
   -- %! Rotate through the available layout algorithms
@@ -110,6 +105,18 @@ myManageHook = composeAll
     , className =? "rdesktop" --> doFloat
     ]
 
+-- Layouts --------------------------------------------------------------------
+mySpacing = spacingRaw True             -- Only for >1 window
+  -- The bottom edge seems to look narrower than it is
+  (Border 0 15 10 10) -- Size of screen edge gaps
+  True             -- Enable screen edge gaps
+  (Border 10 10 10 10) -- Size of window gaps
+  True             -- Enable window gaps
+
+
+-- LayoutHook ----------------------------------------------------------------
+myLayoutHook = avoidStruts $ mySpacing $ smartBorders (layoutHook desktopConfig)
+
 -- xmobar --------------------------------------------------------------------
 xmobarEscape = concatMap doubleLts
   where doubleLts '<' = "<<"
@@ -118,8 +125,8 @@ xmobarEscape = concatMap doubleLts
 myWorkspaces :: [String]        
 myWorkspaces = clickable . (Prelude.map xmobarEscape) $ ["1","2","3","4","5", "6", "7", "8", "9"]
   where                                                                       
-    clickable l = [ "<action=xdotool key alt+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
-      (i,ws) <- zip [1..5] l,                                        
+    clickable l = [ "<action=xdotool key Super+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
+      (i,ws) <- zip [1..9] l,                                        
       let n = i ]
 
 -- Main ----------------------------------------------------------------------
@@ -136,7 +143,7 @@ main = do
     , XMonad.normalBorderColor = myUnFocusedBorderColor
     , XMonad.manageHook = manageDocks <+> myManageHook 
                         <+> manageHook desktopConfig
-    , XMonad.layoutHook = avoidStruts $ mySpacing $ smartBorders (layoutHook desktopConfig)
+    , XMonad.layoutHook = myLayoutHook
     , XMonad.workspaces = myWorkspaces
     , logHook = dynamicLogWithPP xmobarPP
       { ppOutput = hPutStrLn xmproc

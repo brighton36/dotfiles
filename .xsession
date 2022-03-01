@@ -14,9 +14,11 @@ xset fp rehash
 # on resume.
 /usr/bin/picom -b --no-fading-openclose
 
+/usr/bin/feh --bg-max --randomize "$HOME/Pictures/Wallpapers/"
+
+stalonetray &
+
 /usr/bin/nm-applet &
-/usr/bin/pnmixer &
+/usr/bin/volumeicon &
 /usr/bin/blueman-applet &
-/usr/bin/cbatticon -l 20 -c 10 &
-/usr/bin/psensor &
 
