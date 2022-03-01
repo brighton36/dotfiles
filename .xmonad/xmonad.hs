@@ -15,6 +15,7 @@ import XMonad.Util.NamedScratchpad
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks(avoidStruts, docks, manageDocks, ToggleStruts(..))
 import XMonad.Hooks.DynamicLog(dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
+import XMonad.Actions.CycleWS
 
 
 -- Colors ---------------------------------------------------------------------
@@ -37,21 +38,19 @@ mySolarized = ColorSchemes {
 -- Variables ------------------------------------------------------------------
 myModMask              = mod4Mask     :: KeyMask
 myFocusFollowsMouse    = False        :: Bool
-myBorderWidth          = 3            :: Dimension
+myBorderWidth          = 5            :: Dimension
 myWindowGap            = 12            :: Integer
 myColor                = mySolarized  :: ColorSchemes
 myFocusedBorderColor   = blue myColor :: String
 myUnFocusedBorderColor = gray myColor :: String
 myTerminal             = "alacritty"  :: String
 myFilemanager          = "pcmanfm"    :: String
--- myFont               
---   = "xft:Hack Nerd Font:regular:size=12:antialias=true:hinting=true"         :: String
 
 mySpacing = spacingRaw True             -- Only for >1 window
   -- The bottom edge seems to look narrower than it is
   (Border 0 15 10 10) -- Size of screen edge gaps
   True             -- Enable screen edge gaps
-  (Border 5 5 5 5) -- Size of window gaps
+  (Border 10 10 10 10) -- Size of window gaps
   True             -- Enable window gaps
 
 -- Keys -----------------------------------------------------------------------
@@ -64,6 +63,16 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   , ((modMask, xK_Return ), spawn $ terminal conf)
   , ((modMask, xK_f      ), spawn "firefox")
   , ((modMask, xK_r      ), spawn "dmenu_run")
+  , ((modMask, xK_Escape ), spawn "xscreensaver-command -lock")
+
+	-- Function Keys
+  , ((modMask, xK_F1 ), spawn "pcmanfm") -- FileManager
+  , ((modMask, xK_F3 ), spawn "amixer -q -D pulse sset Master toggle") -- Mute
+  , ((modMask, xK_F6 ), spawn "amixer -q -D pulse sset Master 5%+") -- Vol+
+  , ((modMask, xK_F7 ), spawn "amixer -q -D pulse sset Master 5%-") -- Vol-
+  , ((modMask, xK_F8 ), spawn "/usr/bin/xbacklight -dec 10") -- Bright-
+  , ((modMask, xK_F9 ), spawn "/usr/bin/xbacklight -inc 10") -- Bright+
+  , ((modMask, xK_F10 ), spawn "/home/cderose/bin/screenshot.sh")
 
   -- Layouts
   -- %! Rotate through the available layout algorithms
@@ -82,6 +91,10 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   -- Resize
   , ((modMask, xK_h ), sendMessage Shrink)
   , ((modMask, xK_l ), sendMessage Expand)
+
+  -- Workspaces
+  , ((modMask, xK_Right), nextWS)
+  , ((modMask, xK_Left),  prevWS)
   ]
   ++
   -- mod-[1..9] %! Switch to workspace N
@@ -129,7 +142,7 @@ main = do
       { ppOutput = hPutStrLn xmproc
       , ppCurrent = xmobarColor (blue myColor) "" . wrap "[" "]"
       , ppHiddenNoWindows = xmobarColor (gray myColor) ""
-      , ppTitle   = xmobarColor (green myColor)  "" . shorten 40
+      , ppTitle   = xmobarColor (blue myColor)  "" . shorten 40
       , ppVisible = wrap "(" ")"
       , ppUrgent  = xmobarColor (red myColor) (yellow myColor)
       }
