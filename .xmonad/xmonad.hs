@@ -65,7 +65,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   , ((modMask, xK_r      ), spawn "dmenu_run")
   , ((modMask, xK_Escape ), spawn "xscreensaver-command -lock")
 
-	-- Function Keys
+  -- Function Keys
   , ((modMask, xK_F1 ), spawn "pcmanfm") -- FileManager
   , ((modMask, xK_F3 ), spawn "amixer -q -D pulse sset Master toggle") -- Mute
   , ((modMask, xK_F6 ), spawn "amixer -q -D pulse sset Master 5%+") -- Vol+
