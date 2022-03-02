@@ -47,6 +47,7 @@ myFocusedBorderColor   = blue myColor :: String
 myUnFocusedBorderColor = gray myColor :: String
 myTerminal             = "alacritty"  :: String
 myFilemanager          = "pcmanfm"    :: String
+myBitmapsDir           = "/home/cderose/.xmonad/icons"
 
 -- Keys -----------------------------------------------------------------------
 myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
@@ -57,6 +58,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   -- Launching Programs
   , ((modMask, xK_Return ), spawn $ terminal conf)
   , ((modMask, xK_f      ), spawn "firefox")
+  , ((modMask, xK_c      ), spawn "/usr/bin/google-chrome-stable")
   , ((modMask, xK_r      ), spawn "dmenu_run")
   , ((modMask, xK_Escape ), spawn "xscreensaver-command -lock")
 

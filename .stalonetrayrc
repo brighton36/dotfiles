@@ -3,7 +3,7 @@ transparent false
 dockapp_mode none
 geometry 4x1-180+1
 max_geometry 5x1-325-10
-background "#fdf6e3" # Solarized base3
+background "#073642" # Solarized base02
 
 kludges force_icons_size
 grow_gravity NE
