@@ -13,9 +13,11 @@ import XMonad.Layout.NoBorders (smartBorders, noBorders)
 import XMonad.Layout.Spacing
 import XMonad.Layout.Renamed (renamed, Rename(Replace, CutWordsLeft))
 import XMonad.Layout.WindowNavigation
+import XMonad.Layout.LayoutModifier
 import XMonad.Util.Run (spawnPipe)
 import XMonad.Util.NamedScratchpad
 import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.InsertPosition
 import XMonad.Hooks.ManageDocks(avoidStruts, docks, manageDocks, ToggleStruts(..))
 import XMonad.Hooks.DynamicLog(dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
 import XMonad.Actions.CycleWS
@@ -106,16 +108,14 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
 
 --managehook
 myManageHook = composeAll
-    [ className =? "Gimp"     --> doFloat
-    , className =? "Steam"    --> doFloat
+    [ className =? "Steam"    --> doFloat
     , className =? "rdesktop" --> doFloat
-    , className =? "stalonetray" --> doIgnore
     ]
 
 -- Layouts --------------------------------------------------------------------
 mySpacing = spacingRaw True             -- Only for >1 window
-  -- The bottom edge seems to look narrower than it is
-  (Border 0 15 10 10) -- Size of screen edge gaps
+  -- TODO: This line seems to be completely ignored:
+  (Border 0 0 0 0) -- Size of screen edge gaps
   True             -- Enable screen edge gaps
   (Border 10 10 10 10) -- Size of window gaps
   True             -- Enable window gaps
@@ -139,7 +139,8 @@ myWorkspaces = clickable . (Prelude.map xmobarEscape) $ ["1","2","3","4","5", "6
 -- Main ----------------------------------------------------------------------
 main :: IO ()
 main = do
-  spawn "bash -c 'killall stalonetray; sleep 5; stalonetray &'"
+  -- This is the only way I could get stalone's stack order on top of xmobar
+  spawn "bash -c 'killall stalonetray; sleep 1; stalonetray &'"
   xmproc <- spawnPipe ("xmobar -x 0 ~/.xmonad/xmobar.config")
   xmonad $ desktopConfig
     { XMonad.terminal = myTerminal
