@@ -14,6 +14,8 @@ import XMonad.Layout.Spacing
 import XMonad.Layout.Renamed (renamed, Rename(Replace, CutWordsLeft))
 import XMonad.Layout.WindowNavigation
 import XMonad.Layout.LayoutModifier
+import XMonad.Layout.BoringWindows
+import XMonad.Layout.Minimize
 import XMonad.Util.Run (spawnPipe)
 import XMonad.Util.NamedScratchpad
 import XMonad.Hooks.EwmhDesktops
@@ -21,6 +23,7 @@ import XMonad.Hooks.InsertPosition
 import XMonad.Hooks.ManageDocks(avoidStruts, docks, manageDocks, ToggleStruts(..))
 import XMonad.Hooks.DynamicLog(dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
 import XMonad.Actions.CycleWS
+import XMonad.Actions.Minimize
 
 
 -- Colors ---------------------------------------------------------------------
@@ -58,6 +61,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   -- xmonad commands:
   [ ((modMask .|. shiftMask, xK_q ), io (exitWith ExitSuccess))
   , ((modMask .|. shiftMask, xK_c ), kill)
+  , ((modMask,               xK_m     ), withFocused minimizeWindow)
+  , ((modMask .|. shiftMask, xK_m     ), withLastMinimized maximizeWindowAndFocus)
 
   -- Launching Programs
   , ((modMask, xK_Return ), spawn $ terminal conf)
@@ -122,7 +127,7 @@ mySpacing = spacingRaw True             -- Only for >1 window
 
 
 -- LayoutHook ----------------------------------------------------------------
-myLayoutHook = avoidStruts $ mySpacing $ smartBorders (layoutHook desktopConfig)
+myLayoutHook = minimize . boringWindows $ avoidStruts $ mySpacing $ smartBorders $ (layoutHook desktopConfig)
 
 -- xmobar --------------------------------------------------------------------
 xmobarEscape = concatMap doubleLts
@@ -164,9 +169,9 @@ main = do
       -- TODO: The action isnt working here...
       , ppLayout  = (wrap "<action=xdotool key Super+space>" "</action>") .
         ( \x -> case x of
-        "Spacing Tall"        -> "<icon="++myBitmapsDir++"/tall.xbm/>"
-        "Spacing Mirror Tall" -> "<icon="++myBitmapsDir++"/mtall.xbm/>"
-        "Spacing Full"        -> "<icon="++myBitmapsDir++"/full.xbm/>"
+        "Minimize Spacing Tall"        -> "<icon="++myBitmapsDir++"/tall.xbm/>"
+        "Minimize Spacing Mirror Tall" -> "<icon="++myBitmapsDir++"/mtall.xbm/>"
+        "Minimize Spacing Full"        -> "<icon="++myBitmapsDir++"/full.xbm/>"
         )
       }
     }
