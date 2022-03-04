@@ -16,8 +16,6 @@ xset fp rehash
 
 /usr/bin/feh --bg-max --randomize "$HOME/Pictures/Wallpapers/"
 
-stalonetray &
-
 /usr/bin/nm-applet &
 /usr/bin/volumeicon &
 /usr/bin/blueman-applet &

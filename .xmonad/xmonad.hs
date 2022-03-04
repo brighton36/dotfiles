@@ -3,6 +3,7 @@ import Data.Maybe (fromJust)
 
 import System.IO
 import System.Exit
+import System.Environment
 
 import XMonad
 import XMonad.StackSet
@@ -38,16 +39,17 @@ mySolarized = ColorSchemes {
  }
 
 -- Variables ------------------------------------------------------------------
+home = "/home/cderose"                :: String
 myModMask              = mod4Mask     :: KeyMask
 myFocusFollowsMouse    = False        :: Bool
 myBorderWidth          = 5            :: Dimension
-myWindowGap            = 12            :: Integer
+myWindowGap            = 12           :: Integer
 myColor                = mySolarized  :: ColorSchemes
 myFocusedBorderColor   = blue myColor :: String
 myUnFocusedBorderColor = gray myColor :: String
 myTerminal             = "alacritty"  :: String
 myFilemanager          = "pcmanfm"    :: String
-myBitmapsDir           = "/home/cderose/.xmonad/icons"
+myBitmapsDir           = home++"/.xmonad/icons"
 
 -- Keys -----------------------------------------------------------------------
 myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
@@ -63,13 +65,15 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   , ((modMask, xK_Escape ), spawn "xscreensaver-command -lock")
 
   -- Function Keys
-  , ((modMask, xK_F1 ), spawn "pcmanfm") -- FileManager
-  , ((modMask, xK_F3 ), spawn "amixer -q -D pulse sset Master toggle") -- Mute
-  , ((modMask, xK_F6 ), spawn "amixer -q -D pulse sset Master 5%+") -- Vol+
-  , ((modMask, xK_F7 ), spawn "amixer -q -D pulse sset Master 5%-") -- Vol-
-  , ((modMask, xK_F8 ), spawn "/usr/bin/xbacklight -dec 10") -- Bright-
-  , ((modMask, xK_F9 ), spawn "/usr/bin/xbacklight -inc 10") -- Bright+
-  , ((modMask, xK_F10 ), spawn "$HOME/bin/screenshot.sh")
+  , ((noModMask, xK_F1 ), spawn "pcmanfm") -- FileManager
+  , ((noModMask, xK_F2 ), spawn "/bin/false" )
+  , ((noModMask, xK_F3 ), spawn "/usr/bin/pactl -- set-sink-mute 0 toggle") -- Mute
+  , ((noModMask, xK_F4 ), spawn "/home/cderose/bin/system76_kbd_backlight_toggle.sh" )
+  , ((noModMask, xK_F5 ), spawn "/usr/bin/pactl -- set-sink-volume 0 -5%") -- Vol-
+  , ((noModMask, xK_F6 ), spawn "/usr/bin/pactl -- set-sink-volume 0 +5%") -- Vol+
+  , ((noModMask, xK_F8 ), spawn "/usr/bin/xbacklight -dec 10") -- Bright-
+  , ((noModMask, xK_F9 ), spawn "/usr/bin/xbacklight -inc 10") -- Bright+
+  , ((noModMask, xK_F10 ), spawn "/home/cderose/bin/screenshot.sh")
 
   -- Layouts
   -- %! Rotate through the available layout algorithms
@@ -105,6 +109,7 @@ myManageHook = composeAll
     [ className =? "Gimp"     --> doFloat
     , className =? "Steam"    --> doFloat
     , className =? "rdesktop" --> doFloat
+    , className =? "stalonetray" --> doIgnore
     ]
 
 -- Layouts --------------------------------------------------------------------
@@ -134,6 +139,7 @@ myWorkspaces = clickable . (Prelude.map xmobarEscape) $ ["1","2","3","4","5", "6
 -- Main ----------------------------------------------------------------------
 main :: IO ()
 main = do
+  spawn "bash -c 'killall stalonetray; sleep 5; stalonetray &'"
   xmproc <- spawnPipe ("xmobar -x 0 ~/.xmonad/xmobar.config")
   xmonad $ desktopConfig
     { XMonad.terminal = myTerminal
@@ -151,8 +157,15 @@ main = do
       { ppOutput = hPutStrLn xmproc
       , ppCurrent = xmobarColor (blue myColor) "" . wrap "[" "]"
       , ppHiddenNoWindows = xmobarColor (gray myColor) ""
-      , ppTitle   = xmobarColor (blue myColor)  "" . shorten 40
+      , ppTitle   = xmobarColor (blue myColor)  "" . shorten 70
       , ppVisible = wrap "(" ")"
       , ppUrgent  = xmobarColor (red myColor) (yellow myColor)
+      -- TODO: The action isnt working here...
+      , ppLayout  = (wrap "<action=xdotool key Super+space>" "</action>") .
+        ( \x -> case x of
+        "Spacing Tall"        -> "<icon="++myBitmapsDir++"/tall.xbm/>"
+        "Spacing Mirror Tall" -> "<icon="++myBitmapsDir++"/mtall.xbm/>"
+        "Spacing Full"        -> "<icon="++myBitmapsDir++"/full.xbm/>"
+        )
       }
     }
