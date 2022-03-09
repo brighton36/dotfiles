@@ -74,7 +74,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
 
   -- Launching Programs
   , ((modMask, xK_Return ), spawn $ terminal conf)
-  , ((modMask, xK_f      ), spawn "firefox")
+  , ((modMask, xK_f      ), spawn "firefox -P default-release")
+  , ((modMask, xK_i      ), spawn "firefox -P Fap")
   , ((modMask, xK_c      ), spawn "/usr/bin/google-chrome-stable")
   , ((modMask, xK_r      ), spawn "/home/cderose/bin/dmenu_run_history")
   , ((modMask, xK_Escape ), spawn "xscreensaver-command -lock")
@@ -107,12 +108,14 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   , ((modMask .|. shiftMask, xK_bracketleft  ), windows XMonad.StackSet.swapUp)
 
   -- Resize
-  , ((modMask, xK_h ), sendMessage Shrink)
-  , ((modMask, xK_l ), sendMessage Expand)
+  , ((modMask .|. shiftMask, xK_comma ), sendMessage Shrink)
+  , ((modMask .|. shiftMask, xK_period ), sendMessage Expand)
 
   -- Workspaces
   , ((modMask, xK_Right), nextWS)
   , ((modMask, xK_Left),  prevWS)
+  , ((modMask, xK_h ),    prevWS)
+  , ((modMask, xK_l  ),   nextWS)
   ]
   ++
   -- mod-[1..9] %! Switch to workspace N
