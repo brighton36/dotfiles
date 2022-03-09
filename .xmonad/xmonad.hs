@@ -24,6 +24,8 @@ import XMonad.Hooks.ManageDocks(avoidStruts, docks, manageDocks, ToggleStruts(..
 import XMonad.Hooks.DynamicLog(dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
 import XMonad.Actions.CycleWS
 import XMonad.Actions.Minimize
+import XMonad.Actions.WindowBringer
+import XMonad.Actions.WindowGo
 
 
 -- Colors ---------------------------------------------------------------------
@@ -57,19 +59,27 @@ myFilemanager          = "pcmanfm"    :: String
 myBitmapsDir           = home++"/.xmonad/icons"
 
 -- Keys -----------------------------------------------------------------------
+dmenuTransArgs = ["-l", "50", "-nb", "#414F59", "-sb", "#636D7B", "-sf",
+  "#CEE7EF", "-fn", "-o", "0.85"]
+
+dmenuSwitchMenuArgs = dmenuTransArgs ++ ["-p", "Switch to Window:"]
 myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   -- xmonad commands:
   [ ((modMask .|. shiftMask, xK_q ), io (exitWith ExitSuccess))
   , ((modMask .|. shiftMask, xK_c ), kill)
-  , ((modMask,               xK_m     ), withFocused minimizeWindow)
-  , ((modMask .|. shiftMask, xK_m     ), withLastMinimized maximizeWindowAndFocus)
+  , ((modMask,               xK_m ), withFocused minimizeWindow)
+  , ((modMask .|. shiftMask, xK_m ), withLastMinimized maximizeWindowAndFocus)
+  , ((modMask,               xK_g ), gotoMenu)
+  , ((modMask,               xK_b ), bringMenu)
 
   -- Launching Programs
   , ((modMask, xK_Return ), spawn $ terminal conf)
   , ((modMask, xK_f      ), spawn "firefox")
   , ((modMask, xK_c      ), spawn "/usr/bin/google-chrome-stable")
-  , ((modMask, xK_r      ), spawn "dmenu_run")
+  , ((modMask, xK_r      ), spawn "/home/cderose/bin/dmenu_run_history")
   , ((modMask, xK_Escape ), spawn "xscreensaver-command -lock")
+  , ((modMask, xK_t      ), runOrRaiseAndDo "/usr/bin/telegram-desktop" 
+      (className =? "TelegramDesktop") (maximizeWindowAndFocus))
 
   -- Function Keys
   , ((noModMask, xK_F1 ), spawn "pcmanfm") -- FileManager
