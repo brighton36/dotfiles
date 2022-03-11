@@ -18,10 +18,12 @@ import XMonad.Layout.BoringWindows
 import XMonad.Layout.Minimize
 import XMonad.Util.Run (spawnPipe)
 import XMonad.Util.NamedScratchpad
+import XMonad.Util.Paste
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.InsertPosition
 import XMonad.Hooks.ManageDocks(avoidStruts, docks, manageDocks, ToggleStruts(..))
 import XMonad.Hooks.DynamicLog(dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
+import XMonad.Hooks.UrgencyHook
 import XMonad.Actions.CycleWS
 import XMonad.Actions.Minimize
 import XMonad.Actions.WindowBringer
@@ -49,11 +51,11 @@ mySolarized = ColorSchemes {
 home = "/home/cderose"                :: String
 myModMask              = mod4Mask     :: KeyMask
 myFocusFollowsMouse    = False        :: Bool
-myBorderWidth          = 5            :: Dimension
+myBorderWidth          = 8            :: Dimension
 myWindowGap            = 12           :: Integer
 myColor                = mySolarized  :: ColorSchemes
-myFocusedBorderColor   = blue myColor :: String
-myUnFocusedBorderColor = gray myColor :: String
+myFocusedBorderColor   = black myColor :: String
+myUnFocusedBorderColor = white myColor :: String
 myTerminal             = "alacritty"  :: String
 myFilemanager          = "pcmanfm"    :: String
 myBitmapsDir           = home++"/.xmonad/icons"
@@ -81,6 +83,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   , ((modMask, xK_Escape ), spawn "xscreensaver-command -lock")
   , ((modMask, xK_t      ), runOrRaiseAndDo "/usr/bin/telegram-desktop" 
       (className =? "TelegramDesktop") (maximizeWindowAndFocus))
+  , ((modMask, xK_m      ), sequence_ [(runOrRaiseAndDo "/usr/bin/google-chrome-stable" 
+      (className =? "Google-chrome") (maximizeWindowAndFocus)), (XMonad.Util.Paste.sendKey controlMask xK_1) ])
 
   -- Function Keys
   , ((noModMask, xK_F1 ), spawn "pcmanfm") -- FileManager
@@ -160,7 +164,7 @@ main = do
   -- This is the only way I could get stalone's stack order on top of xmobar
   spawn "bash -c 'killall stalonetray; sleep 1; stalonetray &'"
   xmproc <- spawnPipe ("xmobar -x 0 ~/.xmonad/xmobar.config")
-  xmonad $ desktopConfig
+  xmonad $ withUrgencyHook dzenUrgencyHook { args = ["-bg", "#dc322f", "-xs", "1"] } $ desktopConfig
     { XMonad.terminal = myTerminal
     , XMonad.modMask = myModMask
     , XMonad.keys = myKeys

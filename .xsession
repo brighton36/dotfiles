@@ -19,5 +19,5 @@ xset fp rehash
 /usr/bin/nm-applet &
 /usr/bin/volumeicon &
 /usr/bin/blueman-applet &
-/usr/bin/telegram-desktop &
+/bin/bash -c "sleep 4; /usr/bin/telegram-desktop -startintray &" &
 
