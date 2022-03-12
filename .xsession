@@ -10,9 +10,12 @@ xset +fp /usr/share/fonts/ubuntu/
 xset fp rehash
 
 /usr/bin/xscreensaver -no-splash &
+
+# I just disabled this after it seemed impossible to get the window borders
+# opaque:
 # NOTE: The no-fading-openclose *should* prevent the desktop from displaying
 # on resume.
-/usr/bin/picom -b --no-fading-openclose
+# /usr/bin/picom -b --no-fading-openclose
 
 /usr/bin/feh --bg-max --randomize "$HOME/Pictures/Wallpapers/"
 

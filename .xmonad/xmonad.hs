@@ -28,6 +28,7 @@ import XMonad.Actions.CycleWS
 import XMonad.Actions.Minimize
 import XMonad.Actions.WindowBringer
 import XMonad.Actions.WindowGo
+import XMonad.Actions.CopyWindow
 
 
 -- Colors ---------------------------------------------------------------------
@@ -51,7 +52,7 @@ mySolarized = ColorSchemes {
 home = "/home/cderose"                :: String
 myModMask              = mod4Mask     :: KeyMask
 myFocusFollowsMouse    = False        :: Bool
-myBorderWidth          = 8            :: Dimension
+myBorderWidth          = 6            :: Dimension
 myWindowGap            = 12           :: Integer
 myColor                = mySolarized  :: ColorSchemes
 myFocusedBorderColor   = black myColor :: String
@@ -69,8 +70,10 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   -- xmonad commands:
   [ ((modMask .|. shiftMask, xK_q ), io (exitWith ExitSuccess))
   , ((modMask .|. shiftMask, xK_c ), kill)
-  , ((modMask,               xK_m ), withFocused minimizeWindow)
-  , ((modMask .|. shiftMask, xK_m ), withLastMinimized maximizeWindowAndFocus)
+  , ((modMask,               xK_a ), windows copyToAll)
+  , ((modMask .|. shiftMask, xK_a ), killAllOtherCopies)
+  , ((modMask,               xK_n ), withFocused minimizeWindow)
+  , ((modMask .|. shiftMask, xK_n ), withLastMinimized maximizeWindowAndFocus)
   , ((modMask,               xK_g ), gotoMenu)
   , ((modMask,               xK_b ), bringMenu)
 
@@ -83,8 +86,12 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   , ((modMask, xK_Escape ), spawn "xscreensaver-command -lock")
   , ((modMask, xK_t      ), runOrRaiseAndDo "/usr/bin/telegram-desktop" 
       (className =? "TelegramDesktop") (maximizeWindowAndFocus))
-  , ((modMask, xK_m      ), sequence_ [(runOrRaiseAndDo "/usr/bin/google-chrome-stable" 
-      (className =? "Google-chrome") (maximizeWindowAndFocus)), (XMonad.Util.Paste.sendKey controlMask xK_1) ])
+  -- TODO: This is probably the better way of doing this:
+  -- https://unix.stackexchange.com/questions/237626/is-there-a-way-to-activate-a-particular-tab-of-chrome-via-bash
+  , ((modMask, xK_m      ), sequence_ [
+      (runOrRaiseAndDo "/usr/bin/google-chrome-stable http://mail.derosetechnologies.com" 
+      (className =? "Google-chrome") (maximizeWindowAndFocus)), (XMonad.Util.Paste.sendKey controlMask xK_1)
+      ])
 
   -- Function Keys
   , ((noModMask, xK_F1 ), spawn "pcmanfm") -- FileManager
