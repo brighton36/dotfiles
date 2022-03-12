@@ -66,6 +66,11 @@ dmenuTransArgs = ["-l", "50", "-nb", "#414F59", "-sb", "#636D7B", "-sf",
   "#CEE7EF", "-fn", "-o", "0.85"]
 
 dmenuSwitchMenuArgs = dmenuTransArgs ++ ["-p", "Switch to Window:"]
+
+toggleFloat w = windows (\s -> if Data.Map.member w (XMonad.StackSet.floating s)
+  then XMonad.StackSet.sink w s
+  else (XMonad.StackSet.float w (XMonad.StackSet.RationalRect (1/3) (1/4) (1/2) (4/5)) s))
+
 myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   -- xmonad commands:
   [ ((modMask .|. shiftMask, xK_q ), io (exitWith ExitSuccess))
@@ -73,6 +78,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   , ((modMask,               xK_a ), windows copyToAll)
   , ((modMask .|. shiftMask, xK_a ), killAllOtherCopies)
   , ((modMask,               xK_n ), withFocused minimizeWindow)
+  , ((modMask,               xK_o ), withFocused toggleFloat)
   , ((modMask .|. shiftMask, xK_n ), withLastMinimized maximizeWindowAndFocus)
   , ((modMask,               xK_g ), gotoMenu)
   , ((modMask,               xK_b ), bringMenu)
