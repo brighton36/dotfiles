@@ -51,10 +51,16 @@ set shiftwidth=2
 nnoremap <silent> <C-p> :bp<CR>
 nnoremap <silent> <C-n> :bn<CR>
 
+" Tab Navigation
+" TODO: Why does this affect escape, again?
+nnoremap <silent> <C-t> :tabp<CR>
+nnoremap <silent> <C-T> :tabn<CR>
+
 " Map ctrl-space to escape, and insert in normal, insert, and visual mode:
 :nnoremap <C-@> i
 :inoremap <C-@> <Esc>
 :xnoremap <C-@> <Esc>
+
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""

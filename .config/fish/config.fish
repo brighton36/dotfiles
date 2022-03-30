@@ -64,4 +64,4 @@ alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 export LEDGER_FILE=$HOME/ledger/chris-derose.journal
 
 # Add ruby gem path: 
-set -x PATH $PATH $HOME/.gem/ruby/3.0.0/bin
+set -x PATH $PATH $HOME/.local/share/gem/ruby/3.0.0/bin
