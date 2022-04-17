@@ -99,6 +99,15 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
       (className =? "Google-chrome") (maximizeWindowAndFocus)), (XMonad.Util.Paste.sendKey controlMask xK_1)
       ])
 
+  -- Program Specific:
+  -- TODO: Add chrome and telegram to this list
+  , ((controlMask, xK_bracketright ), 
+    spawn "/home/cderose/bin/remap-if-focused.sh firefox ctrl+bracketright ctrl+Tab")
+  , ((controlMask, xK_bracketleft ), 
+    spawn "/home/cderose/bin/remap-if-focused.sh firefox ctrl+bracketleft ctrl+shift+Tab")
+  , ((controlMask .|. shiftMask, xK_l ), 
+    spawn "/home/cderose/bin/remap-if-focused.sh firefox ctrl+shift+l ctrl+F6")
+
   -- Function Keys
   , ((noModMask, xK_F1 ), spawn "pcmanfm") -- FileManager
   , ((noModMask, xK_F2 ), spawn "/bin/false" )

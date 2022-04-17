@@ -8,3 +8,5 @@ gtk-xft-hinting=1
 gtk-xft-hintstyle="hintmedium"
 gtk-xft-rgba="none"
 
+# This mostly affects firefox:
+gtk-key-theme-name = "Emacs"

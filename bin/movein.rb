@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+# TODO: Seems like we need 'net-ssh-open3'
 # NOTE: Here's what we're doing atm:
 # 1. scp -r .ssh/ 192.168.122.130:~/
 # 2. then ssh into 192.168.122.130
@@ -7,6 +8,7 @@
 # 4. git clone --bare git@github.com:brighton36/home.git $HOME/.cfg
 # 5. config config --local status.showUntrackedFiles no
 # 6. config checkout --force
+# 7. config submodule update --init
 
 require 'optparse'
 require 'io/console'
