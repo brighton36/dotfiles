@@ -29,6 +29,7 @@ import XMonad.Actions.Minimize
 import XMonad.Actions.WindowBringer
 import XMonad.Actions.WindowGo
 import XMonad.Actions.CopyWindow
+import XMonad.Actions.PerWindowKeys
 
 
 -- Colors ---------------------------------------------------------------------
@@ -99,14 +100,41 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
       (className =? "Google-chrome") (maximizeWindowAndFocus)), (XMonad.Util.Paste.sendKey controlMask xK_1)
       ])
 
-  -- Program Specific:
-  -- TODO: Add chrome and telegram to this list
-  , ((controlMask, xK_bracketright ), 
-    spawn "/home/cderose/bin/remap-if-focused.sh firefox ctrl+bracketright ctrl+Tab")
-  , ((controlMask, xK_bracketleft ), 
-    spawn "/home/cderose/bin/remap-if-focused.sh firefox ctrl+bracketleft ctrl+shift+Tab")
-  , ((controlMask .|. shiftMask, xK_l ), 
-    spawn "/home/cderose/bin/remap-if-focused.sh firefox ctrl+shift+l ctrl+F6")
+  -- Firefox Bindings:
+  , ((controlMask, xK_bracketright ), bindAll [ (className =? "firefox", 
+      -- Go Right a Tab
+      XMonad.Util.Paste.sendKey controlMask xK_Tab) ])
+  , ((controlMask, xK_bracketleft ), bindAll [ (className =? "firefox", 
+      -- Go Left a Tab
+      XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_Tab) ])
+  , ((controlMask .|. shiftMask, xK_bracketright ), bindAll [ (className =? "firefox", 
+     -- Move Current Tab Right
+     XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_Page_Down) ])
+  , ((controlMask .|. shiftMask, xK_bracketleft ), bindAll [ (className =? "firefox", 
+     -- Move Current Tab Left
+     XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_Page_Up) ])
+  , ((controlMask .|. shiftMask, xK_l ), bindAll [ (className =? "firefox", 
+      -- Focus to content area, from location
+      XMonad.Util.Paste.sendKey controlMask xK_F6) ])
+  
+  -- Chrome Bindings:
+  -- , ((controlMask, xK_bracketright ), bindAll [ (className =? "Google-chrome", 
+  --     -- Go Right a Tab
+  --     XMonad.Util.Paste.sendKey controlMask xK_Tab) ])
+  -- , ((controlMask, xK_bracketleft ), bindAll [ (className =? "Google-chrome", 
+  --     -- Go Left a Tab
+  --     XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_Tab) ])
+  -- , ((controlMask .|. shiftMask, xK_l ), bindAll [ (className =? "Google-chrome", 
+  --     -- Focus to content area, from location
+  --     XMonad.Util.Paste.sendKey controlMask xK_F6) ])
+
+  -- Telegram Bindings:
+  -- , ((controlMask, xK_bracketright ), bindAll [ (className =? "TelegramDesktop", 
+  --     -- Go Right a Tab
+  --     XMonad.Util.Paste.sendKey controlMask xK_Tab) ])
+  -- , ((controlMask, xK_bracketleft ), bindAll [ (className =? "TelegramDesktop", 
+  --     -- Go Left a Tab
+  --     XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_Tab) ])
 
   -- Function Keys
   , ((noModMask, xK_F1 ), spawn "pcmanfm") -- FileManager
