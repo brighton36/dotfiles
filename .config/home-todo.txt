@@ -1,6 +1,5 @@
 Priority:
-  -- See the telegram and chrome todo's in the xmonad.hs, figure out why we're weird there
-  * Get that ~/bin/volume_change.sh working, and put it into your xmonad
+* Get that ~/bin/volume_change.sh working, and put it into your xmonad
 
 * vim
   * see that todo wrt escape in the vimrc
