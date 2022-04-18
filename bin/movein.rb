@@ -9,6 +9,18 @@
 # 5. config config --local status.showUntrackedFiles no
 # 6. config checkout --force
 # 7. config submodule update --init
+=begin
+NOTE:
+  * Make this into a ./bin/move-in.rb ?
+    $ alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+    $ echo ".cfg" >> .gitignore
+    # scp the ~/.ssh over, or use an http address, depending on the server...
+    $ git clone --bare git@github.com:brighton36/home $HOME/.cfg
+    $ config checkout --force
+    $ config config --local status.showUntrackedFiles no
+    # $ infocmp -x xterm-kitty | /usr/bin/ssh 192.168.122.130 tic -x -o \~/.terminfo /dev/stdin
+    $ config submodule update --init --recursive
+=end
 
 require 'optparse'
 require 'io/console'

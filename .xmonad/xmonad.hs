@@ -127,6 +127,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   -- , ((controlMask .|. shiftMask, xK_l ), bindAll [ (className =? "Google-chrome", 
   --     -- Focus to content area, from location
   --     XMonad.Util.Paste.sendKey controlMask xK_F6) ])
+  -- TODO: Add the move tab bindings
 
   -- Telegram Bindings:
   -- , ((controlMask, xK_bracketright ), bindAll [ (className =? "TelegramDesktop", 

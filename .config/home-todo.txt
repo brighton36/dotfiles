@@ -1,51 +1,39 @@
-TODO:
+Priority:
+  -- See the telegram and chrome todo's in the xmonad.hs, figure out why we're weird there
+  * Get that ~/bin/volume_change.sh working, and put it into your xmonad
 
-* export LESSCHARSET=utf-8 doesn't seem to enable utf-8 in less...
+* vim
+  * see that todo wrt escape in the vimrc
+  * Can we maybe do a 'search for buffer' with ctrl-r?
 
-* Telegram borked again with the file dialogue
+* It'd be nice to not use the arrow keys for terminal history (up and down in fish)
+  * Maybe ctrl-n and ctrl-p?
 
-* Putty/windows:
-  * Ctrl-left / ctrl-right nav
+* Firefox, maybe a tridacty key for undo close?
+  * and maybe set d/u (without modifier) as down/up..
+
+* xmonad
+  * Ctrl-n and ctrl-p might be better than hl for workspaces. And that can
+  * Can we center modal / file-chooser dialogs ?
+    leave us hjkl for resize and move operations
+  * Urgency... seems to work, but there's something weird going on there...
+    * At the least, let's get rid of those control codes
+	* Moving/resizing windows with the keyboard might be good:
+		* https://hackage.haskell.org/package/xmonad-contrib-0.17.0/docs/XMonad-Actions-FloatKeys.html
+		* Maybe using hjkl with a modifier... meta-alt to move, meta-control to resize?
+  * Maybe Look into using statusbar instead of the mobar sleep weirdness:
+    https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Hooks-DynamicLog.html#v:statusBar
+    hmm: https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Hooks-StatusBar.html#g:5
+
+* I think we'd like to disable the arrow keys in Xf86. Try to use emacs keys instead...
+  * kmonad may work here. Look into ctrl-hold/ctrl-tap-escape here in kmonad
+
 tmux:
   Maybe ctrl-tab?
   * https://superuser.com/questions/493048/how-to-convert-2-horizontal-panes-to-vertical-panes-in-tmux
-Awesome:
-  * Let's change meta-space to meta... tab?
-  * It'd be nice if we could get that youtube popup window to always position itself
-    in the upper right-ish, and always on top
-  * Why doesn't resize up and down work?: https://stackoverflow.com/questions/17705888/resizing-window-vertically
-  * Do we really need 9 workspaces?
-  * How to (better?) open minimized windows
 
-vim:
-  * I think we ned to implemet the ctrl-space on visual mode
-  * Can we disable the auto-close on brackets and such?
-  * the new remaps are causing escape to bp
-  https://github.com/svermeulen/vim-easyclip
-
-System:
-  * I'm not sure about the dpms. if I walk away, the screen goes blank, and
-    xscreensaver never kicks in
-      * see if a restart persists this change
-  * Let's do this, if the screensaver is running, and we're not plugged in:
-      https://wiki.archlinux.org/title/Laptop#Hibernate_on_low_battery_level
-  * Spend some time on this maybe: https://wiki.archlinux.org/title/Power_management#Userspace_tools
-
-Chrome:
-  * ctrl-shift [ and ] to move tabs
-  * What's up with ctrl-u and ctrl-d...
 
 ---------------------
-NOTE:
-  * Make this into a ./bin/move-in.rb ?
-    $ alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-    $ echo ".cfg" >> .gitignore
-    # scp the ~/.ssh over, or use an http address, depending on the server...
-    $ git clone --bare git@github.com:brighton36/home $HOME/.cfg
-    $ config checkout --force
-    $ config config --local status.showUntrackedFiles no
-    # $ infocmp -x xterm-kitty | /usr/bin/ssh 192.168.122.130 tic -x -o \~/.terminfo /dev/stdin
-    $ config submodule update --init --recursive
 
 System Notes:
   * the /usr/local/share/kbd/keymaps/dvorak-chris.map and /etc/vconsole.conf and lightdm.conf... isn't in the config
