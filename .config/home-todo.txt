@@ -1,5 +1,7 @@
 Priority:
 * Get that ~/bin/volume_change.sh working, and put it into your xmonad
+* Theme/config dust a bit better...
+* Whats it take to get emacs bindings in gmail...
 
 * vim
   * see that todo wrt escape in the vimrc
@@ -12,7 +14,6 @@ Priority:
   * and maybe set d/u (without modifier) as down/up..
 
 * xmonad
-  * Ctrl-n and ctrl-p might be better than hl for workspaces. And that can
   * Can we center modal / file-chooser dialogs ?
     leave us hjkl for resize and move operations
   * Urgency... seems to work, but there's something weird going on there...

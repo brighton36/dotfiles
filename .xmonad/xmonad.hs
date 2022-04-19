@@ -91,42 +91,53 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   , ((modMask, xK_c      ), spawn "/usr/bin/google-chrome-stable")
   , ((modMask, xK_r      ), spawn "/home/cderose/bin/dmenu_run_history")
   , ((modMask, xK_Escape ), spawn "xscreensaver-command -lock")
+
+  -- Switchto/Open Telegram
   , ((modMask, xK_t      ), runOrRaiseAndDo "/usr/bin/telegram-desktop" 
       (className =? "TelegramDesktop") (maximizeWindowAndFocus))
-  -- TODO: This is probably the better way of doing this:
-  -- https://unix.stackexchange.com/questions/237626/is-there-a-way-to-activate-a-particular-tab-of-chrome-via-bash
+
+  -- Open Switchto/Open Mail
   , ((modMask, xK_m      ), sequence_ [
-      (runOrRaiseAndDo "/usr/bin/google-chrome-stable http://mail.derosetechnologies.com" 
-      (className =? "Google-chrome") (maximizeWindowAndFocus)), (XMonad.Util.Paste.sendKey controlMask xK_1)
+      (runOrRaiseAndDo "/usr/bin/firefox http://mail.derosetechnologies.com" 
+      (className =? "firefox") (maximizeWindowAndFocus)), 
+      -- TODO: This isn't exactly working. Seemingly if you're not on the same
+      -- workspace as firefox, it doesn't do what you'd expect...
+      -- Maybe try xdokey...
+      (XMonad.Util.Paste.sendKey mod1Mask xK_1)
       ])
 
-  -- Control-Right-Bracket (]) to Control Tab:
-  , ((controlMask, xK_bracketright ), bindAll [ (
+  -- Control-Right-Bracket to Control Tab:
+  , ((controlMask, xK_bracketright ), bindFirst [ (
       className =? "firefox" <||> className =? "Google-chrome" <||> 
       className =? "TelegramDesktop", 
-      XMonad.Util.Paste.sendKey controlMask xK_Tab) ])
+      XMonad.Util.Paste.sendKey controlMask xK_Tab), 
+      (pure True, XMonad.Util.Paste.sendKey controlMask xK_bracketright) ])
 
-  -- Control-Left-Bracket (]) to Control Shift-Tab:
-  , ((controlMask, xK_bracketleft ), bindAll [ (
+  -- Control-Left-Bracket to Control Shift-Tab:
+  , ((controlMask, xK_bracketleft ), bindFirst [ (
       className =? "firefox" <||> className =? "Google-chrome" <||> 
       className =? "TelegramDesktop", 
-      XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_Tab) ])
+      XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_Tab), 
+      (pure True, XMonad.Util.Paste.sendKey controlMask xK_bracketleft) ])
 
-  -- Control-Shift-Right-Bracket (]) to Control-Shift-Pagedown:
-  , ((controlMask .|. shiftMask, xK_bracketright ), bindAll [ (
+  -- Control-Shift-Right-Bracket to Control-Shift-Pagedown:
+  , ((controlMask .|. shiftMask, xK_bracketright ), bindFirst [ (
       className =? "firefox" <||> className =? "Google-chrome", 
-     XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_Page_Down) ])
+     XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_Page_Down), 
+      (pure True, XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_bracketright) ])
 
-  -- Control-Shift-Left-Bracket (]) to Control-Shift-Pageup:
-  , ((controlMask .|. shiftMask, xK_bracketleft ), bindAll [ (
+  -- Control-Shift-Left-Bracket to Control-Shift-Pageup:
+  , ((controlMask .|. shiftMask, xK_bracketleft ), bindFirst [ (
       className =? "firefox" <||> className =? "Google-chrome", 
-     XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_Page_Up) ])
+     XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_Page_Up), 
+      (pure True, XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_bracketleft) ])
 
   -- Ctrl-Shift-l in browsers, to Control-F6:
-  , ((controlMask .|. shiftMask, xK_l ), bindAll [ (
+  , ((controlMask .|. shiftMask, xK_l ), bindFirst [ (
       className =? "firefox" <||> className =? "Google-chrome", 
       -- Focus to content area, from location
-      XMonad.Util.Paste.sendKey controlMask xK_F6) ])
+      XMonad.Util.Paste.sendKey controlMask xK_F6), 
+      (pure True, XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_l) ])
 
   -- Function Keys
   , ((noModMask, xK_F1 ), spawn "pcmanfm") -- FileManager
@@ -160,8 +171,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   -- Workspaces
   , ((modMask, xK_Right), nextWS)
   , ((modMask, xK_Left),  prevWS)
-  , ((modMask, xK_h ),    prevWS)
-  , ((modMask, xK_l  ),   nextWS)
+  , ((modMask, xK_p ),    prevWS)
+  , ((modMask, xK_n  ),   nextWS)
   ]
   ++
   -- mod-[1..9] %! Switch to workspace N
