@@ -144,8 +144,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   , ((noModMask, xK_F2 ), spawn "/bin/false" )
   , ((noModMask, xK_F3 ), spawn "/usr/bin/pactl -- set-sink-mute 0 toggle") -- Mute
   , ((noModMask, xK_F4 ), spawn "/home/cderose/bin/system76_kbd_backlight_toggle.sh" )
-  , ((noModMask, xK_F5 ), spawn "/usr/bin/pactl -- set-sink-volume 0 -5%") -- Vol-
-  , ((noModMask, xK_F6 ), spawn "/usr/bin/pactl -- set-sink-volume 0 +5%") -- Vol+
+  , ((noModMask, xK_F5 ), spawn "/home/cderose/bin/volume_change.sh -5%") -- Vol-
+  , ((noModMask, xK_F6 ), spawn "/home/cderose/bin/volume_change.sh +5%") -- Vol+
   , ((noModMask, xK_F8 ), spawn "/usr/bin/xbacklight -dec 10") -- Bright-
   , ((noModMask, xK_F9 ), spawn "/usr/bin/xbacklight -inc 10") -- Bright+
   , ((noModMask, xK_F10 ), spawn "/home/cderose/bin/screenshot.sh")
