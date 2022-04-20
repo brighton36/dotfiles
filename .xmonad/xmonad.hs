@@ -78,9 +78,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   , ((modMask .|. shiftMask, xK_c ), kill)
   , ((modMask,               xK_a ), windows copyToAll)
   , ((modMask .|. shiftMask, xK_a ), killAllOtherCopies)
-  , ((modMask,               xK_n ), withFocused minimizeWindow)
+  , ((modMask,               xK_m ), withFocused minimizeWindow)
   , ((modMask,               xK_o ), withFocused toggleFloat)
-  , ((modMask .|. shiftMask, xK_n ), withLastMinimized maximizeWindowAndFocus)
+  , ((modMask .|. shiftMask, xK_m ), withLastMinimized maximizeWindowAndFocus)
   , ((modMask,               xK_g ), gotoMenu)
   , ((modMask,               xK_b ), bringMenu)
 
@@ -97,14 +97,15 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
       (className =? "TelegramDesktop") (maximizeWindowAndFocus))
 
   -- Open Switchto/Open Mail
-  , ((modMask, xK_m      ), sequence_ [
-      (runOrRaiseAndDo "/usr/bin/firefox http://mail.derosetechnologies.com" 
-      (className =? "firefox") (maximizeWindowAndFocus)), 
-      -- TODO: This isn't exactly working. Seemingly if you're not on the same
-      -- workspace as firefox, it doesn't do what you'd expect...
-      -- Maybe try xdokey...
-      (XMonad.Util.Paste.sendKey mod1Mask xK_1)
-      ])
+  -- NOTE: I didn't really use this, and I wanted meta-m for 'minimize'
+  -- , ((modMask, xK_m      ), sequence_ [
+  --     (runOrRaiseAndDo "/usr/bin/firefox http://mail.derosetechnologies.com" 
+  --     (className =? "firefox") (maximizeWindowAndFocus)), 
+  --     -- TODO: This isn't exactly working. Seemingly if you're not on the same
+  --     -- workspace as firefox, it doesn't do what you'd expect...
+  --     -- Maybe try xdokey...
+  --     (XMonad.Util.Paste.sendKey mod1Mask xK_1)
+  --     ])
 
   -- Control-Right-Bracket to Control Tab:
   , ((controlMask, xK_bracketright ), bindFirst [ (
@@ -132,12 +133,19 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
      XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_Page_Up), 
       (pure True, XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_bracketleft) ])
 
-  -- Ctrl-Shift-l in browsers, to Control-F6:
+  -- Ctrl-Shift-l in browsers, to F6:
+	-- (This toggles location-bar/body focus)
   , ((controlMask .|. shiftMask, xK_l ), bindFirst [ (
       className =? "firefox" <||> className =? "Google-chrome", 
-      -- Focus to content area, from location
-      XMonad.Util.Paste.sendKey controlMask xK_F6), 
+      XMonad.Util.Paste.sendKey noModMask xK_F6), 
       (pure True, XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_l) ])
+
+  -- Ctrl-d in browsers, to Ctrl-F4:
+	-- (This closes the browser tab)
+  , ((controlMask , xK_d ), bindFirst [ (
+      className =? "firefox" <||> className =? "Google-chrome", 
+      XMonad.Util.Paste.sendKey controlMask xK_F4), 
+      (pure True, XMonad.Util.Paste.sendKey controlMask xK_d) ])
 
   -- Function Keys
   , ((noModMask, xK_F1 ), spawn "pcmanfm") -- FileManager
