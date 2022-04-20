@@ -1,9 +1,5 @@
 Priority:
 
-* Firefox
-  *  ctrl-f4 closes it. But what to map...
-		* ctrl-d?
-
 * It'd be nice to not use the arrow keys for terminal history (up and down in fish)
   * Maybe ctrl-n and ctrl-p?
 	[I] cderose@link ~/.config/fish> bind -M insert \cp up-or-search
@@ -15,7 +11,7 @@ Priority:
 
 
 * Firefox, maybe a tridacty key for undo close?
-  * and maybe set d/u (without modifier) as down/up..
+  * and maybe set u (without modifier) as bind undo..
 
 * vim
   * see that todo wrt escape in the vimrc

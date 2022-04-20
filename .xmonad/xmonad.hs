@@ -147,6 +147,13 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
       XMonad.Util.Paste.sendKey controlMask xK_F4), 
       (pure True, XMonad.Util.Paste.sendKey controlMask xK_d) ])
 
+  -- Ctrl-shift-d in browsers, to Ctrl-shift-t:
+	-- (This undo's the close-tab)
+  , ((controlMask .|. shiftMask, xK_d ), bindFirst [ (
+      className =? "firefox" <||> className =? "Google-chrome", 
+      XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_t), 
+      (pure True, XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_d) ])
+
   -- Function Keys
   , ((noModMask, xK_F1 ), spawn "pcmanfm") -- FileManager
   , ((noModMask, xK_F2 ), spawn "/bin/false" )
