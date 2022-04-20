@@ -9,10 +9,6 @@ Priority:
   * unbind the up and down
 	* Maybe set that background to a solid color...
 
-
-* Firefox, maybe a tridacty key for undo close?
-  * and maybe set u (without modifier) as bind undo..
-
 * vim
   * see that todo wrt escape in the vimrc
   * Can we maybe do a 'search for buffer' with ctrl-r?

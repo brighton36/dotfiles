@@ -1,36 +1,7 @@
-if [ "$TERM" = "xterm-kitty" ]
-  # This fixes weird shape output on kitty terminal. It doesn't seem to cause
-  # problems outside kitty. But, I'm only enabling it for kitty nonetheless...
-  # NOTE: kitty outputs this error. But, the OSC code 50 seems valid: 
-  #   [PARSE ERROR] Unknown OSC code: 50
-  function fish_vi_cursor --on-variable fish_bind_mode
-    if set -q __last_fish_bind_mode
-      and test $__last_fish_bind_mode = $fish_bind_mode
-      return
-    end
-    set -g __last_fish_bind_mode $fish_bind_mode
-    switch $fish_bind_mode
-      case insert
-        printf '\e]0;CursorShape=1\x7'
-      case default
-        printf '\e]50;CursorShape=0\x7'
-      case "*"
-        printf '\e]50;CursorShape=0\x7'
-    end
-  end
-
-  set -x fish_cursor_default block
-  set -x fish_cursor_visual block
-  set -x fish_cursor_insert line
-  set -x fish_cursor_replace_one underscore
-
-  alias icat="/usr/bin/kitty +kitten icat --align=left"
-  alias clipboard="/usr/bin/kitty +kitten clipboard"
-  alias ssh="kitty +kitten ssh use-python"
-end
-
+## Bindings: ##################################################################
 fish_vi_key_bindings --no-erase
 
+# Basic Emacs keys
 bind -M insert \cB backward-word
 bind -M insert \cF forward-word
 
@@ -53,15 +24,19 @@ else
   bind \eOc forward-word
 end
 
+# Ctrl-n and ctrl-p
+bind -M insert \cp up-or-search
+bind -M insert \cn down-or-search
+
+## Theme: #####################################################################
 set fish_greeting
 
 set -g theme_color_scheme solarized-light
 
-# Our config alias to manage our dotfiles in git:
+## Environment: ###############################################################
+
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
-# Ledger:
 export LEDGER_FILE=$HOME/ledger/chris-derose.journal
 
-# Add ruby gem path: 
 set -x PATH $PATH $HOME/.local/share/gem/ruby/3.0.0/bin
