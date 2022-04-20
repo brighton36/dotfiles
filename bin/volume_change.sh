@@ -6,14 +6,30 @@ msgTag="myvolume"
 
 # Change the volume using alsa(might differ if you use pulseaudio)
 # amixer -c 0 set Master "$@" > /dev/null
-/usr/bin/pactl -- set-sink-volume 0 "$@"
+
+case $1 in
+  up)
+    /usr/bin/pactl -- set-sink-volume 0 "+10%"
+    ;;
+  down)
+    /usr/bin/pactl -- set-sink-volume 0 "-10%"
+    ;;
+  mute)
+    /usr/bin/pactl -- set-sink-mute 0 toggle
+    ;;
+
+  *)
+    echo "ERROR: Unknown parameter \"$1\""
+    exit
+esac
 
 # Query amixer for the current volume and whether or not the speaker is muted
 # volume="$(amixer -c 0 get Master | tail -1 | awk '{print $4}' | sed 's/[^0-9]*//g')"
 # mute="$(amixer -c 0 get Master | tail -1 | awk '{print $6}' | sed 's/[^a-z]*//g')"
 volume="$(/usr/bin/pactl -- get-sink-volume 0 | /bin/grep -oP '[\d]+\%' | /bin/head --lines=1)"
 mute="$(/bin/pactl -- get-sink-mute 0 | /bin/grep -oP '[^ ]+$')"
-if [[ $volume == 0 || "$mute" == "off" ]]; then
+
+if [[ $volume == 0 || "$mute" == "yes" ]]; then
     # Show the sound muted notification
     dunstify -a "changeVolume" -u low -i audio-volume-muted -h string:x-dunst-stack-tag:$msgTag "Volume muted"
 else
@@ -23,4 +39,5 @@ else
 fi
 
 # Play the volume changed sound
-canberra-gtk-play -i audio-volume-change -d "changeVolume"
+# canberra-gtk-play -i audio-volume-change -d "changeVolume"
+/usr/bin/mpv /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga

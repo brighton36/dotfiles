@@ -142,10 +142,10 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   -- Function Keys
   , ((noModMask, xK_F1 ), spawn "pcmanfm") -- FileManager
   , ((noModMask, xK_F2 ), spawn "/bin/false" )
-  , ((noModMask, xK_F3 ), spawn "/usr/bin/pactl -- set-sink-mute 0 toggle") -- Mute
+  , ((noModMask, xK_F3 ), spawn "/home/cderose/bin/volume_change.sh mute")
   , ((noModMask, xK_F4 ), spawn "/home/cderose/bin/system76_kbd_backlight_toggle.sh" )
-  , ((noModMask, xK_F5 ), spawn "/home/cderose/bin/volume_change.sh -5%") -- Vol-
-  , ((noModMask, xK_F6 ), spawn "/home/cderose/bin/volume_change.sh +5%") -- Vol+
+  , ((noModMask, xK_F5 ), spawn "/home/cderose/bin/volume_change.sh down")
+  , ((noModMask, xK_F6 ), spawn "/home/cderose/bin/volume_change.sh up")
   , ((noModMask, xK_F8 ), spawn "/usr/bin/xbacklight -dec 10") -- Bright-
   , ((noModMask, xK_F9 ), spawn "/usr/bin/xbacklight -inc 10") -- Bright+
   , ((noModMask, xK_F10 ), spawn "/home/cderose/bin/screenshot.sh")

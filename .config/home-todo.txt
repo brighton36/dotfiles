@@ -1,18 +1,16 @@
 Priority:
-* Unbind the page-up and page-down keys somehow. that's what's causing your problems in firefox
-* Get that ~/bin/volume_change.sh working, and put it into your xmonad
-* Theme/config dust a bit better...
-* Whats it take to get emacs bindings in gmail...
-
-* vim
-  * see that todo wrt escape in the vimrc
-  * Can we maybe do a 'search for buffer' with ctrl-r?
 
 * It'd be nice to not use the arrow keys for terminal history (up and down in fish)
   * Maybe ctrl-n and ctrl-p?
 
 * Firefox, maybe a tridacty key for undo close?
   * and maybe set d/u (without modifier) as down/up..
+
+* vim
+  * see that todo wrt escape in the vimrc
+  * Can we maybe do a 'search for buffer' with ctrl-r?
+
+* Unbind the page-up and page-down keys somehow. that's what's causing your problems in firefox
 
 * xmonad
   * Can we center modal / file-chooser dialogs ?

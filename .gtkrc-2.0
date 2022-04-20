@@ -3,6 +3,7 @@ gtk-theme-name="NumixSolarizedLightBlue"
 gtk-font-name="Sans 12"
 gtk-enable-event-sounds=1
 gtk-enable-input-feedback-sounds=1
+gtk-sound-theme-name=freedesktop
 gtk-xft-antialias=1
 gtk-xft-hinting=1
 gtk-xft-hintstyle="hintmedium"
