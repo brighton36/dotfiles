@@ -86,6 +86,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
 
   -- Launching Programs
   , ((modMask, xK_Return ), spawn $ terminal conf)
+  , ((modMask, xK_e      ), spawn "emacsclient -c -a emacs")
   , ((modMask, xK_f      ), spawn "firefox -P default-release")
   , ((modMask, xK_i      ), spawn "firefox -P Fap")
   , ((modMask, xK_c      ), spawn "/usr/bin/google-chrome-stable")
@@ -142,17 +143,17 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
 
   -- Ctrl-d in browsers, to Ctrl-F4:
 	-- (This closes the browser tab)
-  , ((controlMask , xK_d ), bindFirst [ (
+  , ((controlMask , xK_x ), bindFirst [ (
       className =? "firefox" <||> className =? "Google-chrome", 
       XMonad.Util.Paste.sendKey controlMask xK_F4), 
-      (pure True, XMonad.Util.Paste.sendKey controlMask xK_d) ])
+      (pure True, XMonad.Util.Paste.sendKey controlMask xK_x) ])
 
   -- Ctrl-shift-d in browsers, to Ctrl-shift-t:
 	-- (This undo's the close-tab)
-  , ((controlMask .|. shiftMask, xK_d ), bindFirst [ (
+  , ((controlMask .|. shiftMask, xK_x ), bindFirst [ (
       className =? "firefox" <||> className =? "Google-chrome", 
       XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_t), 
-      (pure True, XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_d) ])
+      (pure True, XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_x) ])
 
   -- Function Keys
   , ((noModMask, xK_F1 ), spawn "pcmanfm") -- FileManager

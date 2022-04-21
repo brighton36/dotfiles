@@ -1,19 +1,13 @@
 Priority:
 
-* It'd be nice to not use the arrow keys for terminal history (up and down in fish)
-  * Maybe ctrl-n and ctrl-p?
-	[I] cderose@link ~/.config/fish> bind -M insert \cp up-or-search
-	[I] cderose@link ~/.config/fish> bind -M default \cp up-or-search
-	[I] cderose@link ~/.config/fish> bind -M insert \cn down-or-search
-	[I] cderose@link ~/.config/fish> bind -M default \cn down-or-search
-  * unbind the up and down
-	* Maybe set that background to a solid color...
+* Those dunst modal colors could be better..
+
+* Firefox
+	* history controls... maybe alt-p and alt-n? or alt[ and alt]
 
 * vim
   * see that todo wrt escape in the vimrc
   * Can we maybe do a 'search for buffer' with ctrl-r?
-
-* Unbind the page-up and page-down keys somehow. that's what's causing your problems in firefox
 
 * xmonad
   * Can we center modal / file-chooser dialogs ?
@@ -26,9 +20,6 @@ Priority:
   * Maybe Look into using statusbar instead of the mobar sleep weirdness:
     https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Hooks-DynamicLog.html#v:statusBar
     hmm: https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Hooks-StatusBar.html#g:5
-
-* I think we'd like to disable the arrow keys in Xf86. Try to use emacs keys instead...
-  * kmonad may work here. Look into ctrl-hold/ctrl-tap-escape here in kmonad
 
 tmux:
   Maybe ctrl-tab?
