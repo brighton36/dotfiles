@@ -93,3 +93,20 @@
 ;; they are implemented.
 
 (setq shell-file-name "/bin/fish" vterm-max-scrollback 5000)
+
+
+;; Custom keys
+;; https://github.com/noctuid/evil-guide#keybindings-and-states
+;; TODO: evil-normal-state-map is probably a good place for ctrl-r:
+;; (define-key evil-normal-state-map (kbd "C-r") 'other-window) ;; todo: buffer-find
+(global-set-key (kbd "M-]") '(lambda() (interactive) (other-window 1)))
+(global-set-key (kbd "M-[") '(lambda() (interactive) (other-window -1))))
+
+;; Try: 
+;; evil-emacs-state-map
+;; (global-set-key (kbd "C-x o")  (other-window))
+
+;;  (map! :leader
+;;  (:prefix ("w" , "window")
+;;  :desc "Focus Next Window"
+;;  "w" ))
