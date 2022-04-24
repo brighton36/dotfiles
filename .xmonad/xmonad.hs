@@ -108,52 +108,53 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   --     (XMonad.Util.Paste.sendKey mod1Mask xK_1)
   --     ])
 
+  -- I disabled these-per application keys in lieu of autohotkey aroudn 2022-04-24
   -- Control-Right-Bracket to Control Tab:
-  , ((controlMask, xK_bracketright ), bindFirst [ (
-      className =? "firefox" <||> className =? "Google-chrome" <||> 
-      className =? "TelegramDesktop", 
-      XMonad.Util.Paste.sendKey controlMask xK_Tab), 
-      (pure True, XMonad.Util.Paste.sendKey controlMask xK_bracketright) ])
+  -- , ((controlMask, xK_bracketright ), bindFirst [ (
+  --     className =? "firefox" <||> className =? "Google-chrome" <||> 
+  --     className =? "TelegramDesktop", 
+  --     XMonad.Util.Paste.sendKey controlMask xK_Tab), 
+  --     (pure True, XMonad.Util.Paste.sendKey controlMask xK_bracketright) ])
 
   -- Control-Left-Bracket to Control Shift-Tab:
-  , ((controlMask, xK_bracketleft ), bindFirst [ (
-      className =? "firefox" <||> className =? "Google-chrome" <||> 
-      className =? "TelegramDesktop", 
-      XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_Tab), 
-      (pure True, XMonad.Util.Paste.sendKey controlMask xK_bracketleft) ])
+  -- , ((controlMask, xK_bracketleft ), bindFirst [ (
+  --     className =? "firefox" <||> className =? "Google-chrome" <||> 
+  --     className =? "TelegramDesktop", 
+  --     XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_Tab), 
+  --     (pure True, XMonad.Util.Paste.sendKey controlMask xK_bracketleft) ])
 
   -- Control-Shift-Right-Bracket to Control-Shift-Pagedown:
-  , ((controlMask .|. shiftMask, xK_bracketright ), bindFirst [ (
-      className =? "firefox" <||> className =? "Google-chrome", 
-     XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_Page_Down), 
-      (pure True, XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_bracketright) ])
+  -- , ((controlMask .|. shiftMask, xK_bracketright ), bindFirst [ (
+  --     className =? "firefox" <||> className =? "Google-chrome", 
+  --    XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_Page_Down), 
+  --     (pure True, XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_bracketright) ])
 
   -- Control-Shift-Left-Bracket to Control-Shift-Pageup:
-  , ((controlMask .|. shiftMask, xK_bracketleft ), bindFirst [ (
-      className =? "firefox" <||> className =? "Google-chrome", 
-     XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_Page_Up), 
-      (pure True, XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_bracketleft) ])
+  -- , ((controlMask .|. shiftMask, xK_bracketleft ), bindFirst [ (
+  --     className =? "firefox" <||> className =? "Google-chrome", 
+  --    XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_Page_Up), 
+  --     (pure True, XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_bracketleft) ])
 
   -- Ctrl-Shift-l in browsers, to F6:
 	-- (This toggles location-bar/body focus)
-  , ((controlMask .|. shiftMask, xK_l ), bindFirst [ (
-      className =? "firefox" <||> className =? "Google-chrome", 
-      XMonad.Util.Paste.sendKey noModMask xK_F6), 
-      (pure True, XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_l) ])
+  -- , ((controlMask .|. shiftMask, xK_l ), bindFirst [ (
+  --     className =? "firefox" <||> className =? "Google-chrome", 
+  --     XMonad.Util.Paste.sendKey noModMask xK_F6), 
+  --     (pure True, XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_l) ])
 
-  -- Ctrl-d in browsers, to Ctrl-F4:
+  -- Ctrl-backspace in browsers, to Ctrl-F4:
 	-- (This closes the browser tab)
-  , ((controlMask , xK_x ), bindFirst [ (
-      className =? "firefox" <||> className =? "Google-chrome", 
-      XMonad.Util.Paste.sendKey controlMask xK_F4), 
-      (pure True, XMonad.Util.Paste.sendKey controlMask xK_x) ])
+  --, ((controlMask , xK_BackSpace ), bindFirst [ (
+  --    className =? "firefox" <||> className =? "Google-chrome", 
+  --    XMonad.Util.Paste.sendKey controlMask xK_F4), 
+  --    (pure True, XMonad.Util.Paste.sendKey controlMask xK_BackSpace) ])
 
-  -- Ctrl-shift-d in browsers, to Ctrl-shift-t:
+  -- Ctrl-shift-backspace in browsers, to Ctrl-shift-t:
 	-- (This undo's the close-tab)
-  , ((controlMask .|. shiftMask, xK_x ), bindFirst [ (
-      className =? "firefox" <||> className =? "Google-chrome", 
-      XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_t), 
-      (pure True, XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_x) ])
+  -- , ((controlMask .|. shiftMask, xK_BackSpace ), bindFirst [ (
+  --     className =? "firefox" <||> className =? "Google-chrome", 
+  --     XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_t), 
+  --     (pure True, XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_BackSpace) ])
 
   -- Function Keys
   , ((noModMask, xK_F1 ), spawn "pcmanfm") -- FileManager

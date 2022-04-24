@@ -2,18 +2,16 @@ Priority:
 
 * emacs
   * I'm not crazy about that current-linegreen, mostly because it's even garish
-  with fish. Let's make it gray or light brown instead.
-
-  * meta-r would be useful for SPACE b-b
+  * ctrl-r to 'SPACE b b'
   * Cmake syntax highlighting
   * ALways turn on line numbers (those sql files weren't line'd)
+  * Can we dim out the background window, the way we do in tmux...
+    * https://stackoverflow.com/questions/33195122/highlight-current-active-window
+  with fish. Let's make it gray or light brown instead.
+  * Understand M-x dedicated-mode
   * gmail might be nice...
 
 * Those dunst modal colors could be better..
-
-* Firefox
-  * Let's change ctrl-[/] to alt-[/]
-	* history controls... maybe alt-p and alt-n? or alt[ and alt]
 
 * vim
   * see that todo wrt escape in the vimrc

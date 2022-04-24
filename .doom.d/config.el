@@ -95,18 +95,39 @@
 (setq shell-file-name "/bin/fish" vterm-max-scrollback 5000)
 
 
-;; Custom keys
+;; This should create more reasonable window close/resize behaviors
+(customize-set-variable 'display-buffer-base-action
+  '((display-buffer-reuse-window display-buffer-same-window)
+    (reusable-frames . t)))
+
+(customize-set-variable 'even-window-sizes nil)     ; avoid resizing
+
+
+;; Custom keys ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; https://github.com/noctuid/evil-guide#keybindings-and-states
+
 ;; TODO: evil-normal-state-map is probably a good place for ctrl-r:
 ;; (define-key evil-normal-state-map (kbd "C-r") 'other-window) ;; todo: buffer-find
+
+;; Window Cycle:
 (global-set-key (kbd "M-]") '(lambda() (interactive) (other-window 1)))
-(global-set-key (kbd "M-[") '(lambda() (interactive) (other-window -1))))
+(global-set-key (kbd "M-[") '(lambda() (interactive) (other-window -1)))
 
-;; Try: 
-;; evil-emacs-state-map
-;; (global-set-key (kbd "C-x o")  (other-window))
+;; Previous/Next Tab
+(map!
+  :nv "C-n" #'+workspace/switch-right ;; #'persp-next
+  :nv "C-p" #'+workspace/switch-left ;; #'persp-prev
+  )
 
-;;  (map! :leader
-;;  (:prefix ("w" , "window")
-;;  :desc "Focus Next Window"
-;;  "w" ))
+;; TODO: See if we still need/want this
+;; This 'locks' (pins) the window, so it can't be closed:
+;; NOTE, maybe try this: (set-window-parameter ook-window 'no-delete-other-windows t)
+;; Per: https://lists.gnu.org/archive/html/help-gnu-emacs/2007-05/msg00975.html
+;; then M-x sticky-buffer-mode
+;; TO
+;; (global-set-key (kbd "C-l") 'locked-buffer-mode)
+;; (define-minor-mode sticky-buffer-mode
+;;   "Make the current window always display this buffer."
+;;   nil " sticky" nil
+;;   (set-window-dedicated-p (selected-window) sticky-buffer-mode))
+
