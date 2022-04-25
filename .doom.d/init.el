@@ -194,3 +194,11 @@
 
 ; Turn on the 80 character ruler on all files
 (add-hook 'after-change-major-mode-hook 'fci-mode)
+
+; Turn on dimming of buffers that aren't focused
+(add-hook 'after-init-hook (lambda ()
+  (when (fboundp 'auto-dim-other-buffers-mode)
+  (auto-dim-other-buffers-mode t))))
+
+; Turn on line-number column for .txt files
+; (add-hook 'text-mode-hook 'display-line-numbers-mode)

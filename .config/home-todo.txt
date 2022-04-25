@@ -1,21 +1,20 @@
 Priority:
 
 * emacs
-  * I'm not crazy about that current-linegreen, mostly because it's even garish
-  * ctrl-r to 'SPACE b b'
-  * Cmake syntax highlighting
+  * We're having a problem atm with txt files not opening in text-mode.
+    they're opening 'Fundamental'. This is causing our line numbers to not show
+    (M-x text-mode seems to fix that...)
   * ALways turn on line numbers (those sql files weren't line'd)
-  * Can we dim out the background window, the way we do in tmux...
-    * https://stackoverflow.com/questions/33195122/highlight-current-active-window
-  with fish. Let's make it gray or light brown instead.
-  * Understand M-x dedicated-mode
-  * gmail might be nice...
+  * maybe Understand M-x dedicated-mode
+
+* fish
+  * Can we get ctrl-b and ctrl-f working in insert mode...
 
 * Those dunst modal colors could be better..
 
 * vim
   * see that todo wrt escape in the vimrc
-  * Can we maybe do a 'search for buffer' with ctrl-r?
+  * Can we maybe do a 'search for buffer' with ctrl-s?
 
 * xmonad
   * Can we center modal / file-chooser dialogs ?

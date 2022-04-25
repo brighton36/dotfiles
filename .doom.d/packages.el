@@ -50,3 +50,4 @@
 ;(unpin! t)
 
 (package! fill-column-indicator)
+(package! auto-dim-other-buffers)

@@ -34,31 +34,10 @@
 ;; refresh your font settings. If Emacs still can't find your font, it likely
 ;; wasn't installed correctly. Font issues are rarely Doom issues!
 
-;; There are two ways to load a theme. Both assume the theme is installed and
-;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-solarized-light)
-
-;; Here, we override the background color of the line numbers column
-;; TODO
-;(custom-set-faces
-;  `(solaire-mode-line-face ((t (:background ,(doom-color 'dark-violet)))))
-;  `(solaire-mode-line-inactive-face ((t (:foreground ,(doom-color 'base6))))) )
-
-;; palettes. No need to wait until the theme or package is loaded. e.g.
-(custom-set-faces!
-  `(line-number :background ,(doom-color 'bg-alt))
-  `(line-number-current-line :background ,(doom-color 'green)))
-
-
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
-
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
 
+(setq org-directory "~/org/")
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
@@ -92,8 +71,29 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-(setq shell-file-name "/bin/fish" vterm-max-scrollback 5000)
+;; Themes and Colors ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(setq doom-theme 'doom-solarized-light)
 
+;; Background color of the line numbers column, and highlight current line color:
+(custom-set-faces!
+  `(line-number :background ,(doom-color 'bg-alt))
+  `(line-number-current-line :background ,(doom-color 'grey)))
+
+;; Unfocused window colors:
+(custom-set-faces
+ ;; solarize base2
+ '(auto-dim-other-buffers-face ((t (:background "#eee8d5"))))
+ )
+
+;; Preferences  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; This determines the style of line numbers in effect. If set to `nil', line
+;; numbers are disabled. For relative line numbers, set this to `relative'.
+(setq display-line-numbers-type t)
+
+;; Enable Cmake Syntax highlighting
+(require 'cmake-mode)
+
+(setq shell-file-name "/bin/fish" vterm-max-scrollback 5000)
 
 ;; This should create more reasonable window close/resize behaviors
 (customize-set-variable 'display-buffer-base-action
@@ -102,22 +102,20 @@
 
 (customize-set-variable 'even-window-sizes nil)     ; avoid resizing
 
-
 ;; Custom keys ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; https://github.com/noctuid/evil-guide#keybindings-and-states
-
-;; TODO: evil-normal-state-map is probably a good place for ctrl-r:
-;; (define-key evil-normal-state-map (kbd "C-r") 'other-window) ;; todo: buffer-find
-
-;; Window Cycle:
+;; Alt-[ and Alt-] Window Cycle:
 (global-set-key (kbd "M-]") '(lambda() (interactive) (other-window 1)))
 (global-set-key (kbd "M-[") '(lambda() (interactive) (other-window -1)))
 
-;; Previous/Next Tab
-(map!
-  :nv "C-n" #'+workspace/switch-right ;; #'persp-next
-  :nv "C-p" #'+workspace/switch-left ;; #'persp-prev
-  )
+;; Ctrl-p and Ctrl-n for  Previous/Next Tab
+(map! :nv "C-n" #'+workspace/switch-right :nv "C-p" #'+workspace/switch-left)
+
+;; evil bindings:
+;; https://github.com/noctuid/evil-guide#keybindings-and-states
+
+;; In normal mode, ctrl-s will 'search' for an open buffer
+(define-key evil-normal-state-map (kbd "C-s") #'+vertico/switch-workspace-buffer)
+
 
 ;; TODO: See if we still need/want this
 ;; This 'locks' (pins) the window, so it can't be closed:
