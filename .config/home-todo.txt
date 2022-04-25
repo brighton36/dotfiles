@@ -4,8 +4,7 @@ Priority:
   * We're having a problem atm with txt files not opening in text-mode.
     they're opening 'Fundamental'. This is causing our line numbers to not show
     (M-x text-mode seems to fix that...)
-  * ALways turn on line numbers (those sql files weren't line'd)
-  * maybe Understand M-x dedicated-mode
+  * *maybe* Understand M-x dedicated-mode (I think we fixed our window issues)
 
 * fish
   * Can we get ctrl-b and ctrl-f working in insert mode...
@@ -17,8 +16,6 @@ Priority:
   * Can we maybe do a 'search for buffer' with ctrl-s?
 
 * xmonad
-  * Can we center modal / file-chooser dialogs ?
-    leave us hjkl for resize and move operations
   * Urgency... seems to work, but there's something weird going on there...
     * At the least, let's get rid of those control codes
 	* Moving/resizing windows with the keyboard might be good:
@@ -29,8 +26,9 @@ Priority:
     hmm: https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Hooks-StatusBar.html#g:5
 
 tmux:
-  Maybe ctrl-tab?
+  * Maybe ctrl-tab?
   * https://superuser.com/questions/493048/how-to-convert-2-horizontal-panes-to-vertical-panes-in-tmux
+  * Some kind of tab-next tab-prev (meta-shift-[/]?
 
 
 ---------------------

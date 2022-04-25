@@ -24,6 +24,7 @@ import XMonad.Hooks.InsertPosition
 import XMonad.Hooks.ManageDocks(avoidStruts, docks, manageDocks, ToggleStruts(..))
 import XMonad.Hooks.DynamicLog(dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
 import XMonad.Hooks.UrgencyHook
+import XMonad.Hooks.ManageHelpers
 import XMonad.Actions.CycleWS
 import XMonad.Actions.Minimize
 import XMonad.Actions.WindowBringer
@@ -202,6 +203,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
 myManageHook = composeAll
     [ className =? "Steam"    --> doFloat
     , className =? "rdesktop" --> doFloat
+    , className =? "Xmessage" --> doCenterFloat
+    , isDialog                --> doCenterFloat
     ]
 
 -- Layouts --------------------------------------------------------------------
@@ -234,7 +237,10 @@ main = do
   -- This is the only way I could get stalone's stack order on top of xmobar
   spawn "bash -c 'killall stalonetray; sleep 1; stalonetray &'"
   xmproc <- spawnPipe ("xmobar -x 0 ~/.xmonad/xmobar.config")
-  xmonad $ withUrgencyHook dzenUrgencyHook { args = ["-bg", "#dc322f", "-xs", "1"] } $ desktopConfig
+  xmonad 
+    $ XMonad.Hooks.EwmhDesktops.ewmhFullscreen . ewmh 
+    $ withUrgencyHook dzenUrgencyHook { args = ["-bg", "#dc322f", "-xs", "1"] } 
+    $ desktopConfig
     { XMonad.terminal = myTerminal
     , XMonad.modMask = myModMask
     , XMonad.keys = myKeys
