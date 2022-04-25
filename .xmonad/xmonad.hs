@@ -239,8 +239,10 @@ main = do
   xmproc <- spawnPipe ("xmobar -x 0 ~/.xmonad/xmobar.config")
   xmonad 
     $ XMonad.Hooks.EwmhDesktops.ewmhFullscreen . ewmh 
-    $ withUrgencyHook dzenUrgencyHook { args = ["-bg", "#dc322f", "-xs", "1"] } 
-    $ desktopConfig
+    $ withUrgencyHook dzenUrgencyHook { 
+      -- bg: Solarized-red fg: Solarized-base3
+      args = ["-bg", "#dc322f", "-fg", "#fdf6e3", "-xs", "1"] 
+    } $ desktopConfig
     { XMonad.terminal = myTerminal
     , XMonad.modMask = myModMask
     , XMonad.keys = myKeys
@@ -259,7 +261,6 @@ main = do
       , ppTitle   = xmobarColor (blue myColor)  "" . shorten 70
       , ppVisible = wrap "(" ")"
       , ppUrgent  = xmobarColor (red myColor) (yellow myColor)
-      -- TODO: The action isnt working here...
       , ppLayout  = (wrap "<action=xdotool key Super+space>" "</action>") .
         ( \x -> case x of
         "Minimize Spacing Tall"        -> "<icon="++myBitmapsDir++"/tall.xbm/>"

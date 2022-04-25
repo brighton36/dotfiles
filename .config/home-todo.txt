@@ -18,12 +18,16 @@ Priority:
 * xmonad
   * Urgency... seems to work, but there's something weird going on there...
     * At the least, let's get rid of those control codes
+    * Ok, I think we need to switch to https://xmonad.github.io/xmonad-docs/xmonad-contrib-0.16.999/XMonad-Util-ClickableWorkspaces.html
+      * Because our implementation is what's causing this
+      * Probably this is also needed: https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Hooks-StatusBar.html#g:5
+    * Test it by running: sleep 1; echo -e "\a"
+
 	* Moving/resizing windows with the keyboard might be good:
 		* https://hackage.haskell.org/package/xmonad-contrib-0.17.0/docs/XMonad-Actions-FloatKeys.html
 		* Maybe using hjkl with a modifier... meta-alt to move, meta-control to resize?
   * Maybe Look into using statusbar instead of the mobar sleep weirdness:
     https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Hooks-DynamicLog.html#v:statusBar
-    hmm: https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Hooks-StatusBar.html#g:5
 
 tmux:
   * Maybe ctrl-tab?
