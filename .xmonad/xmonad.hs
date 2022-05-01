@@ -1,40 +1,30 @@
 import Data.Map
-import Data.Maybe (fromJust)
-
-import System.IO
 import System.Exit
-import System.Environment
 
 import XMonad
-import XMonad.StackSet
-import XMonad.Config.Desktop
-import XMonad.Prompt.ConfirmPrompt
-import XMonad.Layout.NoBorders (smartBorders, noBorders)
-import XMonad.Layout.Spacing
-import XMonad.Layout.Renamed (renamed, Rename(Replace, CutWordsLeft))
-import XMonad.Layout.WindowNavigation
-import XMonad.Layout.LayoutModifier
-import XMonad.Layout.BoringWindows
-import XMonad.Layout.Minimize
-import XMonad.Util.Run (spawnPipe)
-import XMonad.Util.NamedScratchpad
-import XMonad.Util.Paste
-import XMonad.Util.Loggers
-import XMonad.Util.ClickableWorkspaces
-import XMonad.Hooks.EwmhDesktops
-import XMonad.Hooks.InsertPosition
-import XMonad.Hooks.ManageDocks(avoidStruts, docks, manageDocks, ToggleStruts(..))
-import XMonad.Hooks.DynamicLog(dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
-import XMonad.Hooks.UrgencyHook
-import XMonad.Hooks.ManageHelpers
-import XMonad.Hooks.StatusBar
-import XMonad.Hooks.StatusBar.PP
 import XMonad.Actions.CycleWS
 import XMonad.Actions.Minimize
 import XMonad.Actions.WindowBringer
 import XMonad.Actions.WindowGo
 import XMonad.Actions.CopyWindow
-import XMonad.Actions.PerWindowKeys
+-- We were using this with the key remapping... which would be nice to get working
+-- import XMonad.Actions.PerWindowKeys
+import XMonad.Config.Desktop
+import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.ManageDocks(avoidStruts, docks, manageDocks, ToggleStruts(..))
+import XMonad.Hooks.UrgencyHook
+import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.StatusBar
+import XMonad.Hooks.StatusBar.PP
+import XMonad.Layout.NoBorders (smartBorders, noBorders)
+import XMonad.Layout.Spacing
+import XMonad.Layout.BoringWindows
+import XMonad.Layout.Minimize
+import XMonad.StackSet
+import XMonad.Util.Loggers
+import XMonad.Util.ClickableWorkspaces
+-- We were using this with the key remapping... which would be nice to get working
+-- import XMonad.Util.Paste
 
 -- Colors ---------------------------------------------------------------------
 data ColorSchemes = ColorSchemes{base03, base02, base01, base00, base0, base1, 
@@ -223,10 +213,14 @@ mySpacing = spacingRaw True             -- Only for >1 window
   (Border 10 10 10 10) -- Size of window gaps
   True             -- Enable window gaps
 
--- LayoutHook ----------------------------------------------------------------
-myLayoutHook = minimize . boringWindows $ avoidStruts $ mySpacing $ smartBorders $ (layoutHook desktopConfig)
+-- LayoutHook -----------------------------------------------------------------
+myLayoutHook = minimize . boringWindows 
+  $ avoidStruts 
+  $ mySpacing 
+  $ smartBorders 
+  $ (layoutHook desktopConfig)
 
--- xmobar --------------------------------------------------------------------
+-- xmobar ---------------------------------------------------------------------
 mySB = statusBarProp "xmobar" (pure xmobarPP)
 myPP = xmobarPP { 
   ppCurrent = xmcBlue . xmobarBorder "Top" (blue myColor) 2
@@ -264,7 +258,7 @@ myPP = xmobarPP {
 	xmcBase1   = xmobarColor (base1 myColor) ""
 	xmcBase3   = xmobarColor (base3 myColor) ""
 
--- Main ----------------------------------------------------------------------
+-- Main -----------------------------------------------------------------------
 main :: IO ()
 main = do
   -- This is the only way I could get stalone's stack order on top of xmobar

@@ -20,21 +20,13 @@ Priority:
   * Shadows would be nice...
 
 * xmonad
-  * Urgency... seems to work, but there's something weird going on there...
-    * At the least, let's get rid of those control codes
-		* Lets do this: https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Hooks-StatusBar.html
-    * Ok, I think we need to switch to https://xmonad.github.io/xmonad-docs/xmonad-contrib-0.16.999/XMonad-Util-ClickableWorkspaces.html
-      * Because our implementation is what's causing this
-      * Test it by running: sleep 1; echo -e "\a"
   * Autokey added a tray icon, which is why the power is getting clipped
   * Something weird is happening with windows appearing on workspaces that they shouldnt
-    * maybe this is a bug in the bleeding edge?
+    * maybe this is a bug in the bleeding edge? maybe it's because we don't have desktop backgrounds..
 
 	* Moving/resizing windows with the keyboard might be good:
 		* https://hackage.haskell.org/package/xmonad-contrib-0.17.0/docs/XMonad-Actions-FloatKeys.html
 		* Maybe using hjkl with a modifier... meta-alt to move, meta-control to resize?
-  * Maybe Look into using statusbar instead of the mobar sleep weirdness:
-    https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Hooks-DynamicLog.html#v:statusBar
 
 * maybe we should be using ctrl-o andn ctrl-i more... instead of ctrl-n annd ctrl-p
   * It's already the default on firefox...
