@@ -240,7 +240,8 @@ myPP = xmobarPP {
     , ppOrder           = \[ws, l, _, wins] -> [ws, l, wins]
     -- NOTE: If we dont like the window display, here's where that's controlled
 		, ppExtras          = [XMonad.Util.Loggers.logTitles formatFocused formatUnfocused]
-    , ppLayout  = ( \x -> case x of
+    , ppLayout  = (wrap "<action=xdotool key Super+space>" "</action>") .
+      ( \x -> case x of
       "Minimize Spacing Tall"        -> "<icon="++myBitmapsDir++"/tall.xbm/>"
       "Minimize Spacing Mirror Tall" -> "<icon="++myBitmapsDir++"/mtall.xbm/>"
       "Minimize Spacing Full"        -> "<icon="++myBitmapsDir++"/full.xbm/>"
