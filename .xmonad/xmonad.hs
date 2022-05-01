@@ -236,7 +236,7 @@ myPP = xmobarPP {
     , ppTitleSanitize   = xmobarStrip
     , ppHidden          = xmcBase3
     , ppHiddenNoWindows = xmcBase1
-    , ppUrgent          = xmcRed . wrap (xmcYellow "!") (xmcYellow "!")
+    , ppUrgent          = xmcRed
     , ppOrder           = \[ws, l, _, wins] -> [ws, l, wins]
     -- NOTE: If we dont like the window display, here's where that's controlled
 		, ppExtras          = [XMonad.Util.Loggers.logTitles formatFocused formatUnfocused]
