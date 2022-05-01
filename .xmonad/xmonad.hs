@@ -36,7 +36,6 @@ import XMonad.Actions.WindowGo
 import XMonad.Actions.CopyWindow
 import XMonad.Actions.PerWindowKeys
 
-
 -- Colors ---------------------------------------------------------------------
 data ColorSchemes = ColorSchemes{base03, base02, base01, base00, base0, base1, 
   base2, base3, black, white, yellow, orange, red, magenta, violet, blue, cyan, 
@@ -224,37 +223,36 @@ mySpacing = spacingRaw True             -- Only for >1 window
   (Border 10 10 10 10) -- Size of window gaps
   True             -- Enable window gaps
 
-
 -- LayoutHook ----------------------------------------------------------------
 myLayoutHook = minimize . boringWindows $ avoidStruts $ mySpacing $ smartBorders $ (layoutHook desktopConfig)
 
 -- xmobar --------------------------------------------------------------------
 mySB = statusBarProp "xmobar" (pure xmobarPP)
 myPP = xmobarPP { 
-    ppCurrent = xmcBlue . xmobarBorder "Top" (blue myColor) 2
-    , ppSep             = xmcBase01 " | "
-    , ppTitleSanitize   = xmobarStrip
-    , ppHidden          = xmcBase3
-    , ppHiddenNoWindows = xmcBase1
-    , ppUrgent          = xmcRed
-    , ppOrder           = \[ws, l, _, wins] -> [ws, l, wins]
-    -- NOTE: If we dont like the window display, here's where that's controlled
-		, ppExtras          = [XMonad.Util.Loggers.logTitles formatFocused formatUnfocused]
-    , ppLayout  = (wrap "<action=xdotool key Super+space>" "</action>") .
-      ( \x -> case x of
-      "Minimize Spacing Tall"        -> "<icon="++myBitmapsDir++"/tall.xbm/>"
-      "Minimize Spacing Mirror Tall" -> "<icon="++myBitmapsDir++"/mtall.xbm/>"
-      "Minimize Spacing Full"        -> "<icon="++myBitmapsDir++"/full.xbm/>"
-      )
+  ppCurrent = xmcBlue . xmobarBorder "Top" (blue myColor) 2
+  , ppSep             = xmcBase01 " | "
+  , ppTitleSanitize   = xmobarStrip
+  , ppHidden          = xmcBase3
+  , ppHiddenNoWindows = xmcBase1
+  , ppUrgent          = xmcRed
+  , ppOrder           = \[ws, l, _, wins] -> [ws, l, wins]
+  -- NOTE: If we dont like the window display, here's where that's controlled
+  , ppExtras          = [XMonad.Util.Loggers.logTitles formatFocused formatUnfocused]
+  , ppLayout  = (wrap "<action=xdotool key Super+space>" "</action>") .
+    ( \x -> case x of
+    "Minimize Spacing Tall"        -> "<icon="++myBitmapsDir++"/tall.xbm/>"
+    "Minimize Spacing Mirror Tall" -> "<icon="++myBitmapsDir++"/mtall.xbm/>"
+    "Minimize Spacing Full"        -> "<icon="++myBitmapsDir++"/full.xbm/>"
+    )
 	}
 	where
-	formatFocused   = wrap (xmcBlue    "[") (xmcBlue    "]") . xmcBlue . ppWindow
-	formatUnfocused = wrap (xmcBase1 "[") (xmcBase1 "]") . xmcBase1    . ppWindow
+	formatFocused   = wrap (xmcBlue  "[") (xmcBlue  "]") . xmcBlue  . ppWindow
+	formatUnfocused = wrap (xmcBase1 "[") (xmcBase1 "]") . xmcBase1 . ppWindow
 
 	-- | Windows should have *some* title, which should not not exceed a
 	-- sane length.
 	ppWindow :: String -> String
-	ppWindow = xmobarRaw . (\w -> if Prelude.null w then "untitled" else w) . shorten 30
+	ppWindow = xmobarRaw . (\w -> if Prelude.null w then "untitled" else w) . shorten 20
 
 	xmcBlue, xmcBase01, xmcBase1, xmcBase3, xmcMagenta, xmcRed, xmcWhite, xmcYellow :: String -> String
 	xmcMagenta = xmobarColor (magenta myColor) ""
