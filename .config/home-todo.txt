@@ -1,27 +1,34 @@
 Priority:
 
+* Telegram
+  * ctrl-w isn't working...
+  * ctrl-a isn't working...
+  * ctrl-h and ctrl-d...
 * emacs
+  * Why doesnt M-[/] work in vterm...
   * We're having a problem atm with txt files not opening in text-mode.
     they're opening 'Fundamental'. This is causing our line numbers to not show
     (M-x text-mode seems to fix that...)
   * *maybe* Understand M-x dedicated-mode (I think we fixed our window issues)
+  * Window resize using ctrl-shift-< and ctrl-shift->
 
 * fish
   * Can we get ctrl-b and ctrl-f working in insert mode...
 
 * Those dunst modal colors could be better..
-
-* vim
-  * see that todo wrt escape in the vimrc
-  * Can we maybe do a 'search for buffer' with ctrl-s?
+* maybe try picom again... or even picom-jonaburg-fix?
+  * Shadows would be nice...
 
 * xmonad
   * Urgency... seems to work, but there's something weird going on there...
     * At the least, let's get rid of those control codes
+		* Lets do this: https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Hooks-StatusBar.html
     * Ok, I think we need to switch to https://xmonad.github.io/xmonad-docs/xmonad-contrib-0.16.999/XMonad-Util-ClickableWorkspaces.html
       * Because our implementation is what's causing this
-      * Probably this is also needed: https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Hooks-StatusBar.html#g:5
-    * Test it by running: sleep 1; echo -e "\a"
+      * Test it by running: sleep 1; echo -e "\a"
+  * Autokey added a tray icon, which is why the power is getting clipped
+  * Something weird is happening with windows appearing on workspaces that they shouldnt
+    * maybe this is a bug in the bleeding edge?
 
 	* Moving/resizing windows with the keyboard might be good:
 		* https://hackage.haskell.org/package/xmonad-contrib-0.17.0/docs/XMonad-Actions-FloatKeys.html
@@ -29,10 +36,17 @@ Priority:
   * Maybe Look into using statusbar instead of the mobar sleep weirdness:
     https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Hooks-DynamicLog.html#v:statusBar
 
+* maybe we should be using ctrl-o andn ctrl-i more... instead of ctrl-n annd ctrl-p
+  * It's already the default on firefox...
+
 tmux:
   * Maybe ctrl-tab?
   * https://superuser.com/questions/493048/how-to-convert-2-horizontal-panes-to-vertical-panes-in-tmux
   * Some kind of tab-next tab-prev (meta-shift-[/]?
+
+* vim
+  * see that todo wrt escape in the vimrc
+  * Can we maybe do a 'search for buffer' with ctrl-s?
 
 
 ---------------------

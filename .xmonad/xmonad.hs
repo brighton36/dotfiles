@@ -19,12 +19,15 @@ import XMonad.Layout.Minimize
 import XMonad.Util.Run (spawnPipe)
 import XMonad.Util.NamedScratchpad
 import XMonad.Util.Paste
+import XMonad.Util.Loggers
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.InsertPosition
 import XMonad.Hooks.ManageDocks(avoidStruts, docks, manageDocks, ToggleStruts(..))
 import XMonad.Hooks.DynamicLog(dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
 import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.StatusBar
+import XMonad.Hooks.StatusBar.PP
 import XMonad.Actions.CycleWS
 import XMonad.Actions.Minimize
 import XMonad.Actions.WindowBringer
@@ -34,17 +37,27 @@ import XMonad.Actions.PerWindowKeys
 
 
 -- Colors ---------------------------------------------------------------------
-data ColorSchemes = ColorSchemes{black ,white ,gray ,yellow ,orange ,red ,purple ,blue ,cyan ,green :: String}
+data ColorSchemes = ColorSchemes{base03, base02, base01, base00, base0, base1, 
+  base2, base3, black, white, yellow, orange, red, magenta, violet, blue, cyan, 
+  green :: String}
 
 mySolarized :: ColorSchemes
 mySolarized = ColorSchemes {
-  black   = "#073642",
-  white   = "#fdf6e3",
-  gray    = "#93a1a1",
+  base03   = "#002b36",
+  base02   = "#073642",
+  base01   = "#586e75",
+  base00   = "#657b83",
+  base0   = "#839496",
+  base1   = "#93a1a1",
+  base2   = "#eee8d5",
+  base3   = "#fdf6e3",
+  black   = "#073642", -- TODO: nix
+  white   = "#fdf6e3", -- TODO: nix
   yellow  = "#b58900",
   orange  = "#cb4b16",
   red     = "#dc322f",
-  purple  = "#6c71c4",
+  magenta = "#d33682",
+  violet  = "#6c71c4",
   blue    = "#268bd2",
   cyan    = "#2aa198",
   green   = "#859900"
@@ -64,11 +77,6 @@ myFilemanager          = "pcmanfm"    :: String
 myBitmapsDir           = home++"/.xmonad/icons"
 
 -- Keys -----------------------------------------------------------------------
-dmenuTransArgs = ["-l", "50", "-nb", "#414F59", "-sb", "#636D7B", "-sf",
-  "#CEE7EF", "-fn", "-o", "0.85"]
-
-dmenuSwitchMenuArgs = dmenuTransArgs ++ ["-p", "Switch to Window:"]
-
 toggleFloat w = windows (\s -> if Data.Map.member w (XMonad.StackSet.floating s)
   then XMonad.StackSet.sink w s
   else (XMonad.StackSet.float w (XMonad.StackSet.RationalRect (1/3) (1/4) (1/2) (4/5)) s))
@@ -137,21 +145,21 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   --     (pure True, XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_bracketleft) ])
 
   -- Ctrl-Shift-l in browsers, to F6:
-	-- (This toggles location-bar/body focus)
+  -- (This toggles location-bar/body focus)
   -- , ((controlMask .|. shiftMask, xK_l ), bindFirst [ (
   --     className =? "firefox" <||> className =? "Google-chrome", 
   --     XMonad.Util.Paste.sendKey noModMask xK_F6), 
   --     (pure True, XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_l) ])
 
   -- Ctrl-backspace in browsers, to Ctrl-F4:
-	-- (This closes the browser tab)
+  -- (This closes the browser tab)
   --, ((controlMask , xK_BackSpace ), bindFirst [ (
   --    className =? "firefox" <||> className =? "Google-chrome", 
   --    XMonad.Util.Paste.sendKey controlMask xK_F4), 
   --    (pure True, XMonad.Util.Paste.sendKey controlMask xK_BackSpace) ])
 
   -- Ctrl-shift-backspace in browsers, to Ctrl-shift-t:
-	-- (This undo's the close-tab)
+  -- (This undo's the close-tab)
   -- , ((controlMask .|. shiftMask, xK_BackSpace ), bindFirst [ (
   --     className =? "firefox" <||> className =? "Google-chrome", 
   --     XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_t), 
@@ -220,28 +228,53 @@ mySpacing = spacingRaw True             -- Only for >1 window
 myLayoutHook = minimize . boringWindows $ avoidStruts $ mySpacing $ smartBorders $ (layoutHook desktopConfig)
 
 -- xmobar --------------------------------------------------------------------
-xmobarEscape = concatMap doubleLts
-  where doubleLts '<' = "<<"
-        doubleLts x   = [x]
+mySB = statusBarProp "xmobar" (pure xmobarPP)
+myPP = xmobarPP { 
+    ppCurrent = xmcBlue . xmobarBorder "Top" (blue myColor) 2
+    , ppSep             = xmcBase01 " | "
+    , ppTitleSanitize   = xmobarStrip
+    , ppHidden          = xmcBase3
+    , ppHiddenNoWindows = xmcBase1
+    , ppUrgent          = xmcRed . wrap (xmcYellow "!") (xmcYellow "!")
+    , ppOrder           = \[ws, l, _, wins] -> [ws, l, wins]
+    -- NOTE: If we dont like the window display, here's where that's controlled
+		, ppExtras          = [XMonad.Util.Loggers.logTitles formatFocused formatUnfocused]
+    , ppLayout  = ( \x -> case x of
+      "Minimize Spacing Tall"        -> "<icon="++myBitmapsDir++"/tall.xbm/>"
+      "Minimize Spacing Mirror Tall" -> "<icon="++myBitmapsDir++"/mtall.xbm/>"
+      "Minimize Spacing Full"        -> "<icon="++myBitmapsDir++"/full.xbm/>"
+      )
+	}
+	where
+	formatFocused   = wrap (xmcBlue    "[") (xmcBlue    "]") . xmcBlue . ppWindow
+	formatUnfocused = wrap (xmcBase1 "[") (xmcBase1 "]") . xmcBase1    . ppWindow
 
-myWorkspaces :: [String]        
-myWorkspaces = clickable . (Prelude.map xmobarEscape) $ ["1","2","3","4","5", "6", "7", "8", "9"]
-  where                                                                       
-    clickable l = [ "<action=xdotool key Super+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
-      (i,ws) <- zip [1..9] l,                                        
-      let n = i ]
+	-- | Windows should have *some* title, which should not not exceed a
+	-- sane length.
+	ppWindow :: String -> String
+	ppWindow = xmobarRaw . (\w -> if Prelude.null w then "untitled" else w) . shorten 30
+
+	xmcBlue, xmcBase01, xmcBase1, xmcBase3, xmcMagenta, xmcRed, xmcWhite, xmcYellow :: String -> String
+	xmcMagenta = xmobarColor (magenta myColor) ""
+	xmcBlue    = xmobarColor (blue myColor) ""
+	xmcWhite   = xmobarColor (white myColor) ""
+	xmcYellow  = xmobarColor (yellow myColor) ""
+	xmcRed     = xmobarColor (red myColor) ""
+	xmcBase01  = xmobarColor (base01 myColor) ""
+	xmcBase1   = xmobarColor (base1 myColor) ""
+	xmcBase3   = xmobarColor (base3 myColor) ""
 
 -- Main ----------------------------------------------------------------------
 main :: IO ()
 main = do
   -- This is the only way I could get stalone's stack order on top of xmobar
   spawn "bash -c 'killall stalonetray; sleep 1; stalonetray &'"
-  xmproc <- spawnPipe ("xmobar -x 0 ~/.xmonad/xmobar.config")
+  mySB <- statusBarPipe "xmobar -x 0 ~/.xmonad/xmobar.config" (pure myPP)
   xmonad 
-    $ XMonad.Hooks.EwmhDesktops.ewmhFullscreen . ewmh 
-    $ withUrgencyHook dzenUrgencyHook { 
-      -- bg: Solarized-red fg: Solarized-base3
-      args = ["-bg", "#dc322f", "-fg", "#fdf6e3", "-xs", "1"] 
+    . XMonad.Hooks.EwmhDesktops.ewmhFullscreen . ewmh 
+    . withSB mySB 
+    . withUrgencyHook dzenUrgencyHook { 
+      args = ["-bg", (red myColor), "-fg", (base3 myColor), "-xs", "1"] 
     } $ desktopConfig
     { XMonad.terminal = myTerminal
     , XMonad.modMask = myModMask
@@ -253,19 +286,4 @@ main = do
     , XMonad.manageHook = manageDocks <+> myManageHook 
                         <+> manageHook desktopConfig
     , XMonad.layoutHook = myLayoutHook
-    , XMonad.workspaces = myWorkspaces
-    , logHook = dynamicLogWithPP xmobarPP
-      { ppOutput = hPutStrLn xmproc
-      , ppCurrent = xmobarColor (blue myColor) "" . wrap "[" "]"
-      , ppHiddenNoWindows = xmobarColor (gray myColor) ""
-      , ppTitle   = xmobarColor (blue myColor)  "" . shorten 70
-      , ppVisible = wrap "(" ")"
-      , ppUrgent  = xmobarColor (red myColor) (yellow myColor)
-      , ppLayout  = (wrap "<action=xdotool key Super+space>" "</action>") .
-        ( \x -> case x of
-        "Minimize Spacing Tall"        -> "<icon="++myBitmapsDir++"/tall.xbm/>"
-        "Minimize Spacing Mirror Tall" -> "<icon="++myBitmapsDir++"/mtall.xbm/>"
-        "Minimize Spacing Full"        -> "<icon="++myBitmapsDir++"/full.xbm/>"
-        )
-      }
     }
