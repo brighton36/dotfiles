@@ -20,6 +20,7 @@ import XMonad.Util.Run (spawnPipe)
 import XMonad.Util.NamedScratchpad
 import XMonad.Util.Paste
 import XMonad.Util.Loggers
+import XMonad.Util.ClickableWorkspaces
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.InsertPosition
 import XMonad.Hooks.ManageDocks(avoidStruts, docks, manageDocks, ToggleStruts(..))
@@ -269,7 +270,7 @@ main :: IO ()
 main = do
   -- This is the only way I could get stalone's stack order on top of xmobar
   spawn "bash -c 'killall stalonetray; sleep 1; stalonetray &'"
-  mySB <- statusBarPipe "xmobar -x 0 ~/.xmonad/xmobar.config" (pure myPP)
+  mySB <- statusBarPipe "xmobar -x 0 ~/.xmonad/xmobar.config" (clickablePP myPP)
   xmonad 
     . XMonad.Hooks.EwmhDesktops.ewmhFullscreen . ewmh 
     . withSB mySB 
