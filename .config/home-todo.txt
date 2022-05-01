@@ -1,9 +1,16 @@
 Priority:
 
-* Telegram
-  * ctrl-w isn't working...
-  * ctrl-a isn't working...
-  * ctrl-h and ctrl-d...
+* fish
+  * Can we get ctrl-b and ctrl-f working in insert mode...
+
+* tmux:
+  * Something better to navigate through the tabs (alt-n/p?)
+  * alt-space? https://superuser.com/questions/493048/how-to-convert-2-horizontal-panes-to-vertical-panes-in-tmux
+
+* vim
+  * see that todo wrt escape in the vimrc
+  * Can we maybe do a 'search for buffer' with ctrl-s?
+
 * emacs
   * Why doesnt M-[/] work in vterm...
   * We're having a problem atm with txt files not opening in text-mode.
@@ -12,34 +19,23 @@ Priority:
   * *maybe* Understand M-x dedicated-mode (I think we fixed our window issues)
   * Window resize using ctrl-shift-< and ctrl-shift->
 
-* fish
-  * Can we get ctrl-b and ctrl-f working in insert mode...
-
-* Those dunst modal colors could be better..
-* maybe try picom again... or even picom-jonaburg-fix?
-  * Shadows would be nice...
 
 * xmonad
+  * maybe try picom again... or even picom-jonaburg-fix?
+    * Shadows would be nice...
+  * Maybe cat backgrounds
+  * Maybe let's not use solarized-dark for the background color on the monad bar
+  * Those dunst modal colors could be better..
+    * And the date shouldn't be cyan... white?
   * Autokey added a tray icon, which is why the power is getting clipped
   * Something weird is happening with windows appearing on workspaces that they shouldnt
     * maybe this is a bug in the bleeding edge? maybe it's because we don't have desktop backgrounds..
-
 	* Moving/resizing windows with the keyboard might be good:
 		* https://hackage.haskell.org/package/xmonad-contrib-0.17.0/docs/XMonad-Actions-FloatKeys.html
 		* Maybe using hjkl with a modifier... meta-alt to move, meta-control to resize?
 
 * maybe we should be using ctrl-o andn ctrl-i more... instead of ctrl-n annd ctrl-p
   * It's already the default on firefox...
-
-tmux:
-  * Maybe ctrl-tab?
-  * https://superuser.com/questions/493048/how-to-convert-2-horizontal-panes-to-vertical-panes-in-tmux
-  * Some kind of tab-next tab-prev (meta-shift-[/]?
-
-* vim
-  * see that todo wrt escape in the vimrc
-  * Can we maybe do a 'search for buffer' with ctrl-s?
-
 
 ---------------------
 
