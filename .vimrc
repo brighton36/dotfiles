@@ -1,12 +1,14 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Amix's vim:
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " I really don't like this plugin, installed by Amix. So, I disabled it
 let g:pathogen_disabled = []
 call add(g:pathogen_disabled, 'auto-pairs')
 call add(g:pathogen_disabled, 'vim-fugitive')
 call add(g:pathogen_disabled, 'tlib')
 call add(g:pathogen_disabled, 'vim-snipmate')
+call add(g:pathogen_disabled, 'vim-multiple-cursors')
 
 set runtimepath+=~/.vim_runtime
 
@@ -61,7 +63,10 @@ nnoremap <silent> <C-T> :tabn<CR>
 :inoremap <C-@> <Esc>
 :xnoremap <C-@> <Esc>
 
-
+" Map ctrl-s to :CtrlPBuffer
+" let g:ctrlp_cmd = 'CtrlPBuffer'
+" let g:ctrlp_map = '<C-s>'
+map <c-s> :CtrlPBuffer<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugins
