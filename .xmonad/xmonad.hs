@@ -60,7 +60,7 @@ myFocusFollowsMouse    = False        :: Bool
 myBorderWidth          = 6            :: Dimension
 myWindowGap            = 12           :: Integer
 myColor                = mySolarized  :: ColorSchemes
-myFocusedBorderColor   = black myColor :: String
+myFocusedBorderColor   = blue myColor :: String
 myUnFocusedBorderColor = white myColor :: String
 myTerminal             = "alacritty"  :: String
 myFilemanager          = "pcmanfm"    :: String
@@ -223,12 +223,13 @@ myLayoutHook = minimize . boringWindows
 -- xmobar ---------------------------------------------------------------------
 mySB = statusBarProp "xmobar" (pure xmobarPP)
 myPP = xmobarPP { 
-  ppCurrent = xmcBlue . xmobarBorder "Top" (blue myColor) 2
+  ppCurrent = xmcWhite . xmobarBorder "Top" (white myColor) 2 . wrap half_space half_space
   , ppSep             = xmcBase01 " | "
   , ppTitleSanitize   = xmobarStrip
-  , ppHidden          = xmcBase3
-  , ppHiddenNoWindows = xmcBase1
+  , ppHidden          = xmcBlue . wrap half_space half_space
+  , ppHiddenNoWindows = xmcBase1 . wrap half_space half_space
   , ppUrgent          = xmcRed
+  , ppWsSep           = ""
   , ppOrder           = \[ws, l, _, wins] -> [ws, l, wins]
   -- NOTE: If we dont like the window display, here's where that's controlled
   , ppExtras          = [XMonad.Util.Loggers.logTitles formatFocused formatUnfocused]
@@ -238,25 +239,28 @@ myPP = xmobarPP {
     "Minimize Spacing Mirror Tall" -> "<icon="++myBitmapsDir++"/mtall.xbm/>"
     "Minimize Spacing Full"        -> "<icon="++myBitmapsDir++"/full.xbm/>"
     )
-	}
-	where
-	formatFocused   = wrap (xmcBlue  "[") (xmcBlue  "]") . xmcBlue  . ppWindow
-	formatUnfocused = wrap (xmcBase1 "[") (xmcBase1 "]") . xmcBase1 . ppWindow
+  }
+  where
+  formatFocused   = wrap (xmcWhiteOnBlue  "[ >") (xmcWhiteOnBlue  "]") . xmcWhiteOnBlue  . ppWindow
+  formatUnfocused = wrap (xmcBlackOnWhite "[ -") (xmcBlackOnWhite "]") . xmcBlackOnWhite . ppWindow
+  half_space = "\x0020" -- TODO: U+0020 is a regular space. We may want U+2009 in some fonts
 
-	-- | Windows should have *some* title, which should not not exceed a
-	-- sane length.
-	ppWindow :: String -> String
-	ppWindow = xmobarRaw . (\w -> if Prelude.null w then "untitled" else w) . shorten 20
+  -- | Windows should have *some* title, which should not not exceed a
+  -- sane length.
+  ppWindow :: String -> String
+  ppWindow = xmobarRaw . (\w -> if Prelude.null w then "untitled" else w) . shorten 20
 
-	xmcBlue, xmcBase01, xmcBase1, xmcBase3, xmcMagenta, xmcRed, xmcWhite, xmcYellow :: String -> String
-	xmcMagenta = xmobarColor (magenta myColor) ""
-	xmcBlue    = xmobarColor (blue myColor) ""
-	xmcWhite   = xmobarColor (white myColor) ""
-	xmcYellow  = xmobarColor (yellow myColor) ""
-	xmcRed     = xmobarColor (red myColor) ""
-	xmcBase01  = xmobarColor (base01 myColor) ""
-	xmcBase1   = xmobarColor (base1 myColor) ""
-	xmcBase3   = xmobarColor (base3 myColor) ""
+  xmcBlue, xmcBase01, xmcBase1, xmcBase3, xmcMagenta, xmcRed, xmcWhite, xmcBlackOnWhite,  xmcWhiteOnBlue, xmcYellow :: String -> String
+  xmcMagenta = xmobarColor (magenta myColor) ""
+  xmcBlue    = xmobarColor (blue myColor) ""
+  xmcBlackOnWhite = xmobarColor (black myColor) "#ffffff"
+  xmcWhiteOnBlue = xmobarColor (white myColor) "#ffffff"
+  xmcWhite   = xmobarColor (white myColor) ""
+  xmcYellow  = xmobarColor (yellow myColor) ""
+  xmcRed     = xmobarColor (red myColor) ""
+  xmcBase01  = xmobarColor (base01 myColor) ""
+  xmcBase1   = xmobarColor (base1 myColor) ""
+  xmcBase3   = xmobarColor (base3 myColor) ""
 
 -- Main -----------------------------------------------------------------------
 main :: IO ()
@@ -277,7 +281,6 @@ main = do
     , XMonad.borderWidth = myBorderWidth
     , XMonad.focusedBorderColor = myFocusedBorderColor
     , XMonad.normalBorderColor = myUnFocusedBorderColor
-    , XMonad.manageHook = manageDocks <+> myManageHook 
-                        <+> manageHook desktopConfig
+    , XMonad.manageHook = manageDocks <+> myManageHook <+> manageHook desktopConfig
     , XMonad.layoutHook = myLayoutHook
     }

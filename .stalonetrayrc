@@ -1,13 +1,13 @@
-decorations none
-transparent false
+decorations title
+transparent true
 dockapp_mode none
-geometry 4x1-180+1
+geometry 4x1-200+1054
 max_geometry 5x1-325-10
-background "#073642" # Solarized base02
+background "#268bd2" # Solarized blue
 kludges force_icons_size
-grow_gravity NE
-icon_gravity NE
-icon_size 20
+grow_gravity NW
+icon_gravity NW
+icon_size 23
 sticky true
 window_type dock
 window_layer top

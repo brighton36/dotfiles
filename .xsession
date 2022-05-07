@@ -15,7 +15,7 @@ xset fp rehash
 # opaque:
 # NOTE: The no-fading-openclose *should* prevent the desktop from displaying
 # on resume.
-# /usr/bin/picom -b --no-fading-openclose
+/usr/bin/picom -b # --no-fading-openclose
 
 # I stopped liking the background image...
 # /usr/bin/feh --bg-max --randomize "$HOME/Pictures/Wallpapers/"
