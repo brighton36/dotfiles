@@ -54,7 +54,6 @@ nnoremap <silent> <C-p> :bp<CR>
 nnoremap <silent> <C-n> :bn<CR>
 
 " Tab Navigation
-" TODO: Why does this affect escape, again?
 nnoremap <silent> <C-t> :tabp<CR>
 nnoremap <silent> <C-T> :tabn<CR>
 

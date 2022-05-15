@@ -4,8 +4,8 @@ trayer --edge bottom\
   --SetDockType true\
   --SetPartialStrut true\
   --expand true\
-  --height 28\
-  --distance 178\
+  --height 25\
+  --distance 176\
   --distancefrom right\
   --transparent true\
   --alpha 170\
