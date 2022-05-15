@@ -242,7 +242,7 @@ myPP = xmobarPP {
   }
   where
   formatFocused   = wrap (xmcWhite  "[ >") (xmcWhite  "]") . xmcWhite  . ppWindow
-  formatUnfocused = wrap (xmcGray "[ -") (xmcGray "]") . xmcGray . ppWindow
+  formatUnfocused = wrap (xmcBlue "[ -") (xmcBlue "]") . xmcBlue . ppWindow
   half_space = "\x0020" -- TODO: U+0020 is a regular space. We may want U+2009 in some fonts
 
   -- | Windows should have *some* title, which should not not exceed a
@@ -250,10 +250,9 @@ myPP = xmobarPP {
   ppWindow :: String -> String
   ppWindow = xmobarRaw . (\w -> if Prelude.null w then "untitled" else w) . shorten 20
 
-  xmcBlue, xmcBase01, xmcBase1, xmcBase3, xmcMagenta, xmcRed, xmcWhite, xmcGray, xmcYellow :: String -> String
+  xmcBlue, xmcBase01, xmcBase1, xmcBase3, xmcMagenta, xmcRed, xmcWhite, xmcYellow :: String -> String
   xmcMagenta = xmobarColor (magenta myColor) ""
   xmcBlue    = xmobarColor (blue myColor) ""
-  xmcGray    = xmobarColor (base1 myColor) "#ffffff"
   xmcWhite   = xmobarColor (white myColor) ""
   xmcYellow  = xmobarColor (yellow myColor) ""
   xmcRed     = xmobarColor (red myColor) ""

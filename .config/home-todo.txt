@@ -1,21 +1,23 @@
 Priority:
 
+* Get the brightness up, after sleep. The default brightness sucks
 * fish
   * Can we get ctrl-b and ctrl-f working in insert mode...
 
 * tmux:
-  * Let's dim the background pane better... with a gray background?
+  * Let's maybe try to dim the background pane better... with a gray background?
   * Something better to navigate through the tabs (alt-n/p?)
   * alt-space? https://superuser.com/questions/493048/how-to-convert-2-horizontal-panes-to-vertical-panes-in-tmux
 
 * xmonad
-  * And/or https://www.reddit.com/r/xmonad/comments/t1v3e2/i_cannot_load_icon_fonts_nerd_fonts_on_xmobar/
+  * Are the wallpapers randomly cycling?
   * Naming the workspaces instead of using numbers might be a good idea
+  * I'm not crazy with how the workspace windows are listed. We should colorize that better
+    * What about that Unsafe... can we make it safer?
   * Bind Bluetooth off to F11?
-  * What about that Unsafe... can we make it safer?
-  * Wallpapers per-desktop maybe and workspace names https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Hooks-WallpaperSetter.html
   * Those dunst modal colors could be better..
   * Maybe function key + hjkl should map to up/down/left/rigght
+    * Or maybe just the meta/ctrl there on the lower left
     * Firefox needs a word-right and word-left (ctrl-right, ctrl-left) nearer to the home row
 	* Moving/resizing windows with the keyboard might be good:
 		* https://hackage.haskell.org/package/xmonad-contrib-0.17.0/docs/XMonad-Actions-FloatKeys.html
