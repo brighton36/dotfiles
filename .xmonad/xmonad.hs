@@ -241,8 +241,8 @@ myPP = xmobarPP {
     )
   }
   where
-  formatFocused   = wrap (xmcWhiteOnBlue  "[ >") (xmcWhiteOnBlue  "]") . xmcWhiteOnBlue  . ppWindow
-  formatUnfocused = wrap (xmcBlackOnWhite "[ -") (xmcBlackOnWhite "]") . xmcBlackOnWhite . ppWindow
+  formatFocused   = wrap (xmcWhite  "[ >") (xmcWhite  "]") . xmcWhite  . ppWindow
+  formatUnfocused = wrap (xmcGray "[ -") (xmcGray "]") . xmcGray . ppWindow
   half_space = "\x0020" -- TODO: U+0020 is a regular space. We may want U+2009 in some fonts
 
   -- | Windows should have *some* title, which should not not exceed a
@@ -250,11 +250,10 @@ myPP = xmobarPP {
   ppWindow :: String -> String
   ppWindow = xmobarRaw . (\w -> if Prelude.null w then "untitled" else w) . shorten 20
 
-  xmcBlue, xmcBase01, xmcBase1, xmcBase3, xmcMagenta, xmcRed, xmcWhite, xmcBlackOnWhite,  xmcWhiteOnBlue, xmcYellow :: String -> String
+  xmcBlue, xmcBase01, xmcBase1, xmcBase3, xmcMagenta, xmcRed, xmcWhite, xmcGray, xmcYellow :: String -> String
   xmcMagenta = xmobarColor (magenta myColor) ""
   xmcBlue    = xmobarColor (blue myColor) ""
-  xmcBlackOnWhite = xmobarColor (black myColor) "#ffffff"
-  xmcWhiteOnBlue = xmobarColor (white myColor) "#ffffff"
+  xmcGray    = xmobarColor (base1 myColor) "#ffffff"
   xmcWhite   = xmobarColor (white myColor) ""
   xmcYellow  = xmobarColor (yellow myColor) ""
   xmcRed     = xmobarColor (red myColor) ""
@@ -262,11 +261,15 @@ myPP = xmobarPP {
   xmcBase1   = xmobarColor (base1 myColor) ""
   xmcBase3   = xmobarColor (base3 myColor) ""
 
+-- Startup Hook ---------------------------------------------------------------
+myStartupHook :: X ()
+myStartupHook = do
+  -- spawn "bash -c 'killall stalonetray; sleep 1; stalonetray &'"
+  spawn "~/.xmonad/systray.sh &"
+
 -- Main -----------------------------------------------------------------------
 main :: IO ()
 main = do
-  -- This is the only way I could get stalone's stack order on top of xmobar
-  spawn "bash -c 'killall stalonetray; sleep 1; stalonetray &'"
   mySB <- statusBarPipe "xmobar -x 0 ~/.xmonad/xmobar.config" (clickablePP myPP)
   xmonad 
     . XMonad.Hooks.EwmhDesktops.ewmhFullscreen . ewmh 
@@ -274,13 +277,14 @@ main = do
     . withUrgencyHook dzenUrgencyHook { 
       args = ["-bg", (red myColor), "-fg", (base3 myColor), "-xs", "1"] 
     } $ desktopConfig
-    { XMonad.terminal = myTerminal
-    , XMonad.modMask = myModMask
-    , XMonad.keys = myKeys
-    , XMonad.focusFollowsMouse = myFocusFollowsMouse
-    , XMonad.borderWidth = myBorderWidth
+    { XMonad.terminal           = myTerminal
+    , XMonad.modMask            = myModMask
+    , XMonad.keys               = myKeys
+    , XMonad.focusFollowsMouse  = myFocusFollowsMouse
+    , XMonad.borderWidth        = myBorderWidth
     , XMonad.focusedBorderColor = myFocusedBorderColor
-    , XMonad.normalBorderColor = myUnFocusedBorderColor
-    , XMonad.manageHook = manageDocks <+> myManageHook <+> manageHook desktopConfig
-    , XMonad.layoutHook = myLayoutHook
+    , XMonad.normalBorderColor  = myUnFocusedBorderColor
+    , XMonad.manageHook         = manageDocks <+> myManageHook <+> manageHook desktopConfig
+    , XMonad.layoutHook         = myLayoutHook
+    , startupHook               = myStartupHook
     }
