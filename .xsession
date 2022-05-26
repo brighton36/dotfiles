@@ -25,6 +25,9 @@ xset fp rehash
 # Event Notifications:
 /usr/bin/dunst &
 
+# This *should* apply styling to Telegram..
+export QT_QPA_PLATFORMTHEME=qt6ct
+
 # Tray Icons/Apps
 /usr/bin/nm-applet &
 /usr/bin/blueman-applet &

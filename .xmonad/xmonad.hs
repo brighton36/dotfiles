@@ -223,10 +223,10 @@ myLayoutHook = minimize . boringWindows
 -- xmobar ---------------------------------------------------------------------
 mySB = statusBarProp "xmobar" (pure xmobarPP)
 myPP = xmobarPP { 
-  ppCurrent = xmcWhite . xmobarBorder "Top" (white myColor) 2 . wrap half_space half_space
-  , ppSep             = xmcBase01 " | "
+  ppCurrent = xmcBlue . xmobarBorder "Top" (blue myColor) 2 . wrap half_space half_space
+  , ppSep             = xmcBase01 "\xf6d8"
   , ppTitleSanitize   = xmobarStrip
-  , ppHidden          = xmcBlue . wrap half_space half_space
+  , ppHidden          = xmcBase02 . wrap half_space half_space
   , ppHiddenNoWindows = xmcBase1 . wrap half_space half_space
   , ppUrgent          = xmcRed
   , ppWsSep           = ""
@@ -241,8 +241,8 @@ myPP = xmobarPP {
     )
   }
   where
-  formatFocused   = wrap (xmcWhite  "[ >") (xmcWhite  "]") . xmcWhite  . ppWindow
-  formatUnfocused = wrap (xmcBlue "[ -") (xmcBlue "]") . xmcBlue . ppWindow
+  formatFocused   = wrap (xmcBlue  "\xf144 ") (xmcBlue  " ") . xmcBlue  . ppWindow
+  formatUnfocused = wrap (xmcBase01 "\xf111 ") (xmcBase01 " ") . xmcBase01 . ppWindow
   half_space = "\x0020" -- TODO: U+0020 is a regular space. We may want U+2009 in some fonts
 
   -- | Windows should have *some* title, which should not not exceed a
@@ -250,13 +250,14 @@ myPP = xmobarPP {
   ppWindow :: String -> String
   ppWindow = xmobarRaw . (\w -> if Prelude.null w then "untitled" else w) . shorten 20
 
-  xmcBlue, xmcBase01, xmcBase1, xmcBase3, xmcMagenta, xmcRed, xmcWhite, xmcYellow :: String -> String
+  xmcBlue, xmcBase01, xmcBase02, xmcBase1, xmcBase3, xmcMagenta, xmcRed, xmcWhite, xmcYellow :: String -> String
   xmcMagenta = xmobarColor (magenta myColor) ""
   xmcBlue    = xmobarColor (blue myColor) ""
   xmcWhite   = xmobarColor (white myColor) ""
   xmcYellow  = xmobarColor (yellow myColor) ""
   xmcRed     = xmobarColor (red myColor) ""
   xmcBase01  = xmobarColor (base01 myColor) ""
+  xmcBase02  = xmobarColor (base02 myColor) ""
   xmcBase1   = xmobarColor (base1 myColor) ""
   xmcBase3   = xmobarColor (base3 myColor) ""
 

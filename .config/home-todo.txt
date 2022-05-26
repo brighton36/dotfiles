@@ -1,6 +1,5 @@
 Priority:
 
-* Get the brightness up, after sleep. The default brightness sucks
 * fish
   * Can we get ctrl-b and ctrl-f working in insert mode...
 
@@ -8,6 +7,23 @@ Priority:
   * Let's maybe try to dim the background pane better... with a gray background?
   * Something better to navigate through the tabs (alt-n/p?)
   * alt-space? https://superuser.com/questions/493048/how-to-convert-2-horizontal-panes-to-vertical-panes-in-tmux
+
+* emacs
+  * Stop the cwd fuckery: https://stackoverflow.com/questions/354490/preventing-automatic-change-of-default-directory
+  * :bd closes the window, instead of just the buffer
+    * Meanwhile, SPC-b-d does exactly what we want. Maybe just remap this?
+  * Ctrl-p and ctrl-n won't work for the tab switch. Because we use that for page up/down
+  * Why doesnt M-[/] work in vterm...
+  * We're having a problem atm with txt files not opening in text-mode.
+    they're opening 'Fundamental'. This is causing our line numbers to not show
+    (M-x text-mode seems to fix that...)
+  * *maybe* Understand M-x dedicated-mode (I think we fixed our window issues)
+  * Window resize using ctrl-shift-< and ctrl-shift->
+
+* Picom
+  * Maybe use osx as an inspiration for a navy blue on white bar at the top
+  * Or just go with solarized tan ...
+
 
 * xmonad
   * Are the wallpapers randomly cycling?
@@ -23,14 +39,6 @@ Priority:
 		* https://hackage.haskell.org/package/xmonad-contrib-0.17.0/docs/XMonad-Actions-FloatKeys.html
 		* Maybe using hjkl with a modifier... meta-alt to move, meta-control to resize?
 
-* emacs
-  * Ctrl-p and ctrl-n won't work for the tab switch. Because we use that for page up/down
-  * Why doesnt M-[/] work in vterm...
-  * We're having a problem atm with txt files not opening in text-mode.
-    they're opening 'Fundamental'. This is causing our line numbers to not show
-    (M-x text-mode seems to fix that...)
-  * *maybe* Understand M-x dedicated-mode (I think we fixed our window issues)
-  * Window resize using ctrl-shift-< and ctrl-shift->
 
 * maybe we should be using ctrl-o andn ctrl-i more... instead of ctrl-n annd ctrl-p
   * It's already the default on firefox...
