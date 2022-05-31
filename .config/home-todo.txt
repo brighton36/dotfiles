@@ -9,7 +9,8 @@ Priority:
   * alt-space? https://superuser.com/questions/493048/how-to-convert-2-horizontal-panes-to-vertical-panes-in-tmux
 
 * emacs
-  * Stop the cwd fuckery: https://stackoverflow.com/questions/354490/preventing-automatic-change-of-default-directory
+  * Stop the cwd fuckery:
+    * Maybe this will work: https://www.reddit.com/r/emacs/comments/9mzigd/working_directory/
   * :bd closes the window, instead of just the buffer
     * Meanwhile, SPC-b-d does exactly what we want. Maybe just remap this?
   * Ctrl-p and ctrl-n won't work for the tab switch. Because we use that for page up/down
@@ -20,12 +21,12 @@ Priority:
   * *maybe* Understand M-x dedicated-mode (I think we fixed our window issues)
   * Window resize using ctrl-shift-< and ctrl-shift->
 
-* Picom
-  * Maybe use osx as an inspiration for a navy blue on white bar at the top
-  * Or just go with solarized tan ...
-
-
 * xmonad
+  * You know, it'd be nice if we maybe could use the background color. That would def make the window list more useful
+    * maybe disable transparency on the bar, and do this
+    * And then maybe use a better solarized red...
+    * We don't need a slash between the mem and swap
+    * Maybe separate the workspace section using the powerline characters > or a slash, the way we do on tmux
   * Are the wallpapers randomly cycling?
   * Naming the workspaces instead of using numbers might be a good idea
   * I'm not crazy with how the workspace windows are listed. We should colorize that better

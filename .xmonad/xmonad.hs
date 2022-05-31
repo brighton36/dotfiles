@@ -1,5 +1,6 @@
 import Data.Map
 import System.Exit
+import Text.Printf
 
 import XMonad
 import XMonad.Actions.CycleWS
@@ -223,43 +224,49 @@ myLayoutHook = minimize . boringWindows
 -- xmobar ---------------------------------------------------------------------
 mySB = statusBarProp "xmobar" (pure xmobarPP)
 myPP = xmobarPP { 
-  ppCurrent = xmcBlue . xmobarBorder "Top" (blue myColor) 2 . wrap half_space half_space
-  , ppSep             = xmcBase01 "\xf6d8"
+  ppCurrent = xmcWhiteOnBlue . (xmobarBorder"Full" (blue myColor) 0) . wrap " <fn=1>" "</fn>"
+  , ppSep             = ""
   , ppTitleSanitize   = xmobarStrip
-  , ppHidden          = xmcBase02 . wrap half_space half_space
-  , ppHiddenNoWindows = xmcBase1 . wrap half_space half_space
-  , ppUrgent          = xmcRed
+  , ppHidden          = xmcBase02 . wrap " <fn=1>" "</fn>"
+  , ppHiddenNoWindows = xmcBase1 . wrap " <fn=1>" "</fn>"
+  , ppUrgent          = xmcWhiteOnRed . (xmobarBorder"Full" (red myColor) 0) . wrap " <fn=1>" "</fn>"
   , ppWsSep           = ""
   , ppOrder           = \[ws, l, _, wins] -> [ws, l, wins]
   -- NOTE: If we dont like the window display, here's where that's controlled
   , ppExtras          = [XMonad.Util.Loggers.logTitles formatFocused formatUnfocused]
-  , ppLayout  = (wrap "<action=xdotool key Super+space>" "</action>") .
+  , ppLayout  = xmcWhiteOnOrange . (xmobarBorder"Full" (orange myColor) 0) . (wrap "<action=xdotool key Super+space> " " </action>") .
     ( \x -> case x of
-    "Minimize Spacing Tall"        -> "<icon="++myBitmapsDir++"/tall.xbm/>"
-    "Minimize Spacing Mirror Tall" -> "<icon="++myBitmapsDir++"/mtall.xbm/>"
-    "Minimize Spacing Full"        -> "<icon="++myBitmapsDir++"/full.xbm/>"
+    -- Vertical Split:
+    "Minimize Spacing Tall"        -> "\xfb87" -- "<icon="++myBitmapsDir++"/tall.xbm/>"
+    -- Horizontal Split:
+    "Minimize Spacing Mirror Tall" -> "\xfb86" -- "<icon="++myBitmapsDir++"/mtall.xbm/>"
+    "Minimize Spacing Full"        -> "\xf630" -- "<icon="++myBitmapsDir++"/full.xbm/>"
     )
   }
   where
-  formatFocused   = wrap (xmcBlue  "\xf144 ") (xmcBlue  " ") . xmcBlue  . ppWindow
-  formatUnfocused = wrap (xmcBase01 "\xf111 ") (xmcBase01 " ") . xmcBase01 . ppWindow
+  formatFocused   = (xmobarBorder "Full" (blue myColor) 0) . wrap (xmcWhiteOnBlue  "\xf6dc ") (xmcWhiteOnBlue  " ") . xmcWhiteOnBlue  . ppWindow
+  formatUnfocused = wrap (xmcBase01 " \xf6dc ") (xmcBase01 " ") . xmcBase01 . ppWindow
   half_space = "\x0020" -- TODO: U+0020 is a regular space. We may want U+2009 in some fonts
 
   -- | Windows should have *some* title, which should not not exceed a
   -- sane length.
   ppWindow :: String -> String
-  ppWindow = xmobarRaw . (\w -> if Prelude.null w then "untitled" else w) . shorten 20
+  ppWindow = xmobarRaw . (\w -> if Prelude.null w then "untitled" else w)  . printf "%-20s" . shorten 20
 
-  xmcBlue, xmcBase01, xmcBase02, xmcBase1, xmcBase3, xmcMagenta, xmcRed, xmcWhite, xmcYellow :: String -> String
-  xmcMagenta = xmobarColor (magenta myColor) ""
-  xmcBlue    = xmobarColor (blue myColor) ""
-  xmcWhite   = xmobarColor (white myColor) ""
-  xmcYellow  = xmobarColor (yellow myColor) ""
-  xmcRed     = xmobarColor (red myColor) ""
-  xmcBase01  = xmobarColor (base01 myColor) ""
-  xmcBase02  = xmobarColor (base02 myColor) ""
-  xmcBase1   = xmobarColor (base1 myColor) ""
-  xmcBase3   = xmobarColor (base3 myColor) ""
+  xmcBlue, xmcBase01, xmcBase02, xmcBase1, xmcBase3, xmcMagenta, xmcRed, xmcWhite, xmcYellow, xmcWhiteOnBlue, xmcWhiteOnRed, xmcWhiteOnOrange, xmcWhiteOnBase01 :: String -> String
+  xmcMagenta     = xmobarColor (magenta myColor) ""
+  xmcBlue        = xmobarColor (blue myColor) ""
+  xmcWhite       = xmobarColor (white myColor) ""
+  xmcYellow      = xmobarColor (yellow myColor) ""
+  xmcRed         = xmobarColor (red myColor) ""
+  xmcBase01      = xmobarColor (base01 myColor) ""
+  xmcBase02      = xmobarColor (base02 myColor) ""
+  xmcBase1       = xmobarColor (base1 myColor) ""
+  xmcBase3       = xmobarColor (base3 myColor) ""
+  xmcWhiteOnBlue = xmobarColor (white myColor) (blue myColor)
+  xmcWhiteOnRed  = xmobarColor (white myColor) (red myColor)
+  xmcWhiteOnOrange  = xmobarColor (white myColor) (orange myColor)
+  xmcWhiteOnBase01 = xmobarColor (white myColor) (base01 myColor)
 
 -- Startup Hook ---------------------------------------------------------------
 myStartupHook :: X ()
