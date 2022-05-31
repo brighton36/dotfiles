@@ -227,7 +227,7 @@ myPP = xmobarPP {
   ppCurrent = xmcWhiteOnBlue . (xmobarBorder"Full" (blue myColor) 0) . wrap " <fn=1>" "</fn>"
   , ppSep             = ""
   , ppTitleSanitize   = xmobarStrip
-  , ppHidden          = xmcBase02 . wrap " <fn=1>" "</fn>"
+  , ppHidden          = xmcBlue . wrap " <fn=1>" "</fn>"
   , ppHiddenNoWindows = xmcBase1 . wrap " <fn=1>" "</fn>"
   , ppUrgent          = xmcWhiteOnRed . (xmobarBorder"Full" (red myColor) 0) . wrap " <fn=1>" "</fn>"
   , ppWsSep           = ""
@@ -244,8 +244,8 @@ myPP = xmobarPP {
     )
   }
   where
-  formatFocused   = (xmobarBorder "Full" (blue myColor) 0) . wrap (xmcWhiteOnBlue  "\xf6dc ") (xmcWhiteOnBlue  " ") . xmcWhiteOnBlue  . ppWindow
-  formatUnfocused = wrap (xmcBase01 " \xf6dc ") (xmcBase01 " ") . xmcBase01 . ppWindow
+  formatFocused   = (xmobarBorder "Full" (blue myColor) 0) . wrap (xmcWhiteOnBlue  "\xf6dc ") (xmcWhiteOnBlue  "  ") . xmcWhiteOnBlue  . ppWindow
+  formatUnfocused = wrap (xmcBase01 "\xf6dc ") (xmcBase01 " ") . xmcBase01 . ppWindow
   half_space = "\x0020" -- TODO: U+0020 is a regular space. We may want U+2009 in some fonts
 
   -- | Windows should have *some* title, which should not not exceed a
