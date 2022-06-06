@@ -22,15 +22,11 @@ Priority:
   * Window resize using ctrl-shift-< and ctrl-shift->
 
 * xmonad
-  * You know, it'd be nice if we maybe could use the background color. That would def make the window list more useful
-    * maybe disable transparency on the bar, and do this
-    * And then maybe use a better solarized red...
-    * We don't need a slash between the mem and swap
+  * We don't need a slash between the mem and swap
     * Maybe separate the workspace section using the powerline characters > or a slash, the way we do on tmux
   * Are the wallpapers randomly cycling?
   * Naming the workspaces instead of using numbers might be a good idea
-  * I'm not crazy with how the workspace windows are listed. We should colorize that better
-    * What about that Unsafe... can we make it safer?
+  * What about that Unsafe... can we make it safer?
   * Bind Bluetooth off to F11?
   * Those dunst modal colors could be better..
   * Maybe function key + hjkl should map to up/down/left/rigght
