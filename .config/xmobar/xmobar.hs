@@ -80,7 +80,7 @@ Config {
       , "-O", "ﮣ"        -- A/C 'on'
       , "-o", "ﮤ"        -- Discharging
       ] 5
-    , Run Com "/home/cderose/.xmonad/systraypad.sh" [] "traypad" 10
+    , Run Com "/home/cderose/.config/xmobar/systraypad.sh" [] "traypad" 10
     , Run Date "%a %b %_d %H:%M" "date" 10
     ]
   }

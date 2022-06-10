@@ -272,12 +272,12 @@ myPP = xmobarPP {
 myStartupHook :: X ()
 myStartupHook = do
   -- spawn "bash -c 'killall stalonetray; sleep 1; stalonetray &'"
-  spawn "~/.xmonad/systray.sh &"
+  spawn "~/.config/xmobar/systray.sh &"
 
 -- Main -----------------------------------------------------------------------
 main :: IO ()
 main = do
-  mySB <- statusBarPipe "xmobar -x 0 ~/.xmonad/xmobar.config" (clickablePP myPP)
+  mySB <- statusBarPipe "xmobar -x 0 ~/.config/xmobar/xmobar.hs" (clickablePP myPP)
   xmonad 
     . XMonad.Hooks.EwmhDesktops.ewmhFullscreen . ewmh 
     . withSB mySB 

@@ -22,15 +22,14 @@ Priority:
   * Window resize using ctrl-shift-< and ctrl-shift->
 
 * xmonad
-  * Lets move all the configs into .config
+  * Then let's use better color names: https://www.reddit.com/r/xmonad/comments/otuk3u/how_to_make_a_variable_for_color_on_xmobarrc/
   * Maybe the power icon should be green on charging
   * We don't need a slash between the mem and swap
     * Maybe separate the workspace section using the powerline characters > or a slash, the way we do on tmux
-  * Are the wallpapers randomly cycling?
-  * Naming the workspaces instead of using numbers might be a good idea
-  * What about that Unsafe... can we make it safer?
+  * Are the wallpapers randomly cycling? no.
   * Bind Bluetooth off to F11?
   * Those dunst modal colors could be better..
+  * What about that Unsafe... can we make it safer?
   * Maybe function key + hjkl should map to up/down/left/rigght
     * Or maybe just the meta/ctrl there on the lower left
     * Firefox needs a word-right and word-left (ctrl-right, ctrl-left) nearer to the home row
