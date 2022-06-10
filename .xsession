@@ -1,5 +1,7 @@
 #!/usr/bin/bash
 
+# NOTE: .xprofile seems to be the best place to set environment variables
+
 setxkbmap `cat "$HOME/.Xkbmap"`
 
 # This mostly just bind's l_control to super
@@ -24,9 +26,6 @@ xset fp rehash
 
 # Event Notifications:
 /usr/bin/dunst &
-
-# This *should* apply styling to Telegram..
-export QT_QPA_PLATFORMTHEME=qt6ct
 
 # Tray Icons/Apps
 /usr/bin/nm-applet &

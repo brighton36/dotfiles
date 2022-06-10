@@ -22,6 +22,8 @@ Priority:
   * Window resize using ctrl-shift-< and ctrl-shift->
 
 * xmonad
+  * Lets move all the configs into .config
+  * Maybe the power icon should be green on charging
   * We don't need a slash between the mem and swap
     * Maybe separate the workspace section using the powerline characters > or a slash, the way we do on tmux
   * Are the wallpapers randomly cycling?
@@ -35,6 +37,7 @@ Priority:
 	* Moving/resizing windows with the keyboard might be good:
 		* https://hackage.haskell.org/package/xmonad-contrib-0.17.0/docs/XMonad-Actions-FloatKeys.html
 		* Maybe using hjkl with a modifier... meta-alt to move, meta-control to resize?
+  * Maybe function + gcr,htn,mwv for numpad
 
 
 * maybe we should be using ctrl-o andn ctrl-i more... instead of ctrl-n annd ctrl-p
