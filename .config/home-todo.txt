@@ -22,7 +22,6 @@ Priority:
   * Window resize using ctrl-shift-< and ctrl-shift->
 
 * xmonad
-  * Then let's use better color names: https://www.reddit.com/r/xmonad/comments/otuk3u/how_to_make_a_variable_for_color_on_xmobarrc/
   * Maybe the power icon should be green on charging
   * We don't need a slash between the mem and swap
     * Maybe separate the workspace section using the powerline characters > or a slash, the way we do on tmux
