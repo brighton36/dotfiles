@@ -1,5 +1,4 @@
 import Data.List
-import System.Environment
 
 import Xmobar
 
@@ -53,8 +52,8 @@ myIcons = Icons {
   , bat_med     = "\62845" -- 
   , bat_high    = "\62840" -- 
   , charged     = "⏼"      -- ⏼
-  , discharging = "ﮣ"      -- ﮣ
-  , ac_on       = "ﮤ"      -- ﮤ
+  , discharging = "ﮤ"      -- ﮤ
+  , ac_on       = "ﮣ"      -- ﮣ 
 }
 
 -------------------------------------------------------------------------------
@@ -84,7 +83,7 @@ config = Xmobar.defaultConfig {
     intercalate (" "++(command_sep myIcons)++" ") [
       "%cpu% %multicpu%", 
       "%memory% / %swap%",
-      "%pulse:Master%",
+      "%default:Master%",
       "%battery%",
       "%traypad%"
     ],
@@ -127,7 +126,7 @@ config = Xmobar.defaultConfig {
     --   , "--"
     --   , "-D", "/sys/class/backlight/intel_backlight"
     --   ] 5
-    , Run $ Volume "pulse"  "Master" 
+    , Run $ Volume "default"  "Master" 
       [ "--template", "<action=/usr/bin/pavucontrol><status><volume>%</action>"
       , "--"
       , "-O", ""                  -- Status On
@@ -144,17 +143,17 @@ config = Xmobar.defaultConfig {
       [ "--template"
       , "<action=alacritty --command /usr/bin/sudo /usr/bin/powertop><acstatus> <left>%</action>"
       , "--"
-      , "-L", "15"              -- Low threshold (percent)
-      , "-H", "66"              -- High threshold (percent)
-      , "-h", (base00 myColor)  -- High color
-      , "-m", (base00 myColor)  -- Medium color
-      , "-l", (red myColor)     -- Low color
-      , "--lows", concat ["<fc=",(red myColor),">",(bat_low myIcons),"</fc>"]
+      , "-L",        "15"              -- Low threshold (percent)
+      , "-H",        "66"              -- High threshold (percent)
+      , "-h",        (base00 myColor)  -- High color
+      , "-m",        (base00 myColor)  -- Medium color
+      , "-l",        (red myColor)     -- Low color
+      , "--lows",    concat ["<fc=",(red myColor),">",(bat_low myIcons),"</fc>"]
       , "--mediums", (bat_med myIcons)
-      , "--highs", (bat_high myIcons)
-      , "-i", (charged myIcons)
-      , "-O", (ac_on myIcons)
-      , "-o", (discharging myIcons)
+      , "--highs",   (bat_high myIcons)
+      , "-i",        concat ["<fc=",(green myColor),">",(charged myIcons),"</fc>"]
+      , "-O",        concat ["<fc=",(green myColor),">",(ac_on myIcons),"</fc>"]
+      , "-o",        (discharging myIcons)
       ] 5
     , Run $ Com "/home/cderose/.config/xmobar/systraypad.sh" [] "traypad" 10
     , Run $ Date "%a %b %_d %H:%M" "date" 10
