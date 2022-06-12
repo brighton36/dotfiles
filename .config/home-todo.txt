@@ -1,13 +1,5 @@
 Priority:
 
-* fish
-  * Can we get ctrl-b and ctrl-f working in insert mode...
-
-* tmux:
-  * Let's maybe try to dim the background pane better... with a gray background?
-  * Something better to navigate through the tabs (alt-n/p?)
-  * alt-space? https://superuser.com/questions/493048/how-to-convert-2-horizontal-panes-to-vertical-panes-in-tmux
-
 * emacs
   * Stop the cwd fuckery:
     * Maybe this will work: https://www.reddit.com/r/emacs/comments/9mzigd/working_directory/
@@ -22,7 +14,6 @@ Priority:
   * Window resize using ctrl-shift-< and ctrl-shift->
 
 * xmonad
-  * Maybe separate the workspace section using the powerline characters > or a slash, the way we do on tmux
   * Are the wallpapers randomly cycling? no.
   * Bind Bluetooth off to F11?
   * Those dunst modal colors could be better..
