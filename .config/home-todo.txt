@@ -22,9 +22,7 @@ Priority:
   * Window resize using ctrl-shift-< and ctrl-shift->
 
 * xmonad
-  * Maybe the power icon should be green on charging
-  * We don't need a slash between the mem and swap
-    * Maybe separate the workspace section using the powerline characters > or a slash, the way we do on tmux
+  * Maybe separate the workspace section using the powerline characters > or a slash, the way we do on tmux
   * Are the wallpapers randomly cycling? no.
   * Bind Bluetooth off to F11?
   * Those dunst modal colors could be better..

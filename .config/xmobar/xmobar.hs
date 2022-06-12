@@ -80,13 +80,13 @@ config = Xmobar.defaultConfig {
       "<fc=",(white myColor),",",(base01 myColor),"> ",(cornerstone myIcons)," </fc>",
     "</box>",
     "%UnsafeStdinReader% }{ ",
-    intercalate (" "++(command_sep myIcons)++" ") [
-      "%cpu% %multicpu%", 
-      "%memory% / %swap%",
-      "%default:Master%",
+    (command_sep myIcons),
+    intercalate ((command_sep myIcons)) [
+      "%cpu% %memory% %swap%",
       "%battery%",
-      "%traypad%"
+      "%default:Master%"
     ],
+    " %traypad%",
     "<box type=full color=",(violet myColor),">",
       "<fc=",(white myColor),",",(violet myColor),"> %date% </fc>",
     "</box>"
@@ -97,20 +97,20 @@ config = Xmobar.defaultConfig {
     Run $ UnsafeStdinReader
     , Run $ Cpu 
       [ "--template", concat [
-        "<action=alacritty --command btop>", (system myIcons), " <total>%</action>"]
+        "<action=alacritty --command btop>", (system myIcons), " <total></action>"]
       , "-L",      "10"
       , "-H",      "70"
       ,"--normal", (base00 myColor)
       ,"--high",   (red myColor) 
       ] 5
-    , Run $ MultiCpu 
-      [ "--template", "<ipat>"
-      , "--"
-      , "--load-icon-pattern", "<icon=hbar_%%.xbm/>"
-      ] 2
+    -- , Run $ MultiCpu 
+    --   [ "--template", "<ipat>"
+    --   , "--"
+    --   , "--load-icon-pattern", "<icon=hbar_%%.xbm/>"
+    --   ] 2
     , Run $ Memory 
       [ "--template" , concat [ 
-        "<action=alacritty --command btop>", (memory myIcons), " <usedratio>%</action>"]
+        "<action=alacritty --command btop>", (memory myIcons), " <usedratio></action>"]
       , "--Low"      , "20"             -- units: %
       , "--High"     , "60"             -- units: %
       , "--low"      , (base00 myColor)
@@ -119,15 +119,15 @@ config = Xmobar.defaultConfig {
       ] 5
     , Run $ Swap 
       ["--template", concat [
-        "<action=alacritty --command btop>", (swap myIcons), " <usedratio>%</action>" ] 
+        "<action=alacritty --command btop>", (swap myIcons), " <usedratio></action>" ] 
       ] 5
     -- , Run $ Brightness 
-    --   [ "--template", " <percent>%"
+    --   [ "--template", " <percent>"
     --   , "--"
     --   , "-D", "/sys/class/backlight/intel_backlight"
     --   ] 5
     , Run $ Volume "default"  "Master" 
-      [ "--template", "<action=/usr/bin/pavucontrol><status><volume>%</action>"
+      [ "--template", "<action=/usr/bin/pavucontrol><status></action>"
       , "--"
       , "-O", ""                  -- Status On
       , "-o", " "++(mute myIcons) -- Status Off
@@ -141,7 +141,7 @@ config = Xmobar.defaultConfig {
       ] 5
     , Run $ BatteryP ["BAT0"]
       [ "--template"
-      , "<action=alacritty --command /usr/bin/sudo /usr/bin/powertop><acstatus> <left>%</action>"
+      , "<action=alacritty --command /usr/bin/sudo /usr/bin/powertop><acstatus> <left></action>"
       , "--"
       , "-L",        "15"              -- Low threshold (percent)
       , "-H",        "66"              -- High threshold (percent)
