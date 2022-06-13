@@ -17,6 +17,7 @@ Priority:
     * Maybe this will work: https://www.reddit.com/r/emacs/comments/9mzigd/working_directory/
   * :bd closes the window, instead of just the buffer
     * Meanwhile, SPC-b-d does exactly what we want. Maybe just remap this?
+  * Alt-space would be useful for a layout rotation
   * Why doesnt M-[/] work in vterm...
   * We're having a problem atm with txt files not opening in text-mode.
     they're opening 'Fundamental'. This is causing our line numbers to not show
@@ -24,9 +25,6 @@ Priority:
   * Window resize using ctrl-shift-< and ctrl-shift->
 
 * xmonad
-  * To fix the telegram background:
-    https://www.reddit.com/r/linuxquestions/comments/u7kstc/themes_and_icons_in_lxappearance_and_qt5ct_not/
-    https://github.com/nwg-piotr/nwg-look
   * Are the wallpapers randomly cycling? no.
   * Those dunst modal colors could be better..
   * What about that Unsafe... can we make it safer?
