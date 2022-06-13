@@ -1,4 +1,4 @@
-gtk-icon-theme-name = "Papirus-Light"
+gtk-icon-theme-name = "Papirus-Dark"
 gtk-theme-name="NumixSolarizedLightBlue"
 gtk-font-name="Sans 12"
 gtk-enable-event-sounds=1

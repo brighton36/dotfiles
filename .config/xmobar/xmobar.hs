@@ -1,5 +1,4 @@
 import Data.List
-
 import Xmobar
 
 -- Colors ---------------------------------------------------------------------
@@ -7,7 +6,7 @@ import Xmobar
 --       out
 data ColorSchemes = ColorSchemes{base03, base02, base01, base00, base0, base1, 
   base2, base3, black, white, yellow, orange, red, magenta, violet, blue, cyan, 
-  green :: String}
+  green, darkgrey :: String}
 
 mySolarized :: ColorSchemes
 mySolarized = ColorSchemes {
@@ -28,7 +27,8 @@ mySolarized = ColorSchemes {
   violet  = "#6c71c4",
   blue    = "#268bd2",
   cyan    = "#2aa198",
-  green   = "#859900"
+  green   = "#859900",
+  darkgrey = "#353535" -- TODO: This differ's from xmonad's darkgrey
 }
 
 myColor = mySolarized  :: ColorSchemes
@@ -40,7 +40,6 @@ data Icons = Icons{cornerstone, command_sep, system, memory, swap, mute,
 myIcons :: Icons
 myIcons = Icons {
     cornerstone = "\62211" -- 
-  , command_sep = "\63192" --  
   , system      = "\61573" -- 
   , memory      = "\57958" -- 
   , swap        = "\59142" -- 
@@ -55,6 +54,20 @@ myIcons = Icons {
   , discharging = "ﮤ"      -- ﮤ
   , ac_on       = "ﮣ"      -- ﮣ 
 }
+
+-- Helpers -------------------------------------------------------------------
+fc :: ([Char] , [Char], [Char]) -> [Char]
+fc (foreground, background, contents) = (concat [ 
+  "<fc=",foreground,",",background,">", contents, "</fc>"])
+
+box :: ([Char] , [Char], [Char]) -> [Char]
+box (foreground, background, contents) = (concat [ 
+  "<box type=full color=",background,">", 
+  fc(foreground,background, contents), "</box>"])
+
+action :: ([Char] , [Char]) -> [Char]
+action (command, contents) = (concat [ 
+   "<action=",command,">", contents, "</action>"])
 
 -------------------------------------------------------------------------------
 config :: Config
@@ -76,31 +89,24 @@ config = Xmobar.defaultConfig {
   , sepChar          =  "%"
   , alignSep         =  "}{"
   , template = concat [
-    "<box type=full color=",(base01 myColor),">", 
-      "<fc=",(white myColor),",",(base01 myColor),"> ",(cornerstone myIcons)," </fc>",
-    "</box>",
+    box(white myColor, base01 myColor, " "++(cornerstone myIcons)++" "),
     "%UnsafeStdinReader% }{ ",
-    (command_sep myIcons),
-    intercalate ((command_sep myIcons)) [
-      "%cpu% %memory% %swap%",
-      "%battery%",
-      "%default:Master%"
-    ],
-    " %traypad%",
-    "<box type=full color=",(violet myColor),">",
-      "<fc=",(white myColor),",",(violet myColor),"> %date% </fc>",
-    "</box>"
+    box(white myColor, violet myColor, "\xf6dc %cpu% %memory% %swap%  "),
+    "%battery%%default:Master%",
+    -- NOTE: the background color on the telegram icon appears to come from qt6ct
+    box(darkgrey myColor, darkgrey myColor,"%traypad%"),
+    box(white myColor, darkgrey myColor," %date% ")
     ]
 
   -- plugins
   , commands = [
     Run $ UnsafeStdinReader
     , Run $ Cpu 
-      [ "--template", concat [
-        "<action=alacritty --command btop>", (system myIcons), " <total></action>"]
+      [ "--template"
+      , action("alacritty --command btop", (system myIcons)++ " <total><icon=percent.xbm/>")
       , "-L",      "10"
       , "-H",      "70"
-      ,"--normal", (base00 myColor)
+      -- ,"--normal", (base00 myColor)
       ,"--high",   (red myColor) 
       ] 5
     -- , Run $ MultiCpu 
@@ -109,55 +115,55 @@ config = Xmobar.defaultConfig {
     --   , "--load-icon-pattern", "<icon=hbar_%%.xbm/>"
     --   ] 2
     , Run $ Memory 
-      [ "--template" , concat [ 
-        "<action=alacritty --command btop>", (memory myIcons), " <usedratio></action>"]
+      [ "--template"
+      , action("alacritty --command btop", (memory myIcons)++ " <usedratio><icon=percent.xbm/>")
       , "--Low"      , "20"             -- units: %
       , "--High"     , "60"             -- units: %
-      , "--low"      , (base00 myColor)
-      , "--normal"   , (base00 myColor)
+      --, "--low"      , (base00 myColor)
+      --, "--normal"   , (base00 myColor)
       , "--high"     , (red myColor)
       ] 5
     , Run $ Swap 
-      ["--template", concat [
-        "<action=alacritty --command btop>", (swap myIcons), " <usedratio></action>" ] 
+      [ "--template"
+      , action("alacritty --command btop", (swap myIcons)++ " <usedratio><icon=percent.xbm/>")
       ] 5
     -- , Run $ Brightness 
     --   [ "--template", " <percent>"
     --   , "--"
     --   , "-D", "/sys/class/backlight/intel_backlight"
     --   ] 5
-    , Run $ Volume "default"  "Master" 
-      [ "--template", "<action=/usr/bin/pavucontrol><status></action>"
+    , Run $ Volume "default" "Master" 
+      [ "--template", action("/usr/bin/pavucontrol", "<status>")
       , "--"
       , "-O", ""                  -- Status On
-      , "-o", " "++(mute myIcons) -- Status Off
+      , "-o", box(white myColor, red myColor, "  "++(mute myIcons)++"  ") -- Status Off
       , "-C", (base00 myColor)    -- Status On Color
       , "-c", (red myColor)       -- Status Off Color
       , "-H", "130"               -- High threshold
       , "-L", "80"                -- Low threshold
-      , "-h", (vol_high myIcons)
-      , "-m", (vol_med myIcons)
-      , "-l", (vol_low myIcons)
+      , "-h", box(white myColor, darkgrey myColor, "  "++(vol_high myIcons)++"  ")
+      , "-m", box(white myColor, darkgrey myColor, "  "++(vol_med myIcons)++"  ")
+      , "-l", box(white myColor, darkgrey myColor, "  "++(vol_low myIcons)++"  ")
       ] 5
     , Run $ BatteryP ["BAT0"]
       [ "--template"
-      , "<action=alacritty --command /usr/bin/sudo /usr/bin/powertop><acstatus> <left></action>"
+      , action("alacritty --command /usr/bin/sudo /usr/bin/powertop", "<acstatus>")
       , "--"
       , "-L",        "15"              -- Low threshold (percent)
-      , "-H",        "66"              -- High threshold (percent)
+      , "-H",        "70"              -- High threshold (percent)
       , "-h",        (base00 myColor)  -- High color
-      , "-m",        (base00 myColor)  -- Medium color
+      , "-m",        (violet myColor)  -- Medium color
       , "-l",        (red myColor)     -- Low color
-      , "--lows",    concat ["<fc=",(red myColor),">",(bat_low myIcons),"</fc>"]
-      , "--mediums", (bat_med myIcons)
-      , "--highs",   (bat_high myIcons)
-      , "-i",        concat ["<fc=",(green myColor),">",(charged myIcons),"</fc>"]
-      , "-O",        concat ["<fc=",(green myColor),">",(ac_on myIcons),"</fc>"]
-      , "-o",        (discharging myIcons)
+      , "--lows",    fc(white myColor, red myColor, (bat_low myIcons))
+      , "--mediums", fc(white myColor, violet myColor, (bat_med myIcons))
+      , "--highs",   box(white myColor, cyan myColor, " "++(bat_high myIcons))
+      , "-i",        box(white myColor, green myColor, " "++(charged myIcons)++" <left><icon=percent.xbm/>  ")
+      , "-O",        box(white myColor, green myColor, " "++(ac_on myIcons)++" <left><icon=percent.xbm/>  ")
+      , "-o",        box(white myColor, violet myColor, " <left><icon=percent.xbm/>  ")
       ] 5
     , Run $ Com "/home/cderose/.config/xmobar/systraypad.sh" [] "traypad" 10
     , Run $ Date "%a %b %_d %H:%M" "date" 10
-	]
+  ]
 }
 
 main :: IO ()

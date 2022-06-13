@@ -4,12 +4,12 @@ trayer --edge top\
   --SetDockType true\
   --SetPartialStrut true\
   --expand true\
-  --height 25\
-  --distance 162\
+  --height 26\
+  --distance 161\
   --distancefrom right\
   --transparent true\
   --alpha 0\
-  --tint "0xffffff"\
+  --tint "0x353535"\
   --widthtype request\
   --monitor 0\
   --margin 0\

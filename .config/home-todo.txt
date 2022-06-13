@@ -1,23 +1,8 @@
 Priority:
 
-* emacs
-  * Stop the cwd fuckery:
-    * Space s d maybe
-    * Maybe this will work: https://www.reddit.com/r/emacs/comments/9mzigd/working_directory/
-  * :bd closes the window, instead of just the buffer
-    * Meanwhile, SPC-b-d does exactly what we want. Maybe just remap this?
-  * Ctrl-p and ctrl-n won't work for the tab switch. Because we use that for page up/down
-  * Why doesnt M-[/] work in vterm...
-  * We're having a problem atm with txt files not opening in text-mode.
-    they're opening 'Fundamental'. This is causing our line numbers to not show
-    (M-x text-mode seems to fix that...)
-  * Window resize using ctrl-shift-< and ctrl-shift->
-
-* xmonad
-  * Are the wallpapers randomly cycling? no.
+* Keybindings:
+  * tap ctrl for escape?
   * Bind Bluetooth off to F11?
-  * Those dunst modal colors could be better..
-  * What about that Unsafe... can we make it safer?
   * Maybe function key + hjkl should map to up/down/left/rigght
     * Or maybe just the meta/ctrl there on the lower left
     * Firefox needs a word-right and word-left (ctrl-right, ctrl-left) nearer to the home row
@@ -26,6 +11,25 @@ Priority:
 		* Maybe using hjkl with a modifier... meta-alt to move, meta-control to resize?
   * Maybe function + gcr,htn,mwv for numpad
 
+* emacs
+  * Stop the cwd fuckery:
+    * Space s d maybe
+    * Maybe this will work: https://www.reddit.com/r/emacs/comments/9mzigd/working_directory/
+  * :bd closes the window, instead of just the buffer
+    * Meanwhile, SPC-b-d does exactly what we want. Maybe just remap this?
+  * Why doesnt M-[/] work in vterm...
+  * We're having a problem atm with txt files not opening in text-mode.
+    they're opening 'Fundamental'. This is causing our line numbers to not show
+    (M-x text-mode seems to fix that...)
+  * Window resize using ctrl-shift-< and ctrl-shift->
+
+* xmonad
+  * To fix the telegram background:
+    https://www.reddit.com/r/linuxquestions/comments/u7kstc/themes_and_icons_in_lxappearance_and_qt5ct_not/
+    https://github.com/nwg-piotr/nwg-look
+  * Are the wallpapers randomly cycling? no.
+  * Those dunst modal colors could be better..
+  * What about that Unsafe... can we make it safer?
 
 * maybe we should be using ctrl-o andn ctrl-i more... instead of ctrl-n annd ctrl-p
   * It's already the default on firefox...
