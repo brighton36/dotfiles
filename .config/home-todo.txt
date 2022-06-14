@@ -1,5 +1,7 @@
 Priority:
 
+* Set the volume icon to dark grey, instead of black
+
 * Keybindings:
   * tap ctrl for escape?
   * Bind Bluetooth off to F11?
@@ -13,8 +15,6 @@ Priority:
 
 * emacs
   * Stop the cwd fuckery:
-    * Space s d maybe
-    * Maybe this will work: https://www.reddit.com/r/emacs/comments/9mzigd/working_directory/
   * :bd closes the window, instead of just the buffer
     * Meanwhile, SPC-b-d does exactly what we want. Maybe just remap this?
   * Alt-space would be useful for a layout rotation
@@ -25,6 +25,9 @@ Priority:
   * Window resize using ctrl-shift-< and ctrl-shift->
 
 * xmonad
+  * Is there a meta-(reload xmonad)
+  * Test the vol icon with the levels. I think we have shit levels
+  * Maybe mute should be yellow and not red
   * Are the wallpapers randomly cycling? no.
   * Those dunst modal colors could be better..
   * What about that Unsafe... can we make it safer?

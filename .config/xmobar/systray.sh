@@ -9,7 +9,7 @@ trayer --edge top\
   --distancefrom right\
   --transparent true\
   --alpha 0\
-  --tint "0x353535"\
+  --tint "0xffffff"\
   --widthtype request\
   --monitor 0\
   --margin 0\

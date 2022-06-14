@@ -91,11 +91,11 @@ config = Xmobar.defaultConfig {
   , template = concat [
     box(white myColor, base01 myColor, " "++(cornerstone myIcons)++" "),
     "%UnsafeStdinReader% }{ ",
-    box(white myColor, base01 myColor, "\xf6dc %cpu% %memory% %swap%  "),
+    box(white myColor, blue myColor, "\xf6dc %cpu% %memory% %swap%  "),
     "%battery%%default:Master%",
     -- NOTE: the background color on the telegram icon appears to come from qt6ct
-    box(darkgrey myColor, darkgrey myColor,"%traypad%"),
-    box(white myColor, violet myColor," %date% ")
+    box(white myColor, white myColor,"%traypad%"),
+    box(white myColor, base01 myColor," %date% ")
     ]
 
   -- plugins
@@ -136,14 +136,14 @@ config = Xmobar.defaultConfig {
       [ "--template", action("/usr/bin/pavucontrol", "<status>")
       , "--"
       , "-O", ""                  -- Status On
-      , "-o", box(white myColor, red myColor, " "++(mute myIcons)++" ") -- Status Off
+      , "-o", box(white myColor, red myColor, " "++(mute myIcons)++"  ") -- Status Off
       , "-C", (base00 myColor)    -- Status On Color
       , "-c", (red myColor)       -- Status Off Color
       , "-H", "130"               -- High threshold
       , "-L", "80"                -- Low threshold
-      , "-h", box(white myColor, darkgrey myColor, " "++(vol_high myIcons)++" ")
-      , "-m", box(white myColor, darkgrey myColor, " "++(vol_med myIcons)++" ")
-      , "-l", box(white myColor, darkgrey myColor, " "++(vol_low myIcons)++" ")
+      , "-h", box(darkgrey myColor, white myColor, " "++(vol_high myIcons)++"  ")
+      , "-m", box(darkgrey myColor, white myColor, " "++(vol_med myIcons)++"  ")
+      , "-l", box(darkgrey myColor, white myColor, " "++(vol_low myIcons)++"  ")
       ] 5
     , Run $ BatteryP ["BAT0"]
       [ "--template"
@@ -152,11 +152,11 @@ config = Xmobar.defaultConfig {
       , "-L",        "15"              -- Low threshold (percent)
       , "-H",        "70"              -- High threshold (percent)
       , "-h",        (base00 myColor)  -- High color
-      , "-m",        (violet myColor)  -- Medium color
+      , "-m",        (base01 myColor)  -- Medium color
       , "-l",        (red myColor)     -- Low color
       , "--lows",    fc(white myColor, red myColor, 
                        (bat_low myIcons))
-      , "--mediums", fc(white myColor, violet myColor, 
+      , "--mediums", fc(white myColor, base01 myColor, 
                        (bat_med myIcons))
       , "--highs",   box(white myColor, cyan myColor, 
                        " "++(bat_high myIcons))
@@ -164,7 +164,7 @@ config = Xmobar.defaultConfig {
                        " "++(charged myIcons)++" <left><icon=percent.xbm/>  ")
       , "-O",        box(white myColor, green myColor, 
                        " "++(ac_on myIcons)++" <left><icon=percent.xbm/>  ")
-      , "-o",        box(white myColor, violet myColor, 
+      , "-o",        box(white myColor, base01 myColor, 
                        " <left><icon=percent.xbm/>  ")
       ] 5
     , Run $ Com "/home/cderose/.config/xmobar/systraypad.sh" [] "traypad" 10
