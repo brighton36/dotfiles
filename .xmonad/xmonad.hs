@@ -75,6 +75,7 @@ toggleFloat w = windows (\s -> if Data.Map.member w (XMonad.StackSet.floating s)
 myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   -- xmonad commands:
   [ ((modMask .|. shiftMask, xK_q ), io (exitWith ExitSuccess))
+  , ((modMask              , xK_q     ), spawn "if type xmonad; then xmonad --recompile && xmonad --restart; else xmessage xmonad not in \\$PATH: \"$PATH\"; fi") -- %! Restart xmonad
   , ((modMask .|. shiftMask, xK_c ), kill)
   , ((modMask,               xK_a ), windows copyToAll)
   , ((modMask .|. shiftMask, xK_a ), killAllOtherCopies)

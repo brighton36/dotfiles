@@ -1,6 +1,5 @@
 Priority:
 
-* Set the volume icon to dark grey, instead of black
 
 * Keybindings:
   * tap ctrl for escape?
@@ -14,6 +13,8 @@ Priority:
   * Maybe function + gcr,htn,mwv for numpad
 
 * emacs
+  * Tabs are weird sometimes.... editing ruby... otherwise...
+  * maybe use alt-n and alt-p for tabs in emacs
   * Stop the cwd fuckery:
   * :bd closes the window, instead of just the buffer
     * Meanwhile, SPC-b-d does exactly what we want. Maybe just remap this?
@@ -24,12 +25,14 @@ Priority:
     (M-x text-mode seems to fix that...)
   * Window resize using ctrl-shift-< and ctrl-shift->
 
+* Firefox
+  * ctrl-shift-backspace : undo close tab
+
 * xmonad
-  * Is there a meta-(reload xmonad)
-  * Test the vol icon with the levels. I think we have shit levels
-  * Maybe mute should be yellow and not red
-  * Are the wallpapers randomly cycling? no.
   * Those dunst modal colors could be better..
+  * Are the wallpapers randomly cycling? no.
+  * Test the vol icon with the levels. I think we have shit levels
+  * I think flashfocus needs to restart in the config, in the same way the tray does...
   * What about that Unsafe... can we make it safer?
 
 * maybe we should be using ctrl-o andn ctrl-i more... instead of ctrl-n annd ctrl-p
