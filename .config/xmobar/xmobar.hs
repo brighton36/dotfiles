@@ -156,7 +156,7 @@ config = Xmobar.defaultConfig {
       , "-h",        (base00 myColor)  -- High color
       , "-m",        (base01 myColor)  -- Medium color
       , "-l",        (red myColor)     -- Low color
-      , "--lows",    (box (white myColor) (red myColor) " "++(bat_low myIcons)++"<left><icon=percent.xbm/>  ")
+      , "--lows",    (box (white myColor) (red myColor) (" "++(bat_low myIcons)++"<left><icon=percent.xbm/>  "))
       , "--mediums", (box (white myColor) (blue myColor) ((bat_med myIcons)++"<left><icon=percent.xbm/>  "))
       , "--highs",   (box (white myColor) (cyan myColor) (" "++(bat_high myIcons++"<left><icon=percent.xbm/>  ")))
       , "-i",        (box (white myColor) (green myColor) 
