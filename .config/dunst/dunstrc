@@ -33,7 +33,8 @@
     origin = top-right
 
     # Offset from the origin
-    offset = 10x50
+    # (from-right x from-top)
+    offset = 60x80
 
     # Scale factor. It is auto-detected if value is 0.
     scale = 0
@@ -49,10 +50,10 @@
 
     # Set the progress bar height. This includes the frame, so make sure
     # it's at least twice as big as the frame width.
-    progress_bar_height = 10
+    progress_bar_height = 15
 
     # Set the frame width of the progress bar
-    progress_bar_frame_width = 1
+    progress_bar_frame_width = 0
 
     # Set the minimum width for the progress bar
     progress_bar_min_width = 150
@@ -60,6 +61,8 @@
     # Set the maximum width for the progress bar
     progress_bar_max_width = 300
 
+    # Progress bar color:
+    highlight = "#ffffff"
 
     # Show how many messages are currently hidden (because of
     # notification_limit).
@@ -86,10 +89,10 @@
 
     # Defines width in pixels of frame around the notification window.
     # Set to 0 to disable.
-    frame_width = 3
+    frame_width = 0
 
     # Defines color of the frame around the notification window.
-    frame_color = "#073642"
+    frame_color = "#002b36" # solarized base03
 
     # Define a color for the separator.
     # possible values are:
@@ -97,7 +100,7 @@
     #  * foreground: use the same color as the foreground;
     #  * frame: use the same color as the frame;
     #  * anything else will be interpreted as a X color.
-    separator_color = frame
+    separator_color = auto
 
     # Sort messages by urgency.
     sort = yes
@@ -197,7 +200,7 @@
 
     # Paths to default icons.
     # icon_path = /usr/share/icons/Adwaita/16x16/status/:/usr/share/icons/Adwaita/16x16/devices/
-    icon_path = /usr/share/icons/ePapirus/16x16/status/:/usr/share/icons/ePapirus/16x16/devices/
+    icon_path = /usr/share/icons/Papirus-Dark/24x24/actions/
 
     ### History ###
 
@@ -293,23 +296,22 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#586e75"
-    foreground = "#eee8d5"
+    background = "#268bd2" # solarized blue
+    foreground = "#ffffff"  # white
     timeout = 10
     # Icon for notifications with low urgency, uncomment to enable
     #default_icon = /path/to/icon
 
 [urgency_normal]
-    background = "#073642"
-    foreground = "#eee8d5"
+    background = "#002b36" # solarized base03
+    foreground = "#ffffff" # white
     timeout = 10
     # Icon for notifications with normal urgency, uncomment to enable
     #default_icon = /path/to/icon
 
 [urgency_critical]
-    background = "#dc322f"
-    foreground = "#eee8d5"
-    frame_color = "#d30102"
+    background = "#dc322f" # solorized red
+    foreground = "#ffffff" # white
     timeout = 0
     # Icon for notifications with critical urgency, uncomment to enable
     #default_icon = /path/to/icon

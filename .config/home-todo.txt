@@ -29,8 +29,6 @@ Priority:
   * ctrl-shift-backspace : undo close tab
 
 * xmonad
-  * Those dunst modal colors could be better..
-  * Are the wallpapers randomly cycling? no.
   * Test the vol icon with the levels. I think we have shit levels
   * I think flashfocus needs to restart in the config, in the same way the tray does...
   * What about that Unsafe... can we make it safer?
