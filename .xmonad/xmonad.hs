@@ -274,6 +274,9 @@ myStartupHook :: X ()
 myStartupHook = do
   -- spawn "bash -c 'killall stalonetray; sleep 1; stalonetray &'"
   spawn "~/.config/xmobar/systray.sh &"
+  -- Seems like this stops working for random reasons on occasion, trying it
+  -- out here, instead of the xsession
+  spawn "bash -c 'killall flashfocus; /usr/bin/flashfocus &'"
 
 -- Main -----------------------------------------------------------------------
 main :: IO ()

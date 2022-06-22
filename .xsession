@@ -33,7 +33,4 @@ xset fp rehash
 /bin/bash -c "sleep 4; /usr/bin/telegram-desktop -startintray &" &
 /usr/bin/autokey-gtk &
 
-# Flash-on-focus animation
-/usr/bin/flashfocus &
-
 /usr/bin/emacs --daemon &
