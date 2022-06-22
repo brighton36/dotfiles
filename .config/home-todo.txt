@@ -2,9 +2,10 @@ Priority:
 
 * Firefox
   * ctrl-shift-backspace : undo close tab
+* fish
+  * Maybe insert mode ctrl-b and ctrl-f should be back-letter/forward/letter
 
 * Keybindings:
-  * tap ctrl for escape? (xcape)
   * Bind Bluetooth off to F11?
   * Maybe function key + hjkl should map to up/down/left/rigght
     * Or maybe just the meta/ctrl there on the lower left
