@@ -1,7 +1,5 @@
 Priority:
 
-* Firefox
-  * ctrl-shift-backspace : undo close tab
 * fish
   * Maybe insert mode ctrl-b and ctrl-f should be back-letter/forward/letter
 
@@ -28,7 +26,13 @@ Priority:
     (M-x text-mode seems to fix that...)
   * Window resize using ctrl-shift-< and ctrl-shift->
 
-* xmonad
+* xmobar
+  * Switch to property-based logging in xmobar:
+    https://www.reddit.com/r/xmonad/comments/t935oi/how_to_kill_old_xmobar_instances_when_spawning/
+    * that should fix the bugginess and the unsafe issues
+  * Maybe stack-static will fix the buggy xmobar:
+    https://wiki.archlinux.org/title/Haskell#stack-static
+    You may be able to go back to the non-dynamic xmobar package at that time...
   * What about that Unsafe... can we make it safer? Maybe this will fix the xmobar crash..
 
 * maybe we should be using ctrl-o andn ctrl-i more... instead of ctrl-n annd ctrl-p
