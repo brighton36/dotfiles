@@ -187,8 +187,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   , ((modMask .|. shiftMask, xK_period ), sendMessage Expand)
 
   -- Workspaces
-  , ((modMask, xK_Right), nextWS)
-  , ((modMask, xK_Left),  prevWS)
   , ((modMask, xK_p ),    prevWS)
   , ((modMask, xK_n  ),   nextWS)
   ]

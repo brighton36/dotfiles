@@ -4,9 +4,6 @@
 
 setxkbmap `cat "$HOME/.Xkbmap"`
 
-# This mostly just bind's l_control to super
-xmodmap "$HOME/.Xmodmap"
-
 # This enables tap for escape on the capslock key (which is control_l, 
 # apparently, due to the above modmaps
 xcape -e 'Control_L=Escape'

@@ -1,9 +1,0 @@
-clear mod4
-clear control
-
-keycode 37 = Super_L
-keycode 105 = Super_R
-keycode 66 = Control_L
-
-add control = Control_L
-add mod4 = Super_L Super_R

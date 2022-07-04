@@ -1,1 +1,1 @@
--layout us(dvorak) -option -option ctrl:nocaps
+-layout us(dvorak) -option ctrl:nocaps -option ctrl:swap_lwin_lctl

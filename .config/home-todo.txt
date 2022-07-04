@@ -1,13 +1,31 @@
 Priority:
 
-* fish
-  * Maybe insert mode ctrl-b and ctrl-f should be back-letter/forward/letter
+* Resume from hibernate needs to 100% the brightness
+
+* Bluetooth hsp mode:
+  https://wiki.archlinux.org/title/bluetooth_headset#Switch_between_HSP/HFP_and_A2DP_setting
+* Maybe try this out to see the bluetooth battery:
+https://wiki.archlinux.org/title/bluetooth_headset#Battery_level_reporting
+https://github.com/TheWeirdDev/Bluetooth_Headset_Battery_Level
+https://www.reddit.com/r/pipewire/comments/pcjkls/bluetooth_battery_status/
+
+* xmobar
+  * Move the dunst upper right a bit
+  * Switch to property-based logging in xmobar:
+    https://www.reddit.com/r/xmonad/comments/t935oi/how_to_kill_old_xmobar_instances_when_spawning/
+    * that should fix the bugginess and the unsafe issues
+  * Maybe stack-static will fix the buggy xmobar:
+    https://wiki.archlinux.org/title/Haskell#stack-static
+    You may be able to go back to the non-dynamic xmobar package at that time...
+  * What about that Unsafe... can we make it safer? Maybe this will fix the xmobar crash..
+
+* Firefox needs a word-right and word-left (ctrl-right, ctrl-left) nearer to the home row
 
 * Keybindings:
   * Bind Bluetooth off to F11?
   * Maybe function key + hjkl should map to up/down/left/rigght
     * Or maybe just the meta/ctrl there on the lower left
-    * Firefox needs a word-right and word-left (ctrl-right, ctrl-left) nearer to the home row
+    * I guess the apple karabiner has right-command+hjkl as an option
 	* Moving/resizing windows with the keyboard might be good:
 		* https://hackage.haskell.org/package/xmonad-contrib-0.17.0/docs/XMonad-Actions-FloatKeys.html
 		* Maybe using hjkl with a modifier... meta-alt to move, meta-control to resize?
@@ -26,14 +44,6 @@ Priority:
     (M-x text-mode seems to fix that...)
   * Window resize using ctrl-shift-< and ctrl-shift->
 
-* xmobar
-  * Switch to property-based logging in xmobar:
-    https://www.reddit.com/r/xmonad/comments/t935oi/how_to_kill_old_xmobar_instances_when_spawning/
-    * that should fix the bugginess and the unsafe issues
-  * Maybe stack-static will fix the buggy xmobar:
-    https://wiki.archlinux.org/title/Haskell#stack-static
-    You may be able to go back to the non-dynamic xmobar package at that time...
-  * What about that Unsafe... can we make it safer? Maybe this will fix the xmobar crash..
 
 * maybe we should be using ctrl-o andn ctrl-i more... instead of ctrl-n annd ctrl-p
   * It's already the default on firefox...
