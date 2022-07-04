@@ -2,8 +2,6 @@
 
 # NOTE: .xprofile seems to be the best place to set environment variables
 
-setxkbmap `cat "$HOME/.Xkbmap"`
-
 # This enables tap for escape on the capslock key (which is control_l, 
 # apparently, due to the above modmaps
 xcape -e 'Control_L=Escape'

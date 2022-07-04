@@ -9,6 +9,11 @@ https://wiki.archlinux.org/title/bluetooth_headset#Battery_level_reporting
 https://github.com/TheWeirdDev/Bluetooth_Headset_Battery_Level
 https://www.reddit.com/r/pipewire/comments/pcjkls/bluetooth_battery_status/
 
+* Keyboaard:
+  * maybe set these layout settings in the X config:
+  https://wiki.archlinux.org/title/Xorg/Keyboard_configuration#Using_X_configuration_files
+  so that it applies when a new keyboard is attached
+
 * xmobar
   * Move the dunst upper right a bit
   * Switch to property-based logging in xmobar:
