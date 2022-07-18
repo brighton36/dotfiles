@@ -18,7 +18,9 @@
         "wordChars": "[\\w]"
     },
     "hotkey": {
-        "modifiers": [],
+        "modifiers": [
+            "<ctrl>"
+        ],
         "hotKey": "i"
     },
     "filter": {
