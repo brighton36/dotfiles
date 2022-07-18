@@ -14,6 +14,8 @@ https://www.reddit.com/r/pipewire/comments/pcjkls/bluetooth_battery_status/
   https://wiki.archlinux.org/title/Xorg/Keyboard_configuration#Using_X_configuration_files
   so that it applies when a new keyboard is attached
 
+* Xmonad
+  * 0.17 is finally in the mainstream repo. so, stop using the AUR version?
 * xmobar
   * Move the dunst upper right a bit
   * Switch to property-based logging in xmobar:
@@ -23,6 +25,12 @@ https://www.reddit.com/r/pipewire/comments/pcjkls/bluetooth_battery_status/
     https://wiki.archlinux.org/title/Haskell#stack-static
     You may be able to go back to the non-dynamic xmobar package at that time...
   * What about that Unsafe... can we make it safer? Maybe this will fix the xmobar crash..
+
+*Todo: adjust the screenshot app to remove the colons (for jira)
+
+* picom:
+  * Try out this snazzy animations fork: picom-animations-git
+    https://github.com/PhyTech-R0/dotfiles/blob/master/.config/picom/picom.conf
 
 * Firefox needs a word-right and word-left (ctrl-right, ctrl-left) nearer to the home row
 
@@ -39,9 +47,11 @@ https://www.reddit.com/r/pipewire/comments/pcjkls/bluetooth_battery_status/
 * emacs
   * Tabs are weird sometimes.... editing ruby... otherwise...
   * maybe use alt-n and alt-p for tabs in emacs
+  * maybe use ctrl-[/] to navigate the file tabs at the top
   * Stop the cwd fuckery:
   * :bd closes the window, instead of just the buffer
     * Meanwhile, SPC-b-d does exactly what we want. Maybe just remap this?
+  https://emacs.stackexchange.com/questions/22437/open-set-of-buffers-based-on-git-branch
   * Alt-space would be useful for a layout rotation
   * Why doesnt M-[/] work in vterm...
   * We're having a problem atm with txt files not opening in text-mode.

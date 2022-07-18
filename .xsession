@@ -12,16 +12,9 @@ xset fp rehash
 
 /usr/bin/xscreensaver -no-splash &
 
-# I just disabled this after it seemed impossible to get the window borders
-# opaque:
-# NOTE: The no-fading-openclose *should* prevent the desktop from displaying
-# on resume.
-/usr/bin/picom -b # --no-fading-openclose
+/usr/bin/picom -b
 
-# I stopped liking the background image...
 /usr/bin/feh --bg-max --randomize "$HOME/Pictures/Wallpapers/"
-# Let's just set it to solarized base1
-# /usr/bin/xsetroot -solid '#93a1a1'
 
 # Event Notifications:
 /usr/bin/dunst &
