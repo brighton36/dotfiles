@@ -1,0 +1,28 @@
+{
+    "type": "script",
+    "description": "slack \"C-i\" : Forward History",
+    "store": {},
+    "modes": [
+        3
+    ],
+    "usageCount": 0,
+    "prompt": false,
+    "omitTrigger": false,
+    "showInTrayMenu": false,
+    "abbreviation": {
+        "abbreviations": [],
+        "backspace": true,
+        "ignoreCase": false,
+        "immediate": false,
+        "triggerInside": false,
+        "wordChars": "[\\w]"
+    },
+    "hotkey": {
+        "modifiers": [],
+        "hotKey": "i"
+    },
+    "filter": {
+        "regex": "slack.Slack",
+        "isRecursive": false
+    }
+}
