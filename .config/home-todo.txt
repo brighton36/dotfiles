@@ -2,6 +2,8 @@ Priority:
 
 * Resume from hibernate needs to 100% the brightness
 
+* Maybe we can assign shortcuts to gmail desktop, to make it awesome
+
 * Bluetooth hsp mode:
   https://wiki.archlinux.org/title/bluetooth_headset#Switch_between_HSP/HFP_and_A2DP_setting
 * Maybe try this out to see the bluetooth battery:
