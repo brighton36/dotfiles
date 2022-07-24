@@ -85,6 +85,30 @@
  '(auto-dim-other-buffers-face ((t (:background "#eee8d5"))))
  )
 
+;; Custom Functions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Window Rotation:
+(defun rotate-windows (arg)
+  "Rotate your windows; use the prefix argument to rotate the other direction"
+  (interactive "P")
+  (if (not (> (count-windows) 1))
+      (message "You can't rotate a single window!")
+    (let* ((rotate-times (prefix-numeric-value arg))
+           (direction (if (or (< rotate-times 0) (equal arg '(4)))
+                          'reverse 'identity)))
+      (dotimes (_ (abs rotate-times))
+        (dotimes (i (- (count-windows) 1))
+          (let* ((w1 (elt (funcall direction (window-list)) i))
+                 (w2 (elt (funcall direction (window-list)) (+ i 1)))
+                 (b1 (window-buffer w1))
+                 (b2 (window-buffer w2))
+                 (s1 (window-start w1))
+                 (s2 (window-start w2))
+                 (p1 (window-point w1))
+                 (p2 (window-point w2)))
+            (set-window-buffer-start-and-point w1 b2 s2 p2)
+            (set-window-buffer-start-and-point w2 b1 s1 p1)))))))
+
 ;; Preferences  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -107,8 +131,12 @@
 (global-set-key (kbd "M-]") '(lambda() (interactive) (other-window 1)))
 (global-set-key (kbd "M-[") '(lambda() (interactive) (other-window -1)))
 
-;; Ctrl-p and Ctrl-n for  Previous/Next Tab
-(map! :nv "C-n" #'+workspace/switch-right :nv "C-p" #'+workspace/switch-left)
+;; Alt-Shift-[ an Alt-Shift-] Move Window Cycle
+(global-set-key (kbd "M-}") '(lambda() (interactive) (rotate-windows -1)))
+(global-set-key (kbd "M-{") '(lambda() (interactive) (rotate-windows 1)))
+
+;; Alt-p and Alt-n for  Previous/Next Tab
+(map! :nv "M-n" #'+workspace/switch-right :nv "M-p" #'+workspace/switch-left)
 
 ;; evil bindings:
 ;; https://github.com/noctuid/evil-guide#keybindings-and-states
@@ -116,16 +144,10 @@
 ;; In normal mode, ctrl-s will 'search' for an open buffer
 (define-key evil-normal-state-map (kbd "C-s") #'+vertico/switch-workspace-buffer)
 
+;; Window Resize Up/down:
+(global-set-key (kbd "C-<") 'shrink-window)
+(global-set-key (kbd "C->") 'enlarge-window)
 
-;; TODO: See if we still need/want this
-;; This 'locks' (pins) the window, so it can't be closed:
-;; NOTE, maybe try this: (set-window-parameter ook-window 'no-delete-other-windows t)
-;; Per: https://lists.gnu.org/archive/html/help-gnu-emacs/2007-05/msg00975.html
-;; then M-x sticky-buffer-mode
-;; TO
-;; (global-set-key (kbd "C-l") 'locked-buffer-mode)
-;; (define-minor-mode sticky-buffer-mode
-;;   "Make the current window always display this buffer."
-;;   nil " sticky" nil
-;;   (set-window-dedicated-p (selected-window) sticky-buffer-mode))
-
+;; Window Resize left/right. I guess this works..
+(global-set-key (kbd "C-S-o") 'shrink-window-horizontally)
+(global-set-key (kbd "C-S-e") 'enlarge-window-horizontally)
