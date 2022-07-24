@@ -3,10 +3,6 @@ Priority:
 * Mod4  + ,aeo  should map to up/down/left/rigght
   * Rebind the o then, I guess
 
-* Resume from hibernate needs to 100% the brightness
-
-* Get this working with xmonad and firefox:
-
 * emacs
   * Indentation is weird sometimes.... editing ruby... otherwise...
   * That edit server would be nice in there. it's commented out currently.
@@ -14,10 +10,6 @@ Priority:
     * Be sure to add the script if you get it worknig...
     * And float it in xmonady https://parasurv.neocities.org/emacs/edit-browser-textarea-with-emacs.html
   * Maybe: https://emacs.stackexchange.com/questions/22437/open-set-of-buffers-based-on-git-branch
-
-* picom:
-  * Try out this snazzy animations fork: picom-animations-git
-    https://github.com/PhyTech-R0/dotfiles/blob/master/.config/picom/picom.conf
 
 * Maybe we can assign shortcuts to gmail desktop, to make it awesome
   * Let's just see if the greasemonkey can be made to work first...
@@ -42,10 +34,9 @@ Priority:
 	* Moving/resizing float windows with the keyboard might be good:
 		* https://hackage.haskell.org/package/xmonad-contrib-0.17.0/docs/XMonad-Actions-FloatKeys.html
 		* Maybe using hjkl with a modifier... meta-alt to move, meta-control to resize?
-  * Maybe function + gcr,htn,mwv for numpad
+		* Or just going with the emacs keys of </> and o/e
 
-* maybe we should be using ctrl-o andn ctrl-i more... instead of ctrl-n annd ctrl-p
-  * It's already the default on firefox...
+  * Maybe function + gcr,htn,mwv for numpad
 
 ---------------------
 
