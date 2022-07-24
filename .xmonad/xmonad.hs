@@ -25,8 +25,7 @@ import XMonad.Layout.Minimize
 import XMonad.StackSet
 import XMonad.Util.Loggers
 import XMonad.Util.ClickableWorkspaces
--- We were using this with the key remapping... which would be nice to get working
--- import XMonad.Util.Paste
+import XMonad.Util.Paste
 
 -- Colors ---------------------------------------------------------------------
 data ColorSchemes = ColorSchemes{base03, base02, base01, base00, base0, base1, 
@@ -76,28 +75,39 @@ toggleFloat w = windows (\s -> if Data.Map.member w (XMonad.StackSet.floating s)
 myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   -- xmonad commands:
   [ ((modMask .|. shiftMask, xK_q ), io (exitWith ExitSuccess))
+  -- TODO: Recompile xmonad here as well probably make this a bin script
   , ((modMask              , xK_q     ), spawn "if type xmonad; then xmonad --recompile && xmonad --restart; else xmessage xmonad not in \\$PATH: \"$PATH\"; fi") -- %! Restart xmonad
   , ((modMask .|. shiftMask, xK_c ), kill)
   , ((modMask,               xK_a ), windows copyToAll)
-  , ((modMask .|. shiftMask, xK_a ), killAllOtherCopies)
+	-- TODO: Find a new letter for this
+  -- , ((modMask .|. shiftMask, xK_a ), killAllOtherCopies)
   , ((modMask,               xK_m ), withFocused minimizeWindow)
-  , ((modMask,               xK_o ), withFocused toggleFloat)
+	-- TODO: Find a new letter for this
+  -- , ((modMask,               xK_o ), withFocused toggleFloat)
   , ((modMask .|. shiftMask, xK_m ), withLastMinimized maximizeWindowAndFocus)
   , ((modMask,               xK_g ), gotoMenu)
   , ((modMask,               xK_b ), bringMenu)
 
   -- Launching Programs
   , ((modMask, xK_Return ), spawn $ terminal conf)
-  , ((modMask, xK_e      ), spawn "emacsclient -c -a emacs")
+	-- TODO: Find a new letter for this
+  -- , ((modMask, xK_e      ), spawn "emacsclient -c -a emacs")
   , ((modMask, xK_f      ), spawn "firefox -P default-release")
   , ((modMask, xK_i      ), spawn "firefox -P Fap")
   , ((modMask, xK_c      ), spawn "/usr/bin/google-chrome-stable")
   , ((modMask, xK_r      ), spawn "/home/cderose/bin/dmenu_run_history")
   , ((modMask, xK_Escape ), spawn "xscreensaver-command -lock")
 
-  -- Switchto/Open Telegram
+  -- Switch-to/Open Telegram
   , ((modMask, xK_t      ), runOrRaiseAndDo "/usr/bin/telegram-desktop" 
       (className =? "TelegramDesktop") (maximizeWindowAndFocus))
+
+  -- Arrow Keys using modMask+(wasd keys, when looking at the key labels)
+  , ((modMask, xK_a      ), (XMonad.Util.Paste.sendKey noModMask xK_Left))
+  , ((modMask, xK_e      ), (XMonad.Util.Paste.sendKey noModMask xK_Right))
+  , ((modMask, xK_comma  ), (XMonad.Util.Paste.sendKey noModMask xK_Up))
+  , ((modMask, xK_o      ), (XMonad.Util.Paste.sendKey noModMask xK_Down))
+
 
   -- Open Switchto/Open Mail
   -- NOTE: I didn't really use this, and I wanted meta-m for 'minimize'
