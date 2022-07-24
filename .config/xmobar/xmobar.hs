@@ -66,16 +66,17 @@ box foreground background contents = (concat [
   (fc foreground background contents), "</box>"])
 
 action :: [Char] -> [Char] -> [Char]
--- This was crashing:
--- action command contents = (concat [ 
---    "<action=",command,">", contents, "</action>"])
-action command contents = contents
+action command contents = (concat [ 
+   "<action=",command,">", contents, "</action>"])
 
 -------------------------------------------------------------------------------
 config :: Config
 config = Xmobar.defaultConfig {
     font             =  "xft:Ubuntu Nerd Font:size=15:antialias=true"
-  , additionalFonts  =  ["xft:Ubuntu Nerd Font Mono:size=15:antialias=true"]
+  , additionalFonts  =  [
+    "xft:Ubuntu Nerd Font Mono:size=15:antialias=true",
+    "xft:Source Code Pro Bold:size=15:antialias=true"
+    ]
   , bgColor          =  (white myColor)
   , fgColor          =  (base00 myColor)
   , alpha            =  255
@@ -92,17 +93,17 @@ config = Xmobar.defaultConfig {
   , alignSep         =  "}{"
   , template = concat [
     (box (white myColor) (base01 myColor) (" "++(cornerstone myIcons)++" ")),
-    "%UnsafeStdinReader% }{ ",
+    "%UnsafeXMonadLog% }{ ",
     (box (white myColor) (blue myColor) "\xf6dc %cpu% %memory% %swap% "),
     "%battery%\xf6dc%default:Master%",
     -- NOTE: the background color on the telegram icon appears to come from qt6ct
     (box (white myColor) (white myColor) "%traypad%"),
-    (box (white myColor) (violet myColor) " %date% ")
-    ]
+    (box (white myColor) (violet myColor) " <fn=2>%date%</fn> ")
+  ]
 
   -- plugins
   , commands = [
-    Run $ UnsafeStdinReader
+    Run $ UnsafeXMonadLog
     , Run $ Cpu 
       [ "--template"
       , (action "alacritty --command btop" (system myIcons)++ " <total><icon=percent.xbm/>")
@@ -120,7 +121,7 @@ config = Xmobar.defaultConfig {
       [ "--template"
       , (action "alacritty --command btop" (memory myIcons)++ " <usedratio><icon=percent.xbm/>")
       , "--Low"      , "20"             -- units: %
-      , "--High"     , "60"             -- units: %
+      , "--High"     , "80"             -- units: %
       --, "--low"      , (base00 myColor)
       --, "--normal"   , (base00 myColor)
       , "--high"     , (white myColor)++","++(red myColor)

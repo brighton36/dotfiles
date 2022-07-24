@@ -11,6 +11,7 @@ import XMonad.Actions.CopyWindow
 -- We were using this with the key remapping... which would be nice to get working
 -- import XMonad.Actions.PerWindowKeys
 import XMonad.Config.Desktop
+import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks(avoidStruts, docks, manageDocks, ToggleStruts(..))
 import XMonad.Hooks.UrgencyHook
@@ -279,10 +280,10 @@ myStartupHook = do
 -- Main -----------------------------------------------------------------------
 main :: IO ()
 main = do
-  mySB <- statusBarPipe "xmobar -x 0 ~/.config/xmobar/xmobar.hs" (clickablePP myPP)
   xmonad 
-    . XMonad.Hooks.EwmhDesktops.ewmhFullscreen . ewmh 
-    . withSB mySB 
+    . XMonad.Hooks.EwmhDesktops.ewmhFullscreen 
+    . ewmh 
+    . withEasySB (statusBarProp "xmobar" (clickablePP myPP)) defToggleStrutsKey
     . withUrgencyHook dzenUrgencyHook { 
       args = ["-bg", (red myColor), "-fg", (base3 myColor), "-xs", "1"] 
     } $ desktopConfig
