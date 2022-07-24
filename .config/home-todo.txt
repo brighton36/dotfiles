@@ -1,11 +1,10 @@
 Priority:
 
-* Mod4  + ,aeo  should map to up/down/left/rigght
-  * Rebind the o then, I guess
+* xmonad:
+	* Address the todo's in the xmonad.hs
 
 * emacs
-  * Indentation is weird sometimes.... editing ruby... otherwise...
-		* Maybe it's this: https://emacs.stackexchange.com/questions/56083/how-to-make-backspace-respect-tab-stops-when-there-is-only-preceeding-white-spac
+	* Maybe change the resize in both emacs and tmux to be ctrl-shift hjkl
   * That edit server would be nice in there. it's commented out currently.
     * It logs 'done' before showing a window of any kind...
     * Be sure to add the script if you get it worknig...
