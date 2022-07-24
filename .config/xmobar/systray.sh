@@ -5,7 +5,7 @@ trayer --edge top\
   --SetPartialStrut true\
   --expand true\
   --height 26\
-  --distance 150\
+  --distance 154\
   --distancefrom right\
   --transparent true\
   --alpha 0\

@@ -126,7 +126,34 @@
 
 (customize-set-variable 'even-window-sizes nil)     ; avoid resizing
 
-;; Custom keys ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Edit Server ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; This is used by firefox. For more on the edit server:
+; https://www.emacswiki.org/emacs/Edit_with_Emacs
+; TODO: This doesn't work, though, you get an error message in the current frame
+; (add-to-list 'load-path "~/.emacs.d/lisp")
+; 
+; (when (require 'edit-server nil t)
+;  (setq edit-server-new-frame nil)
+;  (edit-server-start t))
+;(setq edit-server-verbose t)
+
+;; Dumb Jump ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+
+(global-set-key
+	(kbd "C-j")
+	(defhydra dumb-jump-hydra (:color blue :columns 3)
+		"Dumb Jump"
+		("j" dumb-jump-go "Go")
+		("o" dumb-jump-go-other-window "Other window")
+		("e" dumb-jump-go-prefer-external "Go external")
+		("x" dumb-jump-go-prefer-external-other-window "Go external other window")
+		("i" dumb-jump-go-prompt "Prompt")
+		("l" dumb-jump-quick-look "Quick look")
+		("b" dumb-jump-back "Back"))
+)
+
+;; Custom keys ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Alt-[ and Alt-] Window Cycle:
 (global-set-key (kbd "M-]") '(lambda() (interactive) (other-window 1)))
 (global-set-key (kbd "M-[") '(lambda() (interactive) (other-window -1)))
@@ -151,3 +178,4 @@
 ;; Window Resize left/right. I guess this works..
 (global-set-key (kbd "C-S-o") 'shrink-window-horizontally)
 (global-set-key (kbd "C-S-e") 'enlarge-window-horizontally)
+

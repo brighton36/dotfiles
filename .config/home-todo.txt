@@ -6,15 +6,14 @@ Priority:
 * Resume from hibernate needs to 100% the brightness
 
 * Get this working with xmonad and firefox:
-  https://parasurv.neocities.org/emacs/edit-browser-textarea-with-emacs.html
 
 * emacs
-  * https://www.emacswiki.org/emacs/JumpToDefinition
-    * Ctrl-j?
-  * Tabs are weird sometimes.... editing ruby... otherwise...
+  * Indentation is weird sometimes.... editing ruby... otherwise...
+  * That edit server would be nice in there. it's commented out currently.
+    * It logs 'done' before showing a window of any kind...
+    * Be sure to add the script if you get it worknig...
+    * And float it in xmonady https://parasurv.neocities.org/emacs/edit-browser-textarea-with-emacs.html
   * Maybe: https://emacs.stackexchange.com/questions/22437/open-set-of-buffers-based-on-git-branch
-
-* Todo: adjust the screenshot app to remove the colons (for jira)
 
 * picom:
   * Try out this snazzy animations fork: picom-animations-git
