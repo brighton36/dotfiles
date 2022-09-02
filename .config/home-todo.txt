@@ -1,20 +1,25 @@
 Priority:
 
+* Add the .mbsyncrc file, but, remove the password from the repo, use passcmd
+* Maybe start adding the kiavi/stow dotfiles
+* I think standardizing the resize, as ctl-shift-hjkl in tmux/emacs/xmonad is prudent
+* Or I can use hjkl for arrows: left, down, up right
+
 * xmonad:
 	* Address the todo's in the xmonad.hs
+* picom:
+  * No shadow for full screen apps
 
 * emacs
-	* Maybe change the resize in both emacs and tmux to be ctrl-shift hjkl
+  * Maybe this: https://tony-zorman.com/posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html
+  * the (visual select) then < and >  doesn't tab the way we want. Or even the way the 'tab' key works
+    * https://www.reddit.com/r/DoomEmacs/comments/i2atvp/using_tab_to_align_code_in_normal_state/
+	* A layout adjustment... like xmonad mod4-space, or something like tmux's alt-1/2/etc function..
   * That edit server would be nice in there. it's commented out currently.
-    * It logs 'done' before showing a window of any kind...
-    * Be sure to add the script if you get it worknig...
+    * The keyboard shortcut in firefox isn't working
+    * How do we save/send-to-firefox
     * And float it in xmonady https://parasurv.neocities.org/emacs/edit-browser-textarea-with-emacs.html
   * Maybe: https://emacs.stackexchange.com/questions/22437/open-set-of-buffers-based-on-git-branch
-
-* Maybe we can assign shortcuts to gmail desktop, to make it awesome
-  * Let's just see if the greasemonkey can be made to work first...
-  * If not, maybe try to autohotkey a google-desktop the way we did slack...
-		* And I guess uninstall the greasemonkey
 
 * Bluetooth hsp mode:
   https://wiki.archlinux.org/title/bluetooth_headset#Switch_between_HSP/HFP_and_A2DP_setting
@@ -34,6 +39,7 @@ Priority:
 	* Moving/resizing float windows with the keyboard might be good:
 		* https://hackage.haskell.org/package/xmonad-contrib-0.17.0/docs/XMonad-Actions-FloatKeys.html
 		* Maybe using hjkl with a modifier... meta-alt to move, meta-control to resize?
+			* Yeah, and, I'm thinking we can use this same thing for pane resize in emacs/tmux
 		* Or just going with the emacs keys of </> and o/e
   * Maybe function + gcr,htn,mwv for numpad
 

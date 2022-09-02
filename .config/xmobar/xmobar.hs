@@ -39,7 +39,7 @@ data Icons = Icons{cornerstone, system, memory, swap, mute,
   ac_on :: String}
 myIcons :: Icons
 myIcons = Icons {
-    cornerstone = "\62211" -- 
+    cornerstone = "\61603"      -- ,,
   , system      = "\61573" -- 
   , memory      = "\57958" -- 
   , swap        = "\59142" -- 

@@ -75,23 +75,23 @@ toggleFloat w = windows (\s -> if Data.Map.member w (XMonad.StackSet.floating s)
 myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   -- xmonad commands:
   [ ((modMask .|. shiftMask, xK_q ), io (exitWith ExitSuccess))
-  -- TODO: Recompile xmonad here as well probably make this a bin script
-  , ((modMask              , xK_q     ), spawn "if type xmonad; then xmonad --recompile && xmonad --restart; else xmessage xmonad not in \\$PATH: \"$PATH\"; fi") -- %! Restart xmonad
+  -- TODO: Recompile xmobar here as well probably make this a bin script
+  , ((modMask              , xK_q ), spawn "if type xmonad; then xmonad --recompile && xmonad --restart; else xmessage xmonad not in \\$PATH: \"$PATH\"; fi") -- %! Restart xmonad
   , ((modMask .|. shiftMask, xK_c ), kill)
   , ((modMask,               xK_a ), windows copyToAll)
 	-- TODO: Find a new letter for this
-  -- , ((modMask .|. shiftMask, xK_a ), killAllOtherCopies)
+  , ((modMask .|. shiftMask, xK_a ), killAllOtherCopies)
   , ((modMask,               xK_m ), withFocused minimizeWindow)
 	-- TODO: Find a new letter for this
-  -- , ((modMask,               xK_o ), withFocused toggleFloat)
+  -- TODO: Maybe 'd' for detach (and/or, shift-d, in this case)
+  , ((modMask,               xK_o ), withFocused toggleFloat)
   , ((modMask .|. shiftMask, xK_m ), withLastMinimized maximizeWindowAndFocus)
   , ((modMask,               xK_g ), gotoMenu)
   , ((modMask,               xK_b ), bringMenu)
 
   -- Launching Programs
   , ((modMask, xK_Return ), spawn $ terminal conf)
-	-- TODO: Find a new letter for this
-  -- , ((modMask, xK_e      ), spawn "emacsclient -c -a emacs")
+  , ((modMask, xK_e      ), spawn "emacsclient -c -a emacs")
   , ((modMask, xK_f      ), spawn "firefox -P default-release")
   , ((modMask, xK_i      ), spawn "firefox -P Fap")
   , ((modMask, xK_c      ), spawn "/usr/bin/google-chrome-stable")
@@ -99,14 +99,17 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   , ((modMask, xK_Escape ), spawn "xscreensaver-command -lock")
 
   -- Switch-to/Open Telegram
-  , ((modMask, xK_t      ), runOrRaiseAndDo "/usr/bin/telegram-desktop" 
-      (className =? "TelegramDesktop") (maximizeWindowAndFocus))
+  -- TODO:
+  , ((modMask, xK_t ), spawn "emacsclient -c -e '(telega)'")
+  --, ((modMask, xK_t      ), runOrRaiseAndDo "/usr/bin/telegram-desktop" 
+  --    (className =? "TelegramDesktop") (maximizeWindowAndFocus))
 
+  -- This does not seem to be working...
   -- Arrow Keys using modMask+(wasd keys, when looking at the key labels)
-  , ((modMask, xK_a      ), (XMonad.Util.Paste.sendKey noModMask xK_Left))
-  , ((modMask, xK_e      ), (XMonad.Util.Paste.sendKey noModMask xK_Right))
-  , ((modMask, xK_comma  ), (XMonad.Util.Paste.sendKey noModMask xK_Up))
-  , ((modMask, xK_o      ), (XMonad.Util.Paste.sendKey noModMask xK_Down))
+  -- , ((modMask, xK_a      ), (XMonad.Util.Paste.sendKey noModMask xK_Left))
+  -- , ((modMask, xK_e      ), (XMonad.Util.Paste.sendKey noModMask xK_Right))
+  -- , ((modMask, xK_comma  ), (XMonad.Util.Paste.sendKey noModMask xK_Up))
+  -- , ((modMask, xK_o      ), (XMonad.Util.Paste.sendKey noModMask xK_Down))
 
 
   -- Open Switchto/Open Mail
@@ -214,6 +217,7 @@ myManageHook = composeAll
     , className =? "rdesktop" --> doFloat
     , className =? "Xmessage" --> doCenterFloat
     , isDialog                --> doCenterFloat
+    , title =? "Edit with Emacs FRAME"  --> doCenterFloat
     ]
 
 -- Layouts --------------------------------------------------------------------

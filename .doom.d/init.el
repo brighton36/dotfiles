@@ -123,6 +123,7 @@
        ;;data              ; config/data formats
        ;;(dart +flutter)   ; paint ui and not much else
        ;;dhall
+       edit-server
        ;;elixir            ; erlang done right
        ;;elm               ; care for a cup of TEA?
        emacs-lisp        ; drown in parentheses
@@ -176,7 +177,7 @@
        ;;zig               ; C, but simpler
 
        :email
-       ;;(mu4e +org +gmail)
+       (mu4e +org +gmail)
        ;;notmuch
        ;;(wanderlust +gmail)
 
@@ -192,9 +193,6 @@
        ;;literate
        (default +bindings +smartparens))
 
-; Turn on the 80 character ruler on all files
-(add-hook 'after-change-major-mode-hook 'fci-mode)
-
 ; Turn on dimming of buffers that aren't focused
 (add-hook 'after-init-hook (lambda ()
   (when (fboundp 'auto-dim-other-buffers-mode)
@@ -202,3 +200,4 @@
 
 ; Turn on line-number column for .txt files
 ; (add-hook 'text-mode-hook 'display-line-numbers-mode)
+

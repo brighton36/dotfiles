@@ -155,10 +155,9 @@
 ; TODO: This doesn't work, though, you get an error message in the current frame
 ; (add-to-list 'load-path "~/.emacs.d/lisp")
 ; 
-; (when (require 'edit-server nil t)
-;  (setq edit-server-new-frame nil)
-;  (edit-server-start t))
-;(setq edit-server-verbose t)
+(when (and (require 'edit-server nil t) (daemonp))
+      (edit-server-start))
+; (setq edit-server-verbose t)
 
 ;; Dumb Jump ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
@@ -177,6 +176,10 @@
 )
 
 ;; Custom keys ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Turn on the 80 character ruler on all files
+(add-hook 'after-change-major-mode-hook 'fci-mode)
+
 ;; Alt-[ and Alt-] Window Cycle:
 (global-set-key (kbd "M-]") '(lambda() (interactive) (other-window 1)))
 (global-set-key (kbd "M-[") '(lambda() (interactive) (other-window -1)))
@@ -202,3 +205,28 @@
 (global-set-key (kbd "C-S-o") 'shrink-window-horizontally)
 (global-set-key (kbd "C-S-e") 'enlarge-window-horizontally)
 
+; mu4e Settings:
+(set-email-account!
+  "gmail"
+  '((mu4e-sent-folder       . "/[Gmail]/Sent Mail")
+    (mu4e-trash-folder      . "/[Gmail]/Bin")
+    (smtpmail-smtp-user     . "cderose@derosetechnologies.com"))
+  t)
+
+(setq mu4e-get-mail-command "mbsync cderose@derosetechnologies.com"
+  ;; get emails and index every 1 minute
+  mu4e-update-interval 60
+  ;; send emails with format=flowed
+  mu4e-compose-format-flowed t
+  ;; no need to run cleanup after indexing for cderose@derosetechnologies.com
+  mu4e-index-cleanup nil
+  mu4e-index-lazy-check t
+  ;; more sensible date format
+  mu4e-headers-date-format "%d.%m.%y")
+
+; Telega settings
+(setq telega-server-libs-prefix "/usr")
+(setq telega-use-images 1)
+(telega-notifications-mode 1)
+(telega-appindicator-mode 1)
+(define-key global-map (kbd "C-c t") telega-prefix-map)
