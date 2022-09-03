@@ -22,6 +22,7 @@ import XMonad.Layout.NoBorders (smartBorders, noBorders)
 import XMonad.Layout.Spacing
 import XMonad.Layout.BoringWindows
 import XMonad.Layout.Minimize
+import XMonad.Layout.Gaps
 import XMonad.StackSet
 import XMonad.Util.Loggers
 import XMonad.Util.ClickableWorkspaces
@@ -79,12 +80,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   , ((modMask              , xK_q ), spawn "if type xmonad; then xmonad --recompile && xmonad --restart; else xmessage xmonad not in \\$PATH: \"$PATH\"; fi") -- %! Restart xmonad
   , ((modMask .|. shiftMask, xK_c ), kill)
   , ((modMask,               xK_a ), windows copyToAll)
-	-- TODO: Find a new letter for this
   , ((modMask .|. shiftMask, xK_a ), killAllOtherCopies)
   , ((modMask,               xK_m ), withFocused minimizeWindow)
-	-- TODO: Find a new letter for this
-  -- TODO: Maybe 'd' for detach (and/or, shift-d, in this case)
-  , ((modMask,               xK_o ), withFocused toggleFloat)
+  , ((modMask,               xK_d ), withFocused toggleFloat)
   , ((modMask .|. shiftMask, xK_m ), withLastMinimized maximizeWindowAndFocus)
   , ((modMask,               xK_g ), gotoMenu)
   , ((modMask,               xK_b ), bringMenu)
@@ -104,13 +102,11 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   --, ((modMask, xK_t      ), runOrRaiseAndDo "/usr/bin/telegram-desktop" 
   --    (className =? "TelegramDesktop") (maximizeWindowAndFocus))
 
-  -- This does not seem to be working...
-  -- Arrow Keys using modMask+(wasd keys, when looking at the key labels)
-  -- , ((modMask, xK_a      ), (XMonad.Util.Paste.sendKey noModMask xK_Left))
-  -- , ((modMask, xK_e      ), (XMonad.Util.Paste.sendKey noModMask xK_Right))
-  -- , ((modMask, xK_comma  ), (XMonad.Util.Paste.sendKey noModMask xK_Up))
-  -- , ((modMask, xK_o      ), (XMonad.Util.Paste.sendKey noModMask xK_Down))
-
+  -- Arrow Keys using modMask+(hjkl)
+  , ((modMask, xK_h      ), (XMonad.Util.Paste.sendKey noModMask xK_Left))
+  , ((modMask, xK_l      ), (XMonad.Util.Paste.sendKey noModMask xK_Right))
+  , ((modMask, xK_k  ), (XMonad.Util.Paste.sendKey noModMask xK_Up))
+  , ((modMask, xK_j  ), (XMonad.Util.Paste.sendKey noModMask xK_Down))
 
   -- Open Switchto/Open Mail
   -- NOTE: I didn't really use this, and I wanted meta-m for 'minimize'
@@ -211,7 +207,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
       | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
       , (f, m) <- [(XMonad.StackSet.greedyView, 0), (XMonad.StackSet.shift, shiftMask)]]
 
---managehook
+-- ManageHook -----------------------------------------------------------------
 myManageHook = composeAll
     [ className =? "Steam"    --> doFloat
     , className =? "rdesktop" --> doFloat
@@ -220,20 +216,21 @@ myManageHook = composeAll
     , title =? "Edit with Emacs FRAME"  --> doCenterFloat
     ]
 
--- Layouts --------------------------------------------------------------------
-mySpacing = spacingRaw True             -- Only for >1 window
-  -- TODO: This line seems to be completely ignored:
-  (Border 0 0 0 0) -- Size of screen edge gaps
-  True             -- Enable screen edge gaps
-  (Border 10 10 10 10) -- Size of window gaps
-  True             -- Enable window gaps
-
 -- LayoutHook -----------------------------------------------------------------
-myLayoutHook = minimize . boringWindows 
+myLayoutHook = gaps [(U,5), (R,5), (L,5), (D,5)] $ minimize . boringWindows 
   $ avoidStruts 
-  $ mySpacing 
-  $ smartBorders 
-  $ (layoutHook desktopConfig)
+  $ spacing 5
+  $ smartBorders -- This is needed in order to play fullscreen video without borders
+  $ (tiled ||| Mirror tiled ||| Full)
+    where
+      -- default tiling algorithm partitions the screen into two panes
+      tiled   = Tall nmaster delta ratio
+      -- The default number of windows in the master pane
+      nmaster = 1
+      -- Default proportion of screen occupied by master pane
+      ratio   = 1/2
+      -- Percent of screen to increment by when resizing panes
+      delta   = 3/100
 
 -- xmobar ---------------------------------------------------------------------
 mySB = statusBarProp "xmobar" (pure xmobarPP)

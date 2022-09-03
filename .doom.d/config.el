@@ -72,18 +72,13 @@
 ;; they are implemented.
 
 ;; Themes and Colors ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq doom-theme 'doom-solarized-light)
+(add-to-list 'custom-theme-load-path "~/.doom.d/themes")
+(setq doom-theme 'doom-solarized-light-cderose)
 
 ;; Background color of the line numbers column, and highlight current line color:
 (custom-set-faces!
   `(line-number :background ,(doom-color 'bg-alt))
   `(line-number-current-line :background ,(doom-color 'grey)))
-
-;; Unfocused window colors:
-(custom-set-faces
- ;; solarize base2
- '(auto-dim-other-buffers-face ((t (:background "#eee8d5"))))
- )
 
 ;; Custom Functions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -152,9 +147,7 @@
 ;; Edit Server ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; This is used by firefox. For more on the edit server:
 ; https://www.emacswiki.org/emacs/Edit_with_Emacs
-; TODO: This doesn't work, though, you get an error message in the current frame
-; (add-to-list 'load-path "~/.emacs.d/lisp")
-; 
+
 (when (and (require 'edit-server nil t) (daemonp))
       (edit-server-start))
 ; (setq edit-server-verbose t)
@@ -188,6 +181,15 @@
 (global-set-key (kbd "M-}") '(lambda() (interactive) (rotate-windows -1)))
 (global-set-key (kbd "M-{") '(lambda() (interactive) (rotate-windows 1)))
 
+;; Window Splits:
+(define-key evil-normal-state-map (kbd "C--") '(lambda() (interactive) (split-window)(other-window 1)))
+(global-set-key (kbd "C-\\") '(lambda() (interactive) (split-window-right)(other-window 1)))
+
+;; Decrease Font size
+;; TODO:
+; (global-set-key (kbd "C-,") 'text-scale-decrease)
+; (global-set-key (kbd "C-_") 'text-scale-decrease)
+
 ;; Alt-p and Alt-n for  Previous/Next Tab
 (map! :nv "M-n" #'+workspace/switch-right :nv "M-p" #'+workspace/switch-left)
 
@@ -213,7 +215,7 @@
     (smtpmail-smtp-user     . "cderose@derosetechnologies.com"))
   t)
 
-(setq mu4e-get-mail-command "mbsync cderose@derosetechnologies.com"
+(setq mu4e-get-mail-command "/usr/bin/mbsync -V cderose@derosetechnologies.com"
   ;; get emails and index every 1 minute
   mu4e-update-interval 60
   ;; send emails with format=flowed

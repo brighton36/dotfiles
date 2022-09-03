@@ -2,23 +2,22 @@ Priority:
 
 * Add the .mbsyncrc file, but, remove the password from the repo, use passcmd
 * Maybe start adding the kiavi/stow dotfiles
-* I think standardizing the resize, as ctl-shift-hjkl in tmux/emacs/xmonad is prudent
-* Or I can use hjkl for arrows: left, down, up right
+* I think standardizing the resize, as ctl-shift-<>/<> in tmux/emacs/xmonad is prudent
 
 * xmonad:
 	* Address the todo's in the xmonad.hs
-* picom:
-  * No shadow for full screen apps
+  * Maybe this: https://tony-zorman.com/posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html
 
 * emacs
-  * Maybe this: https://tony-zorman.com/posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html
-  * the (visual select) then < and >  doesn't tab the way we want. Or even the way the 'tab' key works
-    * https://www.reddit.com/r/DoomEmacs/comments/i2atvp/using_tab_to_align_code_in_normal_state/
-	* A layout adjustment... like xmonad mod4-space, or something like tmux's alt-1/2/etc function..
+  * Window resize needs left/right and up/down do  c->, c-<, c-shift->, and c-shift-<
+  * The font increase/decrease isn't quite workking
   * That edit server would be nice in there. it's commented out currently.
     * The keyboard shortcut in firefox isn't working
     * How do we save/send-to-firefox
     * And float it in xmonady https://parasurv.neocities.org/emacs/edit-browser-textarea-with-emacs.html
+  * the (visual select) then < and >  doesn't tab the way we want. Or even the way the 'tab' key works
+    * https://www.reddit.com/r/DoomEmacs/comments/i2atvp/using_tab_to_align_code_in_normal_state/
+	* A layout adjustment... like xmonad mod4-space, or something like tmux's alt-1/2/etc function..
   * Maybe: https://emacs.stackexchange.com/questions/22437/open-set-of-buffers-based-on-git-branch
 
 * Bluetooth hsp mode:
@@ -33,6 +32,9 @@ Priority:
     https://wiki.archlinux.org/title/Haskell#stack-static
     You may be able to go back to the non-dynamic xmobar package at that time...
   * What about that Unsafe... can we make it safer?
+
+* Maybe we should round the corners of our screenshots:
+  https://stackoverflow.com/questions/718314/rounding-corners-of-pictures-with-imagemagick
 
 * Keybindings:
   * Bind Bluetooth off to F11?
