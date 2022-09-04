@@ -10,7 +10,7 @@ Priority:
 
 * emacs
   * Window resize needs left/right and up/down do  c->, c-<, c-shift->, and c-shift-<
-  * The font increase/decrease isn't quite workking
+  * I guess ctrl-n and ctrl-p should switch between tabs
   * That edit server would be nice in there. it's commented out currently.
     * The keyboard shortcut in firefox isn't working
     * How do we save/send-to-firefox

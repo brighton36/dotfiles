@@ -185,10 +185,20 @@
 (define-key evil-normal-state-map (kbd "C--") '(lambda() (interactive) (split-window)(other-window 1)))
 (global-set-key (kbd "C-\\") '(lambda() (interactive) (split-window-right)(other-window 1)))
 
-;; Decrease Font size
-;; TODO:
-; (global-set-key (kbd "C-,") 'text-scale-decrease)
-; (global-set-key (kbd "C-_") 'text-scale-decrease)
+;; Unset Increase/Decrease Font size:
+(define-key evil-normal-state-map (kbd "C-=") nil) ;; doom-normal mode
+(define-key evil-normal-state-map (kbd "C-+") nil) ;; doom-normal mode
+(global-unset-key (kbd "C-=")) ;; face-remap
+
+;; Set Increase/Decrease Font size:
+(global-set-key (kbd "C-+") 'text-scale-increase)
+; This gets weird. I guess we could alternatively just disable undo-fu:
+(after! undo-fu
+  (map! :map undo-fu-mode-map "C-_" #'text-scale-decrease))
+
+;; Close the window
+(global-unset-key (kbd "C-<backspace>")) ;; simple.el backward-kill-word
+(global-set-key (kbd "C-<backspace>") 'delete-window)
 
 ;; Alt-p and Alt-n for  Previous/Next Tab
 (map! :nv "M-n" #'+workspace/switch-right :nv "M-p" #'+workspace/switch-left)
