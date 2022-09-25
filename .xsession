@@ -22,7 +22,8 @@ xset fp rehash
 # Tray Icons/Apps
 /usr/bin/nm-applet &
 /usr/bin/blueman-applet &
-/bin/bash -c "sleep 4; /usr/bin/telegram-desktop -startintray &" &
+# We switched to telega
+# /bin/bash -c "sleep 4; /usr/bin/telegram-desktop -startintray &" &
 /usr/bin/autokey-gtk &
 
 /usr/bin/emacs --daemon &

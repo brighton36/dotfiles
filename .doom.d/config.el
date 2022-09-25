@@ -7,7 +7,7 @@
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
 (setq user-full-name "Chris DeRose"
-      user-mail-address "chris@chrisderose.com")
+      user-mail-address "cderose@derosetechnologies.com")
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom:
 ;;
@@ -185,10 +185,12 @@
 (define-key evil-normal-state-map (kbd "C--") '(lambda() (interactive) (split-window)(other-window 1)))
 (global-set-key (kbd "C-\\") '(lambda() (interactive) (split-window-right)(other-window 1)))
 
-;; Unset Increase/Decrease Font size:
+;; Ubind C-= and C-+ in various places:
+(global-unset-key (kbd "C-=")) ;; face-remap
 (define-key evil-normal-state-map (kbd "C-=") nil) ;; doom-normal mode
 (define-key evil-normal-state-map (kbd "C-+") nil) ;; doom-normal mode
-(global-unset-key (kbd "C-=")) ;; face-remap
+;; TODO: Does this work? Answer: No
+; (define-key mu4e-headers-mode-map (kbd "C-+") nil)
 
 ;; Set Increase/Decrease Font size:
 (global-set-key (kbd "C-+") 'text-scale-increase)
@@ -217,6 +219,15 @@
 (global-set-key (kbd "C-S-o") 'shrink-window-horizontally)
 (global-set-key (kbd "C-S-e") 'enlarge-window-horizontally)
 
+;; Visual Mode's > and < shifts, don't really work the way you'd think. This adjusts
+;; the shift, based on the language:
+;; TODO: I'm not sure this is working... Answer: It does, but kills TRAMP
+;; (add-to-list 'ignored-local-variable-values "tab-width")
+
+;; Apps ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Outline mode should use markdown style headers:
+(setq outline-regexp "[#\f]+")
+
 ; mu4e Settings:
 (set-email-account!
   "gmail"
@@ -225,16 +236,26 @@
     (smtpmail-smtp-user     . "cderose@derosetechnologies.com"))
   t)
 
-(setq mu4e-get-mail-command "/usr/bin/mbsync -V cderose@derosetechnologies.com"
-  ;; get emails and index every 1 minute
-  mu4e-update-interval 60
-  ;; send emails with format=flowed
+(setq 
+  mu4e-get-mail-command "/usr/bin/mbsync -V cderose@derosetechnologies.com"
+  ; NOTE: I moved the sync into ~/.config/systemd/user/mbsync.service
+  ; Per: https://wiki.archlinux.org/title/isync#With_a_timer
+  mu4e-update-interval nil
+  mu4e-headers-auto-update t
   mu4e-compose-format-flowed t
-  ;; no need to run cleanup after indexing for cderose@derosetechnologies.com
   mu4e-index-cleanup nil
+  mu4e-view-auto-mark-as-read nil
   mu4e-index-lazy-check t
-  ;; more sensible date format
-  mu4e-headers-date-format "%d.%m.%y")
+  mu4e-view-show-images t
+  mu4e-use-fancy-chars t
+  mu4e-attachment-dir "~/Downloads"
+  mu4e-headers-date-format "%y-%m-%d")
+
+;; TODO
+;; (setq mu4e-compose-signature
+;;    "Foo X. Bar\nhttp://www.example.com\n")
+
+(setq message-kill-buffer-on-exit t)
 
 ; Telega settings
 (setq telega-server-libs-prefix "/usr")
@@ -242,3 +263,50 @@
 (telega-notifications-mode 1)
 (telega-appindicator-mode 1)
 (define-key global-map (kbd "C-c t") telega-prefix-map)
+
+;; Company (Code completion)
+
+(after! company
+  (setq company-idle-delay 0.5
+        company-minimum-prefix-length 2)
+  (setq company-show-numbers t)
+  (add-hook 'evil-normal-state-entry-hook #'company-abort)) ;; make aborting less annoying.
+
+(setq-default history-length 1000)
+(setq-default prescient-history-length 1000)
+(set-company-backend!
+  '(text-mode
+    markdown-mode
+    gfm-mode)
+  '(:seperate
+    company-ispell
+    company-files
+    company-yasnippet))
+
+;; Projectile
+; Mostly just ignores
+(setq projectile-ignored-projects '("~/" "/tmp" "~/.emacs.d/.local/straight/repos/"))
+(defun projectile-ignored-project-function (filepath)
+  "Return t if FILEPATH is within any of `projectile-ignored-projects'"
+  (or (mapcar (lambda (p) (s-starts-with-p p filepath)) projectile-ignored-projects)))
+
+;; ispell
+(setq ispell-dictionary "en-custom")
+
+;; Trying these settings out, from : https://tecosaur.github.io/emacs-config/config.html#fetching
+(setq-default
+ delete-by-moving-to-trash t                      ; Delete files to trash
+ x-stretch-cursor t)                              ; Stretch cursor to the glyph width
+
+(setq undo-limit 80000000                         ; Raise undo-limit to 80Mb
+      evil-want-fine-undo t                       ; By default while in insert all changes are one big blob. Be more granular
+      )
+
+(global-subword-mode 1)                           ; Iterate through CamelCase words
+
+; New buffers default to org:
+(setq-default major-mode 'org-mode)
+
+; faster which-key menu:
+(setq which-key-idle-delay 0.5) 
+
