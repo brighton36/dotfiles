@@ -236,20 +236,24 @@
     (smtpmail-smtp-user     . "cderose@derosetechnologies.com"))
   t)
 
-(setq 
-  mu4e-get-mail-command "/usr/bin/mbsync -V cderose@derosetechnologies.com"
-  ; NOTE: I moved the sync into ~/.config/systemd/user/mbsync.service
-  ; Per: https://wiki.archlinux.org/title/isync#With_a_timer
-  mu4e-update-interval nil
-  mu4e-headers-auto-update t
-  mu4e-compose-format-flowed t
-  mu4e-index-cleanup nil
-  mu4e-view-auto-mark-as-read nil
-  mu4e-index-lazy-check t
-  mu4e-view-show-images t
-  mu4e-use-fancy-chars t
-  mu4e-attachment-dir "~/Downloads"
-  mu4e-headers-date-format "%y-%m-%d")
+; NOTE: The issue here, is that .emacs.d/modules/email/mu4e/config.el is loading after this file
+;       so, we can just hook it here, like so:
+(with-eval-after-load 'mu4e
+  (setq 
+    mu4e-get-mail-command "/usr/bin/mbsync -V cderose@derosetechnologies.com"
+    ; NOTE: I tried setting up the sync in ~/.config/systemd/user/mbsync.service
+    ; Per: https://wiki.archlinux.org/title/isync#With_a_timer
+    ; But I think this works better:
+    mu4e-update-interval 60
+    mu4e-headers-auto-update t
+    mu4e-compose-format-flowed t
+    mu4e-index-cleanup nil
+    mu4e-view-auto-mark-as-read nil
+    mu4e-index-lazy-check t
+    mu4e-view-show-images t
+    mu4e-use-fancy-chars t
+    mu4e-attachment-dir "~/Downloads"
+    mu4e-headers-date-format "%y-%m-%d") )
 
 ;; TODO
 ;; (setq mu4e-compose-signature
