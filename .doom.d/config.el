@@ -254,9 +254,10 @@
     mu4e-use-fancy-chars t
     mu4e-attachment-dir "~/Downloads"
     mu4e-headers-date-format "%y-%m-%d")
-  ;;; TODO: This isn't working...
-  ; (define-key mu4e-view-mode-map (kbd "C-+") nil)
   (define-key mu4e-headers-mode-map (kbd "C-+") nil)
+  ; Seems like these both need to be defined, in order to work:
+  (define-key mu4e-view-mode-map (kbd "C-+") nil)
+  (evil-define-key 'normal mu4e-view-mode-map (kbd "C-+") nil)
   )
 
 ;; TODO
