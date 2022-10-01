@@ -189,8 +189,6 @@
 (global-unset-key (kbd "C-=")) ;; face-remap
 (define-key evil-normal-state-map (kbd "C-=") nil) ;; doom-normal mode
 (define-key evil-normal-state-map (kbd "C-+") nil) ;; doom-normal mode
-;; TODO: Does this work? Answer: No
-; (define-key mu4e-headers-mode-map (kbd "C-+") nil)
 
 ;; Set Increase/Decrease Font size:
 (global-set-key (kbd "C-+") 'text-scale-increase)
@@ -236,6 +234,8 @@
     (smtpmail-smtp-user     . "cderose@derosetechnologies.com"))
   t)
 
+; TODO I think we'll want/need to rebind mule-headers-split-view-grow/shrink
+
 ; NOTE: The issue here, is that .emacs.d/modules/email/mu4e/config.el is loading after this file
 ;       so, we can just hook it here, like so:
 (with-eval-after-load 'mu4e
@@ -253,7 +253,11 @@
     mu4e-view-show-images t
     mu4e-use-fancy-chars t
     mu4e-attachment-dir "~/Downloads"
-    mu4e-headers-date-format "%y-%m-%d") )
+    mu4e-headers-date-format "%y-%m-%d")
+  ;;; TODO: This isn't working...
+  ; (define-key mu4e-view-mode-map (kbd "C-+") nil)
+  (define-key mu4e-headers-mode-map (kbd "C-+") nil)
+  )
 
 ;; TODO
 ;; (setq mu4e-compose-signature
