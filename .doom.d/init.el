@@ -203,4 +203,3 @@
 ; Lets try out relative line numbers:
 ; ESC (number) (up or down)
 (setq display-line-numbers-type 'relative)
-

@@ -2,6 +2,7 @@ Priority:
 
 * Add the .mbsyncrc file, but, remove the password from the repo, use passcmd
 * I think standardizing the resize, as ctl-shift-<>/<> in tmux/emacs/xmonad is prudent
+  * And it should almost certainly be ctrl-shift-hjkl
 
 * Maybe add the email sync systemd stuff once we figure out how we're going to update emails
 

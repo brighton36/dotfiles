@@ -144,6 +144,28 @@
 
 (customize-set-variable 'even-window-sizes nil)     ; avoid resizing
 
+;; Trying these settings out, from : https://tecosaur.github.io/emacs-config/config.html#fetching
+(setq-default
+ delete-by-moving-to-trash t                      ; Delete files to trash
+ x-stretch-cursor t)                              ; Stretch cursor to the glyph width
+
+(setq undo-limit 80000000                         ; Raise undo-limit to 80Mb
+      evil-want-fine-undo t                       ; By default while in insert all changes are one big blob. Be more granular
+      )
+
+(global-subword-mode 1)                           ; Iterate through CamelCase words
+
+; New buffers default to org:
+(setq-default major-mode 'org-mode)
+
+; faster which-key menu:
+(setq which-key-idle-delay 0.5) 
+
+; The 'open in browser' should always load in the default profile:
+;(setq browse-url-generic-program
+;	(shell-command-to-string "/usr/bin/firefox -P default-release")
+;	browse-url-browser-function 'browse-url-generic)
+
 ;; Edit Server ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; This is used by firefox. For more on the edit server:
 ; https://www.emacswiki.org/emacs/Edit_with_Emacs
@@ -217,16 +239,10 @@
 (global-set-key (kbd "C-S-o") 'shrink-window-horizontally)
 (global-set-key (kbd "C-S-e") 'enlarge-window-horizontally)
 
-;; Visual Mode's > and < shifts, don't really work the way you'd think. This adjusts
-;; the shift, based on the language:
-;; TODO: I'm not sure this is working... Answer: It does, but kills TRAMP
-;; (add-to-list 'ignored-local-variable-values "tab-width")
-
-;; Apps ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Outline mode should use markdown style headers:
+;; Outline ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq outline-regexp "[#\f]+")
 
-; mu4e Settings:
+;; mu4e ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (set-email-account!
   "gmail"
   '((mu4e-sent-folder       . "/[Gmail]/Sent Mail")
@@ -234,7 +250,35 @@
     (smtpmail-smtp-user     . "cderose@derosetechnologies.com"))
   t)
 
-; TODO I think we'll want/need to rebind mule-headers-split-view-grow/shrink
+; SMTP Settings:
+(setq message-send-mail-function 'smtpmail-send-it
+  smtpmail-stream-type 'starttls
+  smtpmail-default-smtp-server "smtp.gmail.com"
+  smtpmail-smtp-server "smtp.gmail.com"
+  smtpmail-smtp-service 587)
+
+; Org-msg settings:
+; NOTE: I don't think I'm actually using this at the moment. But, I'd like to...
+(setq mail-user-agent 'gnus-user-agent)
+(require 'org-msg)
+(setq org-msg-startup "hidestars indent inlineimages"
+  org-msg-greeting-fmt "\nHello %s,\n\n"
+  org-msg-recipient-names '(("chris@chrisderose.com" . "Chris DeRose"))
+  org-msg-greeting-name-limit 3
+  org-msg-default-alternatives '((new   . (text html))
+  (reply-to-html . (text html))
+  (reply-to-text . (text)))
+  org-msg-convert-citation t
+  org-msg-signature "
+
+  Regards,
+
+  #+begin_signature
+  --
+  *Chris Derose
+  /chris@chrisderose.com/
+  #+end_signature")
+ (org-msg-mode)
 
 ; NOTE: The issue here, is that .emacs.d/modules/email/mu4e/config.el is loading after this file
 ;       so, we can just hook it here, like so:
@@ -253,28 +297,55 @@
     mu4e-view-show-images t
     mu4e-use-fancy-chars t
     mu4e-attachment-dir "~/Downloads"
+    mu4e-compose-signature "Chris Derose\nchris@chrisderose.com\n"
     mu4e-headers-date-format "%y-%m-%d")
+  ; Keybindings:
+  ; NOTE: Implicit:
+  ; Headers Mode:
   (define-key mu4e-headers-mode-map (kbd "C-+") nil)
-  ; Seems like these both need to be defined, in order to work:
-  (define-key mu4e-view-mode-map (kbd "C-+") nil)
-  (evil-define-key 'normal mu4e-view-mode-map (kbd "C-+") nil)
-  )
+  (evil-define-key 'normal mu4e-headers-mode-map "r" nil)
+  (evil-define-key 'normal mu4e-headers-mode-map "?" nil)
+  (evil-define-key 'normal mu4e-headers-mode-map "!" nil)
+  (evil-define-key 'normal mu4e-headers-mode-map "+" nil)
+  (evil-define-key 'normal mu4e-headers-mode-map "-" nil)
+  (evil-define-key 'normal mu4e-headers-mode-map "=" nil)
+  (evil-define-key 'normal mu4e-headers-mode-map "&" nil)
+  (evil-define-key 'normal mu4e-headers-mode-map "*" nil)
+  (evil-define-key 'normal mu4e-headers-mode-map "y" nil)
+  (evil-define-key 'normal mu4e-headers-mode-map "m" 'mu4e-headers-mark-for-read)
+  (evil-define-key 'normal mu4e-headers-mode-map "M" 'mu4e-headers-mark-for-unread)
 
-;; TODO
-;; (setq mu4e-compose-signature
-;;    "Foo X. Bar\nhttp://www.example.com\n")
+  ; View mode:
+  (define-key mu4e-view-mode-map (kbd "C-+") nil) ; For some reason this is necessary
+  (evil-define-key 'normal mu4e-view-mode-map (kbd "C-+") nil)
+  (evil-define-key 'normal mu4e-view-mode-map "r" nil)
+  (evil-define-key 'normal mu4e-view-mode-map "?" nil)
+  (evil-define-key 'normal mu4e-view-mode-map "+" nil)
+  (evil-define-key 'normal mu4e-view-mode-map "-" nil)
+  (evil-define-key 'normal mu4e-view-mode-map "=" nil)
+  (evil-define-key 'normal mu4e-view-mode-map "&" nil)
+  (evil-define-key 'normal mu4e-view-mode-map "*" nil)
+  (evil-define-key 'normal mu4e-view-mode-map "y" nil)
+  (evil-define-key 'normal mu4e-view-mode-map "m" #'mu4e-view-mark-for-read)
+  (evil-define-key 'normal mu4e-view-mode-map "M" #'mu4e-view-mark-for-unread)
+  (evil-define-key 'normal mu4e-view-mode-map "!" #'mu4e-view-raw-message)
+  )
 
 (setq message-kill-buffer-on-exit t)
 
-; Telega settings
+;; Telega ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq telega-server-libs-prefix "/usr")
 (setq telega-use-images 1)
 (telega-notifications-mode 1)
 (telega-appindicator-mode 1)
 (define-key global-map (kbd "C-c t") telega-prefix-map)
 
-;; Company (Code completion)
+(with-eval-after-load 'telega
+	(define-key telega-chat-mode-map (kbd "C-S-r") 'telega-msg-reply)
+	(define-key telega-chat-mode-map (kbd "C-S-e") 'telega-msg-edit)
+  (evil-define-key 'normal telega-chat-mode-map "q" 'telega) )
 
+;; Telega ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (after! company
   (setq company-idle-delay 0.5
         company-minimum-prefix-length 2)
@@ -292,30 +363,14 @@
     company-files
     company-yasnippet))
 
-;; Projectile
+;; Projectile ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Mostly just ignores
 (setq projectile-ignored-projects '("~/" "/tmp" "~/.emacs.d/.local/straight/repos/"))
 (defun projectile-ignored-project-function (filepath)
   "Return t if FILEPATH is within any of `projectile-ignored-projects'"
   (or (mapcar (lambda (p) (s-starts-with-p p filepath)) projectile-ignored-projects)))
 
-;; ispell
+;; ispell ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq ispell-dictionary "en-custom")
 
-;; Trying these settings out, from : https://tecosaur.github.io/emacs-config/config.html#fetching
-(setq-default
- delete-by-moving-to-trash t                      ; Delete files to trash
- x-stretch-cursor t)                              ; Stretch cursor to the glyph width
-
-(setq undo-limit 80000000                         ; Raise undo-limit to 80Mb
-      evil-want-fine-undo t                       ; By default while in insert all changes are one big blob. Be more granular
-      )
-
-(global-subword-mode 1)                           ; Iterate through CamelCase words
-
-; New buffers default to org:
-(setq-default major-mode 'org-mode)
-
-; faster which-key menu:
-(setq which-key-idle-delay 0.5) 
-
+;; TOOD: Organize ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
