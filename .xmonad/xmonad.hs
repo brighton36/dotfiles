@@ -294,7 +294,7 @@ main = do
   xmonad 
     . XMonad.Hooks.EwmhDesktops.ewmhFullscreen 
     . ewmh 
-    . withEasySB (statusBarProp "xmobar" (clickablePP myPP)) defToggleStrutsKey
+    . withEasySB (statusBarProp "~/.config/xmobar/xmobar-start.sh" (clickablePP myPP)) defToggleStrutsKey
     . withUrgencyHook dzenUrgencyHook { 
       args = ["-bg", (red myColor), "-fg", (base3 myColor), "-xs", "1"] 
     } $ desktopConfig

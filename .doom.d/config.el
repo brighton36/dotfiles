@@ -161,6 +161,7 @@
 ; faster which-key menu:
 (setq which-key-idle-delay 0.5) 
 
+; TODO: Can we nix this, now that we have eaf?
 ; The 'open in browser' should always load in the default profile:
 ;(setq browse-url-generic-program
 ;	(shell-command-to-string "/usr/bin/firefox -P default-release")
@@ -238,6 +239,57 @@
 ;; Window Resize left/right. I guess this works..
 (global-set-key (kbd "C-S-o") 'shrink-window-horizontally)
 (global-set-key (kbd "C-S-e") 'enlarge-window-horizontally)
+
+;; Outline ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; NOTE: Be sure to follow the install steps: https://github.com/emacs-eaf/emacs-application-framework#install
+(use-package! eaf
+  :load-path "~/.emacs.d/site-lisp/emacs-application-framework"
+  :init
+  :custom
+  (eaf-browser-continue-where-left-off t) 
+  (eaf-browser-enable-adblocker t)
+  (browse-url-browser-function 'eaf-open-browser)
+  :config
+  (defalias 'browse-web #'eaf-open-browser)
+
+  (require 'eaf-file-manager)
+  (require 'eaf-music-player)
+  (require 'eaf-image-viewer)
+  (require 'eaf-camera)
+  (require 'eaf-demo)
+  (require 'eaf-airshare)
+  (require 'eaf-terminal)
+  (require 'eaf-markdown-previewer)
+  (require 'eaf-video-player)
+  (require 'eaf-vue-demo)
+  (require 'eaf-file-sender)
+  (require 'eaf-pdf-viewer)
+  (require 'eaf-mindmap)
+  (require 'eaf-netease-cloud-music)
+  (require 'eaf-jupyter)
+  (require 'eaf-org-previewer)
+  (require 'eaf-system-monitor)
+  (require 'eaf-rss-reader)
+  (require 'eaf-file-browser)
+  (require 'eaf-browser)
+  (require 'eaf-org)
+  (require 'eaf-mail)
+  (require 'eaf-git)
+  (when (display-graphic-p)
+    (require 'eaf-all-the-icons))
+
+  (require 'eaf-evil)
+  (define-key key-translation-map (kbd "SPC")
+    (lambda (prompt)
+      (if (derived-mode-p 'eaf-mode)
+          (pcase eaf--buffer-app-name
+            ("browser" (if  (string= (eaf-call-sync "call_function" eaf--buffer-id "is_focus") "True")
+                           (kbd "SPC")
+                         (kbd eaf-evil-leader-key)))
+            ("pdf-viewer" (kbd eaf-evil-leader-key))
+            ("image-viewer" (kbd eaf-evil-leader-key))
+            (_  (kbd "SPC")))
+        (kbd "SPC")))))
 
 ;; Outline ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq outline-regexp "[#\f]+")
@@ -372,5 +424,3 @@
 
 ;; ispell ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq ispell-dictionary "en-custom")
-
-;; TOOD: Organize ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

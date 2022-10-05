@@ -7,9 +7,6 @@ Priority:
 * Maybe add the email sync systemd stuff once we figure out how we're going to update emails
 
 * xmonad:
-  * I think this is the issue with startup xmobar crashing:
-   https://reddit.com/r/xmonad/comments/xciq2d/an_issue_ive_found_with_xmobar_alsa_plugin/
-
 	* Address the todo's in the xmonad.hs
   * Maybe this: https://tony-zorman.com/posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html
 
@@ -21,10 +18,7 @@ Priority:
   you can't tell what tab you're in, in that case
 
 * emacs
-  * Get the telega unread messages count more readable:
-    the face is: telega-muted-count
-    * from the chat: You can use ~describe-face~ to get their font face. Then modify the face to your liking.
-  * telega edit isn't worknig right with doom-emacs. rebind the telega-msg-edit to maybe ctrl-shift-e
+  * maybe remove the ctrl-t for tabnew
   * Window resize needs left/right and up/down do  c->, c-<, c-shift->, and c-shift-<
   * That edit server would be nice in there. it's commented out currently.
     * The keyboard shortcut in firefox isn't working
@@ -46,9 +40,6 @@ Priority:
     https://www.reddit.com/r/pipewire/comments/pcjkls/bluetooth_battery_status/
 
 * xmobar
-  * Maybe stack-static will fix the buggy xmobar:
-    https://wiki.archlinux.org/title/Haskell#stack-static
-    You may be able to go back to the non-dynamic xmobar package at that time...
   * What about that Unsafe... can we make it safer?
 
 * Maybe we should round the corners of our screenshots:
