@@ -1,16 +1,13 @@
 Priority:
 
-* Add the .mbsyncrc file, but, remove the password from the repo, use passcmd
 * I think standardizing the resize, as ctl-shift-<>/<> in tmux/emacs/xmonad is prudent
   * And it should almost certainly be ctrl-shift-hjkl
-
-* Maybe add the email sync systemd stuff once we figure out how we're going to update emails
 
 * xmonad:
 	* Address the todo's in the xmonad.hs
   * Maybe this: https://tony-zorman.com/posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html
 
-* Fish : Does ctrl-k not work?
+* Fish : Does ctrl-k not work? And, maybe we should match these shortcuts a bit better to emacs
 
 * tmux
   * When there's a bell on a tab, that's not the current tab, that shouldn't change the color
@@ -18,6 +15,11 @@ Priority:
   you can't tell what tab you're in, in that case
 
 * emacs
+  * https://github.com/abo-abo/avy
+    * Maybe use that avy-goto-char-timer
+    * From https://news.ycombinator.com/item?id=33134113
+    * I'm thinking ctrl-g
+    * We should have a goto-line number too
   * maybe remove the ctrl-t for tabnew
   * Window resize needs left/right and up/down do  c->, c-<, c-shift->, and c-shift-<
   * That edit server would be nice in there. it's commented out currently.
