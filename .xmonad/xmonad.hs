@@ -98,7 +98,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
 
   -- Emacs bindings:
   , ((modMask, xK_e      ), spawn "emacsclient --eval \"(emacs-everywhere)\"")
-  , ((modMask, xK_b      ), spawn "emacsclient -c -a emacs")
+  -- TODO: I think xk_b is probably the better shortrcut, but, defToggleStrutsKey
+  -- seems to be registering this 
+  , ((modMask, xK_minus), spawn "emacsclient -c -a emacs")
 
   -- Switch-to/Open Telegram
   -- I guess we decided against all this:
