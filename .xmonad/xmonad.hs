@@ -85,28 +85,33 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   , ((modMask,               xK_d ), withFocused toggleFloat)
   , ((modMask .|. shiftMask, xK_m ), withLastMinimized maximizeWindowAndFocus)
   , ((modMask,               xK_g ), gotoMenu)
-  , ((modMask,               xK_b ), bringMenu)
+  -- I decided to move xK_b to 'new' emacs buffer
+  -- , ((modMask,               xK_b ), bringMenu)
 
   -- Launching Programs
   , ((modMask, xK_Return ), spawn $ terminal conf)
-  , ((modMask, xK_e      ), spawn "emacsclient -c -a emacs")
   , ((modMask, xK_f      ), spawn "firefox -P default-release")
   , ((modMask, xK_i      ), spawn "firefox -P Fap")
   , ((modMask, xK_c      ), spawn "/usr/bin/google-chrome-stable")
   , ((modMask, xK_r      ), spawn "/home/cderose/bin/dmenu_run_history")
   , ((modMask, xK_Escape ), spawn "xscreensaver-command -lock")
 
+  -- Emacs bindings:
+  , ((modMask, xK_e      ), spawn "emacsclient --eval \"(emacs-everywhere)\"")
+  , ((modMask, xK_b      ), spawn "emacsclient -c -a emacs")
+
   -- Switch-to/Open Telegram
-  -- TODO:
-  , ((modMask, xK_t ), spawn "emacsclient -c -e '(telega)'")
+  -- I guess we decided against all this:
+  -- , ((modMask, xK_t ), spawn "emacsclient -c -e '(telega)'")
   --, ((modMask, xK_t      ), runOrRaiseAndDo "/usr/bin/telegram-desktop" 
   --    (className =? "TelegramDesktop") (maximizeWindowAndFocus))
 
   -- Arrow Keys using modMask+(hjkl)
-  , ((modMask, xK_h      ), (XMonad.Util.Paste.sendKey noModMask xK_Left))
-  , ((modMask, xK_l      ), (XMonad.Util.Paste.sendKey noModMask xK_Right))
-  , ((modMask, xK_k  ), (XMonad.Util.Paste.sendKey noModMask xK_Up))
-  , ((modMask, xK_j  ), (XMonad.Util.Paste.sendKey noModMask xK_Down))
+  -- I guess we decided against all this:
+  -- , ((modMask, xK_h      ), (XMonad.Util.Paste.sendKey noModMask xK_Left))
+  -- , ((modMask, xK_l      ), (XMonad.Util.Paste.sendKey noModMask xK_Right))
+  -- , ((modMask, xK_k  ), (XMonad.Util.Paste.sendKey noModMask xK_Up))
+  -- , ((modMask, xK_j  ), (XMonad.Util.Paste.sendKey noModMask xK_Down))
 
   -- Open Switchto/Open Mail
   -- NOTE: I didn't really use this, and I wanted meta-m for 'minimize'
@@ -213,7 +218,7 @@ myManageHook = composeAll
     , className =? "rdesktop" --> doFloat
     , className =? "Xmessage" --> doCenterFloat
     , isDialog                --> doCenterFloat
-    , title =? "Edit with Emacs FRAME"  --> doCenterFloat
+    , title =? "Emacs Everywhere"  --> doCenterFloat
     ]
 
 -- LayoutHook -----------------------------------------------------------------
@@ -287,6 +292,8 @@ myStartupHook = do
   -- Seems like this stops working for random reasons on occasion, trying it
   -- out here, instead of the xsession
   spawn "bash -c 'killall flashfocus; /usr/bin/flashfocus &'"
+  -- Sometimes xcape stops working for no reason as well. 
+  spawn "bash -c 'killall xcape; /usr/bin/xcape -e Control_L=Escape'"
 
 -- Main -----------------------------------------------------------------------
 main :: IO ()

@@ -159,7 +159,8 @@
 (global-subword-mode 1)                           ; Iterate through CamelCase words
 
 ; New buffers default to org:
-(setq-default major-mode 'org-mode)
+; I disabled this because of issues with emacs everywhere. Maybe I want this ultimately...
+; (setq-default major-mode 'org-mode)
 
 ; faster which-key menu:
 (setq which-key-idle-delay 0.5) 
@@ -246,6 +247,17 @@
 ;; epa ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (require 'epa)
 (epa-file-enable)
+
+;; everywhere ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; These frame params were all necessary to get the xmonad doCenterFloat to work:
+(setq emacs-everywhere-frame-name-format "Emacs Everywhere")
+(setq emacs-everywhere-frame-parameters 
+  '((name . "Emacs Everywhere")
+    (width . 80)
+    (height . 25)
+    (minibuffer . t)
+    (menu-bar-lines . t)) )
+(remove-hook 'emacs-everywhere-init-hooks 'emacs-everywhere-set-frame-position)
 
 ;; Outline ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; NOTE: Be sure to follow the install steps: https://github.com/emacs-eaf/emacs-application-framework#install

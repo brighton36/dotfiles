@@ -2,10 +2,6 @@
 
 # NOTE: .xprofile seems to be the best place to set environment variables
 
-# This enables tap for escape on the capslock key (which is control_l, 
-# apparently, due to the above modmaps
-xcape -e 'Control_L=Escape'
-
 # gdm sets the cursors weird. This sets it back:
 xsetroot -cursor_name left_ptr
 
