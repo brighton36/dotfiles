@@ -66,7 +66,7 @@
        ;;parinfer          ; turn lisp into python, sort of
        ;;rotate-text       ; cycle region at point between text candidates
        snippets          ; my elves. They type so I don't have to
-       ;;word-wrap         ; soft wrapping with language-aware indent
+       word-wrap         ; soft wrapping with language-aware indent
 
        :emacs
        (dired +icons)            ; making dired pretty [functional]
@@ -202,3 +202,4 @@
 ; Lets try out relative line numbers:
 ; ESC (number) (up or down)
 (setq display-line-numbers-type 'relative)
+

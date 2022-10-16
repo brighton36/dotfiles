@@ -133,7 +133,8 @@
 ;; Preferences  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+'(auto-dim-other-buffers-face ((t (:background "#EEE8D5"))))
+; (setq display-line-numbers-type t)
 
 ;; Enable Cmake Syntax highlighting
 (require 'cmake-mode)
@@ -165,13 +166,21 @@
 ; faster which-key menu:
 (setq which-key-idle-delay 0.5) 
 
+; 80-column indicator, and ruler:
+(add-hook 'find-file-hook (lambda () (ruler-mode 1)))
+(add-hook 'find-file-hook (lambda () (display-fill-column-indicator-mode t)))
+
 ; TODO: Can we nix this, now that we have eaf?
 ; The 'open in browser' should always load in the default profile:
 ;(setq browse-url-generic-program
 ;	(shell-command-to-string "/usr/bin/firefox -P default-release")
 ;	browse-url-browser-function 'browse-url-generic)
 
-;; Edit Server ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Visual Line ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Just a prettier indication that we're wrapping:
+(setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
+
+;; Edit Server ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; This is used by firefox. For more on the edit server:
 ; https://www.emacswiki.org/emacs/Edit_with_Emacs
 
@@ -197,20 +206,17 @@
 
 ;; Custom keys ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-; Turn on the 80 character ruler on all files
-(add-hook 'after-change-major-mode-hook 'fci-mode)
-
 ;; Alt-[ and Alt-] Window Cycle:
-(global-set-key (kbd "M-]") '(lambda() (interactive) (other-window 1)))
-(global-set-key (kbd "M-[") '(lambda() (interactive) (other-window -1)))
+(global-set-key (kbd "M-]") #'(lambda() (interactive) (other-window 1)))
+(global-set-key (kbd "M-[") #'(lambda() (interactive) (other-window -1)))
 
 ;; Alt-Shift-[ an Alt-Shift-] Move Window Cycle
-(global-set-key (kbd "M-}") '(lambda() (interactive) (rotate-windows -1)))
-(global-set-key (kbd "M-{") '(lambda() (interactive) (rotate-windows 1)))
+(global-set-key (kbd "M-}") #'(lambda() (interactive) (rotate-windows -1)))
+(global-set-key (kbd "M-{") #'(lambda() (interactive) (rotate-windows 1)))
 
 ;; Window Splits:
-(define-key evil-normal-state-map (kbd "C--") '(lambda() (interactive) (split-window)(other-window 1)))
-(global-set-key (kbd "C-\\") '(lambda() (interactive) (split-window-right)(other-window 1)))
+(define-key evil-normal-state-map (kbd "C--") #'(lambda() (interactive) (split-window)(other-window 1)))
+(global-set-key (kbd "C-\\") #'(lambda() (interactive) (split-window-right)(other-window 1)))
 
 ;; Ubind C-= and C-+ in various places:
 (global-unset-key (kbd "C-=")) ;; face-remap
@@ -533,6 +539,7 @@
     mu4e-update-interval 60
     mu4e-headers-auto-update t
     mu4e-compose-format-flowed t
+    fill-flowed-encode-column 80
     mu4e-index-cleanup nil
     mu4e-view-auto-mark-as-read nil
     mu4e-index-lazy-check t
@@ -574,6 +581,7 @@
   )
 
 (setq message-kill-buffer-on-exit t)
+
 
 ;; Telega ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq telega-server-libs-prefix "/usr")

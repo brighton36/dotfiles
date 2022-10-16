@@ -3,9 +3,8 @@ Priority:
 * I think standardizing the resize, as ctl-shift-<>/<> in tmux/emacs/xmonad is prudent
   * And it should almost certainly be ctrl-shift-hjkl
 
-* xmonad:
-	* Address the todo's in the xmonad.hs
-  * Maybe this: https://tony-zorman.com/posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html
+* Fix the xcape by using intercept-tools and caps2esc:
+  * https://gitlab.com/interception/linux/tools
 
 * Fish : Does ctrl-k not work? And, maybe we should match these shortcuts a bit better to emacs
 
@@ -15,6 +14,10 @@ Priority:
   you can't tell what tab you're in, in that case
 
 * emacs
+  * That edit server would be nice in there. it's commented out currently.
+    * The keyboard shortcut in firefox isn't working
+    * How do we save/send-to-firefox
+    * And float it in xmonady https://parasurv.neocities.org/emacs/edit-browser-textarea-with-emacs.html
   * https://github.com/abo-abo/avy
     * Maybe use that avy-goto-char-timer
     * From https://news.ycombinator.com/item?id=33134113
@@ -22,10 +25,6 @@ Priority:
     * We should have a goto-line number too
   * maybe remove the ctrl-t for tabnew
   * Window resize needs left/right and up/down do  c->, c-<, c-shift->, and c-shift-<
-  * That edit server would be nice in there. it's commented out currently.
-    * The keyboard shortcut in firefox isn't working
-    * How do we save/send-to-firefox
-    * And float it in xmonady https://parasurv.neocities.org/emacs/edit-browser-textarea-with-emacs.html
   * Maybe insert emoji by binding to insert-char or emojify (get page-up/page-down working )
   * https://solargraph.org/
   * evil-shift-right (visual select) then < and >  doesn't tab the way we want. Or even the way the 'tab' key works
@@ -34,15 +33,21 @@ Priority:
     * https://www.reddit.com/r/DoomEmacs/comments/i2atvp/using_tab_to_align_code_in_normal_state/
 	* A layout adjustment... like xmonad mod4-space, or something like tmux's alt-1/2/etc function..
 
+* Let's maybe switch to a modal keyboard pointer:
+  - https://news.ycombinator.com/item?id=33221901
+  - https://github.com/rvaiya/warpd
+
+* xmonad:
+	* Address the todo's in the xmonad.hs
+  * Maybe this: https://tony-zorman.com/posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html
+  * xmobar: What about that Unsafe... can we make it safer?
+
 * Bluetooth hsp mode:
   https://wiki.archlinux.org/title/bluetooth_headset#Switch_between_HSP/HFP_and_A2DP_setting
   * Maybe try this out to see the bluetooth battery:
     https://wiki.archlinux.org/title/bluetooth_headset#Battery_level_reporting
     https://github.com/TheWeirdDev/Bluetooth_Headset_Battery_Level
     https://www.reddit.com/r/pipewire/comments/pcjkls/bluetooth_battery_status/
-
-* xmobar
-  * What about that Unsafe... can we make it safer?
 
 * Maybe we should round the corners of our screenshots:
   https://stackoverflow.com/questions/718314/rounding-corners-of-pictures-with-imagemagick
@@ -51,10 +56,6 @@ Priority:
   * Bind Bluetooth off to F11?
 	* Moving/resizing float windows with the keyboard might be good:
 		* https://hackage.haskell.org/package/xmonad-contrib-0.17.0/docs/XMonad-Actions-FloatKeys.html
-		* Maybe using hjkl with a modifier... meta-alt to move, meta-control to resize?
-			* Yeah, and, I'm thinking we can use this same thing for pane resize in emacs/tmux
-		* Or just going with the emacs keys of </> and o/e
-  * Maybe function + gcr,htn,mwv for numpad
 
 ---------------------
 
