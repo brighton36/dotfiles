@@ -14,10 +14,12 @@ Priority:
   you can't tell what tab you're in, in that case
 
 * emacs
-  * That edit server would be nice in there. it's commented out currently.
+  * Word wrap in telega messages would be nice
+  * emacs everywhere server would be nice. it's commented out currently.
     * The keyboard shortcut in firefox isn't working
     * How do we save/send-to-firefox
     * And float it in xmonady https://parasurv.neocities.org/emacs/edit-browser-textarea-with-emacs.html
+  * Add these: https://github.com/DarthFennec/highlight-indent-guides
   * https://github.com/abo-abo/avy
     * Maybe use that avy-goto-char-timer
     * From https://news.ycombinator.com/item?id=33134113
@@ -31,13 +33,21 @@ Priority:
     * Is this fixed? if not try one of:
     * https://stackoverflow.com/questions/8473131/set-the-evil-shift-width-to-the-buffer-local-indentation-in-emacs
     * https://www.reddit.com/r/DoomEmacs/comments/i2atvp/using_tab_to_align_code_in_normal_state/
+  * EVentually we're going to want to GTD this: https://www.labri.fr/perso/nrougier/GTD/index.html
 	* A layout adjustment... like xmonad mod4-space, or something like tmux's alt-1/2/etc function..
+  * Eventually a GTD:
+    * Watch: 'craft an email workflow' https://youtu.be/dSZu4jwvaSs
+    * https://www.labri.fr/perso/nrougier/GTD/index.html
+    * https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd.html
+
 
 * Let's maybe switch to a modal keyboard pointer:
   - https://news.ycombinator.com/item?id=33221901
   - https://github.com/rvaiya/warpd
 
 * xmonad:
+  * Add support for emoji pop-up:
+    - https://github.com/jchook/emoji-menu
 	* Address the todo's in the xmonad.hs
   * Maybe this: https://tony-zorman.com/posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html
   * xmobar: What about that Unsafe... can we make it safer?

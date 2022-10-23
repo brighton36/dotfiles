@@ -37,7 +37,7 @@
        hydra
        ;;indent-guides     ; highlighted indent columns
        ; NOTE: I think this was causing our weird spaces betwen //
-       ligatures         ; ligatures and symbols to make your code pretty again
+       ;ligatures         ; ligatures and symbols to make your code pretty again
        ;;minimap           ; show a map of the code on the side
        modeline          ; snazzy, Atom-inspired modeline, plus API
        nav-flash         ; blink cursor line after big motions
