@@ -259,8 +259,8 @@
 (setq emacs-everywhere-frame-name-format "Emacs Everywhere")
 (setq emacs-everywhere-frame-parameters 
   '((name . "Emacs Everywhere")
-    (width . 80)
-    (height . 25)
+    (width . 120)
+    (height . 40)
     (minibuffer . t)
     (menu-bar-lines . t)) )
 (remove-hook 'emacs-everywhere-init-hooks 'emacs-everywhere-set-frame-position)
