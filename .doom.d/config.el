@@ -265,6 +265,20 @@
     (menu-bar-lines . t)) )
 (remove-hook 'emacs-everywhere-init-hooks 'emacs-everywhere-set-frame-position)
 
+; There were a couple problems that were caused by xdotool not clearing modifiers, 
+; after a paste. This method was copied out of the emacs-everywhere.el, and 
+; slightly modified, to fix the stuck-key issue, that was happening after paste.
+; Note that we nixed osx support in this implementation:
+(eval-after-load "emacs-everywhere"
+  (defcustom emacs-everywhere-paste-command
+    (list "/home/cderose/.doom.d/bin/emacs-everywhere-paste.sh" "Shift+Insert")
+    "Command to trigger a system paste from the clipboard.
+    This is given as a list in the form (CMD ARGS...).
+
+    To not run any command, set to nil."
+      :type '(set (repeat string) (const nil))
+      :group 'emacs-everywhere))
+
 ;; Outline ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; NOTE: Be sure to follow the install steps: https://github.com/emacs-eaf/emacs-application-framework#install
 (use-package! eaf
