@@ -201,8 +201,10 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   , ((modMask .|. shiftMask, xK_bracketleft  ), windows XMonad.StackSet.swapUp)
 
   -- Resize
-  , ((modMask .|. shiftMask, xK_comma ), sendMessage Shrink)
-  , ((modMask .|. shiftMask, xK_period ), sendMessage Expand)
+  -- TODO: I'm really not crazy about these... this was added after we realized
+  -- that the multi-head keys stepped on these
+  , ((modMask, xK_Left ), sendMessage Shrink)
+  , ((modMask, xK_Right ), sendMessage Expand)
 
   -- Workspaces
   , ((modMask, xK_p ),    prevWS)
