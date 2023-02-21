@@ -94,6 +94,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   , ((modMask, xK_i      ), spawn "firefox -P Fap")
   , ((modMask, xK_c      ), spawn "/usr/bin/google-chrome-stable")
   , ((modMask, xK_r      ), spawn "/home/cderose/bin/dmenu_run_history")
+  , ((modMask, xK_z      ), spawn "/usr/bin/rofimoji")
   , ((modMask, xK_Escape ), spawn "xscreensaver-command -lock")
 
   -- Emacs bindings:
@@ -213,6 +214,12 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   [((m .|. modMask, k), windows $ f i)
       | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
       , (f, m) <- [(XMonad.StackSet.greedyView, 0), (XMonad.StackSet.shift, shiftMask)]]
+	++
+	-- mod-{w,e,r} %! Switch to physical/Xinerama screens 1, 2, or 3
+	-- mod-shift-{w,e,r} %! Move client to screen 1, 2, or 3
+	[((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
+			| (key, sc) <- zip [xK_comma, xK_apostrophe, xK_period] [0..]
+			, (f, m) <- [(XMonad.StackSet.view, 0), (XMonad.StackSet.shift, shiftMask)]]
 
 -- ManageHook -----------------------------------------------------------------
 myManageHook = composeAll

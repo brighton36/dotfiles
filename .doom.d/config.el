@@ -38,6 +38,8 @@
 ;; change `org-directory'. It must be set before org loads!
 
 (setq org-directory "~/org/")
+(setq org-agenda-files '("~/org/"))
+(setq org-long-done 'time)
 
 ;; This is used in a few places
 (setq auth-sources '((:source "~/.authinfo.gpg")))
@@ -181,11 +183,12 @@
 (setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
 
 ;; Edit Server ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; I disabled this when we switched to emacs everywhere...
 ; This is used by firefox. For more on the edit server:
 ; https://www.emacswiki.org/emacs/Edit_with_Emacs
 
-(when (and (require 'edit-server nil t) (daemonp))
-      (edit-server-start))
+; (when (and (require 'edit-server nil t) (daemonp))
+;      (edit-server-start))
 ; (setq edit-server-verbose t)
 
 ;; Dumb Jump ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -249,6 +252,10 @@
 ;; Window Resize left/right. I guess this works..
 (global-set-key (kbd "C-S-o") 'shrink-window-horizontally)
 (global-set-key (kbd "C-S-e") 'enlarge-window-horizontally)
+
+;; highlight-indent ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(setq highlight-indent-guides-method 'bitmap)
+(setq highlight-indent-guides-auto-character-face-perc 25)
 
 ;; epa ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (require 'epa)
