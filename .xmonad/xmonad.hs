@@ -1,6 +1,7 @@
 import Data.Map
 import System.Exit
 import Text.Printf
+import Text.Read
 
 import XMonad
 import XMonad.Actions.CycleWS
@@ -27,33 +28,9 @@ import XMonad.StackSet
 import XMonad.Util.Loggers
 import XMonad.Util.ClickableWorkspaces
 import XMonad.Util.Paste
+import XMonad.Util.WorkspaceCompare
 
--- Colors ---------------------------------------------------------------------
-data ColorSchemes = ColorSchemes{base03, base02, base01, base00, base0, base1, 
-  base2, base3, black, white, yellow, orange, red, magenta, violet, blue, cyan, 
-  green :: String}
-
-mySolarized :: ColorSchemes
-mySolarized = ColorSchemes {
-  base03   = "#002b36",
-  base02   = "#073642",
-  base01   = "#586e75",
-  base00   = "#657b83",
-  base0   = "#839496",
-  base1   = "#93a1a1",
-  base2   = "#eee8d5",
-  base3   = "#fdf6e3",
-  black   = "#073642", -- TODO: nix
-  white   = "#fdf6e3", -- TODO: nix
-  yellow  = "#b58900",
-  orange  = "#cb4b16",
-  red     = "#dc322f",
-  magenta = "#d33682",
-  violet  = "#6c71c4",
-  blue    = "#268bd2",
-  cyan    = "#2aa198",
-  green   = "#859900"
- }
+import MyTheme
 
 -- Variables ------------------------------------------------------------------
 home = "/home/cderose"                :: String
@@ -94,6 +71,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   , ((modMask, xK_i      ), spawn "firefox -P Fap")
   , ((modMask, xK_c      ), spawn "/usr/bin/google-chrome-stable")
   , ((modMask, xK_r      ), spawn "/home/cderose/bin/dmenu_run_history")
+  , ((modMask, xK_t      ), spawn "~/.config/xmobar/systray.sh")
   , ((modMask, xK_z      ), spawn "/usr/bin/rofimoji")
   , ((modMask, xK_Escape ), spawn "xscreensaver-command -lock")
 
@@ -249,30 +227,45 @@ myLayoutHook = gaps [(U,5), (R,5), (L,5), (D,5)] $ minimize . boringWindows
       delta   = 3/100
 
 -- xmobar ---------------------------------------------------------------------
+
+compareNumbers :: String -> String -> Ordering
+compareNumbers a b =
+	case (readMaybe a :: Maybe Int, readMaybe b :: Maybe Int) of
+		-- if they're both valid numbers then compare them
+		(Just x, Just y) -> compare y x
+		-- push numbers to the front of strings
+		(Just _, Nothing) -> LT
+		(Nothing, Just _) -> GT
+		-- strings get normal string comparison
+		(Nothing, Nothing) -> compare a b
+
 mySB = statusBarProp "xmobar" (pure xmobarPP)
 myPP = xmobarPP { 
-  ppCurrent = xmcWhiteOnBlue . (xmobarBorder"Full" (blue myColor) 0) . wrap " <fn=1>" "</fn>"
+  ppCurrent = xmcBase3 . wrap " <fn=1>" "</fn>"
   , ppSep             = ""
   , ppTitleSanitize   = xmobarStrip
   , ppHidden          = xmcBlue . wrap " <fn=1>" "</fn>"
   , ppHiddenNoWindows = xmcBase1 . wrap " <fn=1>" "</fn>"
   , ppUrgent          = xmcWhiteOnRed . (xmobarBorder"Full" (red myColor) 0) . wrap " <fn=1>" "</fn>"
   , ppWsSep           = ""
-  , ppOrder           = \[ws, l, _, wins] -> [ws, l, wins]
+  -- ws is the workspace, l is the layout , wins is the window title
+  , ppOrder           = \[ws, l, _, wins] -> [wins, l, ws]
+  -- This reversese the order of the workspaces:
+  --, ppSort = mkWsSort $ return compareNumbers
   -- NOTE: If we dont like the window display, here's where that's controlled
   , ppExtras          = [XMonad.Util.Loggers.logTitles formatFocused formatUnfocused]
-  , ppLayout  = xmcWhiteOnOrange . (xmobarBorder"Full" (orange myColor) 0) . (wrap "<action=xdotool key Super+space> " " </action>") .
+  , ppLayout          = xmcOrange . (wrap "<action=xdotool key Super+space> " " </action>") .
     ( \x -> case x of
     -- Vertical Split:
-    "Minimize Spacing Tall"        -> "\xfb87" -- "<icon="++myBitmapsDir++"/tall.xbm/>"
+    "Minimize Spacing Tall"        -> "<fn=3>יכִנָאֲ</fn>" -- "\xfb87" -- "<icon="++myBitmapsDir++"/tall.xbm/>"
     -- Horizontal Split:
-    "Minimize Spacing Mirror Tall" -> "\xfb86" -- "<icon="++myBitmapsDir++"/mtall.xbm/>"
-    "Minimize Spacing Full"        -> "\xf630" -- "<icon="++myBitmapsDir++"/full.xbm/>"
+    "Minimize Spacing Mirror Tall" -> "<fn=3>יקפוא</fn>" -- "\xfb86" -- "<icon="++myBitmapsDir++"/mtall.xbm/>"
+    "Minimize Spacing Full"        -> "<fn=3>אלמ</fn>" -- "\xf630" -- "<icon="++myBitmapsDir++"/full.xbm/>"
     )
   }
   where
-  formatFocused   = (xmobarBorder "Full" (blue myColor) 0) . wrap (xmcWhiteOnBlue  "\xf6dc ") (xmcWhiteOnBlue  "  ") . xmcWhiteOnBlue  . ppWindow
-  formatUnfocused = wrap (xmcBase01 "\xf6dc ") (xmcBase01 " ") . xmcBase01 . ppWindow
+  formatFocused   = wrap (xmcBase3  " ") (xmcBase3  "\xf6dc ") . xmcBase3  . ppWindow
+  formatUnfocused = wrap (xmcBase1 " ") (xmcBase1 "\xf6dc ") . xmcBase1 . ppWindow
   half_space = "\x0020" -- TODO: U+0020 is a regular space. We may want U+2009 in some fonts
 
   -- | Windows should have *some* title, which should not not exceed a
@@ -280,11 +273,12 @@ myPP = xmobarPP {
   ppWindow :: String -> String
   ppWindow = xmobarRaw . (\w -> if Prelude.null w then "untitled" else w)  . printf "%-20s" . shorten 20
 
-  xmcBlue, xmcBase01, xmcBase02, xmcBase1, xmcBase3, xmcMagenta, xmcRed, xmcWhite, xmcYellow, xmcWhiteOnBlue, xmcWhiteOnRed, xmcWhiteOnOrange, xmcWhiteOnBase01 :: String -> String
+  xmcBlue, xmcBase01, xmcBase02, xmcBase1, xmcBase3, xmcMagenta, xmcRed, xmcWhite, xmcYellow, xmcWhiteOnBlue, xmcWhiteOnRed, xmcOrangeOnWhite, xmcWhiteOnBase01 :: String -> String
   xmcMagenta     = xmobarColor (magenta myColor) ""
   xmcBlue        = xmobarColor (blue myColor) ""
   xmcWhite       = xmobarColor (white myColor) ""
   xmcYellow      = xmobarColor (yellow myColor) ""
+  xmcOrange      = xmobarColor (orange myColor) ""
   xmcRed         = xmobarColor (red myColor) ""
   xmcBase01      = xmobarColor (base01 myColor) ""
   xmcBase02      = xmobarColor (base02 myColor) ""
@@ -292,14 +286,14 @@ myPP = xmobarPP {
   xmcBase3       = xmobarColor (base3 myColor) ""
   xmcWhiteOnBlue = xmobarColor (white myColor) (blue myColor)
   xmcWhiteOnRed  = xmobarColor (white myColor) (red myColor)
-  xmcWhiteOnOrange  = xmobarColor (white myColor) (orange myColor)
+  xmcOrangeOnWhite  = xmobarColor (orange myColor) (white myColor)
   xmcWhiteOnBase01 = xmobarColor (white myColor) (base01 myColor)
 
 -- Startup Hook ---------------------------------------------------------------
 myStartupHook :: X ()
 myStartupHook = do
   -- spawn "bash -c 'killall stalonetray; sleep 1; stalonetray &'"
-  spawn "~/.config/xmobar/systray.sh &"
+  -- spawn "~/.config/xmobar/systray.sh &"
   -- Seems like this stops working for random reasons on occasion, trying it
   -- out here, instead of the xsession
   spawn "bash -c 'killall flashfocus; /usr/bin/flashfocus &'"

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+/usr/bin/ghc -i/home/cderose/.config/xmobar -threaded -dynamic ~/.xmonad/xmonad.hs -fforce-recomp -o $1
+

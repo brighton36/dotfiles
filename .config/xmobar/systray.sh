@@ -1,15 +1,20 @@
-sleep 1 && killall trayer
-trayer --edge top\
-  --align right\
-  --SetDockType true\
-  --SetPartialStrut true\
-  --expand true\
-  --height 26\
-  --distance 176\
-  --distancefrom right\
-  --transparent true\
-  --alpha 0\
-  --tint "0xffffff"\
-  --widthtype request\
-  --monitor 0\
-  --margin 0\
+#!/bin/bash
+
+/usr/bin/pgrep trayer
+if [ $? -ne 0 ]; then
+  /usr/bin/trayer --edge top\
+    --align right\
+    --SetDockType true\
+    --SetPartialStrut true\
+    --expand true\
+    --height 52\
+    --distance 36\
+    --distancefrom top\
+    --tint "0xffffff"\
+    --widthtype request\
+    --monitor 'primary'\
+    --SetPartialStrut false
+    --margin 0 &
+else
+  killall trayer
+fi
