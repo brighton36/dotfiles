@@ -72,7 +72,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   , ((modMask, xK_c      ), spawn "/usr/bin/google-chrome-stable")
   , ((modMask, xK_r      ), spawn "/home/cderose/bin/dmenu_run_history")
   , ((modMask, xK_t      ), spawn "~/.config/xmobar/systray.sh")
-  , ((modMask, xK_z      ), spawn "/usr/bin/rofimoji")
+  , ((modMask, xK_z      ), spawn "/usr/bin/rofimoji -a type --typer xdotool --keybinding-copy \"Control+y\"")
   , ((modMask, xK_Escape ), spawn "xscreensaver-command -lock")
 
   -- Emacs bindings:

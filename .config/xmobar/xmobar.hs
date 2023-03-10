@@ -7,14 +7,14 @@ myColor = mySolarized  :: ColorSchemes
 
 config :: Config
 config = Xmobar.defaultConfig {
-    font             =  "xft:Ubuntu Nerd Font:size=15:antialias=true"
+    font             =  "xft:Ubuntu Nerd Font:size=14:antialias=true"
   , additionalFonts  =  [
-    "xft:Ubuntu Nerd Font Mono:size=15:antialias=true",
-    "xft:Source Code Pro Bold:size=15:antialias=true",
+    "xft:Ubuntu Nerd Font Mono:size=14:antialias=true",
+    "xft:Source Code Pro Bold:size=14:antialias=true",
     "xft:Linux Libertine:size=24:antialias=true"
     ]
   , bgColor          =  (blue myColor)
-  , fgColor          =  (base2 myColor)
+  , fgColor          =  (base1 myColor)
   , alpha            =  120
   , position         =  TopH 36
   , border           =  NoBorder
@@ -29,12 +29,12 @@ config = Xmobar.defaultConfig {
   , alignSep         =  "}{"
   , template = concat [
     (fc2 (white myColor) " %time% "),
-    (fc2 (yellow myColor) "<fn=2> %hdate% </fn>"),
+    (fc2 (cyan myColor) "<fn=2> %hdate% </fn>"),
     (fc2 (white myColor) " <fn=2> %date%</fn>"),
     "%battery% %default:Master%\xf6dc",
     "  %swap% %memory% %cpu% \xf6dc",
     " }{ %UnsafeXMonadLog%",
-    (" <fc="++(yellow myColor)++">"++(cornerstone myIcons)++"</fc> ")
+    ("  <fc="++(yellow myColor)++">"++(cornerstone myIcons)++"</fc> ")
   ]
 
   -- plugins
@@ -42,7 +42,7 @@ config = Xmobar.defaultConfig {
     Run $ UnsafeXMonadLog
     , Run $ Cpu 
       [ "--template"
-      , (action "alacritty --command btop" " <total>% "++(system myIcons))
+      , (action "alacritty --command btop" (system myIcons)++"<total>% ")
       , "-L",      "10"
       , "-H",      "70"
       -- ,"--normal", (base00 myColor)
@@ -55,7 +55,7 @@ config = Xmobar.defaultConfig {
     --   ] 2
     , Run $ Memory 
       [ "--template"
-      , (action "alacritty --command btop" " <usedratio>% "++(memory myIcons))
+      , (action "alacritty --command btop" (memory myIcons)++"<usedratio>% ")
       , "--Low"      , "20"             -- units: %
       , "--High"     , "80"             -- units: %
       --, "--low"      , (base00 myColor)
@@ -64,7 +64,7 @@ config = Xmobar.defaultConfig {
       ] 5
     , Run $ Swap 
       [ "--template"
-      , (action "alacritty --command btop" " <usedratio>% "++(swap myIcons))
+      , (action "alacritty --command btop" (swap myIcons)++"<usedratio>% ")
       ] 5
     -- , Run $ Brightness 
     --   [ "--template", " <percent>"
@@ -72,7 +72,7 @@ config = Xmobar.defaultConfig {
     --   , "-D", "/sys/class/backlight/intel_backlight"
     --   ] 5
     , Run $ Volume "default" "Master" 
-      [ "--template", (action "/usr/bin/pavucontrol" "<status>")
+      [ "--template", (action "/usr/bin/pavucontrol" "<volume>% <status>")
       , "--"
       , "-O", ""                  -- Status On
       , "-o", (fc2 (red myColor) (" "++(mute myIcons)++"  ")) -- Status Off
@@ -80,9 +80,9 @@ config = Xmobar.defaultConfig {
       , "-c", (red myColor)       -- Status Off Color
       , "-H", "130"               -- High threshold
       , "-L", "80"                -- Low threshold
-      , "-h", (fc2 (darkgrey myColor) ((vol_high myIcons)++"  "))
-      , "-m", (fc2 (darkgrey myColor) ((vol_med myIcons)++"  "))
-      , "-l", (fc2 (darkgrey myColor) ((vol_low myIcons)++"  "))
+      , "-h", (fc2 (orange myColor) ((vol_high myIcons)++"  "))
+      , "-m", (fc2 (cyan myColor) ((vol_med myIcons)++"  "))
+      , "-l", (fc2 (yellow myColor) ((vol_low myIcons)++"  "))
       ] 5
     , Run $ BatteryP ["BAT0"]
       [ "--template"

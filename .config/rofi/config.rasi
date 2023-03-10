@@ -1,0 +1,11 @@
+configuration {
+  modi: "window,drun,ssh,combi";
+  combi-modi: "window,drun,ssh";
+  
+  kb-remove-char-forward: "";
+  kb-remove-to-sol: "";
+
+  kb-page-next: "Control+d";
+  kb-page-prev: "Control+u";
+}
+@theme "solarized"
