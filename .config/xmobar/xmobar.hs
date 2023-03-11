@@ -7,11 +7,10 @@ myColor = mySolarized  :: ColorSchemes
 
 config :: Config
 config = Xmobar.defaultConfig {
-    font             =  "xft:Ubuntu Nerd Font:size=14:antialias=true"
+    font             =  "Ubuntu Nerd Font 14"
   , additionalFonts  =  [
-    "xft:Ubuntu Nerd Font Mono:size=14:antialias=true",
-    "xft:Source Code Pro Bold:size=14:antialias=true",
-    "xft:Linux Libertine:size=24:antialias=true"
+    "Ubuntu Nerd Font Mono 14",
+    "Linux Libertine 24"
     ]
   , bgColor          =  (blue myColor)
   , fgColor          =  (base1 myColor)
@@ -29,12 +28,13 @@ config = Xmobar.defaultConfig {
   , alignSep         =  "}{"
   , template = concat [
     (fc2 (white myColor) " %time% "),
-    (fc2 (cyan myColor) "<fn=2> %hdate% </fn>"),
-    (fc2 (white myColor) " <fn=2> %date%</fn>"),
+    (fc2 (cyan myColor) " %hdate% "),
+    (fc2 (white myColor) " %date% "),
     "%battery% %default:Master%\xf6dc",
     "  %swap% %memory% %cpu% \xf6dc",
-    " }{ %UnsafeXMonadLog%",
-    ("  <fc="++(yellow myColor)++">"++(cornerstone myIcons)++"</fc> ")
+    " }{ %UnsafeXMonadLog%  ",
+    (fc2 (yellow myColor) (cornerstone myIcons) ), 
+    "  "
   ]
 
   -- plugins
