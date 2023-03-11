@@ -52,4 +52,5 @@
 (package! fill-column-indicator)
 (package! auto-dim-other-buffers)
 (package! dumb-jump)
+(package! evil-avy)
 (straight-use-package 'telega)

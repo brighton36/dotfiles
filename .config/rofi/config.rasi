@@ -4,8 +4,13 @@ configuration {
   
   kb-remove-char-forward: "";
   kb-remove-to-sol: "";
+  kb-clear-line: "";
+  kb-remove-word-back: "Control-w";
+  kb-cancel: "Escape";
 
   kb-page-next: "Control+d";
   kb-page-prev: "Control+u";
+  kb-row-last: "Control+G";
+  kb-row-first: "Control+g";
 }
 @theme "solarized"

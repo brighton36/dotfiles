@@ -253,6 +253,19 @@
 (global-set-key (kbd "C-S-o") 'shrink-window-horizontally)
 (global-set-key (kbd "C-S-e") 'enlarge-window-horizontally)
 
+;; avy ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(with-eval-after-load 'evil-maps
+  (define-key evil-normal-state-map (kbd "C-n") 'evil-avy-goto-char-timer))
+(with-eval-after-load 'evil-maps
+  (define-key evil-normal-state-map (kbd "C-g") 'evil-avy-goto-line))
+
+(setq avy-all-windows 'all-frames)
+
+;; TODO: Let's maybe change the highlight color from grey to ... red?
+`(avy-background-face ((t (:foreground ,"#ff0000" :background  ,"#ff00ff"))))
+'(avy-background-face ((t (:background "#750000" :foreground "#BD9800"))))
+'(avy-lead-face ((t (:background "#750000" :foreground "#BD9800" :weight bold))))
+
 ;; highlight-indent ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq highlight-indent-guides-method 'bitmap)
 (setq highlight-indent-guides-auto-character-face-perc 25)

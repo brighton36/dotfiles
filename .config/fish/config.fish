@@ -8,6 +8,7 @@ bind -M insert \cF forward-char
 bind -M insert \cA beginning-of-line
 bind -M insert \cE end-of-line
 bind -M insert \cW backward-kill-word
+bind -M insert \cK kill-line
 
 # Ctrl-n and ctrl-p
 bind -M insert \cp up-or-search
