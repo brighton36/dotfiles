@@ -70,16 +70,16 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   , ((modMask, xK_f      ), spawn "firefox -P default-release")
   , ((modMask, xK_i      ), spawn "firefox -P Fap")
   , ((modMask, xK_c      ), spawn "/usr/bin/google-chrome-stable")
-  , ((modMask, xK_r      ), spawn "/home/cderose/bin/dmenu_run_history")
+  , ((modMask, xK_r      ), spawn "~/bin/dmenu_run_history")
   , ((modMask, xK_t      ), spawn "~/.config/xmobar/systray.sh")
   , ((modMask, xK_z      ), spawn "/usr/bin/rofimoji -a type --typer xdotool --keybinding-copy \"Control+y\"")
   , ((modMask, xK_Escape ), spawn "xscreensaver-command -lock")
 
   -- Emacs bindings:
-  , ((modMask, xK_minus      ), spawn "emacsclient --eval \"(emacs-everywhere)\"")
+  , ((modMask, xK_minus      ), spawn "~/.guix-profile/bin/emacsclient --eval \"(emacs-everywhere)\"")
   -- TODO: I think xk_b is probably the better shortrcut, but, defToggleStrutsKey
   -- seems to be registering this 
-  , ((modMask, xK_e), spawn "emacsclient -c -a emacs")
+  , ((modMask, xK_e), spawn "~/.guix-profile/bin/emacsclient -c -a emacs")
 
   -- Switch-to/Open Telegram
   -- I guess we decided against all this:

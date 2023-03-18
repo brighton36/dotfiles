@@ -55,3 +55,13 @@ alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 export LEDGER_FILE=$HOME/ledger/chris-derose.journal
 
 set -x PATH $PATH $HOME/.local/share/gem/ruby/3.0.0/bin
+
+## Guix ######################################################################
+set GUIX_PROFILE "/home/cderose/.guix-profile"
+
+# This is probably not the best way to do this. But, I copied these out of 
+# . "$GUIX_PROFILE/etc/profile", which is meant to be sourced in bash
+set PATH /home/cderose/.guix-profile/bin $PATH
+set INFOPATH "/home/cderose/.guix-profile/share/info"
+set EMACSLOADPATH "/home/cderose/.guix-profile/share/emacs/site-lisp"
+
