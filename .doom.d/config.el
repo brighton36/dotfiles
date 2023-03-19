@@ -223,12 +223,12 @@
 (define-key evil-normal-state-map (kbd "C-s") #'+vertico/switch-workspace-buffer)
 
 ;; Window Resize Up/down:
-(global-set-key (kbd "C-<") 'shrink-window)
-(global-set-key (kbd "C->") 'enlarge-window)
+(global-set-key (kbd "C-S-j") 'shrink-window)
+(global-set-key (kbd "C-S-k") 'enlarge-window)
 
 ;; Window Resize left/right. I guess this works..
-(global-set-key (kbd "C-S-o") 'shrink-window-horizontally)
-(global-set-key (kbd "C-S-e") 'enlarge-window-horizontally)
+(global-set-key (kbd "C-S-h") 'shrink-window-horizontally)
+(global-set-key (kbd "C-S-l") 'enlarge-window-horizontally)
 
 ;; org ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; If you use `org' and don't want your org files in the default location below,

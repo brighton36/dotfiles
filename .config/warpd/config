@@ -1,0 +1,67 @@
+hint_activation_key: A-M-c
+hint2_activation_key: A-M-C
+grid_activation_key:  A-M-g
+history_activation_key: A-M-h
+
+
+hint: c
+hint2: C
+grid: g
+history: h
+screen: 
+
+left: h
+down: j
+up: k
+right: l
+
+top: H
+middle: M
+bottom: L
+
+start: 0
+end: $
+
+#scroll_down: Scroll down key. (default: e)
+#scroll_up: Scroll up key. (default: r)
+
+oneshot_timeout: 1000
+
+grid_nr: 2
+grid_nc: 2
+
+# warpd doesn't respect the keyboard translations, so that's why this is weird:
+# dvorak: h
+grid_left: j
+# dvorak: k
+grid_up: v
+# dvorak: j
+grid_down: c
+# dvorak: l
+grid_right: p
+
+# dvorak: c r t n
+grid_keys: i o k l
+
+# dvorak: m w v
+# buttons: m < >
+
+#cursor_color: The color of the pointer in normal mode (rgba hex value). (default: #FF4500)
+#cursor_size: The height of the pointer in normal mode. (default: 7)
+#grid_size: The thickness of grid lines in pixels. (default: 4)
+#grid_border_size: The thickness of the grid border in pixels. (default: 0)
+#grid_color: The color of the grid. (default: #1c1c1e)
+#grid_border_color: The color of the grid border. (default: #ffffff)
+#hint_bgcolor: The background hint color. (default: #1c1c1e)
+#hint_fgcolor: The foreground hint color. (default: #a1aba7)
+#hint_chars: The character set from which hints are generated. The total number of hints is the square of the size of this string. It may be desirable to increase this for larger screens or trim it to increase gaps between hints. (default: abcdefghijklmnopqrstuvwxyz)
+#hint_font: The font name used by hints. Note: This is platform specific, in X it corresponds to a valid xft font name, on macos it corresponds to a postscript name. (default: Arial)
+#hint_size: Hint size (range: 1-1000) (default: 20)
+#hint_border_radius: Border radius. (default: 3)
+#hint2_size: The size of hints in the secondary grid (range: 1-1000). (default: 20)
+#hint2_gap_size: The spacing between hints in the secondary grid. (range: 1-1000) (default: 1)
+#hint2_grid_size: The size of the secondary grid. (default: 3)
+#indicator: Specifies an optional visual indicator to be displayed while normal mode is active, must be one of: topright, topleft, bottomright, bottomleft, none (default: none)
+#indicator_color: The color of the visual indicator color. (default: #00ff00)
+#indicator_size: The size of the visual indicator in pixels. (default: 12)
+

@@ -18,6 +18,8 @@ xset fp rehash
 # Event Notifications:
 /usr/bin/dunst &
 
+/usr/bin/keynav
+
 # Tray Icons/Apps
 /usr/bin/nm-applet &
 /usr/bin/blueman-applet &

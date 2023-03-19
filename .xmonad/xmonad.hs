@@ -62,14 +62,15 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   , ((modMask,               xK_d ), withFocused toggleFloat)
   , ((modMask .|. shiftMask, xK_m ), withLastMinimized maximizeWindowAndFocus)
   , ((modMask,               xK_g ), gotoMenu)
-  -- I decided to move xK_b to 'new' emacs buffer
+  -- xK_b seems to be picked up by struts...
   -- , ((modMask,               xK_b ), bringMenu)
 
   -- Launching Programs
   , ((modMask, xK_Return ), spawn $ terminal conf)
   , ((modMask, xK_f      ), spawn "firefox -P default-release")
   , ((modMask, xK_i      ), spawn "firefox -P Fap")
-  , ((modMask, xK_c      ), spawn "/usr/bin/google-chrome-stable")
+  -- This was deprecated for 'click' , by way of keynav
+  -- , ((modMask, xK_c      ), spawn "/usr/bin/google-chrome-stable")
   , ((modMask, xK_r      ), spawn "~/bin/dmenu_run_history")
   , ((modMask, xK_t      ), spawn "~/.config/xmobar/systray.sh")
   , ((modMask, xK_z      ), spawn "/usr/bin/rofimoji -a type --typer xdotool --keybinding-copy \"Control+y\"")
@@ -181,8 +182,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   -- Resize
   -- TODO: I'm really not crazy about these... this was added after we realized
   -- that the multi-head keys stepped on these
-  , ((modMask, xK_Left ), sendMessage Shrink)
-  , ((modMask, xK_Right ), sendMessage Expand)
+  , ((modMask .|. shiftMask, xK_h ), sendMessage Shrink)
+  , ((modMask .|. shiftMask, xK_l), sendMessage Expand)
 
   -- Workspaces
   , ((modMask, xK_p ),    prevWS)
