@@ -62,7 +62,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   , ((modMask,               xK_d ), withFocused toggleFloat)
   , ((modMask .|. shiftMask, xK_m ), withLastMinimized maximizeWindowAndFocus)
   , ((modMask,               xK_g ), gotoMenu)
-  -- xK_b seems to be picked up by struts...
+  -- I just don't think we need/use this..
   -- , ((modMask,               xK_b ), bringMenu)
 
   -- Launching Programs
@@ -78,9 +78,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
 
   -- Emacs bindings:
   , ((modMask, xK_minus      ), spawn "~/.guix-profile/bin/emacsclient --eval \"(emacs-everywhere)\"")
-  -- TODO: I think xk_b is probably the better shortrcut, but, defToggleStrutsKey
-  -- seems to be registering this 
   , ((modMask, xK_e), spawn "~/.guix-profile/bin/emacsclient -c -a emacs")
+  , ((modMask, xK_b), spawn "~/.guix-profile/bin/emacsclient -n -e '(+org-capture/open-frame)'")
 
   -- Switch-to/Open Telegram
   -- I guess we decided against all this:
@@ -307,7 +306,7 @@ main = do
   xmonad 
     . XMonad.Hooks.EwmhDesktops.ewmhFullscreen 
     . ewmh 
-    . withEasySB (statusBarProp "~/.config/xmobar/xmobar-start.sh" (clickablePP myPP)) defToggleStrutsKey
+    . withSB (statusBarProp "~/.config/xmobar/xmobar-start.sh" (clickablePP myPP))
     . withUrgencyHook dzenUrgencyHook { 
       args = ["-bg", (red myColor), "-fg", (base3 myColor), "-xs", "1"] 
     } $ desktopConfig
