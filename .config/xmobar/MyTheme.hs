@@ -65,19 +65,20 @@ module MyTheme(
     ac_on :: String}
   myIcons :: Icons
   myIcons = Icons {
-      cornerstone = (fn 2 "בשֵׁחמַ ")  -- ,,
-    , system      = "C:"  -- (fn 3 "דבעמ")   -- "\61573" -- 
-    , memory      = "M:"  -- (fn 3 "ןורכיז") -- "\57958" -- 
-    , swap        = "S:" -- (fn 3 "ףילִחהַלְ") -- "\59142" -- 
-    , mute        = (fn 2 "קיתִשְׁהַלְ") -- 婢
-    , vol_high    = (fn 2 "הַוֹבגָ")   -- "\61480" -- 
-    , vol_med     = (fn 2 "ינוניב") -- "墳"     -- 墳
-    , vol_low     = (fn 2 "ךוּמנָ")   -- "\61479" -- 
-    , bat_low     = (fn 2 "ךוּמנָ")   -- "\62841" -- 
-    , bat_med     = (fn 2 "ינוניב") -- "\62845" -- 
-    , bat_high    = (fn 2 "הַוֹבגָ")   -- "\62840" -- 
-    , charged     = (fn 2 "ןועט")   -- "⏼"      -- ⏼
-    , discharging = (fn 2 "הקירפ")  -- "ﮤ"      -- ﮤ
-    , ac_on       = (fn 2 "ענָוּממְ")  -- "ﮣ"      -- ﮣ 
+      -- NOTE: I guess no icon for now
+      cornerstone = (fn 2 "")--"בשֵׁחמַ ")  -- ,,
+    , system      = "Cpu:"  -- (fn 3 "דבעמ")   -- "\61573" -- 
+    , memory      = "Mem:"  -- (fn 3 "ןורכיז") -- "\57958" -- 
+    , swap        = "Swp:" -- (fn 3 "ףילִחהַלְ") -- "\59142" -- 
+    , mute        = (fn 2 "mute")-- "קיתִשְׁהַלְ") -- 婢
+    , vol_high    = (fn 2 "high")-- "הַוֹבגָ")   -- "\61480" -- 
+    , vol_med     = (fn 2 "med")-- "ינוניב") -- "墳"     -- 墳
+    , vol_low     = (fn 2 "low")-- "ךוּמנָ")   -- "\61479" -- 
+    , bat_low     = (fn 2 "low") -- "ךוּמנָ")   -- "\62841" -- 
+    , bat_med     = (fn 2 "med") -- "ינוניב") -- "\62845" -- 
+    , bat_high    = (fn 2 "high") --"הַוֹבגָ")   -- "\62840" -- 
+    , charged     = (fn 2 "charged")-- "ןועט")   -- "⏼"      -- ⏼
+    , discharging = (fn 2 "discharging")  -- "ﮤ"      -- ﮤ
+    , ac_on       = (fn 2 "ac_on")  -- "ﮣ"      -- ﮣ
   }
 

@@ -10,7 +10,8 @@ config = Xmobar.defaultConfig {
     font             =  "Ubuntu Nerd Font 14"
   , additionalFonts  =  [
     "Ubuntu Nerd Font Mono 14",
-    "Linux Libertine 24"
+    "BlexMono Nerd Font 16"
+    --"Linux Libertine 24"
     ]
   , bgColor          =  (blue myColor)
   , fgColor          =  (base1 myColor)
@@ -32,7 +33,7 @@ config = Xmobar.defaultConfig {
     (fc2 (white myColor) " %date% "),
     "%battery% %default:Master%\xf6dc",
     "  %swap% %memory% %cpu% \xf6dc",
-    " }{ %UnsafeXMonadLog%  ",
+    " }{ %UnsafeXMonadLog%",
     (fc2 (yellow myColor) (cornerstone myIcons) ), 
     "  "
   ]
