@@ -10,8 +10,8 @@ config = Xmobar.defaultConfig {
     font             =  "Ubuntu Nerd Font 14"
   , additionalFonts  =  [
     "Ubuntu Nerd Font Mono 14",
-    "BlexMono Nerd Font 16"
-    --"Linux Libertine 24"
+    "Ubuntu Nerd Font Bold 18"
+    --Hebrew: "Linux Libertine 24"
     ]
   , bgColor          =  (blue myColor)
   , fgColor          =  (base1 myColor)
@@ -28,10 +28,10 @@ config = Xmobar.defaultConfig {
   , sepChar          =  "%"
   , alignSep         =  "}{"
   , template = concat [
-    (fc2 (white myColor) " %time% "),
+    (fc2 (white myColor) (fn 2 " %time% ")),
     (fc2 (cyan myColor) " %hdate% "),
     (fc2 (white myColor) " %date% "),
-    "%battery% %default:Master%\xf6dc",
+    "%battery%", (fc2 (yellow myColor) (fn 2 "vol: %volume%")), "\xf6dc",
     "  %swap% %memory% %cpu% \xf6dc",
     " }{ %UnsafeXMonadLog%",
     (fc2 (yellow myColor) (cornerstone myIcons) ), 
@@ -72,19 +72,22 @@ config = Xmobar.defaultConfig {
     --   , "--"
     --   , "-D", "/sys/class/backlight/intel_backlight"
     --   ] 5
-    , Run $ Volume "default" "Master" 
-      [ "--template", (action "/usr/bin/pavucontrol" "<volume>% <status>")
-      , "--"
-      , "-O", ""                  -- Status On
-      , "-o", (fc2 (red myColor) (" "++(mute myIcons)++"  ")) -- Status Off
-      , "-C", (base00 myColor)    -- Status On Color
-      , "-c", (red myColor)       -- Status Off Color
-      , "-H", "130"               -- High threshold
-      , "-L", "80"                -- Low threshold
-      , "-h", (fc2 (orange myColor) ((vol_high myIcons)++"  "))
-      , "-m", (fc2 (cyan myColor) ((vol_med myIcons)++"  "))
-      , "-l", (fc2 (yellow myColor) ((vol_low myIcons)++"  "))
-      ] 5
+    -- NOTE: This crashes xmobar at startup, so, I just switched to the Command
+    -- implementation below
+    --, Run $ Volume "default" "Master" 
+    --  [ "--template", (action "/usr/bin/pavucontrol" "<volume>% <status>")
+    --  , "--"
+    --  , "-O", ""                  -- Status On
+    --  , "-o", (fc2 (red myColor) (" "++(mute myIcons)++"  ")) -- Status Off
+    --  , "-C", (base00 myColor)    -- Status On Color
+    --  , "-c", (red myColor)       -- Status Off Color
+    --  , "-H", "130"               -- High threshold
+    --  , "-L", "80"                -- Low threshold
+    --  , "-h", (fc2 (orange myColor) ((vol_high myIcons)++"  "))
+    --  , "-m", (fc2 (cyan myColor) ((vol_med myIcons)++"  "))
+    --  , "-l", (fc2 (yellow myColor) ((vol_low myIcons)++"  "))
+    --  ] 5
+    , Run $ Com "/home/cderose/bin/volume_change.sh" ["show"] "volume" 10
     , Run $ BatteryP ["BAT0"]
       [ "--template"
       , (action "alacritty --command /usr/bin/sudo /usr/bin/powertop" "<acstatus>")
@@ -94,12 +97,12 @@ config = Xmobar.defaultConfig {
       , "-h",        (base00 myColor)  -- High color
       , "-m",        (base01 myColor)  -- Medium color
       , "-l",        (red myColor)     -- Low color
-      , "--lows",    (fc2 (red myColor) (" "++(bat_low myIcons)++"<left><icon=percent.xbm/>  "))
-      , "--mediums", (fc2 (blue myColor) ((bat_med myIcons)++"<left><icon=percent.xbm/>  "))
-      , "--highs",   (fc2 (cyan myColor) (" "++(bat_high myIcons++"<left><icon=percent.xbm/>  ")))
-      , "-i",        (fc2 (green myColor) ("  <left>% "++(charged myIcons)++" "))
-      , "-O",        (fc2 (green myColor)
-                       (" "++(ac_on myIcons)++" <left><icon=percent.xbm/>  "))
+      , "--lows",    (fn 2 (fc2 (red myColor) (" "++(bat_low myIcons)++"<left>%  ")))
+      , "--mediums", (fn 2 (fc2 (blue myColor) ((bat_med myIcons)++"<left>%  ")))
+      , "--highs",   (fn 2 (fc2 (cyan myColor) (" "++(bat_high myIcons++"<left>%  "))))
+      , "-i",        (fn 2 (fc2 (green myColor) ("  <left>% "++(charged myIcons)++" ")))
+      , "-O",        (fn 2 (fc2 (green myColor)
+                       (" "++(ac_on myIcons)++" <left>%  ")))
       , "-o",        "" -- This is taken care of in "--mediums/lows"
       ] 5
 --    , Run $ Com "/home/cderose/.config/xmobar/systraypad.sh" [] "traypad" 10

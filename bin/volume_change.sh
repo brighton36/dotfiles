@@ -17,6 +17,8 @@ case $1 in
   mute)
     /usr/bin/pactl -- set-sink-mute 0 toggle
     ;;
+  show)
+    ;;
 
   *)
     echo "ERROR: Unknown parameter \"$1\""
@@ -26,18 +28,26 @@ esac
 # Query amixer for the current volume and whether or not the speaker is muted
 # volume="$(amixer -c 0 get Master | tail -1 | awk '{print $4}' | sed 's/[^0-9]*//g')"
 # mute="$(amixer -c 0 get Master | tail -1 | awk '{print $6}' | sed 's/[^a-z]*//g')"
-volume="$(/usr/bin/pactl -- get-sink-volume 0 | /bin/grep -oP '[\d]+\%' | /bin/head --lines=1)"
+volume="$(/usr/bin/pactl -- get-sink-volume 0 | /bin/grep -oP '[^ ]+\%' | /bin/head --lines=1)"
 mute="$(/bin/pactl -- get-sink-mute 0 | /bin/grep -oP '[^ ]+$')"
 
-if [[ $volume == 0 || "$mute" == "yes" ]]; then
+function beep {
+  # Play the volume changed sound
+  # canberra-gtk-play -i audio-volume-change -d "changeVolume"
+  /usr/bin/mpv /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga
+}
+
+if [[ $1 == "show" ]]; then
+  # We're mostly just using this in xmobar
+  echo "${volume}"
+elif [[ $volume == 0 || "$mute" == "yes" ]]; then
     # Show the sound muted notification
     dunstify -a "changeVolume" -u low -i audio-volume-muted -h string:x-dunst-stack-tag:$msgTag "Volume muted"
+    beep
 else
     # Show the volume notification
     dunstify -a "changeVolume" -u low -i audio-volume-high -h string:x-dunst-stack-tag:$msgTag \
     -h int:value:"$volume" "Volume: ${volume}"
+    beep
 fi
 
-# Play the volume changed sound
-# canberra-gtk-play -i audio-volume-change -d "changeVolume"
-/usr/bin/mpv /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga

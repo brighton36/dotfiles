@@ -30,4 +30,4 @@ xset fp rehash
 /usr/bin/xhost +
 /usr/bin/autokey-gtk &
 
-/usr/bin/emacs --daemon &
+/home/cderose/.guix-profile/bin/emacs  --daemon &

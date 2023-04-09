@@ -5,7 +5,8 @@ module MyTheme(
   black, white, yellow, orange, red, magenta, violet, blue, cyan, green, darkgrey,
   Icons, myIcons,
   cornerstone, system, memory, swap, mute, vol_high, vol_med, vol_low, bat_low, 
-  bat_med, bat_high, charged, discharging, ac_on
+  bat_med, bat_high, charged, discharging, ac_on, spacingTall, spacingMirrorTall,
+  spacingFull
   )
   where
   import Data.Char
@@ -62,7 +63,7 @@ module MyTheme(
   -- Icons ----------------------------------------------------------------------
   data Icons = Icons{cornerstone, system, memory, swap, mute, 
     vol_high, vol_med, vol_low, bat_low, bat_med, bat_high, charged, discharging, 
-    ac_on :: String}
+    ac_on, spacingTall, spacingMirrorTall, spacingFull :: String}
   myIcons :: Icons
   myIcons = Icons {
       -- NOTE: I guess no icon for now
@@ -70,15 +71,18 @@ module MyTheme(
     , system      = "Cpu:"  -- (fn 3 "דבעמ")   -- "\61573" -- 
     , memory      = "Mem:"  -- (fn 3 "ןורכיז") -- "\57958" -- 
     , swap        = "Swp:" -- (fn 3 "ףילִחהַלְ") -- "\59142" -- 
-    , mute        = (fn 2 "mute")-- "קיתִשְׁהַלְ") -- 婢
-    , vol_high    = (fn 2 "high")-- "הַוֹבגָ")   -- "\61480" -- 
-    , vol_med     = (fn 2 "med")-- "ינוניב") -- "墳"     -- 墳
-    , vol_low     = (fn 2 "low")-- "ךוּמנָ")   -- "\61479" -- 
-    , bat_low     = (fn 2 "low") -- "ךוּמנָ")   -- "\62841" -- 
-    , bat_med     = (fn 2 "med") -- "ינוניב") -- "\62845" -- 
-    , bat_high    = (fn 2 "high") --"הַוֹבגָ")   -- "\62840" -- 
-    , charged     = (fn 2 "charged")-- "ןועט")   -- "⏼"      -- ⏼
-    , discharging = (fn 2 "discharging")  -- "ﮤ"      -- ﮤ
-    , ac_on       = (fn 2 "ac_on")  -- "ﮣ"      -- ﮣ
+    , mute        = (fn 2 "vol: mute")-- "קיתִשְׁהַלְ") -- 婢
+    , vol_high    = (fn 2 "vol: ")-- "הַוֹבגָ")   -- "\61480" -- 
+    , vol_med     = (fn 2 "vol: ")-- "ינוניב") -- "墳"     -- 墳
+    , vol_low     = (fn 2 "vol: ")-- "ךוּמנָ")   -- "\61479" -- 
+    , bat_low     = (fn 2 "bat: ") -- "ךוּמנָ")   -- "\62841" -- 
+    , bat_med     = (fn 2 "bat: ") -- "ינוניב") -- "\62845" -- 
+    , bat_high    = (fn 2 "bat: ") --"הַוֹבגָ")   -- "\62840" -- 
+    , charged     = (fn 2 "batcharged")-- "ןועט")   -- "⏼"      -- ⏼
+    , discharging = (fn 2 "batdischarging")  -- "ﮤ"      -- ﮤ
+    , ac_on       = (fn 2 "ac:")  -- "ﮣ"      -- ﮣ
+    , spacingTall = (fn 2 "Vert") -- "\xfb87" -- "<icon="++myBitmapsDir++"/tall.xbm/>"
+    , spacingMirrorTall = (fn 2 "Horz") -- "\xfb86" -- "<icon="++myBitmapsDir++"/mtall.xbm/>"
+    , spacingFull = (fn 2 "Full") -- "\xf630" -- "<icon="++myBitmapsDir++"/full.xbm/>"
   }
 

@@ -257,10 +257,10 @@ myPP = xmobarPP {
   , ppLayout          = xmcOrange . (wrap "<action=xdotool key Super+space> " " </action>") .
     ( \x -> case x of
     -- Vertical Split:
-    "Minimize Spacing Tall"        -> "<fn=2>V</fn>" -- "\xfb87" -- "<icon="++myBitmapsDir++"/tall.xbm/>"
+    "Minimize Spacing Tall"        -> (spacingTall myIcons)
     -- Horizontal Split:
-    "Minimize Spacing Mirror Tall" -> "<fn=2>H</fn>" -- "\xfb86" -- "<icon="++myBitmapsDir++"/mtall.xbm/>"
-    "Minimize Spacing Full"        -> "<fn=2>F</fn>" -- "\xf630" -- "<icon="++myBitmapsDir++"/full.xbm/>"
+    "Minimize Spacing Mirror Tall" -> (spacingMirrorTall myIcons)
+    "Minimize Spacing Full"        -> (spacingFull myIcons)
     )
   }
   where
