@@ -1,12 +1,12 @@
 [submodule ".config/awesome/awesome-wm-widgets"]
-	path = .config/awesome/awesome-wm-widgets
+	path = X/.config/awesome/awesome-wm-widgets
 	url = https://github.com/streetturtle/awesome-wm-widgets.git
 [submodule ".local/share/omf"]
-	path = .local/share/omf
+	path = shell/.local/share/omf
 	url = https://github.com/oh-my-fish/oh-my-fish.git
 [submodule ".vim_runtime"]
-	path = .vim_runtime
+	path = vim/.vim_runtime
 	url = https://github.com/amix/vimrc.git
 [submodule "/home/cderose/.vim/bundle/vim-ledger"]
-	path = .vim/bundle/vim-ledger
+	path = vim/.vim/bundle/vim-ledger
 	url = https://github.com/ledger/vim-ledger.git

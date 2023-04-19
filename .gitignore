@@ -1,0 +1,10 @@
+emacs/.gnupg/pubring.kbx
+emacs/.gnupg/trustdb.gpg
+X/.config/autokey/autokey.json
+X/.config/xmobar/xmobar
+X/.config/xmobar/*.hi
+X/.config/xmobar/*.o
+X/.xmonad/xmonad-x86_64-linux
+X/.xmonad/xmonad.errors
+X/.xmonad/*.hi
+X/.xmonad/*.o
