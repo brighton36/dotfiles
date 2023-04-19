@@ -47,7 +47,7 @@ config = Xmobar.defaultConfig {
       , "-L",      "10"
       , "-H",      "70"
       -- ,"--normal", (base00 myColor)
-      ,"--high",   (white myColor)++","++(red myColor) 
+      ,"--high",   (red myColor) 
       ] 5
     -- , Run $ MultiCpu 
     --   [ "--template", "<ipat>"
@@ -61,7 +61,7 @@ config = Xmobar.defaultConfig {
       , "--High"     , "80"             -- units: %
       --, "--low"      , (base00 myColor)
       --, "--normal"   , (base00 myColor)
-      , "--high"     , (white myColor)++","++(red myColor)
+      , "--high"     , (red myColor)
       ] 5
     , Run $ Swap 
       [ "--template"
