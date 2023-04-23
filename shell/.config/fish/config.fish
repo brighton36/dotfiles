@@ -50,8 +50,6 @@ set -g theme_color_scheme solarized-light
 
 ## Environment: ###############################################################
 
-alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-
 export LEDGER_FILE=$HOME/ledger/chris-derose.journal
 
 set -x PATH $PATH $HOME/.local/share/gem/ruby/3.0.0/bin

@@ -54,3 +54,6 @@
 (package! dumb-jump)
 (package! evil-avy)
 (straight-use-package 'telega)
+(straight-use-package
+  '(explain-pause-mode :type git :host github :repo "lastquestion/explain-pause-mode"))
+

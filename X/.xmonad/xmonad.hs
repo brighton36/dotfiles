@@ -48,7 +48,7 @@ myBitmapsDir           = home++"/.xmonad/icons"
 -- Keys -----------------------------------------------------------------------
 toggleFloat w = windows (\s -> if Data.Map.member w (XMonad.StackSet.floating s)
   then XMonad.StackSet.sink w s
-  else (XMonad.StackSet.float w (XMonad.StackSet.RationalRect (1/3) (1/4) (1/2) (4/5)) s))
+  else (XMonad.StackSet.float w (XMonad.StackSet.RationalRect (1/10) (1/8) (3/4) (4/5)) s)) --x y w h
 
 myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   -- xmonad commands:
@@ -203,11 +203,13 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
 
 -- ManageHook -----------------------------------------------------------------
 myManageHook = composeAll
-    [ className =? "Steam"    --> doFloat
-    , className =? "rdesktop" --> doFloat
-    , className =? "Xmessage" --> doCenterFloat
-    , isDialog                --> doCenterFloat
+    [ className =? "Steam"         --> doFloat
+    , className =? "rdesktop"      --> doFloat
+    , className =? "Xmessage"      --> doCenterFloat
+    , isDialog                     --> doCenterFloat
     , title =? "Emacs Everywhere"  --> doCenterFloat
+    , title =? "doom-capture"      --> doRectFloat(RationalRect 0.55 0.45 0.425 0.5) --x y w h
+    , title =? "Emacs top"         --> doRectFloat(RationalRect 0.55 0.05 0.425 0.75) --x y w h
     ]
 
 -- LayoutHook -----------------------------------------------------------------

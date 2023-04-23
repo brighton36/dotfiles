@@ -704,3 +704,17 @@
   (define-key vterm-mode-map (kbd "M-]") nil) 
   (define-key vterm-mode-map (kbd "C-<backspace>") nil) 
   )
+
+;; explain-pause-top ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; TODO: this isn't working, seemingly
+(setq explain-pause-top-auto-refresh-interval 1)
+
+(defun open-explain-pause-top-in-new-frame ()
+  "Open `explain-pause-top` in a new frame."
+  (interactive)
+  (let ((new-frame (make-frame '((name . "Emacs top")) )))
+    (select-frame new-frame)
+    (call-interactively #'explain-pause-top)))
+
+(evil-define-key 'normal 'global (kbd "C-t") 'open-explain-pause-top-in-new-frame)

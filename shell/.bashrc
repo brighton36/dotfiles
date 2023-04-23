@@ -67,7 +67,3 @@ export DEBEMAIL DEBFULLNAME
 
 export EDITOR='vim'
 export VISUAL='vim'
-
-# Dotfile management:
-alias config='/usr/bin/git --git-dir=/home/cderose/.cfg/ --work-tree=/home/cderose'
-

@@ -1,3 +1,15 @@
+After enough discussions with people on dotfiles, I decided to publish mine. I don't think anything in here is particularly spectacular, and most of this was copy-pasta'd from other dotfile repos. 
+
+Here's some of my preferences:
+* Dvorak
+* minimal icons
+* solarized-light scheme
+
+I'm running this on arch, with xmonad. You'll see some files from programs I once-used, and no longer use. In those cases, your mileage may vary, as these files may be out of date, and not functional.
+
+NOTE:
+ * There are a lot of hard-coded references to my name, and home directory path.
+ * the system/ folder... doesn't know what it wants to be yet. But, these are files that exist outside of home
 
 TODO: 
   * Mention the need to git submodule init and git submodule update
