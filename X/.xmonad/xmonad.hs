@@ -1,3 +1,5 @@
+{-# LANGUAGE MultiWayIf #-}
+
 import Data.Map
 import System.Exit
 import Text.Printf
@@ -24,9 +26,11 @@ import XMonad.Layout.Spacing
 import XMonad.Layout.BoringWindows
 import XMonad.Layout.Minimize
 import XMonad.Layout.Gaps
+import XMonad.Prelude
 import XMonad.StackSet
-import XMonad.Util.Loggers
 import XMonad.Util.ClickableWorkspaces
+import XMonad.Util.Loggers
+import XMonad.Util.NamedWindows
 import XMonad.Util.Paste
 import XMonad.Util.WorkspaceCompare
 
@@ -228,7 +232,75 @@ myLayoutHook = gaps [(U,5), (R,5), (L,5), (D,5)] $ minimize . boringWindows
       -- Percent of screen to increment by when resizing panes
       delta   = 3/100
 
--- xmobar ---------------------------------------------------------------------
+-- XMonad.Util.Loggers ---------------------------------------------------------
+-- These functions were pulled from the XMonad.Util.Loggers and and adjusted
+-- (really only the change of word to 'getNameWMClass') to log the window class,
+-- instead of the window title.
+-- TODO: this entire section appears to be implemented now, in the latest xmonad
+--       and at some point, we should be able to call XMonad.Util.Loggers#logClassnames
+--       directly, instead of the Main.logClasses that we implemented here
+
+-- | Internal function to get a wrapped title string from a window
+fetchWindowClass :: Window -> X String
+fetchWindowClass = fmap show . getNameWMClass
+
+-- | A helper function to create screen-specific loggers.
+withScreen :: (WindowScreen -> Logger) -> ScreenId -> Logger
+withScreen f n = do
+  ss <- withWindowSet $ return . XMonad.StackSet.screens
+  case find ((== n) . XMonad.StackSet.screen) ss of
+    Just s  -> f s
+    Nothing -> pure Nothing
+
+-- | Internal helper function for 'logWindowInfoOnScreen'.
+logWindowInfoOnScreenWorker
+  :: (Window -> X String)
+  -> WindowScreen
+  -> (Window -> String -> String)
+  -> Logger
+logWindowInfoOnScreenWorker getWindowInfo screen logger = do
+  let wins = maybe [] XMonad.StackSet.integrate . XMonad.StackSet.stack . XMonad.StackSet.workspace $ screen
+  winNames <- traverse getWindowInfo wins
+  pure . Just . unwords $ zipWith logger wins winNames
+
+-- | Internal function to get the specified window information for all windows on
+-- the visible workspace of the given screen and format them according to the
+-- given functions.
+logWindowInfoOnScreen
+  :: (Window -> X String)
+  -> ScreenId
+  -> (String -> String)
+  -> (String -> String)
+  -> (String -> String)
+  -> Logger
+logWindowInfoOnScreen getWindowInfo sid formatFoc formatUnfoc formatUrg =
+  (`withScreen` sid) $ \screen -> do
+    let focWin = fmap XMonad.StackSet.focus . XMonad.StackSet.stack . XMonad.StackSet.workspace $ screen
+    urgWins <- readUrgents
+    logWindowInfoOnScreenWorker getWindowInfo screen $ \win name ->
+      if | Just win == focWin -> formatFoc   name
+         | win `elem` urgWins -> formatUrg   name
+         | otherwise          -> formatUnfoc name
+
+-- | Internal. Like 'logWindowInfoOnScreen', but directly use the "focused" screen
+-- (the one with the currently focused workspace).
+logWindowInfoFocusedScreen
+  :: (Window -> X String)
+  -> (String -> String)
+  -> (String -> String)
+  -> (String -> String)
+  -> Logger
+logWindowInfoFocusedScreen getWindowInfo formatFoc formatUnfoc formatUrg = do
+  sid <- gets $ XMonad.StackSet.screen . XMonad.StackSet.current . windowset
+  logWindowInfoOnScreen getWindowInfo sid formatFoc formatUnfoc formatUrg
+
+-- | Like 'logClassesOnScreen', but directly use the "focused" screen
+-- (the one with the currently focused workspace).
+logClasses :: (String -> String) -> (String -> String) -> Logger
+logClasses formatFoc formatUnfoc =
+  logWindowInfoFocusedScreen fetchWindowClass formatFoc formatUnfoc formatUnfoc
+
+-- xmobar ----------------------------------------------------------------------
 
 compareNumbers :: String -> String -> Ordering
 compareNumbers a b =
@@ -255,7 +327,7 @@ myPP = xmobarPP {
   -- This reversese the order of the workspaces:
   --, ppSort = mkWsSort $ return compareNumbers
   -- NOTE: If we dont like the window display, here's where that's controlled
-  , ppExtras          = [XMonad.Util.Loggers.logTitles formatFocused formatUnfocused]
+  , ppExtras          = [Main.logClasses formatFocused formatUnfocused]
   , ppLayout          = xmcOrange . (wrap "<action=xdotool key Super+space> " " </action>") .
     ( \x -> case x of
     -- Vertical Split:
@@ -272,8 +344,8 @@ myPP = xmobarPP {
 
   -- | Windows should have *some* title, which should not not exceed a
   -- sane length.
-  ppWindow :: String -> String
-  ppWindow = xmobarRaw . (\w -> if Prelude.null w then "untitled" else w)  . printf "%-20s" . shorten 20
+  -- ppWindow :: String -> String
+  ppWindow = xmobarRaw . (\w -> if Prelude.null w then "untitled" else w)  . printf "%-12s" . shorten 12
 
   xmcBlue, xmcBase01, xmcBase02, xmcBase1, xmcBase3, xmcMagenta, xmcRed, xmcWhite, xmcYellow, xmcWhiteOnBlue, xmcWhiteOnRed, xmcOrangeOnWhite, xmcWhiteOnBase01 :: String -> String
   xmcMagenta     = xmobarColor (magenta myColor) ""
