@@ -5,8 +5,9 @@ module MyTheme(
   black, white, yellow, orange, red, magenta, violet, blue, cyan, green, darkgrey,
   Icons, myIcons,
   cornerstone, system, memory, swap, mute, vol_high, vol_med, vol_low, bat_low, 
-  bat_med, bat_high, charged, discharging, ac_on, spacingTall, spacingMirrorTall,
-  spacingFull
+  bat_med, bat_high, charged, discharging, ac_on,
+  spacingVertical, spacingHorizontal, spacingFull,
+  spacingCircle, spacingGrid, spacingThreeCol
   )
   where
   import Data.Char
@@ -57,13 +58,14 @@ module MyTheme(
     blue    = "#268bd2",
     cyan    = "#2aa198",
     green   = "#859900",
-    darkgrey = "#353535" -- TODO: This differ's from xmonad's darkgrey
+    darkgrey = "#353535"
   }
 
   -- Icons ----------------------------------------------------------------------
   data Icons = Icons{cornerstone, system, memory, swap, mute, 
     vol_high, vol_med, vol_low, bat_low, bat_med, bat_high, charged, discharging, 
-    ac_on, spacingTall, spacingMirrorTall, spacingFull :: String}
+    ac_on, spacingVertical, spacingHorizontal, spacingFull,
+    spacingCircle, spacingGrid, spacingThreeCol:: String}
   myIcons :: Icons
   myIcons = Icons {
       -- NOTE: I guess no icon for now
@@ -81,8 +83,10 @@ module MyTheme(
     , charged     = (fn 2 "batcharged")-- "ןועט")   -- "⏼"      -- ⏼
     , discharging = (fn 2 "batdischarging")  -- "ﮤ"      -- ﮤ
     , ac_on       = (fn 2 "ac:")  -- "ﮣ"      -- ﮣ
-    , spacingTall = (fn 2 "Vert") -- "\xfb87" -- "<icon="++myBitmapsDir++"/tall.xbm/>"
-    , spacingMirrorTall = (fn 2 "Horz") -- "\xfb86" -- "<icon="++myBitmapsDir++"/mtall.xbm/>"
+    , spacingVertical = (fn 2 "Vert") -- "\xfb87" -- "<icon="++myBitmapsDir++"/tall.xbm/>"
+    , spacingHorizontal = (fn 2 "Horz") -- "\xfb86" -- "<icon="++myBitmapsDir++"/mtall.xbm/>"
     , spacingFull = (fn 2 "Full") -- "\xf630" -- "<icon="++myBitmapsDir++"/full.xbm/>"
+    , spacingCircle = (fn 2 "Circle")
+    , spacingGrid = (fn 2 "Grid")
+    , spacingThreeCol = (fn 2 "Three")
   }
-
