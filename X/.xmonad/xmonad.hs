@@ -82,7 +82,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   , ((modMask, xK_r      ), spawn "~/bin/dmenu_run_history")
   , ((modMask, xK_t      ), spawn "~/.config/xmobar/systray.sh")
   , ((modMask, xK_z      ), spawn "/usr/bin/rofimoji -a type --typer xdotool --keybinding-copy \"Control+y\"")
-  , ((modMask, xK_Escape ), spawn "xscreensaver-command -lock")
+  , ((modMask, xK_Escape ), spawn "/usr/bin/systemctl suspend") -- Alternatively: "xscreensaver-command -lock"
 
   -- Emacs bindings:
   , ((modMask, xK_minus      ), spawn "~/.guix-profile/bin/emacsclient --eval \"(emacs-everywhere)\"")
@@ -163,11 +163,11 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
 
   -- Function Keys
   , ((noModMask, xK_F1 ), spawn "pcmanfm") -- FileManager
-  , ((noModMask, xK_F2 ), spawn "/bin/false" )
   , ((noModMask, xK_F3 ), spawn "/home/cderose/bin/volume_change.sh mute")
   , ((noModMask, xK_F4 ), spawn "/home/cderose/bin/system76_kbd_backlight_toggle.sh" )
   , ((noModMask, xK_F5 ), spawn "/home/cderose/bin/volume_change.sh down")
   , ((noModMask, xK_F6 ), spawn "/home/cderose/bin/volume_change.sh up")
+  , ((noModMask, xK_F7 ), spawn "/home/cderose/bin/cycle_display.rb" )
   , ((noModMask, xK_F8 ), spawn "/usr/bin/xbacklight -dec 10") -- Bright-
   , ((noModMask, xK_F9 ), spawn "/usr/bin/xbacklight -inc 10") -- Bright+
   , ((noModMask, xK_F10 ), spawn "/home/cderose/bin/screenshot.sh")
@@ -213,6 +213,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
 myManageHook = composeAll
     [ className =? "Steam"         --> doFloat
     , className =? "rdesktop"      --> doFloat
+    , className =? "Vncviewer"     --> doFloat
     , className =? "Xmessage"      --> doCenterFloat
     , isDialog                     --> doCenterFloat
     , title =? "Emacs Everywhere"  --> doCenterFloat

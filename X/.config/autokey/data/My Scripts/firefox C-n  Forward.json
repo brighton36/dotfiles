@@ -2,10 +2,8 @@
     "type": "script",
     "description": "firefox \"C-n\" : Forward",
     "store": {},
-    "modes": [
-        3
-    ],
-    "usageCount": 80,
+    "modes": [],
+    "usageCount": 0,
     "prompt": false,
     "omitTrigger": false,
     "showInTrayMenu": false,

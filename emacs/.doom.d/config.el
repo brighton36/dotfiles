@@ -705,6 +705,13 @@
   (define-key vterm-mode-map (kbd "C-<backspace>") nil) 
   )
 
+;; eshell ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(add-hook 'eshell-mode-hook
+  (lambda ()
+    (define-key evil-insert-state-local-map (kbd "C-p") 'eshell-previous-matching-input-from-input)
+    (define-key evil-insert-state-local-map (kbd "C-n") 'eshell-next-matching-input-from-input)
+    ))
+
 ;; explain-pause-top ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ; TODO: this isn't working, seemingly
