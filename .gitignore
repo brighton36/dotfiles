@@ -1,7 +1,7 @@
 emacs/.gnupg/pubring.kbx
 emacs/.gnupg/trustdb.gpg
 emacs/.gnupg/crls.d
-emacs/.gnupg/.*
+emacs/.gnupg/*
 X/.config/autokey/autokey.json
 X/.config/xmobar/xmobar
 X/.config/xmobar/*.hi
@@ -10,4 +10,6 @@ X/.xmonad/xmonad-x86_64-linux
 X/.xmonad/xmonad.errors
 X/.xmonad/*.hi
 X/.xmonad/*.o
+X/.xmonad/xmonad
+X/.xmonad/xmobar
 *~

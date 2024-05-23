@@ -252,6 +252,10 @@
 (global-set-key (kbd "C-S-h") 'shrink-window-horizontally)
 (global-set-key (kbd "C-S-l") 'enlarge-window-horizontally)
 
+;; Hebrew Mode
+;; TODO: seems to work in insert mode , oddly. But, I think we may just want this for eshell...
+;; (global-set-key (kbd "C-i") #'(lambda() (interactive) (buffer-face-mode-face 'default nil ':family "Linux Libertine") (buffer-face-mode)))
+
 ;; org ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -291,6 +295,10 @@
 
 ;; Save org buffers after re-filing:
 (advice-add 'org-refile :after 'org-save-all-org-buffers)
+
+; This was getting in the way of rotate:
+(define-key org-mode-map (kbd "M-{") nil)
+(define-key org-mode-map (kbd "M-}") nil)
 
 ;; avy ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (with-eval-after-load 'evil-maps

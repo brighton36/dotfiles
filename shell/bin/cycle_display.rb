@@ -32,8 +32,10 @@ class Xrandr
   end
 
   def self.run(*args)
-    puts(args.inspect)
     output, error, status = Open3.capture3 XRANDR_PATH, *args
+
+    # For now, we're trying to debug the cases where this poops out:
+    #File.open(format('/home/cderose/tmp/%s.xrandr.out',Time.now.strftime('%Y%m%d_%I%M')),'w').write(output)
 
     if status.exitstatus != 0 || !error.empty?
       puts format('Fatal Error running xrandr (%<code>d): %<error>s', code: status.exitstatus, error: error)

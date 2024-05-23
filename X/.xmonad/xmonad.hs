@@ -16,6 +16,7 @@ import XMonad.Actions.CopyWindow
 import XMonad.Config.Desktop
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.InsertPosition
 import XMonad.Hooks.ManageDocks(avoidStruts, docks, manageDocks, ToggleStruts(..))
 import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.ManageHelpers
@@ -27,7 +28,6 @@ import XMonad.Layout.BoringWindows
 import XMonad.Layout.Minimize
 import XMonad.Layout.Gaps
 import XMonad.Layout.ThreeColumns
-import XMonad.Layout.Circle
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Grid
 import XMonad.Prelude
@@ -202,12 +202,12 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   [((m .|. modMask, k), windows $ f i)
       | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
       , (f, m) <- [(XMonad.StackSet.greedyView, 0), (XMonad.StackSet.shift, shiftMask)]]
-	++
-	-- mod-{w,e,r} %! Switch to physical/Xinerama screens 1, 2, or 3
-	-- mod-shift-{w,e,r} %! Move client to screen 1, 2, or 3
-	[((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
-			| (key, sc) <- zip [xK_comma, xK_apostrophe, xK_period] [0..]
-			, (f, m) <- [(XMonad.StackSet.view, 0), (XMonad.StackSet.shift, shiftMask)]]
+  ++
+  -- mod-{w,e,r} %! Switch to physical/Xinerama screens 1, 2, or 3
+  -- mod-shift-{w,e,r} %! Move client to screen 1, 2, or 3
+  [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
+      | (key, sc) <- zip [xK_comma, xK_apostrophe, xK_period] [0..]
+      , (f, m) <- [(XMonad.StackSet.view, 0), (XMonad.StackSet.shift, shiftMask)]]
 
 -- ManageHook -----------------------------------------------------------------
 myManageHook = composeAll
@@ -216,9 +216,10 @@ myManageHook = composeAll
     , className =? "Vncviewer"     --> doFloat
     , className =? "Xmessage"      --> doCenterFloat
     , isDialog                     --> doCenterFloat
-    , title =? "Emacs Everywhere"  --> doCenterFloat
+    , title =? "Emacs Everywhere"  --> doFloat
     , title =? "doom-capture"      --> doRectFloat(RationalRect 0.55 0.45 0.425 0.5) --x y w h
     , title =? "Emacs top"         --> doRectFloat(RationalRect 0.55 0.05 0.425 0.75) --x y w h
+    , title =? "zoom"              --> doFloat -- This will match the notifications only, not the room window
     ]
 
 -- LayoutHook -----------------------------------------------------------------
@@ -248,9 +249,6 @@ myLayoutHook = gaps [(U,5), (R,5), (L,5), (D,5)] $ minimize . boringWindows
   -- Full layout makes every window full screen. When you toggle the
   -- active window, it will bring the active window to the front.
   ||| noBorders Full
-  -- Circle layout places the master window in the center of the screen.
-  -- Remaining windows appear in a circle around it
-   ||| Circle
 
   -- Grid layout tries to equally distribute windows in the available
   -- space, increasing the number of columns and rows as necessary.
@@ -329,14 +327,14 @@ logClasses formatFoc formatUnfoc =
 
 compareNumbers :: String -> String -> Ordering
 compareNumbers a b =
-	case (readMaybe a :: Maybe Int, readMaybe b :: Maybe Int) of
-		-- if they're both valid numbers then compare them
-		(Just x, Just y) -> compare y x
-		-- push numbers to the front of strings
-		(Just _, Nothing) -> LT
-		(Nothing, Just _) -> GT
-		-- strings get normal string comparison
-		(Nothing, Nothing) -> compare a b
+  case (readMaybe a :: Maybe Int, readMaybe b :: Maybe Int) of
+    -- if they're both valid numbers then compare them
+    (Just x, Just y) -> compare y x
+    -- push numbers to the front of strings
+    (Just _, Nothing) -> LT
+    (Nothing, Just _) -> GT
+    -- strings get normal string comparison
+    (Nothing, Nothing) -> compare a b
 
 mySB = statusBarProp "xmobar" (pure xmobarPP)
 myPP = xmobarPP { 
@@ -356,7 +354,6 @@ myPP = xmobarPP {
   , ppLayout          = xmcOrange . (wrap "<action=xdotool key Super+space> " " </action>") .
     ( \x -> case x of
     -- Vertical Split:
-    "Minimize Spacing Circle"               -> (spacingCircle myIcons)
     "Minimize Spacing Grid"                 -> (spacingGrid myIcons)
     "Minimize Spacing ThreeCol"             -> (spacingThreeCol myIcons)
     "Minimize Spacing ResizableTall"        -> (spacingVertical myIcons)
@@ -404,7 +401,8 @@ myStartupHook = do
 -- Main -----------------------------------------------------------------------
 main :: IO ()
 main = do
-  xmonad 
+  xmonad
+    . setupInsertPosition Below Newer
     . XMonad.Hooks.EwmhDesktops.ewmhFullscreen 
     . ewmh 
     . withSB (statusBarProp "~/.config/xmobar/xmobar-start.sh" (clickablePP myPP))
