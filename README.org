@@ -7,6 +7,10 @@ Here's some of my preferences:
 
 I'm running this on arch, with xmonad. You'll see some files from programs I once-used, and no longer use. In those cases, your mileage may vary, as these files may be out of date, and not functional.
 
+Here's my keyboard configs, :
+ * https://configure.zsa.io/moonlander/layouts/p7E9R/latest/0
+ * system76-keyboard-configurator for lemp10 (see the 'system/system76-keyboard-configurator-lemp10.json')
+
 NOTE:
  * There are a lot of hard-coded references to my name, and home directory path.
  * the system/ folder... doesn't know what it wants to be yet. But, these are files that exist outside of home

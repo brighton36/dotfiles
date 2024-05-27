@@ -1,4 +1,4 @@
 #!/bin/sh
 
-/usr/bin/ghc -i/home/cderose/.config/xmobar -package xmobar -package xmonad -package xmonad-contrib -threaded -dynamic ~/.xmonad/xmonad.hs -fforce-recomp -o $1
+/usr/bin/ghc -i/home/cderose/.config/xmobar -package xmobar -package xmonad -package xmonad-contrib -package X11 -threaded -dynamic ~/.xmonad/xmonad.hs -fforce-recomp -o $1
 

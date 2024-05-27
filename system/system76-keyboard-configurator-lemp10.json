@@ -1,0 +1,349 @@
+{
+  "model": "system76/lemp10",
+  "version": 1,
+  "map": {
+    "K00": [
+      "ESC",
+      "ESC"
+    ],
+    "K01": [
+      "MEDIA_PREV",
+      "F1"
+    ],
+    "K02": [
+      "MEDIA_NEXT",
+      "F2"
+    ],
+    "K03": [
+      "MUTE",
+      "F3"
+    ],
+    "K04": [
+      "PLAY_PAUSE",
+      "F4"
+    ],
+    "K05": [
+      "VOLUME_DOWN",
+      "F5"
+    ],
+    "K06": [
+      "VOLUME_UP",
+      "F6"
+    ],
+    "K07": [
+      "TOUCHPAD",
+      "F7"
+    ],
+    "K08": [
+      "KBD_DOWN",
+      "F8"
+    ],
+    "K09": [
+      "KBD_UP",
+      "F9"
+    ],
+    "K0A": [
+      "PAUSE",
+      "F10"
+    ],
+    "K0B": [
+      "SCROLL_LOCK",
+      "F11"
+    ],
+    "K0C": [
+      "INSERT",
+      "F12"
+    ],
+    "K0D": [
+      "HOME",
+      "HOME"
+    ],
+    "K0E": [
+      "END",
+      "END"
+    ],
+    "K0F": [
+      "PRINT_SCREEN",
+      "PRINT_SCREEN"
+    ],
+    "K0G": [
+      "DEL",
+      "DEL"
+    ],
+    "K10": [
+      "TICK",
+      "TICK"
+    ],
+    "K11": [
+      "1",
+      "1"
+    ],
+    "K12": [
+      "2",
+      "2"
+    ],
+    "K13": [
+      "3",
+      "3"
+    ],
+    "K14": [
+      "4",
+      "4"
+    ],
+    "K15": [
+      "5",
+      "5"
+    ],
+    "K16": [
+      "6",
+      "6"
+    ],
+    "K17": [
+      "7",
+      "7"
+    ],
+    "K18": [
+      "8",
+      "8"
+    ],
+    "K19": [
+      "9",
+      "9"
+    ],
+    "K1A": [
+      "0",
+      "0"
+    ],
+    "K1B": [
+      "MINUS",
+      "MINUS"
+    ],
+    "K1C": [
+      "EQUALS",
+      "EQUALS"
+    ],
+    "K1D": [
+      "BKSP",
+      "BKSP"
+    ],
+    "K20": [
+      "TAB",
+      "TAB"
+    ],
+    "K21": [
+      "Q",
+      "Q"
+    ],
+    "K22": [
+      "W",
+      "W"
+    ],
+    "K23": [
+      "E",
+      "E"
+    ],
+    "K24": [
+      "R",
+      "R"
+    ],
+    "K25": [
+      "T",
+      "T"
+    ],
+    "K26": [
+      "Y",
+      "Y"
+    ],
+    "K27": [
+      "U",
+      "U"
+    ],
+    "K28": [
+      "I",
+      "I"
+    ],
+    "K29": [
+      "O",
+      "O"
+    ],
+    "K2A": [
+      "P",
+      "P"
+    ],
+    "K2B": [
+      "BRACE_OPEN",
+      "BRACE_OPEN"
+    ],
+    "K2C": [
+      "BRACE_CLOSE",
+      "BRACE_CLOSE"
+    ],
+    "K2D": [
+      "BACKSLASH",
+      "BACKSLASH"
+    ],
+    "K30": [
+      "CAPS",
+      "CAPS"
+    ],
+    "K31": [
+      "A",
+      "A"
+    ],
+    "K32": [
+      "S",
+      "S"
+    ],
+    "K33": [
+      "D",
+      "D"
+    ],
+    "K34": [
+      "F",
+      "F"
+    ],
+    "K35": [
+      "G",
+      "G"
+    ],
+    "K36": [
+      "H",
+      "H"
+    ],
+    "K37": [
+      "J",
+      "J"
+    ],
+    "K38": [
+      "K",
+      "K"
+    ],
+    "K39": [
+      "L",
+      "L"
+    ],
+    "K3A": [
+      "SEMICOLON",
+      "SEMICOLON"
+    ],
+    "K3B": [
+      "QUOTE",
+      "QUOTE"
+    ],
+    "K3C": [
+      "ENTER",
+      "ENTER"
+    ],
+    "K40": [
+      "LEFT_SHIFT",
+      "LEFT_SHIFT"
+    ],
+    "K41": [
+      "Z",
+      "Z"
+    ],
+    "K42": [
+      "X",
+      "X"
+    ],
+    "K43": [
+      "C",
+      "C"
+    ],
+    "K44": [
+      "V",
+      "V"
+    ],
+    "K45": [
+      "B",
+      "B"
+    ],
+    "K46": [
+      "N",
+      "N"
+    ],
+    "K47": [
+      "M",
+      "M"
+    ],
+    "K48": [
+      "COMMA",
+      "COMMA"
+    ],
+    "K49": [
+      "PERIOD",
+      "PERIOD"
+    ],
+    "K4A": [
+      "SLASH",
+      "SLASH"
+    ],
+    "K4B": [
+      "RIGHT_SHIFT",
+      "RIGHT_SHIFT"
+    ],
+    "K50": [
+      "LEFT_CTRL",
+      "LEFT_CTRL"
+    ],
+    "K51": [
+      "FN",
+      "FN"
+    ],
+    "K52": [
+      "APP",
+      "LEFT_SUPER"
+    ],
+    "K53": [
+      "LEFT_ALT",
+      "LEFT_ALT"
+    ],
+    "K54": [
+      "SPACE",
+      "SPACE"
+    ],
+    "K55": [
+      "RIGHT_ALT",
+      "RIGHT_ALT"
+    ],
+    "K56": [
+      "RIGHT_CTRL",
+      "RIGHT_CTRL"
+    ],
+    "K57": [
+      "PGUP",
+      "PGUP"
+    ],
+    "K58": [
+      "UP",
+      "UP"
+    ],
+    "K59": [
+      "PGDN",
+      "PGDN"
+    ],
+    "K60": [
+      "LEFT",
+      "LEFT"
+    ],
+    "K61": [
+      "DOWN",
+      "DOWN"
+    ],
+    "K62": [
+      "RIGHT",
+      "RIGHT"
+    ]
+  },
+  "key_leds": {},
+  "layers": [
+    {
+      "mode": null,
+      "brightness": 0,
+      "color": [
+        0,
+        0
+      ]
+    }
+  ]
+}

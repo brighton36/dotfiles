@@ -14,4 +14,9 @@ MAPPINGS:
   - KEY: KEY_LEFTSHIFT
     TAP: KEY_DELETE
     HOLD: KEY_LEFTSHIFT
+  - KEY: KEY_LEFTMETA
+    # Possibly tap should do something else. In any case, KEY_COMPOSE is picked up as
+    # the 'menu' key, in xev
+    TAP: KEY_COMPOSE
+    HOLD: KEY_COMPOSE
 

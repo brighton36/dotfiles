@@ -4,6 +4,7 @@ import Data.Map
 import System.Exit
 import Text.Printf
 import Text.Read
+import Graphics.X11.ExtraTypes
 
 import XMonad
 import XMonad.Actions.CycleWS
@@ -162,15 +163,32 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   --     (pure True, XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_BackSpace) ])
 
   -- Function Keys
-  , ((noModMask, xK_F1 ), spawn "pcmanfm") -- FileManager
-  , ((noModMask, xK_F3 ), spawn "/home/cderose/bin/volume_change.sh mute")
-  , ((noModMask, xK_F4 ), spawn "/home/cderose/bin/system76_kbd_backlight_toggle.sh" )
-  , ((noModMask, xK_F5 ), spawn "/home/cderose/bin/volume_change.sh down")
-  , ((noModMask, xK_F6 ), spawn "/home/cderose/bin/volume_change.sh up")
-  , ((noModMask, xK_F7 ), spawn "/home/cderose/bin/cycle_display.rb" )
-  , ((noModMask, xK_F8 ), spawn "/usr/bin/xbacklight -dec 10") -- Bright-
-  , ((noModMask, xK_F9 ), spawn "/usr/bin/xbacklight -inc 10") -- Bright+
-  , ((noModMask, xK_F10 ), spawn "/home/cderose/bin/screenshot.sh")
+  -- F1:
+  , ((noModMask, xF86XK_AudioPrev ), spawn "pcmanfm") -- FileManager
+  -- F2:
+  , ((noModMask, xF86XK_AudioNext ), spawn "/home/cderose/bin/cycle_display.rb") 
+  -- F3:
+  , ((noModMask, xF86XK_AudioMute ), spawn "/home/cderose/bin/volume_change.sh mute")
+  -- F4:
+  , ((noModMask, xF86XK_AudioPlay ), spawn "/home/cderose/bin/system76_kbd_backlight_toggle.sh" )
+  -- F5:
+  , ((noModMask, xF86XK_AudioLowerVolume ), spawn "/home/cderose/bin/volume_change.sh down")
+  -- F6:
+  , ((noModMask, xF86XK_AudioRaiseVolume ), spawn "/home/cderose/bin/volume_change.sh up")
+  -- F7: The built-in keyboard sends 'TouchpadToggle'
+  , ((noModMask, xF86XK_TouchpadToggle ), spawn "dunstify -u normal 'TODO: Bind xF86XK_TouchpadToggle'" )
+  -- F7: The moonlander sends 'Stop'
+  , ((noModMask, xF86XK_AudioStop ), spawn "dunstify -u normal 'TODO: Bind xF86XK_AudioStop'" )
+  -- F8: This is for the moonlander, the BIOS handles this on the builtin keyboard
+  , ((noModMask, xF86XK_MonBrightnessDown ), spawn "/usr/bin/xbacklight -dec 10") -- Bright-
+  -- F9: This is for the moonlander, the BIOS handles this on the builtin keyboard
+  , ((noModMask, xF86XK_MonBrightnessUp ), spawn "/usr/bin/xbacklight -inc 10") -- Bright+
+  -- F10:
+  , ((noModMask, xK_Pause ), spawn "/home/cderose/bin/screenshot.sh")
+  -- F11: 
+  , ((noModMask, xK_Scroll_Lock ), spawn "dunstify -u normal 'TODO: Bind ScrollLock'" )
+  -- F12: 
+  , ((noModMask, xK_Insert ), spawn "dunstify -u normal 'TODO: Bind Insert'" )
 
   -- Layouts
   -- %! Rotate through the available layout algorithms

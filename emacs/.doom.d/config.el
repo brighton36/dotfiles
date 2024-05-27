@@ -297,8 +297,8 @@
 (advice-add 'org-refile :after 'org-save-all-org-buffers)
 
 ; This was getting in the way of rotate:
-(define-key org-mode-map (kbd "M-{") nil)
-(define-key org-mode-map (kbd "M-}") nil)
+(with-eval-after-load 'org (define-key org-mode-map (kbd "M-{") nil))
+(with-eval-after-load 'org (define-key org-mode-map (kbd "M-}") nil))
 
 ;; avy ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (with-eval-after-load 'evil-maps
@@ -679,7 +679,7 @@
 ;; This sets our messages to wrap by default
 (add-hook 'telega-chat-mode-hook 'visual-line-mode)
 
-;; Telega ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Company ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (after! company
   (setq company-idle-delay 0.5
         company-minimum-prefix-length 2)
