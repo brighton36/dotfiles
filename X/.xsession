@@ -2,6 +2,9 @@
 
 # NOTE: .xprofile seems to be the best place to set environment variables
 
+# This mod3 is later picked up by xmonad for our hjkl overrides:
+/usr/bin/xmodmap -e "clear Mod3" -e "add Mod3 = Menu"
+
 # gdm sets the cursors weird. This sets it back:
 xsetroot -cursor_name left_ptr
 

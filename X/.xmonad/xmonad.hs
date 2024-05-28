@@ -43,7 +43,6 @@ import MyTheme
 
 -- Variables ------------------------------------------------------------------
 home = "/home/cderose"                :: String
-myModMask              = mod4Mask     :: KeyMask
 myFocusFollowsMouse    = False        :: Bool
 myBorderWidth          = 6            :: Dimension
 myWindowGap            = 12           :: Integer
@@ -83,7 +82,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   , ((modMask, xK_r      ), spawn "~/bin/dmenu_run_history")
   , ((modMask, xK_t      ), spawn "~/.config/xmobar/systray.sh")
   , ((modMask, xK_z      ), spawn "/usr/bin/rofimoji -a type --typer xdotool --keybinding-copy \"Control+y\"")
-  , ((modMask, xK_Escape ), spawn "/usr/bin/systemctl suspend") -- Alternatively: "xscreensaver-command -lock"
+  , ((modMask, xK_Escape ), spawn "xscreensaver-command -lock")
 
   -- Emacs bindings:
   , ((modMask, xK_minus      ), spawn "~/.guix-profile/bin/emacsclient --eval \"(emacs-everywhere)\"")
@@ -162,19 +161,26 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   --     XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_t), 
   --     (pure True, XMonad.Util.Paste.sendKey (controlMask .|. shiftMask) xK_BackSpace) ])
 
+  -- Menu/Application Keys
+  -- We're using the Fn layer for this rn. But, this is a template for us, down the line 
+  --, ((mod3Mask, xK_h ), XMonad.Util.Paste.sendKey (noModMask) xK_Left)
+  --, ((mod3Mask, xK_l ), XMonad.Util.Paste.sendKey (noModMask) xK_Right)
+  --, ((mod3Mask, xK_j ), XMonad.Util.Paste.sendKey (noModMask) xK_Down)
+  --, ((mod3Mask, xK_k ), XMonad.Util.Paste.sendKey (noModMask) xK_Up)
+
   -- Function Keys
   -- F1:
   , ((noModMask, xF86XK_AudioPrev ), spawn "pcmanfm") -- FileManager
   -- F2:
-  , ((noModMask, xF86XK_AudioNext ), spawn "/home/cderose/bin/cycle_display.rb") 
+  , ((noModMask, xF86XK_AudioNext ), spawn "~/bin/cycle_display.rb") 
   -- F3:
-  , ((noModMask, xF86XK_AudioMute ), spawn "/home/cderose/bin/volume_change.sh mute")
+  , ((noModMask, xF86XK_AudioMute ), spawn "~/bin/volume_change.sh mute")
   -- F4:
-  , ((noModMask, xF86XK_AudioPlay ), spawn "/home/cderose/bin/system76_kbd_backlight_toggle.sh" )
+  , ((noModMask, xF86XK_AudioPlay ), spawn "~/bin/system76_kbd_backlight_toggle.sh" )
   -- F5:
-  , ((noModMask, xF86XK_AudioLowerVolume ), spawn "/home/cderose/bin/volume_change.sh down")
+  , ((noModMask, xF86XK_AudioLowerVolume ), spawn "~/bin/volume_change.sh down")
   -- F6:
-  , ((noModMask, xF86XK_AudioRaiseVolume ), spawn "/home/cderose/bin/volume_change.sh up")
+  , ((noModMask, xF86XK_AudioRaiseVolume ), spawn "~/bin/volume_change.sh up")
   -- F7: The built-in keyboard sends 'TouchpadToggle'
   , ((noModMask, xF86XK_TouchpadToggle ), spawn "dunstify -u normal 'TODO: Bind xF86XK_TouchpadToggle'" )
   -- F7: The moonlander sends 'Stop'
@@ -184,11 +190,11 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   -- F9: This is for the moonlander, the BIOS handles this on the builtin keyboard
   , ((noModMask, xF86XK_MonBrightnessUp ), spawn "/usr/bin/xbacklight -inc 10") -- Bright+
   -- F10:
-  , ((noModMask, xK_Pause ), spawn "/home/cderose/bin/screenshot.sh")
+  , ((noModMask, xK_Pause ), spawn "~/bin/screenshot.sh")
   -- F11: 
   , ((noModMask, xK_Scroll_Lock ), spawn "dunstify -u normal 'TODO: Bind ScrollLock'" )
   -- F12: 
-  , ((noModMask, xK_Insert ), spawn "dunstify -u normal 'TODO: Bind Insert'" )
+  , ((noModMask, xK_Insert ), spawn "/usr/bin/systemctl suspend" )
 
   -- Layouts
   -- %! Rotate through the available layout algorithms
@@ -205,8 +211,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   , ((modMask .|. shiftMask, xK_bracketleft  ), windows XMonad.StackSet.swapUp)
 
   -- Resize
-  -- TODO: I'm really not crazy about these... this was added after we realized
-  -- that the multi-head keys stepped on these
   , ((modMask .|. shiftMask, xK_h ), sendMessage Shrink)
   , ((modMask .|. shiftMask, xK_l), sendMessage Expand)
 
@@ -428,7 +432,7 @@ main = do
       args = ["-bg", (red myColor), "-fg", (base3 myColor), "-xs", "1"] 
     } $ desktopConfig
     { XMonad.terminal           = myTerminal
-    , XMonad.modMask            = myModMask
+    , XMonad.modMask            = mod4Mask
     , XMonad.keys               = myKeys
     , XMonad.focusFollowsMouse  = myFocusFollowsMouse
     , XMonad.borderWidth        = myBorderWidth

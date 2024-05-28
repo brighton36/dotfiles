@@ -4,7 +4,7 @@
   "map": {
     "K00": [
       "ESC",
-      "ESC"
+      "NONE"
     ],
     "K01": [
       "MEDIA_PREV",
@@ -35,11 +35,11 @@
       "F7"
     ],
     "K08": [
-      "KBD_DOWN",
+      "BRIGHTNESS_DOWN",
       "F8"
     ],
     "K09": [
-      "KBD_UP",
+      "BRIGHTNESS_UP",
       "F9"
     ],
     "K0A": [
@@ -56,75 +56,75 @@
     ],
     "K0D": [
       "HOME",
-      "HOME"
+      "NONE"
     ],
     "K0E": [
       "END",
-      "END"
+      "NONE"
     ],
     "K0F": [
       "PRINT_SCREEN",
-      "PRINT_SCREEN"
+      "NONE"
     ],
     "K0G": [
       "DEL",
-      "DEL"
+      "NONE"
     ],
     "K10": [
       "TICK",
-      "TICK"
+      "NONE"
     ],
     "K11": [
       "1",
-      "1"
+      "NONE"
     ],
     "K12": [
       "2",
-      "2"
+      "NONE"
     ],
     "K13": [
       "3",
-      "3"
+      "NONE"
     ],
     "K14": [
       "4",
-      "4"
+      "NONE"
     ],
     "K15": [
       "5",
-      "5"
+      "NONE"
     ],
     "K16": [
       "6",
-      "6"
+      "NONE"
     ],
     "K17": [
       "7",
-      "7"
+      "NONE"
     ],
     "K18": [
       "8",
-      "8"
+      "NONE"
     ],
     "K19": [
       "9",
-      "9"
+      "NONE"
     ],
     "K1A": [
       "0",
-      "0"
+      "NONE"
     ],
     "K1B": [
       "MINUS",
-      "MINUS"
+      "NONE"
     ],
     "K1C": [
       "EQUALS",
-      "EQUALS"
+      "NONE"
     ],
     "K1D": [
       "BKSP",
-      "BKSP"
+      "NONE"
     ],
     "K20": [
       "TAB",
@@ -132,55 +132,55 @@
     ],
     "K21": [
       "Q",
-      "Q"
+      "NONE"
     ],
     "K22": [
       "W",
-      "W"
+      "NONE"
     ],
     "K23": [
       "E",
-      "E"
+      "NONE"
     ],
     "K24": [
       "R",
-      "R"
+      "NONE"
     ],
     "K25": [
       "T",
-      "T"
+      "NONE"
     ],
     "K26": [
       "Y",
-      "Y"
+      "NONE"
     ],
     "K27": [
       "U",
-      "U"
+      "NONE"
     ],
     "K28": [
       "I",
-      "I"
+      "NONE"
     ],
     "K29": [
       "O",
-      "O"
+      "NONE"
     ],
     "K2A": [
       "P",
-      "P"
+      "RIGHT"
     ],
     "K2B": [
       "BRACE_OPEN",
-      "BRACE_OPEN"
+      "NONE"
     ],
     "K2C": [
       "BRACE_CLOSE",
-      "BRACE_CLOSE"
+      "NONE"
     ],
     "K2D": [
       "BACKSLASH",
-      "BACKSLASH"
+      "NONE"
     ],
     "K30": [
       "CAPS",
@@ -188,47 +188,47 @@
     ],
     "K31": [
       "A",
-      "A"
+      "NONE"
     ],
     "K32": [
       "S",
-      "S"
+      "NONE"
     ],
     "K33": [
       "D",
-      "D"
+      "NONE"
     ],
     "K34": [
       "F",
-      "F"
+      "NONE"
     ],
     "K35": [
       "G",
-      "G"
+      "PGUP"
     ],
     "K36": [
       "H",
-      "H"
+      "PGDN"
     ],
     "K37": [
       "J",
-      "J"
+      "LEFT"
     ],
     "K38": [
       "K",
-      "K"
+      "NONE"
     ],
     "K39": [
       "L",
-      "L"
+      "NONE"
     ],
     "K3A": [
       "SEMICOLON",
-      "SEMICOLON"
+      "NONE"
     ],
     "K3B": [
       "QUOTE",
-      "QUOTE"
+      "NONE"
     ],
     "K3C": [
       "ENTER",
@@ -240,43 +240,43 @@
     ],
     "K41": [
       "Z",
-      "Z"
+      "NONE"
     ],
     "K42": [
       "X",
-      "X"
+      "NONE"
     ],
     "K43": [
       "C",
-      "C"
+      "DOWN"
     ],
     "K44": [
       "V",
-      "V"
+      "UP"
     ],
     "K45": [
       "B",
-      "B"
+      "NONE"
     ],
     "K46": [
       "N",
-      "N"
+      "NONE"
     ],
     "K47": [
       "M",
-      "M"
+      "NONE"
     ],
     "K48": [
       "COMMA",
-      "COMMA"
+      "NONE"
     ],
     "K49": [
       "PERIOD",
-      "PERIOD"
+      "NONE"
     ],
     "K4A": [
       "SLASH",
-      "SLASH"
+      "NONE"
     ],
     "K4B": [
       "RIGHT_SHIFT",

@@ -1,21 +1,29 @@
+* brighton36's dotfiles
 After enough discussions with people on dotfiles, I decided to publish mine. I don't think anything in here is particularly spectacular, and most of this was copy-pasta'd from other dotfile repos. 
 
-Here's some of my preferences:
- * Dvorak
- * minimal/no icons
- * solarized-light scheme
+** Here's some of my preferences:
+*** Dvorak
+*** minimal/no icons
+*** solarized-light scheme
 
-I'm running this on arch, with xmonad. You'll see some files from programs I once-used, and no longer use. In those cases, your mileage may vary, as these files may be out of date, and not functional.
 
-Here's my keyboard configs, :
- * https://configure.zsa.io/moonlander/layouts/p7E9R/latest/0
- * system76-keyboard-configurator for lemp10 (see the 'system/system76-keyboard-configurator-lemp10.json')
+* Keyboard configs:
+** Built-in Laptop Keyboard -  [system/system76-keyboard-configurator-lemp10.json](system/system76-keyboard-configurator-lemp10.json)
+** External USB Keyboard - [brighton36's Moonlander - lemp10](https://configure.zsa.io/moonlander/layouts/p7E9R)
 
-NOTE:
- * There are a lot of hard-coded references to my name, and home directory path.
- * the system/ folder... doesn't know what it wants to be yet. But, these are files that exist outside of home
+* NOTE:
+** There are a lot of hard-coded references to my name, and home directory path.
+** the system/ folder... doesn't know what it wants to be yet. But, these are files that exist outside of home
+** I'm running this on arch, with xmonad. You'll see some files from programs I once-used, and no longer use. In those cases, your mileage may vary, as these files may be out of date, and not functional.
 
-Install:
-  * Check out the repo
-  * `git submodule` init and `git submodule` update
-  * make all (or manually choose to stow what you want)
+* Install:
+** Check out the repo
+** `git submodule` init and `git submodule` update
+** make all (or manually choose to stow what you want)
+
+* System Notes:
+** the /usr/local/share/kbd/keymaps/dvorak-chris.map and /etc/vconsole.conf and lightdm.conf... isn't in the config
+** On the laptop, we manually created a powertop service: https://wiki.archlinux.org/title/Powertop
+** Note that we needed xmobar to compile with dynamic libs enabled, which, we use the
+  xmobar-dynamic aur package for
+** We use a script in /usr/lib/systemd/system-sleep/brightness to set resume/wake brightness
