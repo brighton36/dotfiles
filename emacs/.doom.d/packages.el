@@ -52,7 +52,6 @@
 (package! fill-column-indicator)
 (package! auto-dim-other-buffers)
 (package! dumb-jump)
-(package! telega)
 (package! evil-avy)
 (straight-use-package
   '(explain-pause-mode :type git :host github :repo "lastquestion/explain-pause-mode"))

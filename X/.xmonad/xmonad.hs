@@ -87,7 +87,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   -- Emacs bindings:
   , ((modMask, xK_minus      ), spawn "~/.guix-profile/bin/emacsclient --eval \"(emacs-everywhere)\"")
   , ((modMask, xK_e), spawn "~/.guix-profile/bin/emacsclient -c -a emacs")
-  , ((modMask, xK_b), spawn "~/.guix-profile/bin/emacsclient -n -e '(+org-capture/open-frame)'")
+  , ((modMask, xK_c), spawn "~/.guix-profile/bin/emacsclient -n -e '(+org-capture/open-frame)'")
 
   -- Switch-to/Open Telegram
   -- I guess we decided against all this:

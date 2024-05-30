@@ -1,4 +1,4 @@
-;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
@@ -171,11 +171,10 @@
 (add-hook 'find-file-hook (lambda () (ruler-mode 1)))
 (add-hook 'find-file-hook (lambda () (display-fill-column-indicator-mode t)))
 
-; TODO: Can we nix this, now that we have eaf?
 ; The 'open in browser' should always load in the default profile:
 ;(setq browse-url-generic-program
 ;	(shell-command-to-string "/usr/bin/firefox -P default-release")
-;	browse-url-browser-function 'browse-url-generic)
+; browse-url-browser-function 'browse-url-generic)
 
 ;; Visual Line ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Just a prettier indication that we're wrapping:
@@ -260,6 +259,9 @@
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
+
+(define-key global-map (kbd "C-c c") 'org-capture)
+(setq org-agenda-files (list "inbox.org"))
 (setq org-agenda-start-with-log-mode t)
 (setq org-long-done 'time)
 (setq org-todo-keywords '((sequence "TODO(t)" "IN-PROGRESS(p)" "WAITING(w)" "|" "DONE(d!)")))
@@ -272,7 +274,13 @@
 
 (after! org
   (setq org-capture-templates
-    `(("t" "Tasks / Projects")
+    `(("i" "Inbox" entry  (file "inbox.org")
+        ,(concat "* TODO %?\n"
+                 "/Entered on/ %U"))
+      ("@" "Inbox [mu4e]" entry (file "inbox.org")
+        ,(concat "* TODO Process \"%a\" %?\n"
+                 "/Entered on/ %U"))
+      ("t" "Tasks / Projects")
       ("tt" "Task" entry (file+olp "~/org/personal.org" "Inbox")
            "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
       ("ts" "Clocked Entry Subtask" entry (clock)
@@ -345,228 +353,6 @@
     To not run any command, set to nil."
       :type '(set (repeat string) (const nil))
       :group 'emacs-everywhere))
-
-;; Outline ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; NOTE: Be sure to follow the install steps: https://github.com/emacs-eaf/emacs-application-framework#install
-(use-package! eaf
-  :load-path "~/.emacs.d/site-lisp/emacs-application-framework"
-  :commands (eaf-open
-             eaf-open-browser
-             eaf-open-jupyter
-             +eaf-open-mail-as-html)
-  :init
-  (defvar +eaf-enabled-apps
-    '(org browser mindmap jupyter org-previewer markdown-previewer file-sender video-player))
-
-  (defun +eaf-app-p (app-symbol)
-    (memq app-symbol +eaf-enabled-apps))
-
-  (when (+eaf-app-p 'browser)
-    ;; Make EAF Browser my default browser
-    (setq browse-url-browser-function #'eaf-open-browser)
-    (defalias 'browse-web #'eaf-open-browser)
-
-    (map! :localleader
-          :map (mu4e-headers-mode-map mu4e-view-mode-map)
-          :desc "Open mail as HTML" "h" #'+eaf-open-mail-as-html
-          :desc "Open URL (EAF)" "o" #'eaf-open-browser))
-
-  (when (+eaf-app-p 'pdf-viewer)
-    (after! org
-      ;; Use EAF PDF Viewer in Org
-      (defun +eaf--org-open-file-fn (file &optional link)
-        "An wrapper function on `eaf-open'."
-        (eaf-open file))
-
-      ;; use `emacs-application-framework' to open PDF file: link
-      (add-to-list 'org-file-apps '("\\.pdf\\'" . +eaf--org-open-file-fn)))
-
-    (after! latex
-      ;; Link EAF with the LaTeX compiler in emacs. When a .tex file is open,
-      ;; the Command>Compile and view (C-c C-a) option will compile the .tex
-      ;; file into a .pdf file and display it using EAF. Double clicking on the
-      ;; PDF side jumps to editing the clicked section.
-      (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex --synctex=1%(mode)%' %t" TeX-run-TeX nil t))
-      (add-to-list 'TeX-view-program-list '("eaf" eaf-pdf-synctex-forward-view))
-      (add-to-list 'TeX-view-program-selection '(output-pdf "eaf"))))
-
-  :config
-  ;; Generic
-  (setq eaf-start-python-process-when-require t
-        eaf-kill-process-after-last-buffer-closed t
-        eaf-fullscreen-p nil)
-
-  ;; Debug
-  (setq eaf-enable-debug nil)
-
-  ;; Web engine
-  (setq 
-        ;; eaf-webengine-font-family (symbol-name (font-get doom-font :family))
-        ;; eaf-webengine-fixed-font-family (symbol-name (font-get doom-font :family))
-        ;; eaf-webengine-serif-font-family (symbol-name (font-get doom-serif-font :family))
-        ;; eaf-webengine-font-size 16
-        ;; eaf-webengine-fixed-font-size 16
-        eaf-webengine-enable-scrollbar t
-        eaf-webengine-scroll-step 200
-        eaf-webengine-default-zoom 1.25
-        eaf-webengine-show-hover-link t
-        eaf-webengine-download-path "~/Downloads"
-        eaf-webengine-enable-plugin t
-        eaf-webengine-enable-javascript t
-        eaf-webengine-enable-javascript-access-clipboard t)
-
-  (when (display-graphic-p)
-    (require 'eaf-all-the-icons)
-    (mapc (lambda (v) (eaf-all-the-icons-icon (car v)))
-          eaf-all-the-icons-alist))
-
-  ;; Browser settings
-  (when (+eaf-app-p 'browser)
-    (setq eaf-browser-continue-where-left-off t
-          eaf-browser-dark-mode nil ;; "follow"
-          eaf-browser-enable-adblocker t
-          eaf-browser-enable-autofill nil
-          eaf-browser-remember-history t
-          eaf-browser-ignore-history-list '("google.com/search" "file://")
-          eaf-browser-text-selection-color "auto"
-          eaf-browser-blank-page-url "https://www.duckduckgo.com"
-          eaf-browser-chrome-history-file "~/.config/google-chrome/Default/History"
-          eaf-browser-default-search-engine "google"
-          eaf-browser-continue-where-left-off t
-          eaf-browser-aria2-auto-file-renaming t
-          eaf-browser-keybinding '(
-            ("C-u" . "scroll_down") 
-            ("C-d" . "scroll_up")
-            ("C-p" . "history_backward")
-            ("C-n" . "history_forward")
-            ("C-+" . "zoom_in")
-            ("C-_" . "zoom_out")
-            ("q" . "insert_or_close_buffer") 
-            ("y" . "yank_text")
-            ("v" . "select_text") 
-            ("/" . "search_text_forward")
-            ("SPC" . nil) 
-            ) )
-
-    (require 'eaf-browser)
-
-    (defun +eaf-open-mail-as-html ()
-      "Open the html mail in EAF Browser."
-      (interactive)
-      (let ((msg (mu4e-message-at-point t))
-            ;; Bind browse-url-browser-function locally, so it works
-            ;; even if EAF Browser is not set as a default browser.
-            (browse-url-browser-function #'eaf-open-browser))
-        (if msg
-            (mu4e-action-view-in-browser msg)
-          (message "No message at point.")))))
-
-  ;; File manager settings
-  (when (+eaf-app-p 'file-manager)
-    (setq eaf-file-manager-show-preview nil
-          eaf-find-alternate-file-in-dired t
-          eaf-file-manager-show-hidden-file t
-          eaf-file-manager-show-icon t)
-    (require 'eaf-file-manager))
-
-  ;; File Browser
-  (when (+eaf-app-p 'file-browser)
-    (require 'eaf-file-browser))
-
-  ;; PDF Viewer settings
-  (when (+eaf-app-p 'pdf-viewer)
-    (setq eaf-pdf-dark-mode "follow"
-          eaf-pdf-show-progress-on-page nil
-          eaf-pdf-dark-exclude-image t
-          eaf-pdf-notify-file-changed t)
-    (require 'eaf-pdf-viewer))
-
-  ;; Org
-  (when (+eaf-app-p 'rss-reader)
-    (setq eaf-rss-reader-split-horizontally nil
-          eaf-rss-reader-web-page-other-window t)
-    (require 'eaf-org))
-
-  ;; Org
-  (when (+eaf-app-p 'org)
-    (require 'eaf-org))
-
-  ;; Mail
-  ;; BUG The `eaf-open-mail-as-html' is not working,
-  ;;     I use `+eaf-open-mail-as-html' instead
-  (when (+eaf-app-p 'mail)
-    (require 'eaf-mail))
-
-  ;; Org Previewer
-  (when (+eaf-app-p 'org-previewer)
-    (setq eaf-org-dark-mode "follow")
-    (require 'eaf-org-previewer))
-
-  ;; Markdown Previewer
-  (when (+eaf-app-p 'markdown-previewer)
-    (setq eaf-markdown-dark-mode "follow")
-    (require 'eaf-markdown-previewer))
-
-  ;; Jupyter
-  (when (+eaf-app-p 'jupyter)
-    (setq eaf-jupyter-dark-mode "follow"
-          eaf-jupyter-font-family (symbol-name (font-get doom-font :family))
-          eaf-jupyter-font-size 13)
-    (require 'eaf-jupyter))
-
-  ;; Mindmap
-  (when (+eaf-app-p 'mindmap)
-    (setq eaf-mindmap-dark-mode "follow"
-          eaf-mindmap-save-path "~/Dropbox/Mindmap")
-    (require 'eaf-mindmap))
-
-  ;; File Sender
-  (when (+eaf-app-p 'file-sender)
-    (require 'eaf-file-sender))
-
-  ;; Music Player
-  (when (+eaf-app-p 'music-player)
-    (require 'eaf-music-player))
-
-  ;; Video Player
-  (when (+eaf-app-p 'video-player)
-    (setq eaf-video-player-keybinding
-          '(("p" . "toggle_play")
-            ("q" . "close_buffer")
-            ("h" . "play_backward")
-            ("l" . "play_forward")
-            ("j" . "decrease_volume")
-            ("k" . "increase_volume")
-            ("f" . "toggle_fullscreen")
-            ("R" . "restart")))
-    (require 'eaf-video-player))
-
-  ;; Image Viewer
-  (when (+eaf-app-p 'image-viewer)
-    (require 'eaf-image-viewer))
-
-  ;; Git
-  (when (+eaf-app-p 'git)
-    (require 'eaf-git))
-
-  ;; Fix EVIL keybindings
-  (after! evil
-    (require 'eaf-evil)
-    (define-key key-translation-map (kbd "SPC")
-      (lambda (prompt)
-        (if (derived-mode-p 'eaf-mode)
-            (pcase eaf--buffer-app-name
-              ("browser" (if (eaf-call-sync "execute_function" eaf--buffer-id "is_focus")
-                             (kbd "SPC")
-                           (kbd eaf-evil-leader-key)))
-              ("pdf-viewer" (kbd eaf-evil-leader-key))
-              ("image-viewer" (kbd eaf-evil-leader-key))
-              ("music-player" (kbd eaf-evil-leader-key))
-              ("video-player" (kbd eaf-evil-leader-key))
-              ("file-sender" (kbd eaf-evil-leader-key))
-              ("mindmap" (kbd eaf-evil-leader-key))
-              (_  (kbd "SPC")))
-          (kbd "SPC"))))))
 
 ;; Outline ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq outline-regexp "[#\f]+")
@@ -644,6 +430,7 @@
   (evil-define-key 'normal mu4e-headers-mode-map "y" nil)
   (evil-define-key 'normal mu4e-headers-mode-map "m" 'mu4e-headers-mark-for-read)
   (evil-define-key 'normal mu4e-headers-mode-map "M" 'mu4e-headers-mark-for-unread)
+  (evil-define-key 'normal mu4e-headers-mode-map "c" 'mu4e-org-store-and-capture)
 
   ; View mode:
   (define-key mu4e-view-mode-map (kbd "C-+") nil) ; For some reason this is necessary
@@ -659,10 +446,10 @@
   (evil-define-key 'normal mu4e-view-mode-map "m" #'mu4e-view-mark-for-read)
   (evil-define-key 'normal mu4e-view-mode-map "M" #'mu4e-view-mark-for-unread)
   (evil-define-key 'normal mu4e-view-mode-map "!" #'mu4e-view-raw-message)
+  (evil-define-key 'normal mu4e-view-mode-map "c" 'mu4e-org-store-and-capture)
   )
 
 (setq message-kill-buffer-on-exit t)
-
 
 ;; Telega ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq telega-server-libs-prefix "/usr")
@@ -721,15 +508,26 @@
     ))
 
 ;; explain-pause-top ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun my/get-frame-by-name (fname)
+  "If there is a frame named FNAME, return it, else nil."
+  (require 'dash)                       ; For `-some'
+  (-some (lambda (frame)
+           (when (equal fname (frame-parameter frame 'name))
+             frame))
+         (frame-list)))
 
-; TODO: this isn't working, seemingly
 (setq explain-pause-top-auto-refresh-interval 1)
 
 (defun open-explain-pause-top-in-new-frame ()
   "Open `explain-pause-top` in a new frame."
   (interactive)
-  (let ((new-frame (make-frame '((name . "Emacs top")) )))
-    (select-frame new-frame)
-    (call-interactively #'explain-pause-top)))
+  (setq topframe (my/get-frame-by-name "Emacs top"))
+  (if topframe
+    (select-frame-set-input-focus topframe)
+    (let ((new-frame (make-frame '((name . "Emacs top")) )))
+      (select-frame new-frame)
+      (call-interactively #'explain-pause-top))
+    )
+  )
 
 (evil-define-key 'normal 'global (kbd "C-t") 'open-explain-pause-top-in-new-frame)
