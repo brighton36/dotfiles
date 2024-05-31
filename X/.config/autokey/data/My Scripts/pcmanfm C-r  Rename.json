@@ -1,8 +1,10 @@
 {
     "type": "script",
-    "description": "firefox \"C-n\" : Forward",
+    "description": "pcmanfm \"C-r\" : Rename",
     "store": {},
-    "modes": [],
+    "modes": [
+        3
+    ],
     "usageCount": 0,
     "prompt": false,
     "omitTrigger": false,
@@ -17,12 +19,13 @@
     },
     "hotkey": {
         "modifiers": [
-            "<ctrl>"
+            "<ctrl>",
+            "<shift>"
         ],
-        "hotKey": "n"
+        "hotKey": "<enter>"
     },
     "filter": {
-        "regex": "Navigator.firefox",
+        "regex": "pcmanfm.Pcmanfm",
         "isRecursive": false
     }
 }

@@ -7,9 +7,13 @@ configuration {
   kb-clear-line: "";
   kb-remove-word-back: "Control-w";
   kb-cancel: "Escape";
+  kb-accept-entry: "Return";
+  kb-remove-to-eol: "";
 
   kb-page-next: "Control+d";
   kb-page-prev: "Control+u";
+  kb-row-up: "Control-k";
+  kb-row-down: "Control-j";
   kb-row-last: "Control+G";
   kb-row-first: "Control+g";
 }
