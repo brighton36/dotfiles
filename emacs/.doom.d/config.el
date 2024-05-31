@@ -531,3 +531,7 @@
   )
 
 (evil-define-key 'normal 'global (kbd "C-t") 'open-explain-pause-top-in-new-frame)
+
+;; emojify ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(setq emojify-display-style 'unicode)
+(setq emojify-emoji-styles '(unicode))
