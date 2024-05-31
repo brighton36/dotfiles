@@ -167,14 +167,11 @@
 ; faster which-key menu:
 (setq which-key-idle-delay 0.5) 
 
+;; Ruler mode  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; 80-column indicator, and ruler:
 (add-hook 'find-file-hook (lambda () (ruler-mode 1)))
 (add-hook 'find-file-hook (lambda () (display-fill-column-indicator-mode t)))
-
-; The 'open in browser' should always load in the default profile:
-;(setq browse-url-generic-program
-;	(shell-command-to-string "/usr/bin/firefox -P default-release")
-; browse-url-browser-function 'browse-url-generic)
+(setq comment-column -1) ; This seems to be the way to disable that '#' character...
 
 ;; Visual Line ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Just a prettier indication that we're wrapping:
@@ -454,6 +451,8 @@
 ;; Telega ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq telega-server-libs-prefix "/usr")
 (setq telega-use-images 1)
+(setq telega-filter-button-width 10)
+
 (telega-notifications-mode 1)
 (telega-appindicator-mode 1)
 (define-key global-map (kbd "C-c t") telega-prefix-map)
@@ -535,3 +534,4 @@
 ;; emojify ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq emojify-display-style 'unicode)
 (setq emojify-emoji-styles '(unicode))
+
