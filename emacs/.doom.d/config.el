@@ -349,8 +349,7 @@
       ))
   )
 
-(let* ((variable-tuple
-       (cond ((x-list-fonts "Ubuntu") '(:font "Ubuntu"))))
+(let* ((variable-tuple '(:font "Ubuntu"))
        (headline           `(:weight normal)))
 
   (custom-theme-set-faces
@@ -554,6 +553,8 @@
 
 ;; This sets our messages to wrap by default
 (add-hook 'telega-chat-mode-hook 'visual-line-mode)
+
+(set-face-attribute 'telega-msg-inline-reply nil :foreground "#556b72")
 
 ;; Company ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (after! company
