@@ -148,28 +148,8 @@
 ; In general, we seem to like these modes
 (vertico-posframe-mode 1)
 
-; TODO: be... more judicious here:
-;(setq spacious-padding-widths
-;      '( :internal-border-width 6
-;         :header-line-width 2
-;         :mode-line-width 3
-;         :tab-width 2
-;         :right-divider-width 15
-;         :scroll-bar-width 4
-;         :fringe-width 8))
-
-; This will fix mu4e's weirdness with spacious, when/if the frame loses focus:
-(with-eval-after-load 'mu4e
-  (custom-set-faces `(mode-line ((t (:overline nil :box nil)))))
-  (custom-set-faces `(mode-line-inactive ((t (:background nil :box nil)))))
-  (custom-set-faces `(mode-line-active ((t (:box nil)))))
-  )
-
 (custom-set-faces '(auto-dim-other-buffers-face ((t (:background "#EEE8D5")))))
 (custom-set-faces '(auto-dim-other-buffers-hide-face ((t (:extend t :background "#EEE8D5")))))
-
-; TODO: Do we want this?
-;(spacious-padding-mode 1)
 
 (setq shell-file-name "/bin/fish" vterm-max-scrollback 10000)
 

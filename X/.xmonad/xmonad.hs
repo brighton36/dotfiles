@@ -237,11 +237,14 @@ myManageHook = composeAll
     , className =? "rdesktop"      --> doFloat
     , className =? "Vncviewer"     --> doFloat
     , className =? "Xmessage"      --> doCenterFloat
+    -- The doIgnore should exclude dialogues from setupInsertPosition pushing 
+    -- them behind the foreground window...
     , isDialog                     --> doCenterFloat
     , title =? "Emacs Everywhere"  --> doFloat
     , title =? "doom-capture"      --> doRectFloat(RationalRect 0.55 0.45 0.425 0.5) --x y w h
     , title =? "Emacs top"         --> doRectFloat(RationalRect 0.55 0.05 0.425 0.75) --x y w h
     , title =? "zoom"              --> doFloat -- This will match the notifications only, not the room window
+    , (fmap not isDialog) --> insertPosition Below Newer
     ]
 
 -- LayoutHook -----------------------------------------------------------------
@@ -424,7 +427,6 @@ myStartupHook = do
 main :: IO ()
 main = do
   xmonad
-    . setupInsertPosition Below Newer
     . XMonad.Hooks.EwmhDesktops.ewmhFullscreen 
     . ewmh 
     . withSB (statusBarProp "~/.config/xmobar/xmobar-start.sh" (clickablePP myPP))
