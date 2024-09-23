@@ -55,4 +55,7 @@
 (package! evil-avy)
 (straight-use-package
   '(explain-pause-mode :type git :host github :repo "lastquestion/explain-pause-mode"))
+(package! org-bullets)
 
+(package! spacious-padding :recipe (:host github :repo "protesilaos/spacious-padding"))
+(package! vertico-posframe :recipe (:host github :repo "tumashu/vertico-posframe"))
