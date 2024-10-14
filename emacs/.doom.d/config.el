@@ -575,6 +575,7 @@
   (lambda ()
     (define-key evil-insert-state-local-map (kbd "C-p") 'eshell-previous-matching-input-from-input)
     (define-key evil-insert-state-local-map (kbd "C-n") 'eshell-next-matching-input-from-input)
+    (define-key evil-insert-state-local-map (kbd "M-m") 'eshell-bol)
     ))
 
 (define-key evil-insert-state-map (kbd "C-p") 'eshell-previous-matching-input-from-input)
