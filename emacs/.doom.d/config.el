@@ -191,20 +191,10 @@
 ; Just a prettier indication that we're wrapping:
 (setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
 
-;; Edit Server ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; I disabled this when we switched to emacs everywhere...
-; This is used by firefox. For more on the edit server:
-; https://www.emacswiki.org/emacs/Edit_with_Emacs
-
-; (when (and (require 'edit-server nil t) (daemonp))
-;      (edit-server-start))
-; (setq edit-server-verbose t)
-
 ;; Dumb Jump ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+; (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
 
-
-; TODO: This ... stopped working:
+; TODO: This ... stopped working when we upgraded to emacs 29
 ;(global-set-key
 ;	(kbd "C-j")
 ;	(defhydra dumb-jump-hydra (:color blue :columns 3)
@@ -220,25 +210,32 @@
 
 ;; Custom keys ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Alt-[ and Alt-] Window Cycle:
-(global-set-key (kbd "M-]") #'(lambda() (interactive) (other-window 1)))
-(global-set-key (kbd "M-[") #'(lambda() (interactive) (other-window -1)))
+; TODO: I guess we should stick all these maps into a single call to map!
 
-;; Alt-Shift-[ an Alt-Shift-] Move Window Cycle
-(global-set-key (kbd "M-}") #'(lambda() (interactive) (rotate-windows -1)))
-(global-set-key (kbd "M-{") #'(lambda() (interactive) (rotate-windows 1)))
+;; Global Map (for some reason, these don't work using :g, in the below Evil Bindings section)
+(map! 
+  :map global-map 
+  ;; Alt-[ and Alt-] Window Cycle:
+  "M-]" #'(lambda() (interactive) (other-window 1))
+  "M-[" #'(lambda() (interactive) (other-window -1))
 
-;; Window Resize Up/down:
-(global-set-key (kbd "C-S-j") 'shrink-window)
-(global-set-key (kbd "C-S-k") 'enlarge-window)
+  ;; Alt-Shift-[ an Alt-Shift-] Move Window Cycle
+  "M-}" #'(lambda() (interactive) (rotate-windows -1))
+  "M-{" #'(lambda() (interactive) (rotate-windows 1))
 
-;; Window Resize left/right. I guess this works..
-(global-set-key (kbd "C-S-h") 'shrink-window-horizontally)
-(global-set-key (kbd "C-S-l") 'enlarge-window-horizontally)
+  ;; Window Resize Up/down:
+  "C-S-j" #'shrink-window
+  "C-S-k" #'enlarge-window
 
-; Window Close:
-(global-set-key (kbd "C-<backspace>") 'delete-window)
+  ;; Window Resize left/right. I guess this works..
+  "C-S-h" #'shrink-window-horizontally
+  "C-S-l" #'enlarge-window-horizontally
 
+  ; Window Close:
+  "C-<backspace>" #'delete-window
+  )
+
+;; Evil bindings for all modes
 (map! :n "C-+" #'text-scale-increase
       :n "C-=" nil
 
@@ -255,21 +252,97 @@
       ;; Avy
       :nv "C-n" #'evil-avy-goto-char-timer
       :nv "C-g" #'evil-avy-goto-line
+
+      ;; Emoji's
+      :i "C-z" #'emoji-insert
+
+      ;; Explain:
+      :n "C-t" #'open-explain-pause-top-in-new-frame
+
+      ;; Globals:
+      :g "C-c t" telega-prefix-map
+      :g "C-c c" #'org-capture
       )
 
-; This gets weird. I guess we could alternatively just disable undo-fu:
+;; Mode specific mappings
 (map! :after undo-fu :map undo-fu-mode-map "C-_" #'text-scale-decrease)
 
-;; Hebrew Mode
-;; TODO: seems to work in insert mode , oddly. But, I think we may just want this for eshell...
-;; (global-set-key (kbd "C-i") #'(lambda() (interactive) (buffer-face-mode-face 'default nil ':family "Linux Libertine") (buffer-face-mode)))
+(map! :after org 
+      :map org-mode-map 
+      "M-{" nil
+      "M-}" nil)
+
+(map! :after evil-org
+      :map evil-org-mode-map 
+      :ni "C-S-j" nil
+      :ni "C-S-k" nil
+      :ni "C-S-h" nil
+      :ni "C-S-l" nil
+      )
+
+; Headers Mode:
+(map! :after mu4e :map mu4e-headers-mode-map 
+  "C-+" nil
+  :n "r" nil
+  :n "?" nil
+  :n "!" nil
+  :n "+" nil
+  :n "-" nil
+  :n "=" nil
+  :n "&" nil
+  :n "*" nil
+  :n "y" nil
+  :n "m" 'mu4e-headers-mark-for-read
+  :n "M" 'mu4e-headers-mark-for-unread
+  :n "c" 'mu4e-org-store-and-capture)
+
+; View mode:
+(map! :after mu4e :map mu4e-view-mode-map
+  "C-+" nil
+  :n "r" nil
+  :n "?" nil
+  :n "+" nil
+  :n "-" nil
+  :n "=" nil
+  :n "&" nil
+  :n "*" nil
+  :n "y" nil
+  :n "m" 'mu4e-headers-mark-for-read
+  :n "M" 'mu4e-headers-mark-for-unread
+  :n "!" 'mu4e-view-raw-message
+  :n "c" 'mu4e-org-store-and-capture)
+
+(map! :after telega 
+      :map telega-chat-mode-map
+      "C-S-r" 'telega-msg-reply
+      "C-S-e" 'telega-msg-edit
+      :n "q" 'telega
+
+      :map telega-msg-button-map 
+      "e" 'telega-msg-edit)
+
+(map! :after vterm :map vterm-mode-map
+      "M-]" nil
+      "C-<backspace>" nil)
+
+(map! :after eshell 
+      :map evil-insert-state-local-map
+      "C-p" 'eshell-previous-matching-input-from-input
+      "C-n" 'eshell-next-matching-input-from-input
+
+      :map evil-insert-state-map
+      "C-p" 'eshell-previous-matching-input-from-input
+      "C-n" 'eshell-next-matching-input-from-input
+
+      :map eshell-mode-map
+      :niv "M-m" 'eshell-bol
+      )
 
 ;; org ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
 
-(define-key global-map (kbd "C-c c") 'org-capture)
 (setq org-agenda-files (list "inbox.org"))
 (setq org-agenda-start-with-log-mode t)
 (setq org-long-done 'time)
@@ -284,10 +357,7 @@
     (insert-file-contents path)
     (buffer-string)))
 
-; This was getting in the way of rotate:
-(map! :after org :map org-mode-map "M-{" nil)
-(map! :after org :map org-mode-map "M-}" nil)
-
+; This was getting in the way of the global map shortcuts
 (after! org
   '(mapc
     (lambda (face)
@@ -457,38 +527,6 @@
 ; Keybindings:
 ; NOTE: Implicit:
 
-; Headers Mode:
-(map! :after mu4e :map mu4e-headers-mode-map 
-  "C-+" nil
-  :n "r" nil
-  :n "?" nil
-  :n "!" nil
-  :n "+" nil
-  :n "-" nil
-  :n "=" nil
-  :n "&" nil
-  :n "*" nil
-  :n "y" nil
-  :n "m" 'mu4e-headers-mark-for-read
-  :n "M" 'mu4e-headers-mark-for-unread
-  :n "c" 'mu4e-org-store-and-capture)
-
-; View mode:
-(map! :after mu4e :map mu4e-view-mode-map
-  "C-+" nil
-  :n "r" nil
-  :n "?" nil
-  :n "+" nil
-  :n "-" nil
-  :n "=" nil
-  :n "&" nil
-  :n "*" nil
-  :n "y" nil
-  :n "m" 'mu4e-headers-mark-for-read
-  :n "M" 'mu4e-headers-mark-for-unread
-  :n "!" 'mu4e-view-raw-message
-  :n "c" 'mu4e-org-store-and-capture)
-
 ; NOTE: The issue here, is that .emacs.d/modules/email/mu4e/config.el is loading after this file
 ;       so, we can just hook it here, like so:
 (with-eval-after-load 'mu4e
@@ -509,7 +547,6 @@
     mu4e-attachment-dir "~/Downloads"
     mu4e-compose-signature "Chris Derose\nchris@chrisderose.com\n"
     mu4e-headers-date-format "%y-%m-%d")
-
   )
 
 (setq message-kill-buffer-on-exit t)
@@ -521,17 +558,6 @@
 
 (telega-notifications-mode 1)
 (telega-appindicator-mode 1)
-
-(define-key global-map (kbd "C-c t") telega-prefix-map)
-
-(map! :after telega 
-      :map telega-chat-mode-map
-      "C-S-r" 'telega-msg-reply
-      "C-S-e" 'telega-msg-edit
-      :n "q" 'telega
-
-      :map telega-msg-button-map 
-      "e" 'telega-msg-edit)
 
 ;; This sets our messages to wrap by default
 (add-hook 'telega-chat-mode-hook 'visual-line-mode)
@@ -566,25 +592,6 @@
 ;; ispell ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq ispell-dictionary "en-custom")
 
-;; vterm ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(map! :after vterm :map vterm-mode-map
-      "M-]" nil
-      "C-<backspace>" nil)
-
-;; eshell ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(map! :after eshell 
-      :map evil-insert-state-local-map
-      "C-p" 'eshell-previous-matching-input-from-input
-      "C-n" 'eshell-next-matching-input-from-input
-
-      :map evil-insert-state-map
-      "C-p" 'eshell-previous-matching-input-from-input
-      "C-n" 'eshell-next-matching-input-from-input
-
-      :map eshell-mode-map
-      :niv "M-m" 'eshell-bol
-      )
-
 ;; explain-pause-top ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun my/get-frame-by-name (fname)
   "If there is a frame named FNAME, return it, else nil."
@@ -608,13 +615,9 @@
     )
   )
 
-(evil-define-key 'normal 'global (kbd "C-t") 'open-explain-pause-top-in-new-frame)
-
 ;; emojify ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq emojify-display-style 'unicode)
 (setq emojify-emoji-styles '(unicode))
-
-(map! :i "C-z" #'emoji-insert)
 
 ;; web-mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun my-web-mode-hook ()
