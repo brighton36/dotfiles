@@ -1,4 +1,4 @@
-;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+;-*- mode: elisp -*-
 
 ; This seems to be needed, since switching to guix:
 (add-to-list 'custom-theme-load-path "~/.doom.d/themes")

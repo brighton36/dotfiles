@@ -1,3 +1,5 @@
+;-*- mode: elisp -*-
+
 (setq explain-pause-top-auto-refresh-interval 1)
 
 (defun my/get-frame-by-name (fname)

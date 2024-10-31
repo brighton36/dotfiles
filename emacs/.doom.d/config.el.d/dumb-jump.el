@@ -1,3 +1,5 @@
+;-*- mode: elisp -*-
+
 ; TODO: let's move this into an el file...
 ;; Dumb Jump ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)

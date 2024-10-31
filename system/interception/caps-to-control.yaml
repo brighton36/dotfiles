@@ -19,4 +19,3 @@ MAPPINGS:
     # the 'menu' key, in xev
     TAP: KEY_COMPOSE
     HOLD: KEY_COMPOSE
-

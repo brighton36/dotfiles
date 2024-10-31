@@ -1,3 +1,5 @@
+;-*- mode: elisp -*-
+
 ; Window Rotation:
 (defun rotate-windows (arg)
   "Rotate your windows; use the prefix argument to rotate the other direction"

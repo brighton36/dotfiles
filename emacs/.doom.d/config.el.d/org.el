@@ -1,3 +1,5 @@
+;-*- mode: elisp -*-
+
 (map! :after org 
       :map org-mode-map 
       "M-{" nil

@@ -1,3 +1,5 @@
+;-*- mode: elisp -*-
+
 (after! company
   (setq company-idle-delay 0.5
         company-minimum-prefix-length 2

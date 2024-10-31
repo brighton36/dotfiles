@@ -1,3 +1,5 @@
+;-*- mode: elisp -*-
+
 ; Mostly just ignores
 (setq projectile-ignored-projects '("~/" "/tmp" "~/.emacs.d/.local/straight/repos/"))
 (defun projectile-ignored-project-function (filepath)

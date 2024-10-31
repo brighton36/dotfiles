@@ -1,3 +1,5 @@
+;-*- mode: elisp -*-
+
 (map! :g "C-c t" telega-prefix-map
 
 		  :after telega 
