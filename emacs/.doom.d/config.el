@@ -1,33 +1,5 @@
 ;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-;; Place your private configuration here! Remember, you do not need to run 'doom
-;; sync' after modifying this file!
-
-
-;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets. It is optional.
-(setq user-full-name "Chris DeRose"
-      user-mail-address "cderose@derosetechnologies.com")
-
-;; Doom exposes five (optional) variables for controlling fonts in Doom:
-;;
-;; - `doom-font' -- the primary font to use
-;; - `doom-variable-pitch-font' -- a non-monospace font (where applicable)
-;; - `doom-big-font' -- used for `doom-big-font-mode'; use this for
-;;   presentations or streaming.
-;; - `doom-unicode-font' -- for unicode glyphs
-;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
-;;
-;; See 'C-h v doom-font' for documentation and more examples of what they
-;; accept. For example:
-;;
-;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
-;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
-
-(setq doom-font (font-spec :family "Cousine NF" :size 14)
-      doom-variable-pitch-font (font-spec :family "Ubuntu" :size 14)
-      doom-big-font (font-spec :family "Cousine NF" :size 14))
-
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -35,7 +7,6 @@
 ;; wasn't installed correctly. Font issues are rarely Doom issues!
 
 ;; This is used in a few places
-(setq auth-sources '((:source "~/.authinfo.gpg")))
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
@@ -71,21 +42,88 @@
 
 ;; This seems to be needed, since switching to guix
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e") 
+(add-to-list 'custom-theme-load-path "~/.doom.d/themes")
 
-;; Tells us to recompile the source files, when the cache is older..
-(setq load-prefer-newer t)
+(setq user-full-name "Chris DeRose"
+      user-mail-address "cderose@derosetechnologies.com"
+
+      doom-font (font-spec :family "Cousine NF" :size 14)            ; the primary font to use
+      doom-variable-pitch-font (font-spec :family "Ubuntu" :size 14) ; a non-monospace font (where applicable)
+      doom-big-font (font-spec :family "Cousine NF" :size 14)        ; use this for presentations or streaming
+      ;; NOTE: These fonts are also available:
+      ;; - `doom-unicode-font' -- for unicode glyphs
+      ;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
+      doom-theme 'doom-solarized-light-cderose
+      
+      auth-sources '((:source "~/.authinfo.gpg")) ; This is used in a few places...
+
+      load-prefer-newer t         ; Tells us to recompile the source files, when the cache is older..
+      delete-by-moving-to-trash t ; Delete files to trash
+      x-stretch-cursor t          ; Stretch cursor to the glyph width
+
+      undo-limit 80000000         ; Raise undo-limit to 80Mb
+      evil-want-fine-undo t       ; By default while in insert all changes are one big blob. Be more granular
+
+      which-key-idle-delay 0.5    ; faster which-key menu
+
+      visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow) ; Just a prettier indication that we're wrapping:
+
+      ; vterm
+      shell-file-name "/bin/fish" 
+      vterm-max-scrollback 10000
+
+      ; emojify
+      emojify-display-style 'unicode
+      emojify-emoji-styles '(unicode)
+
+      ; ispell
+      ispell-dictionary "en-custom"
+
+      ; Outline 
+      outline-regexp "[#\f]+"
+
+      ; highlight-indent
+      highlight-indent-guides-method 'bitmap
+      highlight-indent-guides-auto-character-face-perc 25
+)
 
 ;; Themes and Colors ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(add-to-list 'custom-theme-load-path "~/.doom.d/themes")
-(setq doom-theme 'doom-solarized-light-cderose)
-
-;; Background color of the line numbers column, and highlight current line color:
 (custom-set-faces!
-  `(line-number :background ,(doom-color 'bg-alt))
-  `(line-number-current-line :background ,(doom-color 'grey)))
+  `(line-number :background ,(doom-color 'bg-alt)) ; Background color of the line numbers column, and highlight current line color:
+  `(line-number-current-line :background ,(doom-color 'grey))
 
-; Mostly this seems to affect org-mode. But, in general, I don't want links in bold
-(custom-set-faces! `(link :weight normal))
+  `(link :weight normal) ; Mostly this seems to affect org-mode. But, in general, I don't want links in bold
+)
+
+;; This determines the style of line numbers in effect. If set to `nil', line
+;; numbers are disabled. For relative line numbers, set this to `relative'.
+'(auto-dim-other-buffers-face ((t (:background "#EEE8D5"))))
+(custom-set-faces '(auto-dim-other-buffers-face ((t (:background "#EEE8D5")))))
+(custom-set-faces '(auto-dim-other-buffers-hide-face ((t (:extend t :background "#EEE8D5")))))
+
+;; Random Preferences  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(vertico-posframe-mode 1) ; In general, we seem to like these modes
+(global-subword-mode 1)   ; Iterate through CamelCase words
+
+; more reasonable window close/resize behaviors
+(customize-set-variable 'display-buffer-base-action '(
+    (display-buffer-reuse-window display-buffer-same-window)
+    (reusable-frames . t)
+  )
+)
+
+(customize-set-variable 'even-window-sizes nil) ; avoid resizing
+
+; TODO: This seems... not so efficient...
+(defun my-web-mode-hook ()
+  "Hooks for Web mode."
+  (setq web-mode-markup-indent-offset 2)
+)
+(add-hook 'web-mode-hook  'my-web-mode-hook)
+
+(require 'epa)
+(epa-file-enable)
 
 ;; Custom Functions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -110,104 +148,6 @@
                  (p2 (window-point w2)))
             (set-window-buffer-start-and-point w1 b2 s2 p2)
             (set-window-buffer-start-and-point w2 b1 s1 p1)))))))
-
-; TODO Do we actually still use this?
-; 'Better' backspace deletes, that respect indentation. From:
-; https://www.emacswiki.org/emacs/BackspaceWhitespaceToTabStop
-(defvar my-offset 4 "My indentation offset. ")
-(defun backspace-whitespace-to-tab-stop ()
-  "Delete whitespace backwards to the next tab-stop, otherwise delete one character."
-  (interactive)
-  (if (or indent-tabs-mode
-          (region-active-p)
-          (save-excursion
-            (> (point) (progn (back-to-indentation)
-                              (point)))))
-      (call-interactively 'backward-delete-char-untabify)
-    (let ((movement (% (current-column) my-offset))
-          (p (point)))
-      (when (= movement 0) (setq movement my-offset))
-      ;; Account for edge case near beginning of buffer
-      (setq movement (min (- p 1) movement))
-      (save-match-data
-        (if (string-match "[^\t ]*\\([\t ]+\\)$" (buffer-substring-no-properties (- p movement) p))
-            (backward-delete-char (- (match-end 1) (match-beginning 1)))
-          (call-interactively 'backward-delete-char))))))
-
-
-;; Preferences  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-
-'(auto-dim-other-buffers-face ((t (:background "#EEE8D5"))))
-
-; (setq display-line-numbers-type t)
-
-;; Enable Cmake Syntax highlighting
-;;(require 'cmake-mode)
-
-; In general, we seem to like these modes
-(vertico-posframe-mode 1)
-
-(custom-set-faces '(auto-dim-other-buffers-face ((t (:background "#EEE8D5")))))
-(custom-set-faces '(auto-dim-other-buffers-hide-face ((t (:extend t :background "#EEE8D5")))))
-
-(setq shell-file-name "/bin/fish" vterm-max-scrollback 10000)
-
-;; This should create more reasonable window close/resize behaviors
-(customize-set-variable 'display-buffer-base-action
-  '((display-buffer-reuse-window display-buffer-same-window)
-    (reusable-frames . t)))
-
-(customize-set-variable 'even-window-sizes nil)     ; avoid resizing
-
-;; Trying these settings out, from : https://tecosaur.github.io/emacs-config/config.html#fetching
-(setq-default
- delete-by-moving-to-trash t                      ; Delete files to trash
- x-stretch-cursor t)                              ; Stretch cursor to the glyph width
-
-(setq undo-limit 80000000                         ; Raise undo-limit to 80Mb
-      evil-want-fine-undo t                       ; By default while in insert all changes are one big blob. Be more granular
-      )
-
-(global-subword-mode 1)                           ; Iterate through CamelCase words
-
-; New buffers default to org:
-; I disabled this because of issues with emacs everywhere. Maybe I want this ultimately...
-; (setq-default major-mode 'org-mode)
-
-; faster which-key menu:
-(setq which-key-idle-delay 0.5) 
-
-;; Ruler mode  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; 80-column indicator, and ruler:
-; TODO : I think I decided against the ruler...
-;(add-hook 'find-file-hook (lambda () (ruler-mode 1)))
-
-; We don't want the fill column on org-mode, but on every other mode - enable it:
-(add-hook 'find-file-hook (lambda () (if (not (eq 'org-mode (buffer-local-value 'major-mode (current-buffer)))) (display-fill-column-indicator-mode t))))
-(setq comment-column -1) ; This seems to be the way to disable that '#' character in the ruler...
-
-;; Visual Line ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Just a prettier indication that we're wrapping:
-(setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
-
-;; Dumb Jump ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
-
-; TODO: This ... stopped working when we upgraded to emacs 29
-;(global-set-key
-;	(kbd "C-j")
-;	(defhydra dumb-jump-hydra (:color blue :columns 3)
-;		"Dumb Jump"
-;		("j" dumb-jump-go "Go")
-;		("o" dumb-jump-go-other-window "Other window")
-;		("e" dumb-jump-go-prefer-external "Go external")
-;		("x" dumb-jump-go-prefer-external-other-window "Go external other window")
-;		("i" dumb-jump-go-prompt "Prompt")
-;		("l" dumb-jump-quick-look "Quick look")
-;		("b" dumb-jump-back "Back"))
-;)
 
 ;; Custom keys ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (map! 
@@ -262,7 +202,7 @@
 
 ;; NOTE: For whatever reason, when we tried to incorporate these map!'s into the
 ;; above map, telega got unstable, and some of the mappings just kinda stopped 
-;; working
+;; working. Breaking these into multiple map! calls fixed all that.
 
 ;; Mode specific mappings
 (map! :after undo-fu 
@@ -340,110 +280,9 @@
       :map eshell-mode-map
       :niv "M-m" 'eshell-bol)
 
-;; org ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
-
-(setq org-agenda-files (list "inbox.org"))
-(setq org-agenda-start-with-log-mode t)
-(setq org-long-done 'time)
-(setq org-todo-keywords '((sequence "TODO(t)" "IN-PROGRESS(p)" "WAITING(w)" "|" "DONE(d!)")))
-(setq org-refile-targets '(("archive.org" :maxlevel . 1)))
-
-; TODO: this is crashing the lisp: ;(set-fill-column 0)
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1) (display-line-numbers-mode 0)))
-
-; TODO: Do I actually use this?
-(defun dw/read-file-as-string (path)
-  (with-temp-buffer
-    (insert-file-contents path)
-    (buffer-string)))
-
-; This was getting in the way of the global map shortcuts
-(after! org
-  '(mapc
-    (lambda (face)
-      (set-face-attribute
-       face nil
-       :inherit
-       (my-adjoin-to-list-or-symbol
-        'fixed-pitch
-        (face-attribute face :inherit))))
-    (list 'org-code 'org-block 'org-table))
-
-  (setq org-capture-templates
-    `(("i" "Inbox" entry  (file "inbox.org")
-        ,(concat "* TODO %?\n"
-                 "/Entered on/ %U"))
-      ("@" "Inbox [mu4e]" entry (file "inbox.org")
-        ,(concat "* TODO Process \"%a\" %?\n"
-                 "/Entered on/ %U"))
-      ("t" "Tasks / Projects")
-      ("tt" "Task" entry (file+olp "~/org/personal.org" "Inbox")
-           "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
-      ("ts" "Clocked Entry Subtask" entry (clock)
-           "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
-
-      ("j" "Journal Entries")
-      ("jj" "Journal" entry
-           (file+olp+datetree "~/org/journal.org")
-           "\n* %<%I:%M %p> - Journal :journal:\n\n%?\n\n"
-           ;; ,(dw/read-file-as-string "~/Notes/Templates/Daily.org")
-           :clock-in :clock-resume
-           :empty-lines 1)
-      ("jm" "Meeting" entry
-           (file+olp+datetree "~/org/journal.org")
-           "* %<%I:%M %p> - %a :meetings:\n\n%?\n\n"
-           :clock-in :clock-resume
-           :empty-lines 1)
-      ))
-  )
-
-(let* ((variable-tuple '(:font "Ubuntu"))
-       (headline           `(:weight normal)))
-
-  (custom-theme-set-faces
-   'user
-   `(org-level-8 ((t (,@headline ,@variable-tuple))))
-   `(org-level-7 ((t (,@headline ,@variable-tuple))))
-   `(org-level-6 ((t (,@headline ,@variable-tuple))))
-   `(org-level-5 ((t (,@headline ,@variable-tuple))))
-   `(org-level-4 ((t (,@headline ,@variable-tuple :height 1.1))))
-   `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.25))))
-   `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.5))))
-   `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.75))))
-   `(org-document-title ((t (,@headline ,@variable-tuple :height 2.0 :underline nil))))))
-
-(custom-theme-set-faces
- 'user
- '(variable-pitch ((t (:family "Ubuntu Light" :height 170))))
- '(fixed-pitch ((t ( :family "Cousine NF" :height 130)))))
-
-(defun my-adjoin-to-list-or-symbol (element list-or-symbol)
-  (let ((list (if (not (listp list-or-symbol))
-                  (list list-or-symbol)
-                list-or-symbol)))
-    (require 'cl-lib)
-    (cl-adjoin element list)))
-
-;; Save org buffers after re-filing:
-(advice-add 'org-refile :after 'org-save-all-org-buffers)
-
-(custom-theme-set-faces
- 'user
- '(org-block ((t (:inherit fixed-pitch))))
- '(org-code ((t (:inherit (shadow fixed-pitch)))))
- '(org-document-info ((t (:foreground "dark orange"))))
- '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
- '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
- '(org-link ((t ( :underline t))))
- '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
- '(org-property-value ((t (:inherit fixed-pitch))) t)
- '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
- '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
- '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
- '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
+;; config.el.d ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(load! "config.el.d/org.el")
+(load! "config.el.d/mu4e.el")
 
 ;; avy ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq avy-all-windows 'all-frames)
@@ -453,105 +292,29 @@
 '(avy-background-face ((t (:background "#750000" :foreground "#BD9800"))))
 '(avy-lead-face ((t (:background "#750000" :foreground "#BD9800" :weight bold))))
 
-;; highlight-indent ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq highlight-indent-guides-method 'bitmap)
-(setq highlight-indent-guides-auto-character-face-perc 25)
-
-;; epa ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(require 'epa)
-(epa-file-enable)
-
 ;; everywhere ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; TODO: Actually, these frame params kinda borked...
 ; These frame params were all necessary to get the xmonad doCenterFloat to work:
-(setq emacs-everywhere-frame-name-format "Emacs Everywhere")
-(setq emacs-everywhere-frame-parameters 
-  '((name . "Emacs Everywhere")
-    (width . 120)
-    (height . 40)
-    (minibuffer . t)
-    (menu-bar-lines . t)) )
+(setq emacs-everywhere-frame-name-format "Emacs Everywhere"
+      emacs-everywhere-frame-parameters '(
+                                          (name . "Emacs Everywhere")
+                                          (width . 120)
+                                          (height . 40)
+                                          (minibuffer . t)
+                                          (menu-bar-lines . t))
+      emacs-everywhere-paste-command (list "/usr/bin/xdotool" 
+                                           "key" "--clearmodifiers" "Shift+Insert"
+                                           "sleep" "0.25" 
+                                           "keyup" "Meta_L" "Meta_R" "Alt_L" "Alt_R" "Super_L" "Super_R")
+)
+
 (remove-hook 'emacs-everywhere-init-hooks 'emacs-everywhere-set-frame-position)
 
-; There were a couple problems that were caused by xdotool not clearing modifiers, 
-; after a paste. This method was copied out of the emacs-everywhere.el, and 
-; slightly modified, to fix the stuck-key issue, that was happening after paste.
-; Note that we nixed osx support in this implementation:
-
-(setq emacs-everywhere-paste-command (list "/usr/bin/xdotool" "key" "--clearmodifiers" "Shift+Insert" "sleep" "0.25" "keyup" "Meta_L" "Meta_R" "Alt_L" "Alt_R" "Super_L" "Super_R") )
-
-;; Outline ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq outline-regexp "[#\f]+")
-
-;; mu4e ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(set-email-account!
-  "gmail"
-  '((mu4e-sent-folder       . "/[Gmail]/Sent Mail")
-    (mu4e-trash-folder      . "/[Gmail]/Bin")
-    (smtpmail-smtp-user     . "cderose@derosetechnologies.com"))
-  t)
-
-; SMTP Settings:
-(setq message-send-mail-function 'smtpmail-send-it
-  smtpmail-stream-type 'starttls
-  smtpmail-default-smtp-server "smtp.gmail.com"
-  smtpmail-smtp-server "smtp.gmail.com"
-  smtpmail-smtp-service 587)
-
-; Org-msg settings:
-; NOTE: I don't think I'm actually using this at the moment. But, I'd like to...
-(setq mail-user-agent 'gnus-user-agent)
-(require 'org-msg)
-(setq org-msg-startup "hidestars indent inlineimages"
-  org-msg-greeting-fmt "\nHello %s,\n\n"
-  org-msg-recipient-names '(("chris@chrisderose.com" . "Chris DeRose"))
-  org-msg-greeting-name-limit 3
-  org-msg-default-alternatives '((new   . (text html))
-  (reply-to-html . (text html))
-  (reply-to-text . (text)))
-  org-msg-convert-citation t
-  org-msg-signature "
-
-  Regards,
-
-  #+begin_signature
-  --
-  *Chris Derose
-  /chris@chrisderose.com/
-  #+end_signature")
- (org-msg-mode)
-
-; Keybindings:
-; NOTE: Implicit:
-
-; NOTE: The issue here, is that .emacs.d/modules/email/mu4e/config.el is loading after this file
-;       so, we can just hook it here, like so:
-(after! mu4e
-  (setq 
-    mu4e-get-mail-command "/usr/bin/mbsync -V cderose@derosetechnologies.com"
-    ; NOTE: I tried setting up the sync in ~/.config/systemd/user/mbsync.service
-    ; Per: https://wiki.archlinux.org/title/isync#With_a_timer
-    ; But I think this works better:
-    mu4e-update-interval 60
-    mu4e-headers-auto-update t
-    mu4e-compose-format-flowed t
-    fill-flowed-encode-column 80
-    mu4e-index-cleanup nil
-    mu4e-view-auto-mark-as-read nil
-    mu4e-index-lazy-check t
-    mu4e-view-show-images t
-    mu4e-use-fancy-chars t
-    mu4e-attachment-dir "~/Downloads"
-    mu4e-compose-signature "Chris Derose\nchris@chrisderose.com\n"
-    mu4e-headers-date-format "%y-%m-%d")
-  )
-
-(setq message-kill-buffer-on-exit t)
 
 ;; Telega ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq telega-server-libs-prefix "/usr")
-(setq telega-use-images 1)
-(setq telega-filter-button-width 10)
+(setq telega-server-libs-prefix "/usr"
+      telega-use-images 1
+      telega-filter-button-width 10)
 
 (telega-notifications-mode 1)
 (telega-appindicator-mode 1)
@@ -564,20 +327,16 @@
 ;; Company ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (after! company
   (setq company-idle-delay 0.5
-        company-minimum-prefix-length 2)
-  (setq company-show-numbers t)
-  (add-hook 'evil-normal-state-entry-hook #'company-abort)) ;; make aborting less annoying.
+        company-minimum-prefix-length 2
+        company-show-numbers t)
+  (add-hook 'evil-normal-state-entry-hook #'company-abort) ;; make aborting less annoying.
+)
 
 (setq-default history-length 1000)
 (setq-default prescient-history-length 1000)
 (set-company-backend!
-  '(text-mode
-    markdown-mode
-    gfm-mode)
-  '(:seperate
-    company-ispell
-    company-files
-    company-yasnippet))
+  '(text-mode markdown-mode gfm-mode)
+  '(:seperate company-ispell company-files company-yasnippet))
 
 ;; Projectile ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Mostly just ignores
@@ -586,10 +345,9 @@
   "Return t if FILEPATH is within any of `projectile-ignored-projects'"
   (or (mapcar (lambda (p) (s-starts-with-p p filepath)) projectile-ignored-projects)))
 
-;; ispell ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq ispell-dictionary "en-custom")
-
 ;; explain-pause-top ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(setq explain-pause-top-auto-refresh-interval 1)
+
 (defun my/get-frame-by-name (fname)
   "If there is a frame named FNAME, return it, else nil."
   (require 'dash)                       ; For `-some'
@@ -597,8 +355,6 @@
            (when (equal fname (frame-parameter frame 'name))
              frame))
          (frame-list)))
-
-(setq explain-pause-top-auto-refresh-interval 1)
 
 (defun open-explain-pause-top-in-new-frame ()
   "Open `explain-pause-top` in a new frame."
@@ -612,14 +368,20 @@
     )
   )
 
-;; emojify ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq emojify-display-style 'unicode)
-(setq emojify-emoji-styles '(unicode))
+;; Dumb Jump ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
 
-;; web-mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun my-web-mode-hook ()
-  "Hooks for Web mode."
-  (setq web-mode-markup-indent-offset 2)
-)
-(add-hook 'web-mode-hook  'my-web-mode-hook)
+; TODO: This ... stopped working when we upgraded to emacs 29. And, I'm not sure if we still want it
+;(global-set-key
+;	(kbd "C-j")
+;	(defhydra dumb-jump-hydra (:color blue :columns 3)
+;		"Dumb Jump"
+;		("j" dumb-jump-go "Go")
+;		("o" dumb-jump-go-other-window "Other window")
+;		("e" dumb-jump-go-prefer-external "Go external")
+;		("x" dumb-jump-go-prefer-external-other-window "Go external other window")
+;		("i" dumb-jump-go-prompt "Prompt")
+;		("l" dumb-jump-quick-look "Quick look")
+;		("b" dumb-jump-back "Back"))
+;)
 
