@@ -1,4 +1,4 @@
-#-*- mode: outline -*-
+#+TITLE: brighton36's dotfiles README
 * brighton36's dotfiles 📄
 After enough discussions with people on dotfiles, I decided to publish mine. I don't think anything in here is particularly spectacular, and most of this was copy-pasta'd from other dotfile repos.
 
@@ -8,22 +8,24 @@ I guess what makes these marginally unique are my general preference towards: dv
 - There are a lot of hard-coded references to my name, and home directory path.
 - the system/ folder... doesn't know what it wants to be yet. But, these are files that exist outside of home
 - I'm running this on arch, with xmonad. You'll see some files from programs I once-used, and no longer use. In those cases, your mileage may vary, as these files may be out of date, and not functional.
+- There's a lot of references to my IRL name throughout these files. You'll want to change that.
 
-** Supplemental config files
+* How to Install 💻
+These instructions will setup your home directory.
+- Check out the repo
+- Run `git submodule init` and `git submodule update`
+- make all (or manually choose to stow what you want)
+
+* Supplemental config files
 These are installed outside your home directory, and that's not handled by the below install instructions
 - Built-in Laptop Keyboard [[https://github.com/brighton36/dotfiles/blob/main/system/system76-keyboard-configurator-lemp10.json][system/system76-keyboard-configurator-lemp10.json]]
 - External USB Moonlander Keyboard - [[https://configure.zsa.io/moonlander/layouts/p7E9R][brighton36's Moonlander - lemp10]]
 - A caps-to-control tty map [[https://github.com/brighton36/dotfiles/blob/main/system/dvorak-chris.map][/usr/local/share/kbd/keymaps/dvorak-chris.map]] (with a corresponding [[https://github.com/brighton36/dotfiles/blob/main/system/vconsole.conf][/etc/vconsole.conf]])
 - The very-excellent interception config for installation into [[https://github.com/brighton36/dotfiles/tree/main/system/interception][/etc/interception]]
 
-* How to Install 💻
-- Check out the repo
-- Run `git submodule init` and `git submodule update`
-- make all (or manually choose to stow what you want)
-
 * System Notes 📚
-I guess this is like, a TODO list of 'things to maybe include in this repo'.
-- My modified lightdm.conf... isn't part of this repo
+I guess this is like, a TODO list of 'things to maybe include here in the future'.
+- My modified lightdm.conf...
 - I manually created a powertop service using: https://wiki.archlinux.org/title/Powertop
 - I needed xmobar to compile with dynamic libs enabled, which, I use the `xmobar-dynamic aur package` for.
 - I use a script in /usr/lib/systemd/system-sleep/brightness to set resume/wake brightness
