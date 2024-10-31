@@ -265,7 +265,9 @@
 ;; working
 
 ;; Mode specific mappings
-(map! :after undo-fu :map undo-fu-mode-map "C-_" #'text-scale-decrease)
+(map! :after undo-fu 
+      :map undo-fu-mode-map 
+      "C-_" #'text-scale-decrease)
 
 (map! :after org 
       :map org-mode-map 
@@ -280,37 +282,36 @@
       :ni "C-S-l" nil
       )
 
-; Headers Mode:
-(map! :after mu4e :map mu4e-headers-mode-map 
-  "C-+" nil
-  :n "r" nil
-  :n "?" nil
-  :n "!" nil
-  :n "+" nil
-  :n "-" nil
-  :n "=" nil
-  :n "&" nil
-  :n "*" nil
-  :n "y" nil
-  :n "m" 'mu4e-headers-mark-for-read
-  :n "M" 'mu4e-headers-mark-for-unread
-  :n "c" 'mu4e-org-store-and-capture)
+(map! :after mu4e 
+      :map mu4e-headers-mode-map 
+      "C-+" nil
+      :n "r" nil
+      :n "?" nil
+      :n "!" nil
+      :n "+" nil
+      :n "-" nil
+      :n "=" nil
+      :n "&" nil
+      :n "*" nil
+      :n "y" nil
+      :n "m" 'mu4e-headers-mark-for-read
+      :n "M" 'mu4e-headers-mark-for-unread
+      :n "c" 'mu4e-org-store-and-capture
 
-; View mode:
-(map! :after mu4e :map mu4e-view-mode-map
-  "C-+" nil
-  :n "r" nil
-  :n "?" nil
-  :n "+" nil
-  :n "-" nil
-  :n "=" nil
-  :n "&" nil
-  :n "*" nil
-  :n "y" nil
-  :n "m" 'mu4e-headers-mark-for-read
-  :n "M" 'mu4e-headers-mark-for-unread
-  :n "!" 'mu4e-view-raw-message
-  :n "c" 'mu4e-org-store-and-capture)
+      :map mu4e-view-mode-map
+      "C-+" nil
+      :n "r" nil
+      :n "?" nil
+      :n "+" nil
+      :n "-" nil
+      :n "=" nil
+      :n "&" nil
+      :n "*" nil
+      :n "y" nil
+      :n "m" 'mu4e-headers-mark-for-read
+      :n "M" 'mu4e-headers-mark-for-unread
+      :n "!" 'mu4e-view-raw-message
+      :n "c" 'mu4e-org-store-and-capture)
 
 (map! :after telega 
       :map telega-chat-mode-map
@@ -322,7 +323,8 @@
       :map telega-msg-button-map 
       "e" 'telega-msg-edit)
 
-(map! :after vterm :map vterm-mode-map
+(map! :after vterm 
+      :map vterm-mode-map
       "M-]" nil
       "C-<backspace>" nil)
 
@@ -336,8 +338,7 @@
       "C-n" 'eshell-next-matching-input-from-input
 
       :map eshell-mode-map
-      :niv "M-m" 'eshell-bol
-      )
+      :niv "M-m" 'eshell-bol)
 
 ;; org ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; If you use `org' and don't want your org files in the default location below,
@@ -461,6 +462,7 @@
 (epa-file-enable)
 
 ;; everywhere ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; TODO: Actually, these frame params kinda borked...
 ; These frame params were all necessary to get the xmonad doCenterFloat to work:
 (setq emacs-everywhere-frame-name-format "Emacs Everywhere")
 (setq emacs-everywhere-frame-parameters 
@@ -475,15 +477,8 @@
 ; after a paste. This method was copied out of the emacs-everywhere.el, and 
 ; slightly modified, to fix the stuck-key issue, that was happening after paste.
 ; Note that we nixed osx support in this implementation:
-(eval-after-load "emacs-everywhere"
-  (defcustom emacs-everywhere-paste-command
-    (list "/home/cderose/.doom.d/bin/emacs-everywhere-paste.sh" "Shift+Insert")
-    "Command to trigger a system paste from the clipboard.
-    This is given as a list in the form (CMD ARGS...).
 
-    To not run any command, set to nil."
-      :type '(set (repeat string) (const nil))
-      :group 'emacs-everywhere))
+(setq emacs-everywhere-paste-command (list "/usr/bin/xdotool" "key" "--clearmodifiers" "Shift+Insert" "sleep" "0.25" "keyup" "Meta_L" "Meta_R" "Alt_L" "Alt_R" "Super_L" "Super_R") )
 
 ;; Outline ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq outline-regexp "[#\f]+")
@@ -531,7 +526,7 @@
 
 ; NOTE: The issue here, is that .emacs.d/modules/email/mu4e/config.el is loading after this file
 ;       so, we can just hook it here, like so:
-(with-eval-after-load 'mu4e
+(after! mu4e
   (setq 
     mu4e-get-mail-command "/usr/bin/mbsync -V cderose@derosetechnologies.com"
     ; NOTE: I tried setting up the sync in ~/.config/systemd/user/mbsync.service
