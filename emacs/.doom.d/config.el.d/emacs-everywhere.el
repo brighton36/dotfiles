@@ -1,6 +1,5 @@
 ;-*- mode: elisp -*-
 
-; TODO: Actually, these frame params kinda borked...
 ; These frame params were all necessary to get the xmonad doCenterFloat to work:
 (setq emacs-everywhere-frame-name-format "Emacs Everywhere"
       emacs-everywhere-frame-parameters '(
@@ -16,4 +15,3 @@
 )
 
 (remove-hook 'emacs-everywhere-init-hooks 'emacs-everywhere-set-frame-position)
-

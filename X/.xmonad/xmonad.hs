@@ -240,7 +240,7 @@ myManageHook = composeAll
     -- The doIgnore should exclude dialogues from setupInsertPosition pushing 
     -- them behind the foreground window...
     , isDialog                     --> doCenterFloat
-    , title =? "Emacs Everywhere"  --> doFloat
+    , title =? "Emacs Everywhere"  --> doCenterFloat
     , title =? "doom-capture"      --> doRectFloat(RationalRect 0.55 0.45 0.425 0.5) --x y w h
     , title =? "Emacs top"         --> doRectFloat(RationalRect 0.55 0.05 0.425 0.75) --x y w h
     , title =? "zoom"              --> doFloat -- This will match the notifications only, not the room window

@@ -25,6 +25,9 @@
       ; - `doom-unicode-font' -- for unicode glyphs
       ; - `doom-serif-font' -- for the `fixed-pitch-serif' face
       
+      ; avy
+      avy-all-windows 'all-frames
+
       ; vterm
       shell-file-name "/bin/fish" 
       vterm-max-scrollback 10000
@@ -42,6 +45,9 @@
       ; highlight-indent
       highlight-indent-guides-method 'bitmap
       highlight-indent-guides-auto-character-face-perc 25
+
+      ; dired
+      dired-listing-switches "-lt" ; default to sorting by date
 )
 
 ;; Themes and Colors ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -85,8 +91,6 @@
 
 (require 'epa)
 (epa-file-enable)
-
-(setq avy-all-windows 'all-frames)
 
 ;; Key Bindings ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (map! 
@@ -139,7 +143,7 @@
   )
 
 ;; Mode specific mappings. These each seem to need separate map! calls. I think
-;; the :after parameter doesn't overwrie the prior after, and instead chains.
+;; the :after parameter doesn't overwrie the prior after, and instead chains...
 (map! :after undo-fu 
       :map undo-fu-mode-map 
       "C-_" #'text-scale-decrease)
@@ -149,25 +153,5 @@
       "M-]" nil
       "C-<backspace>" nil)
 
-(map! :after eshell 
-      :map evil-insert-state-local-map
-      "C-p" 'eshell-previous-matching-input-from-input
-      "C-n" 'eshell-next-matching-input-from-input
-
-      :map evil-insert-state-map
-      "C-p" 'eshell-previous-matching-input-from-input
-      "C-n" 'eshell-next-matching-input-from-input
-
-      :map eshell-mode-map
-      :niv "M-m" 'eshell-bol)
-
-;; config.el.d ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(load! "config.el.d/my-functions.el")
-(load! "config.el.d/org.el")
-(load! "config.el.d/mu4e.el")
-(load! "config.el.d/company.el")
-(load! "config.el.d/telega.el")
-(load! "config.el.d/explain-pause-top.el")
-(load! "config.el.d/projectile.el")
-(load! "config.el.d/emacs-everywhere.el")
-(load! "config.el.d/dumb-jump.el")
+;; load config.el.d ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(mapc 'load (file-expand-wildcards "~/.doom.d/config.el.d/*.el"))

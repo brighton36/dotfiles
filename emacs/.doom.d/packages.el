@@ -59,3 +59,4 @@
 
 (package! vertico-posframe :recipe (:host github :repo "tumashu/vertico-posframe"))
 (package! svelte-mode)
+(package! emacs-fish-completion :recipe (:host github :repo "LemonBreezes/emacs-fish-completion"))

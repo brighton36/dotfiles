@@ -133,10 +133,7 @@ Can be an integer to determine the exact padding."
 
 
   ;;;; Base theme face overrides
-  (((font-lock-comment-face &override)
-    :slant 'italic
-    :background (if doom-solarized-light-brighter-comments
-                    (doom-blend teal base0 0.07)))
+  (
    ((font-lock-type-face &override) :slant 'italic)
    ((font-lock-builtin-face &override) :slant 'italic)
    ((font-lock-function-name-face &override) :foreground type)
@@ -146,7 +143,6 @@ Can be an integer to determine the exact padding."
    ((line-number &override) :foreground base6)
    ((line-number-current-line &override) :foreground fg :background region :weight 'bold)
    (mode-line
-    :background modeline-bg :foreground modeline-fg
     :box (if -modeline-pad `(:line-width ,-modeline-pad :color ,modeline-bg)))
    (mode-line-inactive
     :background modeline-bg-inactive :foreground modeline-fg-alt
