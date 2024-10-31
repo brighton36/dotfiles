@@ -203,18 +203,20 @@
 ;; Dumb Jump ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
 
-(global-set-key
-	(kbd "C-j")
-	(defhydra dumb-jump-hydra (:color blue :columns 3)
-		"Dumb Jump"
-		("j" dumb-jump-go "Go")
-		("o" dumb-jump-go-other-window "Other window")
-		("e" dumb-jump-go-prefer-external "Go external")
-		("x" dumb-jump-go-prefer-external-other-window "Go external other window")
-		("i" dumb-jump-go-prompt "Prompt")
-		("l" dumb-jump-quick-look "Quick look")
-		("b" dumb-jump-back "Back"))
-)
+
+; TODO: This ... stopped working:
+;(global-set-key
+;	(kbd "C-j")
+;	(defhydra dumb-jump-hydra (:color blue :columns 3)
+;		"Dumb Jump"
+;		("j" dumb-jump-go "Go")
+;		("o" dumb-jump-go-other-window "Other window")
+;		("e" dumb-jump-go-prefer-external "Go external")
+;		("x" dumb-jump-go-prefer-external-other-window "Go external other window")
+;		("i" dumb-jump-go-prompt "Prompt")
+;		("l" dumb-jump-quick-look "Quick look")
+;		("b" dumb-jump-back "Back"))
+;)
 
 ;; Custom keys ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -226,34 +228,6 @@
 (global-set-key (kbd "M-}") #'(lambda() (interactive) (rotate-windows -1)))
 (global-set-key (kbd "M-{") #'(lambda() (interactive) (rotate-windows 1)))
 
-;; Window Splits:
-(define-key evil-normal-state-map (kbd "C--") #'(lambda() (interactive) (split-window)(other-window 1)))
-(global-set-key (kbd "C-\\") #'(lambda() (interactive) (split-window-right)(other-window 1)))
-
-;; Ubind C-= and C-+ in various places:
-(global-unset-key (kbd "C-=")) ;; face-remap
-(define-key evil-normal-state-map (kbd "C-=") nil) ;; doom-normal mode
-(define-key evil-normal-state-map (kbd "C-+") nil) ;; doom-normal mode
-
-;; Set Increase/Decrease Font size:
-(global-set-key (kbd "C-+") 'text-scale-increase)
-; This gets weird. I guess we could alternatively just disable undo-fu:
-(after! undo-fu
-  (map! :map undo-fu-mode-map "C-_" #'text-scale-decrease))
-
-;; Close the window
-(global-unset-key (kbd "C-<backspace>")) ;; simple.el backward-kill-word
-(global-set-key (kbd "C-<backspace>") 'delete-window)
-
-;; Alt-p and Alt-n for  Previous/Next Tab
-(map! :nv "M-n" #'+workspace/switch-right :nv "M-p" #'+workspace/switch-left)
-
-;; evil bindings:
-;; https://github.com/noctuid/evil-guide#keybindings-and-states
-
-;; In normal mode, ctrl-s will 'search' for an open buffer
-(define-key evil-normal-state-map (kbd "C-s") #'+vertico/switch-workspace-buffer)
-
 ;; Window Resize Up/down:
 (global-set-key (kbd "C-S-j") 'shrink-window)
 (global-set-key (kbd "C-S-k") 'enlarge-window)
@@ -261,6 +235,30 @@
 ;; Window Resize left/right. I guess this works..
 (global-set-key (kbd "C-S-h") 'shrink-window-horizontally)
 (global-set-key (kbd "C-S-l") 'enlarge-window-horizontally)
+
+; Window Close:
+(global-set-key (kbd "C-<backspace>") 'delete-window)
+
+(map! :n "C-+" #'text-scale-increase
+      :n "C-=" nil
+
+      ;; Window Splits:
+      :n "C-\\" #'(lambda() (interactive) (split-window-right)(other-window 1))
+      :n "C--" #'(lambda() (interactive) (split-window)(other-window 1))
+
+      ;; Otherwise, In normal mode, ctrl-s will 'search' for an open buffer
+      :n "C-s" #'+vertico/switch-workspace-buffer
+
+      :nv "M-n" #'+workspace/switch-right
+      :nv "M-p" #'+workspace/switch-left
+
+      ;; Avy
+      :nv "C-n" #'evil-avy-goto-char-timer
+      :nv "C-g" #'evil-avy-goto-line
+      )
+
+; This gets weird. I guess we could alternatively just disable undo-fu:
+(map! :after undo-fu :map undo-fu-mode-map "C-_" #'text-scale-decrease)
 
 ;; Hebrew Mode
 ;; TODO: seems to work in insert mode , oddly. But, I think we may just want this for eshell...
@@ -286,11 +284,11 @@
     (insert-file-contents path)
     (buffer-string)))
 
-(after! org
-  ; This was getting in the way of rotate:
-  (define-key org-mode-map (kbd "M-{") nil)
-  (define-key org-mode-map (kbd "M-}") nil)
+; This was getting in the way of rotate:
+(map! :after org :map org-mode-map "M-{" nil)
+(map! :after org :map org-mode-map "M-}" nil)
 
+(after! org
   '(mapc
     (lambda (face)
       (set-face-attribute
@@ -375,11 +373,6 @@
  '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
 
 ;; avy ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(with-eval-after-load 'evil-maps
-  (define-key evil-normal-state-map (kbd "C-n") 'evil-avy-goto-char-timer))
-(with-eval-after-load 'evil-maps
-  (define-key evil-normal-state-map (kbd "C-g") 'evil-avy-goto-line))
-
 (setq avy-all-windows 'all-frames)
 
 ;; TODO: Let's maybe change the highlight color from grey to ... red?
@@ -461,6 +454,41 @@
   #+end_signature")
  (org-msg-mode)
 
+; Keybindings:
+; NOTE: Implicit:
+
+; Headers Mode:
+(map! :after mu4e :map mu4e-headers-mode-map 
+  "C-+" nil
+  :n "r" nil
+  :n "?" nil
+  :n "!" nil
+  :n "+" nil
+  :n "-" nil
+  :n "=" nil
+  :n "&" nil
+  :n "*" nil
+  :n "y" nil
+  :n "m" 'mu4e-headers-mark-for-read
+  :n "M" 'mu4e-headers-mark-for-unread
+  :n "c" 'mu4e-org-store-and-capture)
+
+; View mode:
+(map! :after mu4e :map mu4e-view-mode-map
+  "C-+" nil
+  :n "r" nil
+  :n "?" nil
+  :n "+" nil
+  :n "-" nil
+  :n "=" nil
+  :n "&" nil
+  :n "*" nil
+  :n "y" nil
+  :n "m" 'mu4e-headers-mark-for-read
+  :n "M" 'mu4e-headers-mark-for-unread
+  :n "!" 'mu4e-view-raw-message
+  :n "c" 'mu4e-org-store-and-capture)
+
 ; NOTE: The issue here, is that .emacs.d/modules/email/mu4e/config.el is loading after this file
 ;       so, we can just hook it here, like so:
 (with-eval-after-load 'mu4e
@@ -481,38 +509,7 @@
     mu4e-attachment-dir "~/Downloads"
     mu4e-compose-signature "Chris Derose\nchris@chrisderose.com\n"
     mu4e-headers-date-format "%y-%m-%d")
-  ; Keybindings:
-  ; NOTE: Implicit:
-  ; Headers Mode:
-  (define-key mu4e-headers-mode-map (kbd "C-+") nil)
-  (evil-define-key 'normal mu4e-headers-mode-map "r" nil)
-  (evil-define-key 'normal mu4e-headers-mode-map "?" nil)
-  (evil-define-key 'normal mu4e-headers-mode-map "!" nil)
-  (evil-define-key 'normal mu4e-headers-mode-map "+" nil)
-  (evil-define-key 'normal mu4e-headers-mode-map "-" nil)
-  (evil-define-key 'normal mu4e-headers-mode-map "=" nil)
-  (evil-define-key 'normal mu4e-headers-mode-map "&" nil)
-  (evil-define-key 'normal mu4e-headers-mode-map "*" nil)
-  (evil-define-key 'normal mu4e-headers-mode-map "y" nil)
-  (evil-define-key 'normal mu4e-headers-mode-map "m" 'mu4e-headers-mark-for-read)
-  (evil-define-key 'normal mu4e-headers-mode-map "M" 'mu4e-headers-mark-for-unread)
-  (evil-define-key 'normal mu4e-headers-mode-map "c" 'mu4e-org-store-and-capture)
 
-  ; View mode:
-  (define-key mu4e-view-mode-map (kbd "C-+") nil) ; For some reason this is necessary
-  (evil-define-key 'normal mu4e-view-mode-map (kbd "C-+") nil)
-  (evil-define-key 'normal mu4e-view-mode-map "r" nil)
-  (evil-define-key 'normal mu4e-view-mode-map "?" nil)
-  (evil-define-key 'normal mu4e-view-mode-map "+" nil)
-  (evil-define-key 'normal mu4e-view-mode-map "-" nil)
-  (evil-define-key 'normal mu4e-view-mode-map "=" nil)
-  (evil-define-key 'normal mu4e-view-mode-map "&" nil)
-  (evil-define-key 'normal mu4e-view-mode-map "*" nil)
-  (evil-define-key 'normal mu4e-view-mode-map "y" nil)
-  (evil-define-key 'normal mu4e-view-mode-map "m" #'mu4e-view-mark-for-read)
-  (evil-define-key 'normal mu4e-view-mode-map "M" #'mu4e-view-mark-for-unread)
-  (evil-define-key 'normal mu4e-view-mode-map "!" #'mu4e-view-raw-message)
-  (evil-define-key 'normal mu4e-view-mode-map "c" 'mu4e-org-store-and-capture)
   )
 
 (setq message-kill-buffer-on-exit t)
@@ -524,12 +521,17 @@
 
 (telega-notifications-mode 1)
 (telega-appindicator-mode 1)
+
 (define-key global-map (kbd "C-c t") telega-prefix-map)
 
-(with-eval-after-load 'telega
-	(define-key telega-chat-mode-map (kbd "C-S-r") 'telega-msg-reply)
-	(define-key telega-chat-mode-map (kbd "C-S-e") 'telega-msg-edit)
-  (evil-define-key 'normal telega-chat-mode-map "q" 'telega) )
+(map! :after telega 
+      :map telega-chat-mode-map
+      "C-S-r" 'telega-msg-reply
+      "C-S-e" 'telega-msg-edit
+      :n "q" 'telega
+
+      :map telega-msg-button-map 
+      "e" 'telega-msg-edit)
 
 ;; This sets our messages to wrap by default
 (add-hook 'telega-chat-mode-hook 'visual-line-mode)
@@ -565,21 +567,23 @@
 (setq ispell-dictionary "en-custom")
 
 ;; vterm ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(with-eval-after-load 'vterm
-  (define-key vterm-mode-map (kbd "M-]") nil) 
-  (define-key vterm-mode-map (kbd "C-<backspace>") nil) 
-  )
+(map! :after vterm :map vterm-mode-map
+      "M-]" nil
+      "C-<backspace>" nil)
 
 ;; eshell ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(add-hook 'eshell-mode-hook
-  (lambda ()
-    (define-key evil-insert-state-local-map (kbd "C-p") 'eshell-previous-matching-input-from-input)
-    (define-key evil-insert-state-local-map (kbd "C-n") 'eshell-next-matching-input-from-input)
-    (define-key evil-insert-state-local-map (kbd "M-m") 'eshell-bol)
-    ))
+(map! :after eshell 
+      :map evil-insert-state-local-map
+      "C-p" 'eshell-previous-matching-input-from-input
+      "C-n" 'eshell-next-matching-input-from-input
 
-(define-key evil-insert-state-map (kbd "C-p") 'eshell-previous-matching-input-from-input)
-(define-key evil-insert-state-map (kbd "C-n") 'eshell-next-matching-input-from-input)
+      :map evil-insert-state-map
+      "C-p" 'eshell-previous-matching-input-from-input
+      "C-n" 'eshell-next-matching-input-from-input
+
+      :map eshell-mode-map
+      :niv "M-m" 'eshell-bol
+      )
 
 ;; explain-pause-top ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun my/get-frame-by-name (fname)
@@ -610,9 +614,12 @@
 (setq emojify-display-style 'unicode)
 (setq emojify-emoji-styles '(unicode))
 
+(map! :i "C-z" #'emoji-insert)
+
 ;; web-mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun my-web-mode-hook ()
   "Hooks for Web mode."
   (setq web-mode-markup-indent-offset 2)
 )
 (add-hook 'web-mode-hook  'my-web-mode-hook)
+
