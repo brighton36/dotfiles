@@ -1,3 +1,16 @@
+(map! :after org 
+      :map org-mode-map 
+      "M-{" nil
+      "M-}" nil)
+
+(map! :after evil-org
+      :map evil-org-mode-map 
+      :ni "C-S-j" nil
+      :ni "C-S-k" nil
+      :ni "C-S-h" nil
+      :ni "C-S-l" nil
+      )
+
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
