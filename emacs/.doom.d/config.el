@@ -111,6 +111,7 @@
             (set-window-buffer-start-and-point w1 b2 s2 p2)
             (set-window-buffer-start-and-point w2 b1 s1 p1)))))))
 
+; TODO Do we actually still use this?
 ; 'Better' backspace deletes, that respect indentation. From:
 ; https://www.emacswiki.org/emacs/BackspaceWhitespaceToTabStop
 (defvar my-offset 4 "My indentation offset. ")
@@ -209,60 +210,59 @@
 ;)
 
 ;; Custom keys ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-; TODO: I guess we should stick all these maps into a single call to map!
-
-;; Global Map (for some reason, these don't work using :g, in the below Evil Bindings section)
 (map! 
+  ;; Evil bindings for all modes
+  :n "C-+" #'text-scale-increase
+  :n "C-=" nil
+
+  ;; Window Splits:
+  :n "C-\\" #'(lambda() (interactive) (split-window-right)(other-window 1))
+  :n "C--" #'(lambda() (interactive) (split-window)(other-window 1))
+
+  ;; Otherwise, In normal mode, ctrl-s will 'search' for an open buffer
+  :n "C-s" #'+vertico/switch-workspace-buffer
+
+  :nv "M-n" #'+workspace/switch-right
+  :nv "M-p" #'+workspace/switch-left
+
+  ;; Avy
+  :nv "C-n" #'evil-avy-goto-char-timer
+  :nv "C-g" #'evil-avy-goto-line
+
+  ;; Emoji's
+  :i "C-z" #'emoji-insert
+
+  ;; Explain:
+  :n "C-t" #'open-explain-pause-top-in-new-frame
+
+  ;; Globals:
+  :g "C-c t" telega-prefix-map
+  :g "C-c c" #'org-capture
+
   :map global-map 
-  ;; Alt-[ and Alt-] Window Cycle:
-  "M-]" #'(lambda() (interactive) (other-window 1))
-  "M-[" #'(lambda() (interactive) (other-window -1))
+    ;; Alt-[ and Alt-] Window Cycle:
+    "M-]" #'(lambda() (interactive) (other-window 1))
+    "M-[" #'(lambda() (interactive) (other-window -1))
 
-  ;; Alt-Shift-[ an Alt-Shift-] Move Window Cycle
-  "M-}" #'(lambda() (interactive) (rotate-windows -1))
-  "M-{" #'(lambda() (interactive) (rotate-windows 1))
+    ;; Alt-Shift-[ an Alt-Shift-] Move Window Cycle
+    "M-}" #'(lambda() (interactive) (rotate-windows -1))
+    "M-{" #'(lambda() (interactive) (rotate-windows 1))
 
-  ;; Window Resize Up/down:
-  "C-S-j" #'shrink-window
-  "C-S-k" #'enlarge-window
+    ;; Window Resize Up/down:
+    "C-S-j" #'shrink-window
+    "C-S-k" #'enlarge-window
 
-  ;; Window Resize left/right. I guess this works..
-  "C-S-h" #'shrink-window-horizontally
-  "C-S-l" #'enlarge-window-horizontally
+    ;; Window Resize left/right. I guess this works..
+    "C-S-h" #'shrink-window-horizontally
+    "C-S-l" #'enlarge-window-horizontally
 
-  ; Window Close:
-  "C-<backspace>" #'delete-window
+    ; Window Close:
+    "C-<backspace>" #'delete-window
   )
 
-;; Evil bindings for all modes
-(map! :n "C-+" #'text-scale-increase
-      :n "C-=" nil
-
-      ;; Window Splits:
-      :n "C-\\" #'(lambda() (interactive) (split-window-right)(other-window 1))
-      :n "C--" #'(lambda() (interactive) (split-window)(other-window 1))
-
-      ;; Otherwise, In normal mode, ctrl-s will 'search' for an open buffer
-      :n "C-s" #'+vertico/switch-workspace-buffer
-
-      :nv "M-n" #'+workspace/switch-right
-      :nv "M-p" #'+workspace/switch-left
-
-      ;; Avy
-      :nv "C-n" #'evil-avy-goto-char-timer
-      :nv "C-g" #'evil-avy-goto-line
-
-      ;; Emoji's
-      :i "C-z" #'emoji-insert
-
-      ;; Explain:
-      :n "C-t" #'open-explain-pause-top-in-new-frame
-
-      ;; Globals:
-      :g "C-c t" telega-prefix-map
-      :g "C-c c" #'org-capture
-      )
+;; NOTE: For whatever reason, when we tried to incorporate these map!'s into the
+;; above map, telega got unstable, and some of the mappings just kinda stopped 
+;; working
 
 ;; Mode specific mappings
 (map! :after undo-fu :map undo-fu-mode-map "C-_" #'text-scale-decrease)
@@ -316,6 +316,7 @@
       :map telega-chat-mode-map
       "C-S-r" 'telega-msg-reply
       "C-S-e" 'telega-msg-edit
+      :n "C-g" 'telega-chatbuf-cancel-aux
       :n "q" 'telega
 
       :map telega-msg-button-map 
@@ -352,6 +353,7 @@
 ; TODO: this is crashing the lisp: ;(set-fill-column 0)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1) (display-line-numbers-mode 0)))
 
+; TODO: Do I actually use this?
 (defun dw/read-file-as-string (path)
   (with-temp-buffer
     (insert-file-contents path)
