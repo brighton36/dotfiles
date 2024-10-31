@@ -1,5 +1,5 @@
-#+TITLE: brighton36's dotfiles README
-* brighton36's dotfiles 📄
+#+TITLE: brighton36's dotfiles 📄
+
 After enough discussions with people on dotfiles, I decided to publish mine. I don't think anything in here is particularly spectacular, and most of this was copy-pasta'd from other dotfile repos.
 
 I guess what makes these marginally unique are my general preference towards: dvorak, minimal to no icons, solarized-light. You'll see these values, along with a generally consistent set of key bindings across files.
