@@ -22,6 +22,7 @@
       doom-variable-pitch-font (font-spec :family "Ubuntu" :size 14) ; a non-monospace font (where applicable)
       doom-big-font (font-spec :family "Cousine NF" :size 14)        ; use this for presentations or streaming
       ; NOTE: These fonts are also available:
+      ; TODO - changing the unicode font... will that fix the odd emoji issue we have in telega?
       ; - `doom-unicode-font' -- for unicode glyphs
       ; - `doom-serif-font' -- for the `fixed-pitch-serif' face
       
@@ -94,7 +95,6 @@
 
 ;; Key Bindings ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (map! 
-  ;; Evil bindings for all modes
   :n "C-+" #'text-scale-increase
   :n "C-=" nil
 
@@ -121,6 +121,7 @@
   ;; Globals:
   :g "C-c c" #'org-capture
 
+  ; Seemingly, :g doesn't adjust this map?
   :map global-map 
     ;; Alt-[ and Alt-] Window Cycle:
     "M-]" #'(lambda() (interactive) (other-window 1))
@@ -141,6 +142,19 @@
     ; Window Close:
     "C-<backspace>" #'delete-window
   )
+
+;; The SPC o ... customizations. Which, is kinda like my 'start' menu
+(map! :leader 
+      :desc "Org Capture" :n "o c" #'org-capture
+      :desc "Begin using magit" :n "o g" #'magit
+      :desc "New blank buffer" :n "o n" #'+default/new-buffer
+      :n "o r" nil
+      :n "o R" nil
+      :desc "Start Telegram Client" :n "o t" #'telega
+      :n "o T" nil
+      :desc "Toggle vterm popup" :n "o v" #'vterm
+      :desc "Open vterm here" :n "o V" #'vterm-mode
+      )
 
 ;; Mode specific mappings. These each seem to need separate map! calls. I think
 ;; the :after parameter doesn't overwrie the prior after, and instead chains...

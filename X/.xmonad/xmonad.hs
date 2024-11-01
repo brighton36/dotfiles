@@ -203,12 +203,12 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   , ((modMask .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
 
   -- Focus
-  , ((modMask, xK_bracketright ), windows XMonad.StackSet.focusDown)
-  , ((modMask, xK_bracketleft  ), windows XMonad.StackSet.focusUp)
+  , ((modMask, xK_bracketright ), windows XMonad.StackSet.focusUp)
+  , ((modMask, xK_bracketleft  ), windows XMonad.StackSet.focusDown)
  
   -- Move
-  , ((modMask .|. shiftMask, xK_bracketright ), windows XMonad.StackSet.swapDown)
-  , ((modMask .|. shiftMask, xK_bracketleft  ), windows XMonad.StackSet.swapUp)
+  , ((modMask .|. shiftMask, xK_bracketright ), windows XMonad.StackSet.swapUp)
+  , ((modMask .|. shiftMask, xK_bracketleft  ), windows XMonad.StackSet.swapDown)
 
   -- Resize
   , ((modMask .|. shiftMask, xK_h ), sendMessage Shrink)
