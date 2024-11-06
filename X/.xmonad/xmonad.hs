@@ -85,9 +85,10 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   , ((modMask, xK_Escape ), spawn "xscreensaver-command -lock")
 
   -- Emacs bindings:
-  , ((modMask, xK_minus      ), spawn "~/.guix-profile/bin/emacsclient --eval \"(emacs-everywhere)\"")
-  , ((modMask, xK_e), spawn "~/.guix-profile/bin/emacsclient -c -a emacs")
-  , ((modMask, xK_c), spawn "~/.guix-profile/bin/emacsclient -n -e '(+org-capture/open-frame)'")
+  , ((modMask, xK_minus ), spawn "~/.guix-profile/bin/emacsclient --eval \"(emacs-everywhere)\"")
+  , ((modMask, xK_l     ), spawn "~/.guix-profile/bin/emacsclient --eval \"(ellama-chat \\\"test\\\")\"")
+  , ((modMask, xK_e     ), spawn "~/.guix-profile/bin/emacsclient -c -a emacs")
+  , ((modMask, xK_c     ), spawn "~/.guix-profile/bin/emacsclient -n -e '(+org-capture/open-frame)'")
 
   -- Switch-to/Open Telegram
   -- I guess we decided against all this:
@@ -203,12 +204,12 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = Data.Map.fromList $
   , ((modMask .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
 
   -- Focus
-  , ((modMask, xK_bracketright ), windows XMonad.StackSet.focusUp)
-  , ((modMask, xK_bracketleft  ), windows XMonad.StackSet.focusDown)
+  , ((modMask, xK_bracketright ), windows XMonad.StackSet.focusDown)
+  , ((modMask, xK_bracketleft  ), windows XMonad.StackSet.focusUp)
  
   -- Move
-  , ((modMask .|. shiftMask, xK_bracketright ), windows XMonad.StackSet.swapUp)
-  , ((modMask .|. shiftMask, xK_bracketleft  ), windows XMonad.StackSet.swapDown)
+  , ((modMask .|. shiftMask, xK_bracketright ), windows XMonad.StackSet.swapDown)
+  , ((modMask .|. shiftMask, xK_bracketleft  ), windows XMonad.StackSet.swapUp)
 
   -- Resize
   , ((modMask .|. shiftMask, xK_h ), sendMessage Shrink)

@@ -25,6 +25,7 @@
       ; TODO - changing the unicode font... will that fix the odd emoji issue we have in telega?
       ; - `doom-unicode-font' -- for unicode glyphs
       ; - `doom-serif-font' -- for the `fixed-pitch-serif' face
+      fancy-splash-image (concat doom-private-dir "dashboard-cat.png")
       
       ; avy
       avy-all-windows 'all-frames
@@ -46,10 +47,10 @@
       ; highlight-indent
       highlight-indent-guides-method 'bitmap
       highlight-indent-guides-auto-character-face-perc 25
-
-      ; dired
-      dired-listing-switches "-lt" ; default to sorting by date
 )
+
+; dired - Seems like we need to set these after the mode loads
+(after! dired (setq dired-listing-switches "-lt"))
 
 ;; Themes and Colors ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (custom-set-faces!
@@ -93,6 +94,36 @@
 (require 'epa)
 (epa-file-enable)
 
+; ellama
+(require 'ellama)
+(setopt ellama-provider (make-llm-ollama :chat-model "mistral"))
+
+; Doom Dashboard:
+;(assoc-delete-all "Open project" +doom-dashboard-menu-sections) ; Just for reference, if we want to delete something
+(add-to-list '+doom-dashboard-menu-sections
+             '("Start Telega"
+               :icon (nerd-icons-faicon "nf-fae-telegram" :face 'doom-dashboard-menu-title)
+               ; TODO
+               ;:when (modulep! telega)
+               :action telega))
+(add-to-list '+doom-dashboard-menu-sections
+             '("Start mu4e"
+               :icon (nerd-icons-codicon "nf-cod-mail" :face 'doom-dashboard-menu-title)
+               ; TODO
+               ;:when (modulep! mu4e)
+               :action mu4e))
+(add-to-list '+doom-dashboard-menu-sections
+             '("Start ellama chat"
+               :icon (nerd-icons-faicon "nf-fa-rocketchat" :face 'doom-dashboard-menu-title)
+               ; TODO
+               ;:when (modulep! mu4e)
+               :action ellama-chat))
+(add-to-list '+doom-dashboard-menu-sections
+             '("New Blank Buffer"
+               :icon (nerd-icons-faicon "nf-fa-file" :face 'doom-dashboard-menu-title)
+               :action +default/new-buffer))
+
+      :desc "New blank buffer" :n "o n" #'+default/new-buffer
 ;; Key Bindings ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (map! 
   :n "C-+" #'text-scale-increase
@@ -118,8 +149,13 @@
   ;; Explain:
   :n "C-t" #'open-explain-pause-top-in-new-frame
 
+  ;; popup
+  :n "C-e" #'+popup/toggle
+  :n "C-`" nil
+
   ;; Globals:
   :g "C-c c" #'org-capture
+  :g "C-c e" #'ellama-transient-main-menu ; See: https://willschenk.com/labnotes/2024/ai_in_emacs/
 
   ; Seemingly, :g doesn't adjust this map?
   :map global-map 
@@ -143,17 +179,28 @@
     "C-<backspace>" #'delete-window
   )
 
+(map! :map global-map "C-`" nil) ; We moved this to C-e
+
 ;; The SPC o ... customizations. Which, is kinda like my 'start' menu
 (map! :leader 
+      :n "o b" nil
       :desc "Org Capture" :n "o c" #'org-capture
-      :desc "Begin using magit" :n "o g" #'magit
+      :desc "Toggle eshell popup" :n "o e" #'eshell-toggle
+      :desc "Open eshell here" :n "o E" #'eshell
+      :desc "Start an ellama chat" :n "o l" #'ellama-chat
+      :desc "magit" :n "o g" #'magit
+      :desc "haskell (ghci)" :n "o H" #'run-haskell
+      :desc "javascript (node)" :n "o J" #'nodejs-repl
+      :desc "Mu4e" :n "o m" #'mu4e
       :desc "New blank buffer" :n "o n" #'+default/new-buffer
       :n "o r" nil
-      :n "o R" nil
+      :desc "irb" :n "o R" #'inf-ruby
       :desc "Start Telegram Client" :n "o t" #'telega
       :n "o T" nil
-      :desc "Toggle vterm popup" :n "o v" #'vterm
-      :desc "Open vterm here" :n "o V" #'vterm-mode
+      :desc "Web browser popup" :n "o w" #'eww
+      :desc "Toggle vterm popup" :n "o V" #'vterm
+      :desc "Open vterm here" :n "o v" #'vterm-mode
+      :desc "ipython " :n "o Y" #'run-python
       )
 
 ;; Mode specific mappings. These each seem to need separate map! calls. I think

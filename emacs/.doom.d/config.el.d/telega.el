@@ -1,8 +1,9 @@
 ;-*- mode: elisp -*-
 
-(map! :g "C-c t" telega-prefix-map
+(map!
+  :g "C-c t" telega-prefix-map
 
-		  :after telega 
+  :after telega
       :map telega-chat-mode-map
       "C-S-r" 'telega-msg-reply
       "C-S-e" 'telega-msg-edit
