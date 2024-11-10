@@ -29,4 +29,26 @@ keymap:
       C-SHIFT-o: f2     # C-SHIFT-r : rename
       M-minus: f6       # M-[ : cycle pane
       M-equal: f6       # M-] : cycle pane
-
+  - name: Telegram
+    application: 
+      only: /[Tt]elegram/
+    remap:
+      C-a: home                     # C-a: home (Insert mode)
+      C-n: C-left                   # C-b: left (Insert mode)
+      C-h: [SHIFT-right, backspace] # C-d: delete-next-char (Insert mode)
+      C-j: backspace                # C-h: backspace (Insert mode)
+      C-v: [SHIFT-end, backspace]   # C-k: delete to end of line (Insert mode)
+      C-f: [SHIFT-home, backspace]  # C-u: delete to start of line (Insert mode)
+      C-comma: C-backspace          # C-w: delete-prev-word (Insert mode)
+      C-l: down                     # C-n: down
+      C-r: up                       # C-p: up
+      M-minus: c-shift-tab          # M-[ : prev chat
+      M-equal: c-tab                # M-] : next chat
+      M-h: pagedown                 # M-d: Page down
+      M-f: pageup                   # M-u: Page up
+  - name: vncviewer
+    application: 
+      only: /Vncviewer/
+    remap:
+      C-backspace: SHIFT-f8  # Show menu
+      C-S-dot: SHIFT-insert  # C-SHIFT-v: putty paste
