@@ -90,6 +90,12 @@
 (defun my-web-mode-hook () "Hooks for Web mode." (setq web-mode-markup-indent-offset 2))
 (add-hook 'web-mode-hook  'my-web-mode-hook)
 
+; This fixes a problem in the emacs --daemon mode, where evil-collection-debug 
+; crashes the init, due to this function not being defined. At some point
+; we'll upgrade to an emacs where this is compiled, and this hack should be 
+; removed
+(defun treesit-available-p () nil)
+
 (require 'epa)
 (epa-file-enable)
 
