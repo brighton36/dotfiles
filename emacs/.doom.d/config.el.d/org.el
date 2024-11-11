@@ -65,7 +65,7 @@
       ))
   )
 
-(let* ((variable-tuple '(:font "Ubuntu"))
+(let* ((variable-tuple '(:font "Ubuntu Nerd Font"))
        (headline           `(:weight normal)))
 
   (custom-theme-set-faces

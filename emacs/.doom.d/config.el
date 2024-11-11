@@ -19,7 +19,7 @@
       ; doom
       doom-theme 'doom-solarized-light-cderose
       doom-font (font-spec :family "Cousine NF" :size 14)            ; the primary font to use
-      doom-variable-pitch-font (font-spec :family "Ubuntu" :size 14) ; a non-monospace font (where applicable)
+      doom-variable-pitch-font (font-spec :family "Ubuntu Nerd Font" :size 14) ; a non-monospace font (where applicable)
       doom-big-font (font-spec :family "Cousine NF" :size 14)        ; use this for presentations or streaming
       ; NOTE: These fonts are also available:
       ; TODO - changing the unicode font... will that fix the odd emoji issue we have in telega?
@@ -74,7 +74,6 @@
 '(avy-lead-face ((t (:background "#750000" :foreground "#BD9800" :weight bold))))
 
 ;; Random mode Preferences  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (vertico-posframe-mode 1) ; In general, we seem to like these modes
 (global-subword-mode 1)   ; Iterate through CamelCase words
 
