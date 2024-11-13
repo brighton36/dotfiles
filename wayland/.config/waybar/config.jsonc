@@ -71,14 +71,10 @@
     },
     "wireplumber": {
         "format": "vol: {volume}%",
-        "format-bluetooth": "󰂰",
+        "format-bluetooth": "vol: bt",
         "nospacing": 1,
         "tooltip-format": "Volume : {volume}%",
-        "format-muted": "󰝟",
-        "format-icons": {
-            "headphone": "",
-            "default": ["󰖀","󰕾",""]
-        },
+        "format-muted": "vol: mute",
         "on-click": "pamixer -t",
         "scroll-step": 1
     },

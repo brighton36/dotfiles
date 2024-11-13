@@ -18,7 +18,8 @@
       telega-filter-button-width 10)
 
 (telega-notifications-mode 1)
-(telega-appindicator-mode 1)
+; If you decide you want the systray icon, uncomment this:
+;(telega-appindicator-mode 1)
 
 ;; This sets our messages to wrap by default
 (add-hook 'telega-chat-mode-hook 'visual-line-mode)
