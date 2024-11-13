@@ -1,0 +1,181 @@
+/* Solarized */
+@define-color theme-base03 #002b36;
+@define-color theme-base02 #073642;
+@define-color theme-base01 #586e75;
+@define-color theme-base00 #657b83;
+@define-color theme-base0 #839496;
+@define-color theme-base1 #93a1a1;
+@define-color theme-base2 #eee8d5;
+@define-color theme-base3 #fdf6e3;
+@define-color theme-black #000000;
+@define-color theme-white #ffffff;
+@define-color theme-yellow #b58900;
+@define-color theme-orange #cb4b16;
+@define-color theme-red #dc322f;
+@define-color theme-magenta #d33682;
+@define-color theme-violet #6c71c4;
+@define-color theme-blue #268bd2;
+@define-color theme-cyan #2aa198;
+@define-color theme-green #859900;
+@define-color theme-darkgrey #353535;
+
+* {
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+}
+
+window#waybar {
+  background-color: @theme-base02;
+  transition-property: background-color;
+  transition-duration: 0.5s;
+  opacity: 0.8;
+  font-family: Ubuntu Nerd Font;
+  font-size: 14pt;
+}
+
+window#waybar.hidden {
+  opacity: 0.5;
+}
+
+#workspaces {
+  background-color: transparent;
+  font-family: Ubuntu Nerd Font Mono;
+  font-size: 15pt;
+}
+
+#workspaces button {
+  padding: 0px 4px;
+  margin: 0px 0px;
+  color: @theme-blue;
+}
+
+#workspaces button.active {
+  color: @theme-white;
+}
+#workspaces button.empty {
+  color: @theme-base1;
+}
+
+#workspaces button:hover {
+  box-shadow: inherit;
+  text-shadow: inherit;
+  color: @theme-base02;
+  background-color: @theme-base0;
+}
+
+#workspaces button.urgent {
+  color: @theme-red;
+}
+
+#window{
+  border-radius: 4px;
+  margin: 0px 3px;
+  padding: 0px 12px;
+  color: @theme-white;
+}
+
+#custom-power,
+#custom-date,
+#backlight,
+#wireplumber,
+#network {
+  margin: 0px 3px;
+  padding: 0px 3px;
+  color: @theme-white;
+}
+
+#tray{
+  background-color: @theme-base0;
+  padding: 0px 8px;
+  margin-right: 18px;
+  border-radius: 4px;
+}
+
+#clock {
+  margin: 0px 3px;
+  padding: 0px 3px;
+  color: @theme-white;
+}
+
+#custom-hdate {
+  margin: 0px 3px;
+  padding: 0px 3px;
+  color: @theme-cyan;
+}
+
+#memory {
+  margin: 0 0 0 8px;
+  padding: 0px 0px;
+  color: @theme-base1;
+}
+#cpu {
+  margin: 0px 0px;
+  padding: 0px 0px;
+  color: @theme-base1;
+}
+
+#language {
+  margin: 0px 3px;
+  padding: 0px 3px;
+  color: @theme-violet;
+  font-family: Ubuntu Nerd Font Bold;
+  font-weight: bold;
+  font-size: 16pt;
+}
+
+#wireplumber {
+  margin: 0px 3px;
+  padding: 0px 3px;
+  color: @theme-yellow;
+  font-family: Ubuntu Nerd Font Bold;
+  font-weight: bold;
+  font-size: 16pt;
+}
+
+#battery {
+  margin: 0px 3px;
+  padding: 0px 3px;
+  color: @theme-green;
+  font-family: Ubuntu Nerd Font Bold;
+  font-weight: bold;
+  font-size: 16pt;
+}
+
+#battery.warning,
+#battery.critical {
+  color: @theme-red;
+}
+
+#battery.urgent {
+  color: @theme-orange
+}
+
+#battery.charging {
+  color: @theme-green;
+}
+
+#backlight {
+  background-color: @theme-orange;
+}
+
+#network {
+  background-color: @theme-green;
+  padding-right: 17px;
+}
+
+#custom-power {
+  background-color: @theme-magenta;
+}
+
+
+tooltip {
+  border-radius: 8px;
+  padding: 15px;
+  background-color: @theme-base01;
+}
+
+tooltip label {
+  padding: 5px;
+  background-color: @theme-base01;
+}

@@ -1,0 +1,2 @@
+KERNEL=="uinput", GROUP="input", TAG+="uaccess"
+#KERNEL=="event*", GROUP="input", NAME="input/%k", TAG+="uaccess"

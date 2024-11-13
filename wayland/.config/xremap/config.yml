@@ -6,6 +6,8 @@ keymap:
       C-backspace: c-f4               # Closetab
       C-SHIFT-backspace: c-shift-t    # Undo Close
       C-SHIFT-p: f6                   # C-SHIFT-l : toggle location bar
+      C-l: M-right                    # C-n : forward
+      C-r: M-left                     # C-p : backward
       M-minus: c-shift-tab            # M-[ : prev tab
       M-equal: c-tab                  # M-] : next tab
       M-SHIFT-minus: c-shift-pageup   # M-{ : move tab prev

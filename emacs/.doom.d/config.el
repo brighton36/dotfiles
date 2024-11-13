@@ -23,7 +23,7 @@
       doom-big-font (font-spec :family "Cousine NF" :size 14)        ; use this for presentations or streaming
       ; NOTE: These fonts are also available:
       ; TODO - changing the unicode font... will that fix the odd emoji issue we have in telega?
-      ; - `doom-unicode-font' -- for unicode glyphs
+      ; - `doom-symbol-font' -- for unicode glyphs
       ; - `doom-serif-font' -- for the `fixed-pitch-serif' face
       fancy-splash-image (concat doom-private-dir "dashboard-cat.png")
       
