@@ -40,12 +40,12 @@ window#waybar.hidden {
 
 #workspaces {
   background-color: transparent;
-  font-family: Ubuntu Nerd Font Mono;
   font-size: 15pt;
+  margin-right: 12px;
 }
 
 #workspaces button {
-  padding: 0px 4px;
+  padding: 0px 5px;
   margin: 0px 0px;
   color: @theme-blue;
 }

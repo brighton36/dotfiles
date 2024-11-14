@@ -50,16 +50,16 @@
         }
     },
     "hyprland/language": {
-        "format": "{}",
+        "format": "kbd: {}",
         "format-en": "dvorak-en",
     },
     "memory": {
         "interval": 1,
-        "format": "Swp:{swapPercentage}% Mem:{percentage}% ",
+        "format": "Swp: {swapPercentage}% Mem: {percentage}% ",
     },
     "cpu": {
         "interval": 1,
-        "format": "Cpu:{usage}%",
+        "format": "Cpu: {usage}%",
     },
     "tray": {
         "spacing": 10,
@@ -79,11 +79,11 @@
         "scroll-step": 1
     },
     "battery": {
-        "format": "{capacity}%",
-        "format-full": "Charged",
-        "format-plugged": "{capacity}% max_lifespan",
-        "format-discharging": "{capacity}% Discharging",
-        "format-unknown": "{capacity}% Unknown",
+        "format": "bat: {capacity}% charging",
+        "format-full": "bat: Charged",
+        "format-plugged": "bat: {capacity}% max_lifespan",
+        "format-discharging": "bat: {capacity}% Discharging",
+        "format-unknown": "bat: {capacity}% Unknown",
         "interval": 5,
         "states": {
             "warning": 15,
