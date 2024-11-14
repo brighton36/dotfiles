@@ -21,7 +21,7 @@ These are installed outside your home directory, and that's not handled by the b
 - Built-in Laptop Keyboard [[https://github.com/brighton36/dotfiles/blob/main/system/system76-keyboard-configurator-lemp10.json][system/system76-keyboard-configurator-lemp10.json]]
 - External USB Moonlander Keyboard - [[https://configure.zsa.io/moonlander/layouts/p7E9R][brighton36's Moonlander - lemp10]]
 - A caps-to-control tty map [[https://github.com/brighton36/dotfiles/blob/main/system/dvorak-chris.map][/usr/local/share/kbd/keymaps/dvorak-chris.map]] (with a corresponding [[https://github.com/brighton36/dotfiles/blob/main/system/vconsole.conf][/etc/vconsole.conf]])
-- The very-excellent interception config for installation into [[https://github.com/brighton36/dotfiles/tree/main/system/interception][/etc/interception]]
+- The very-excellent interception config for installation into [[https://github.com/brighton36/dotfiles/tree/main/system/interception][/etc/interception]] (NOTE: I've recently switched to xremap on wayland)
 
 * System Notes 📚
 I guess this is like, a TODO list of 'things to maybe include here in the future'.

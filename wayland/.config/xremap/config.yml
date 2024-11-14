@@ -1,3 +1,28 @@
+modmap:
+  - name: leftmeta_to_compose
+    remap:
+      leftmeta: compose
+  - name: leftctrl_to_leftmeta
+    remap:
+      leftctrl: leftmeta
+  - name: capslock_tap_to_esc_hold_to_leftctrl
+    remap:
+      capslock:
+        alone: esc
+        held: leftctrl
+        alone_timeout_millis: 100
+  - name: tab_tap_to_tab_hold_to_alt
+    remap:
+      tab:
+        alone: tab
+        held: leftalt
+        alone_timeout_millis: 100
+  - name: leftshift_tap_to_delete_hold_to_leftshift
+    remap:
+      leftshift:
+        alone: delete
+        held: leftshift
+        alone_timeout_millis: 100
 keymap:
   - name: firefox
     application: 
