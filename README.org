@@ -1,27 +1,28 @@
 #+TITLE: brighton36's dotfiles 📄
 
-After enough discussions with people on dotfiles, I decided to publish mine. I don't think anything in here is particularly spectacular, and most of this was copy-pasta'd from other dotfile repos.
+These are my dotfiles, calibrated for use on arch. Though, in most cases, they're portable elsewhere. Some of these files are from programs I used in the past, and moved off of, and are no longer well maintained. Nonetheless, I keep them around in case I return to those programs in the future.
 
-I guess what makes these marginally unique are my general preference towards: dvorak, minimal to no icons, solarized-light. You'll see these values, along with a generally consistent set of key bindings across files.
+I guess what makes my dotfiles unique are my general preference towards: dvorak, minimal-to-no icons, solarized-light. You'll see these values, along with a generally consistent set of key bindings across files.
 
 ** NOTES
-- There are a lot of hard-coded references to my name, and home directory path.
-- the system/ folder... doesn't know what it wants to be yet. But, these are files that exist outside of home
-- I'm running this on arch, with xmonad. You'll see some files from programs I once-used, and no longer use. In those cases, your mileage may vary, as these files may be out of date, and not functional.
+- There are a lot of hard-coded references to my name, and home directory path. You'll want to change that.
+- the system/ folder... doesn't know what it wants to be yet. But, these are files that exist outside of home, in use on my machine.
 - There's a lot of references to my IRL name throughout these files. You'll want to change that.
 
 * How to Install 💻
 These instructions will setup your home directory.
 - Check out the repo
-- Run `git submodule init` and `git submodule update`
-- make all (or manually choose to stow what you want)
+- Run `git submodule init` and `git submodule update`. The repo is now ready to deploy.
+- My dotfiles are grouped into the following categories: emacs, shell, tmux, vim, wayland, X.
+- If you want to quickly deploy a category, into your home (say 'wayland'), here's the command to do that: `stow --verbose --target=$HOME --restow wayland`
+- Or, if you want to deploy everything, just run `make all` in the root of the repo.
 
 * Supplemental config files
 These are installed outside your home directory, and that's not handled by the below install instructions
 - Built-in Laptop Keyboard [[https://github.com/brighton36/dotfiles/blob/main/system/system76-keyboard-configurator-lemp10.json][system/system76-keyboard-configurator-lemp10.json]]
 - External USB Moonlander Keyboard - [[https://configure.zsa.io/moonlander/layouts/p7E9R][brighton36's Moonlander - lemp10]]
 - A caps-to-control tty map [[https://github.com/brighton36/dotfiles/blob/main/system/dvorak-chris.map][/usr/local/share/kbd/keymaps/dvorak-chris.map]] (with a corresponding [[https://github.com/brighton36/dotfiles/blob/main/system/vconsole.conf][/etc/vconsole.conf]])
-- The very-excellent interception config for installation into [[https://github.com/brighton36/dotfiles/tree/main/system/interception][/etc/interception]] (NOTE: I've recently switched to xremap on wayland)
+- My nterception config for installation into [[https://github.com/brighton36/dotfiles/tree/main/system/interception][/etc/interception]] (Though I've recently deprecated interception in lieu of xremap on wayland)
 
 * System Notes 📚
 I guess this is like, a TODO list of 'things to maybe include here in the future'.
