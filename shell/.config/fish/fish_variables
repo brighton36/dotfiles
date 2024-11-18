@@ -35,4 +35,4 @@ SETUVAR fish_pager_color_prefix:cyan
 SETUVAR fish_pager_color_progress:cyan
 SETUVAR fish_pager_color_selected_background:\x2dr
 SETUVAR fish_prompt_pwd_dir_length:0
-SETUVAR fish_user_paths:/home/cderose/\x2elocal/bin
+SETUVAR fish_user_paths:/home/cderose/\x2econfig/guix/current/bin\x1e/home/cderose/\x2elocal/bin

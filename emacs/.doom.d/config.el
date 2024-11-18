@@ -20,10 +20,9 @@
       doom-theme 'doom-solarized-light-cderose
       doom-font (font-spec :family "Cousine NF" :size 14)            ; the primary font to use
       doom-variable-pitch-font (font-spec :family "Ubuntu Nerd Font" :size 14) ; a non-monospace font (where applicable)
-      doom-big-font (font-spec :family "Cousine NF" :size 14)        ; use this for presentations or streaming
+      doom-big-font (font-spec :family "Cousine Nerd Font" :size 14)        ; use this for presentations or streaming
       ; NOTE: These fonts are also available:
-      ; TODO - changing the unicode font... will that fix the odd emoji issue we have in telega?
-      ; - `doom-symbol-font' -- for unicode glyphs
+      doom-symbol-font (font-spec :family "Noto Color Emoji" :size 14)        ; for unicode glyphs
       ; - `doom-serif-font' -- for the `fixed-pitch-serif' face
       fancy-splash-image (concat doom-private-dir "dashboard-cat.png")
       

@@ -5,7 +5,7 @@
  ;; If there is more than one, they won't work right.
  '(auto-dim-other-buffers-face ((t (:background "#EEE8D5"))))
  '(auto-dim-other-buffers-hide-face ((t (:extend t :background "#EEE8D5"))))
- '(fixed-pitch ((t (:family "Cousine NF" :height 130))))
+ '(fixed-pitch ((t (:family "Cousine Nerd Font" :height 130))))
  '(line-number ((t (:background "#FDF6E3"))))
  '(line-number-current-line ((t (:background "#E1DBCD"))))
  '(link ((t (:weight normal))))
