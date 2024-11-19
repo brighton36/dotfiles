@@ -18,13 +18,14 @@
 
       ; doom
       doom-theme 'doom-solarized-light-cderose
-      doom-font (font-spec :family "Cousine NF" :size 14)            ; the primary font to use
+      doom-font (font-spec :family "Cousine Nerd Font" :size 14)            ; the primary font to use
       doom-variable-pitch-font (font-spec :family "Ubuntu Nerd Font" :size 14) ; a non-monospace font (where applicable)
-      doom-big-font (font-spec :family "Cousine Nerd Font" :size 14)        ; use this for presentations or streaming
+      doom-big-font (font-spec :family "Cousine Nerd Font" :size 18)        ; use this for presentations or streaming
       ; NOTE: These fonts are also available:
-      doom-symbol-font (font-spec :family "Noto Color Emoji" :size 14)        ; for unicode glyphs
+      ;doom-symbol-font (font-spec :family "Noto Color Emoji" :size 14)        ; for unicode glyphs
       ; - `doom-serif-font' -- for the `fixed-pitch-serif' face
       fancy-splash-image (concat doom-private-dir "dashboard-cat.png")
+      nerd-icons-font-family "Symbols Nerd Fonts Mono"
       
       ; avy
       avy-all-windows 'all-frames
@@ -127,7 +128,6 @@
                :icon (nerd-icons-faicon "nf-fa-file" :face 'doom-dashboard-menu-title)
                :action +default/new-buffer))
 
-      :desc "New blank buffer" :n "o n" #'+default/new-buffer
 ;; Key Bindings ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (map! 
   :n "C-+" #'text-scale-increase

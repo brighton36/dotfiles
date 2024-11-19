@@ -23,6 +23,7 @@ These are installed outside your home directory, and that's not handled by the b
 - External USB Moonlander Keyboard - [[https://configure.zsa.io/moonlander/layouts/p7E9R][brighton36's Moonlander - lemp10]]
 - A caps-to-control tty map [[https://github.com/brighton36/dotfiles/blob/main/system/dvorak-chris.map][/usr/local/share/kbd/keymaps/dvorak-chris.map]] (with a corresponding [[https://github.com/brighton36/dotfiles/blob/main/system/vconsole.conf][/etc/vconsole.conf]])
 - My nterception config for installation into [[https://github.com/brighton36/dotfiles/tree/main/system/interception][/etc/interception]] (Though I've recently deprecated interception in lieu of xremap on wayland)
+- There seems to be some issue in guix, wherein the fontconfig doesn't pull from the system font config. So, to get emacs rendering fonts, you'll need to copy all your icon and font ttf's to ~/.local/share/fonts
 
 * System Notes 📚
 I guess this is like, a TODO list of 'things to maybe include here in the future'.
