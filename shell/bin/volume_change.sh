@@ -25,12 +25,14 @@ case $1 in
     exit
 esac
 
+echo "1"
 # Query amixer for the current volume and whether or not the speaker is muted
 # volume="$(amixer -c 0 get Master | tail -1 | awk '{print $4}' | sed 's/[^0-9]*//g')"
 # mute="$(amixer -c 0 get Master | tail -1 | awk '{print $6}' | sed 's/[^a-z]*//g')"
 volume="$(/usr/bin/pactl -- get-sink-volume 0 | /bin/grep -oP '[^ ]+\%' | /bin/head --lines=1)"
 mute="$(/bin/pactl -- get-sink-mute 0 | /bin/grep -oP '[^ ]+$')"
 
+echo "2"
 function beep {
   # Play the volume changed sound
   # canberra-gtk-play -i audio-volume-change -d "changeVolume"
@@ -50,4 +52,4 @@ else
     -h int:value:"$volume" "Volume: ${volume}"
     beep
 fi
-
+echo "3"

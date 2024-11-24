@@ -50,7 +50,14 @@ window#waybar.hidden {
   color: @theme-blue;
 }
 
+#workspaces button.empty.active {
+  color: @theme-white;
+}
+
 #workspaces button.active {
+  color: @theme-white;
+}
+#workspaces button.focused {
   color: @theme-white;
 }
 #workspaces button.empty {

@@ -31,7 +31,7 @@
         },
     },
     "hyprland/workspaces": {
-        "on-click": "activate",
+        "on-click": "~/bin/hypr-ws-change.sh test",
         "format": "{icon}",
         "format-icons": {
             "default": "",

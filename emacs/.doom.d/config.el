@@ -220,3 +220,20 @@
 
 ;; load config.el.d ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (mapc 'load (file-expand-wildcards "~/.doom.d/config.el.d/*.el"))
+
+; TODO: We want to flesh this out more...
+(defun emacs-dmenu-popup ()
+  "Create and select a frame called emacs-dmenu-popup which consists only of a minibuffer and has specific dimensions. Runs dmenu on that frame, which is an emacs command that prompts you to select an app and open it in a dmenu like behaviour. Delete the frame after that command has exited"
+  (interactive)
+  (with-selected-frame
+    (make-frame '((name . "emacs-dmenu-popup")
+                  (minibuffer . only)
+                  (fullscreen . 0) ; no fullscreen
+                  (undecorated . t) ; remove title bar
+                  ;;(auto-raise . t) ; focus on this frame
+                  ;;(tool-bar-lines . 0)
+                  ;;(menu-bar-lines . 0)
+                  (internal-border-width . 10)
+                  (width . 80)
+                  (height . 11)))
+                  (unwind-protect (dmenu))))
