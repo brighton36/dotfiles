@@ -8,9 +8,9 @@
         "clock",
         "custom/hdate",
         "custom/date",
+        "hyprland/language",
         "battery",
         "wireplumber",
-        "hyprland/language",
         "memory",
         "cpu"
     ],
@@ -50,16 +50,16 @@
         }
     },
     "hyprland/language": {
-        "format": "kbd: {}",
+        "format": "{}",
         "format-en": "dvorak-en",
     },
     "memory": {
         "interval": 1,
-        "format": "Swp: {swapPercentage}% Mem: {percentage}% ",
+        "format": "Swp {swapPercentage}% Mem {percentage}% ",
     },
     "cpu": {
         "interval": 1,
-        "format": "Cpu: {usage}%",
+        "format": "Cpu {usage}%",
     },
     "tray": {
         "spacing": 10,
@@ -70,20 +70,20 @@
         "format": "{:%I:%M %p}"
     },
     "wireplumber": {
-        "format": "vol: {volume}%",
+        "format": "Vol ({volume}%)",
         "format-bluetooth": "vol: bt",
         "nospacing": 1,
-        "tooltip-format": "Volume : {volume}%",
+        "tooltip-format": "Volume : {volume}",
         "format-muted": "vol: mute",
         "on-click": "pamixer -t",
         "scroll-step": 1
     },
     "battery": {
-        "format": "bat: {capacity}% charging",
-        "format-full": "bat: Charged",
-        "format-plugged": "bat: {capacity}% max_lifespan",
-        "format-discharging": "bat: {capacity}% Discharging",
-        "format-unknown": "bat: {capacity}% Unknown",
+        "format": "Bat ({capacity}% Charging)",
+        "format-full": "Bat (Charged)",
+        "format-plugged": "Bat ({capacity}% Lifespan)",
+        "format-discharging": "Bat ({capacity}% Discharging)",
+        "format-unknown": "Bat ({capacity}% Unknown)",
         "interval": 5,
         "states": {
             "warning": 15,
@@ -100,6 +100,5 @@
         "tooltip": false,
         "exec": "date +\"%a %b %d\"",
         "interval": 60
-    }
-
+    },
 }

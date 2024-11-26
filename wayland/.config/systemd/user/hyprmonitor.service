@@ -1,0 +1,11 @@
+[Unit]
+Description=Hyprpaper
+
+[Service]
+Type=simple
+ExecStart="%h/bin/hyprmonitor.sh"
+Restart=always
+TimeoutStartSec=5
+
+[Install]
+WantedBy=default.target
