@@ -13,3 +13,4 @@ X/.xmonad/*.o
 X/.xmonad/xmonad
 X/.xmonad/xmobar
 *~
+__pycache__

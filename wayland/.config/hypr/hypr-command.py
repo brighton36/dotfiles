@@ -1,21 +1,10 @@
 #!/usr/bin/env python3
 
-import re
-import argparse
-import subprocess
+import re, argparse
 from functools import reduce
+from hyprlib import hyprctl
 
-HYPRCTL="/usr/bin/hyprctl"
 OPERATIONS=['switch', 'next', 'prev', 'movespecial', 'togglespecial']
-
-def hyprctl(*args, **kwargs):
-  cmd = [HYPRCTL]+list(map(lambda a: str(a), args))
-  result = subprocess.run(cmd, capture_output=True, text=True)
-  if (kwargs.get("assertOk") and not re.match(r'^ok$', result.stdout)) or result.returncode != 0:
-    raise Exception("Error encountered when running \"{}\" ({}): \"{}\"".format(" ".join(cmd),
-                                                                                result.returncode,
-                                                                                repr(result.stdout)))
-  return result.stdout
 
 def operation_check(arg_value):
   if not arg_value in OPERATIONS:
@@ -62,10 +51,7 @@ match args.operation:
     focus_workspace(9 if (active == 1) else active-1)
   case 'movespecial':
     workspace = re.match(re.compile(r'[^\(]+\((special:|)([^\)]+)\)'), active_window()['workspace'])
-    if workspace[1] == 'special:':
-      move_to_workspace(workspace[2])
-    else:
-      move_to_workspace("special:{}".format(workspace[2]))
+    move_to_workspace(workspace[2] if workspace[1] == 'special:' else "special:{}".format(workspace[2]))
   case 'togglespecial':
     focus_special_workspace(active_workspace())
   case _:
