@@ -7,7 +7,8 @@ hyprpapers:
 	$(eval resolution := "3440x1440")
 	$(eval dest := "wayland/.config/hypr/workspace-")
 	$(eval ext := ".png")
-	# I used https://colorkit.co/palette/2c4875-5b4c82-8a508f-cc0863-ff6361-ff8531-ffa600-8cb357-18bfae-53cbef/ for this color scheme.
+	$(eval MAGICK := "/usr/bin/magick" "-define" "png:exclude-chunks=date") # reproducable-build magick png's
+	# I mostly used https://colorkit.co/palette/2c4875-5b4c82-8a508f-cc0863-ff6361-ff8531-ffa600-8cb357-18bfae-53cbef/ for this color scheme.
 	declare -A PAPERS=( \
 		[1]="#586e75" \
 		[2]="#2c4875" \
@@ -22,10 +23,10 @@ hyprpapers:
     darkColor=$${PAPERS[$${key}]}; \
     lightColor=$$(/usr/bin/pastel lighten 0.20 $${darkColor} | /usr/bin/pastel format hex); \
     darkerColor=$$(/usr/bin/pastel darken 0.20 $${darkColor} | /usr/bin/pastel format hex); \
-		/usr/bin/magick -size $(resolution) -define gradient:direction=southeast gradient:"$${darkColor}-$${lightColor}" -define png:exclude-chunks=date +set date:create +set date:modify $(dest)$${key}$(ext) ; \
-		/usr/bin/magick -size $(resolution) -define gradient:direction=southeast gradient:"$${darkerColor}-$${darkColor}" -define png:exclude-chunks=date +set date:create +set date:modify $(dest)$${key}special$(ext) ; \
+		$(MAGICK) -size $(resolution) -define gradient:direction=southeast gradient:"$${darkColor}-$${lightColor}" $(dest)$${key}$(ext) ; \
+		$(MAGICK) -size $(resolution) -define gradient:direction=southeast gradient:"$${darkerColor}-$${darkColor}" $(dest)$${key}special$(ext) ; \
 	done; \
-	/usr/bin/magick xc:$${PAPERS[1]} xc:$${PAPERS[2]} xc:$${PAPERS[3]} xc:$${PAPERS[4]} xc:$${PAPERS[5]} xc:$${PAPERS[6]} xc:$${PAPERS[7]} xc:$${PAPERS[8]} xc:$${PAPERS[9]} \
+	$(MAGICK) xc:$${PAPERS[1]} xc:$${PAPERS[2]} xc:$${PAPERS[3]} xc:$${PAPERS[4]} xc:$${PAPERS[5]} xc:$${PAPERS[6]} xc:$${PAPERS[7]} xc:$${PAPERS[8]} xc:$${PAPERS[9]} \
           +append -filter Cubic -resize $(resolution)\! $(dest)expo$(ext)
 
 delete:
