@@ -21,7 +21,9 @@ hyprpapers:
 	); for key in "$${!PAPERS[@]}" ; do \
     darkColor=$${PAPERS[$${key}]}; \
     lightColor=$$(/usr/bin/pastel lighten 0.20 $${darkColor} | /usr/bin/pastel format hex); \
-		/usr/bin/magick -size $(resolution) -define gradient:direction=southeast gradient:"$${darkColor}-$${lightColor}" $(dest)$${key}$(ext) ; \
+    darkerColor=$$(/usr/bin/pastel darken 0.20 $${darkColor} | /usr/bin/pastel format hex); \
+		/usr/bin/magick -size $(resolution) -define gradient:direction=southeast gradient:"$${darkColor}-$${lightColor}" -define png:exclude-chunks=date +set date:create +set date:modify $(dest)$${key}$(ext) ; \
+		/usr/bin/magick -size $(resolution) -define gradient:direction=southeast gradient:"$${darkerColor}-$${darkColor}" -define png:exclude-chunks=date +set date:create +set date:modify $(dest)$${key}special$(ext) ; \
 	done; \
 	/usr/bin/magick xc:$${PAPERS[1]} xc:$${PAPERS[2]} xc:$${PAPERS[3]} xc:$${PAPERS[4]} xc:$${PAPERS[5]} xc:$${PAPERS[6]} xc:$${PAPERS[7]} xc:$${PAPERS[8]} xc:$${PAPERS[9]} \
           +append -filter Cubic -resize $(resolution)\! $(dest)expo$(ext)

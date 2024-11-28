@@ -2,7 +2,7 @@
 
 import re, argparse
 from functools import reduce
-from hyprlib import hyprctl
+from hyprlib import *
 
 OPERATIONS=['switch', 'next', 'prev', 'movespecial', 'togglespecial']
 
@@ -10,10 +10,6 @@ def operation_check(arg_value):
   if not arg_value in OPERATIONS:
     raise argparse.ArgumentTypeError("Unrecognized operation \"{}\".".format(arg_value))
   return arg_value
-
-def active_workspace():
-  stdout = hyprctl('activeworkspace')
-  return int(re.search(r'^workspace ID ([^ ]+)',stdout).group(1))
 
 def active_window():
   parts = re.match(re.compile(r"^Window ([^ ]+)[^\n]+\n(.+)", re.MULTILINE | re.DOTALL), hyprctl('activewindow'))

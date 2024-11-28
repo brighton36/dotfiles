@@ -12,3 +12,7 @@ def hyprctl(*args, **kwargs):
                                                                                 result.returncode,
                                                                                 repr(result.stdout)))
   return result.stdout
+
+def active_workspace():
+  stdout = hyprctl('activeworkspace')
+  return int(re.search(r'^workspace ID ([^ ]+)',stdout).group(1))
