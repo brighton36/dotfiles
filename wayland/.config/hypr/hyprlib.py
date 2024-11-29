@@ -16,3 +16,9 @@ def hyprctl(*args, **kwargs):
 def active_workspace():
   stdout = hyprctl('activeworkspace')
   return int(re.search(r'^workspace ID ([^ ]+)',stdout).group(1))
+
+# we should probably DRY out the entire argument parsing sections...
+def operation_check(arg_value, supported_operations):
+  if not arg_value in supported_operations:
+    raise argparse.ArgumentTypeError("Unrecognized operation \"{}\".".format(arg_value))
+  return arg_value

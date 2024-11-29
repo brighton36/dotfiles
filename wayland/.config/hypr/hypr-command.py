@@ -5,11 +5,8 @@ from functools import reduce
 from hyprlib import *
 
 OPERATIONS=['switch', 'next', 'prev', 'movespecial', 'togglespecial']
-
-def operation_check(arg_value):
-  if not arg_value in OPERATIONS:
-    raise argparse.ArgumentTypeError("Unrecognized operation \"{}\".".format(arg_value))
-  return arg_value
+FIRST_WORKSPACE=1
+LAST_WORKSPACE=9
 
 def active_window():
   parts = re.match(re.compile(r"^Window ([^ ]+)[^\n]+\n(.+)", re.MULTILINE | re.DOTALL), hyprctl('activewindow'))
@@ -28,7 +25,7 @@ def focus_special_workspace(n):
 parser = argparse.ArgumentParser(description='A smart(er) operation handler intended for use with bind, in the hyprland.conf.')
 parser.add_argument("operation",
                     help="One of our supported operations: {}".format(', '.join(OPERATIONS)),
-                    type=lambda v: operation_check(v))
+                    type=lambda v: operation_check(v, OPERATIONS))
 parser.add_argument('operation_args',
                     help="(Optional) A variable number of arguments, provided to the operation.",
                     nargs=argparse.REMAINDER)
@@ -41,10 +38,10 @@ match args.operation:
     focus_workspace(int(args.operation_args[0]))
   case 'next':
     active = active_workspace()
-    focus_workspace(1 if (active == 9) else active+1)
+    focus_workspace(FIRST_WORKSPACE if (active == LAST_WORKSPACE) else active+1)
   case 'prev':
     active = active_workspace()
-    focus_workspace(9 if (active == 1) else active-1)
+    focus_workspace(LAST_WORKSPACE if (active == FIRST_WORKSPACE) else active-1)
   case 'movespecial':
     workspace = re.match(re.compile(r'[^\(]+\((special:|)([^\)]+)\)'), active_window()['workspace'])
     move_to_workspace(workspace[2] if workspace[1] == 'special:' else "special:{}".format(workspace[2]))
