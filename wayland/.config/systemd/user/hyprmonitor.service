@@ -3,7 +3,7 @@ Description=Hyprpaper
 
 [Service]
 Type=simple
-ExecStart="%h/.config/hypr/hyprmonitor.py"
+ExecStart="%h/bin/hypr-helper.py" "monitor"
 Restart=always
 TimeoutStartSec=5
 
