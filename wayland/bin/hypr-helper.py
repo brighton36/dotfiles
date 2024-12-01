@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import os, subprocess, socket, re, argparse
+import os, subprocess, socket, re, argparse, time
 
 OPERATIONS=['switch', 'next', 'prev', 'movespecial', 'togglespecial', 'monitor']
 FIRST_WORKSPACE=1
@@ -29,7 +29,16 @@ def operation_check(arg_value, supported_operations):
 def active_window():
   parts = re.match(re.compile(r"^Window ([^ ]+)[^\n]+\n(.+)", re.MULTILINE | re.DOTALL), hyprctl('activewindow'))
   return {**{'windowid': parts[1]},
-          **dict(re.findall(r'^[ \t]+([^:]+):[ ]*(.+)$', parts[2], flags=re.MULTILINE))}
+          **dict(re.findall(r'^[ \t]+([^:]+):[ ]*([^\n]+)$', parts[2], flags=re.MULTILINE))}
+
+def monitors():
+  ret = []
+  for monitor_parts in re.findall(r"^Monitor ([^ ]+) \(([^\)]+)\):\n\t([^\n]+)\n(.+?)\n\n",
+                                  hyprctl('monitors'),
+                                  re.MULTILINE | re.DOTALL):
+    ret.append( {**{'port': monitor_parts[0], 'id': monitor_parts[1], 'resolution': monitor_parts[2]},
+            **dict(re.findall(r'^[ \t]+([^:]+):[ ]*(.+)$', monitor_parts[3], flags=re.MULTILINE))})
+  return ret
 
 def focus_workspace(n):
   hyprctl('dispatch', 'workspace', n, assertOk=True)
@@ -43,13 +52,19 @@ def focus_special_workspace(n):
 def hyprpaper_change(to):
   hyprctl('hyprpaper', 'wallpaper', ",~/.config/hypr/workspace-{}.png".format(to), assertOk=True)
 
-def monitor(line):
+def on_event(line):
   parts = re.match(re.compile(r'^([^\>]+)>>(.*)'), line)
 
   match parts[1]:
     case 'workspace':
+      # This override is here to support the configreloaded. Where, for some reason hyprland triggers a spurious workspace
+      # switch after monitor disable
+      to = on_event.override_workspace if hasattr(on_event, 'override_workspace') and on_event.override_workspace else parts[2]
+      on_event.override_workspace = None
+
       # NOTE at the time of writing, this feature doesn't work: hyprctl keyword misc:background_color 65535
-      hyprpaper_change(parts[2])
+      #      so we instead use wallpapers.
+      hyprpaper_change(to)
     case 'activespecial':
       specialparts = re.match(re.compile(r'^(?:special:([\d]*)|),'), parts[2])
       if specialparts[1]:
@@ -57,7 +72,13 @@ def monitor(line):
       else:
         active = active_workspace()
         hyprpaper_change(active)
+    case 'configreloaded':
+      # Set the background, which, triggers after the monitor is destroyed, in 'workspace' above:
+      on_event.override_workspace=active_workspace()
 
+      # Disable any monitor that isn't focused:
+      for m in filter( lambda m: m['focused'] != 'yes', monitors()):
+        hyprctl('keyword', 'monitor', "{}, disable".format(m['port']), assertOk=True)
 
 parser = argparse.ArgumentParser(description='A smart(er) operation handler intended for use with bind, in the hyprland.conf.')
 parser.add_argument("operation",
@@ -98,7 +119,7 @@ match args.operation:
         lines = buf.splitlines(True)
         buf = "" if lines[-1][-1] == "\n" else lines.pop()
 
-        for line in lines: monitor(line)
+        for line in lines: on_event(line)
 
       client.close()
 
