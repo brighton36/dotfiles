@@ -24,9 +24,9 @@
       ; NOTE: These fonts are also available:
       ;doom-symbol-font (font-spec :family "Noto Color Emoji" :size 14)        ; for unicode glyphs
       ; - `doom-serif-font' -- for the `fixed-pitch-serif' face
-      fancy-splash-image (concat doom-private-dir "dashboard-cat.png")
+      fancy-splash-image (concat doom-user-dir "dashboard-cat.png")
       nerd-icons-font-family "Symbols Nerd Fonts Mono"
-      
+			
       ; avy
       avy-all-windows 'all-frames
 
@@ -47,6 +47,9 @@
       ; highlight-indent
       highlight-indent-guides-method 'bitmap
       highlight-indent-guides-auto-character-face-perc 25
+
+      ; ace-window
+      aw-dispatch-when-more-than 1
 )
 
 ; dired - Seems like we need to set these after the mode loads
@@ -134,8 +137,11 @@
   :n "C-=" nil
 
   ;; Window Splits:
-  :n "C-\\" #'(lambda() (interactive) (split-window-right)(other-window 1))
-  :n "C--" #'(lambda() (interactive) (split-window)(other-window 1))
+  :n "C-\\" #'evil-window-vsplit
+  :n "C--" #'evil-window-split
+
+  ; ace-window
+  :ni "C-f" #'ace-window
 
   ;; Otherwise, In normal mode, ctrl-s will 'search' for an open buffer
   :n "C-s" #'+vertico/switch-workspace-buffer
@@ -150,9 +156,6 @@
   ;; Emoji's
   :i "C-z" #'emoji-insert
 
-  ;; Explain:
-  :n "C-t" #'open-explain-pause-top-in-new-frame
-
   ;; popup
   :n "C-e" #'+popup/toggle
   :n "C-`" nil
@@ -162,14 +165,13 @@
   :g "C-c e" #'ellama-transient-main-menu ; See: https://willschenk.com/labnotes/2024/ai_in_emacs/
 
   ; Seemingly, :g doesn't adjust this map?
-  :map global-map 
-    ;; Alt-[ and Alt-] Window Cycle:
-    "M-]" #'(lambda() (interactive) (other-window 1))
-    "M-[" #'(lambda() (interactive) (other-window -1))
-
-    ;; Alt-Shift-[ an Alt-Shift-] Move Window Cycle
-    "M-}" #'(lambda() (interactive) (rotate-windows -1))
-    "M-{" #'(lambda() (interactive) (rotate-windows 1))
+  :map global-map
+    ; Window management
+    "M-]" #'evil-window-next
+    "M-[" #'evil-window-prev
+    "M-}" #'evil-window-exchange
+    "M-{" #'(lambda() (interactive) (evil-window-exchange -1))
+    "C-<backspace>" #'evil-window-delete
 
     ;; Window Resize Up/down:
     "C-S-j" #'shrink-window
@@ -178,9 +180,6 @@
     ;; Window Resize left/right. I guess this works..
     "C-S-h" #'shrink-window-horizontally
     "C-S-l" #'enlarge-window-horizontally
-
-    ; Window Close:
-    "C-<backspace>" #'delete-window
   )
 
 (map! :map global-map "C-`" nil) ; We moved this to C-e
@@ -220,20 +219,3 @@
 
 ;; load config.el.d ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (mapc 'load (file-expand-wildcards "~/.doom.d/config.el.d/*.el"))
-
-; TODO: We want to flesh this out more...
-(defun emacs-dmenu-popup ()
-  "Create and select a frame called emacs-dmenu-popup which consists only of a minibuffer and has specific dimensions. Runs dmenu on that frame, which is an emacs command that prompts you to select an app and open it in a dmenu like behaviour. Delete the frame after that command has exited"
-  (interactive)
-  (with-selected-frame
-    (make-frame '((name . "emacs-dmenu-popup")
-                  (minibuffer . only)
-                  (fullscreen . 0) ; no fullscreen
-                  (undecorated . t) ; remove title bar
-                  ;;(auto-raise . t) ; focus on this frame
-                  ;;(tool-bar-lines . 0)
-                  ;;(menu-bar-lines . 0)
-                  (internal-border-width . 10)
-                  (width . 80)
-                  (height . 11)))
-                  (unwind-protect (dmenu))))

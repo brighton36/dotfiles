@@ -33,6 +33,7 @@
       ;                                     "key" "--clearmodifiers" "Shift+Insert"
       ;                                     "sleep" "0.25" 
       ;                                     "keyup" "Meta_L" "Meta_R" "Alt_L" "Alt_R" "Super_L" "Super_R")
+      emacs-everywhere-paste-command (list "/usr/bin/ydotool" "key" "29:1" "42:1" "47:1" "47:0" "42:0" "29:0")
 )
 
 (remove-hook 'emacs-everywhere-init-hooks 'emacs-everywhere-set-frame-position)

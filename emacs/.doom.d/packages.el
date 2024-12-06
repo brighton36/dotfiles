@@ -53,8 +53,6 @@
 (package! auto-dim-other-buffers)
 (package! dumb-jump)
 (package! evil-avy)
-(straight-use-package
-  '(explain-pause-mode :type git :host github :repo "lastquestion/explain-pause-mode"))
 (package! org-bullets)
 
 (package! vertico-posframe :recipe (:host github :repo "tumashu/vertico-posframe"))
@@ -64,4 +62,3 @@
 (package! eww)
 (package! eshell-toggle)
 (package! inf-ruby)
-(package! dmenu)

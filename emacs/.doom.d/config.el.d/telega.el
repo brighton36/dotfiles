@@ -25,4 +25,4 @@
 (add-hook 'telega-chat-mode-hook 'visual-line-mode)
 
 (set-face-attribute 'telega-msg-inline-reply nil :foreground "#556b72")
-
+(set-face-attribute 'telega-shadow nil :foreground "#556b72")

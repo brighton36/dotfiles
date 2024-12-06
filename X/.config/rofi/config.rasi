@@ -17,4 +17,4 @@ configuration {
   kb-row-last: "Control+G";
   kb-row-first: "Control+g";
 }
-@theme "solarized"
+@theme "spotlight-dark"

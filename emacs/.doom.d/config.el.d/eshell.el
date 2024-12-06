@@ -1,15 +1,9 @@
 ;-*- mode: elisp -*-
 
 (map! :after eshell
-      :map evil-insert-state-local-map
-      "C-p" 'eshell-previous-matching-input-from-input
-      "C-n" 'eshell-next-matching-input-from-input
-
-      :map evil-insert-state-map
-      "C-p" 'eshell-previous-matching-input-from-input
-      "C-n" 'eshell-next-matching-input-from-input
-
       :map eshell-mode-map
+      :ni "C-p" 'eshell-previous-matching-input-from-input
+      :ni "C-n" 'eshell-next-matching-input-from-input
       :niv "M-m" 'eshell-bol)
 
 (when (and (executable-find "fish")

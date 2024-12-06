@@ -1,24 +1,34 @@
 ;-*- mode: elisp -*-
 
-; Window Rotation:
-(defun rotate-windows (arg)
-  "Rotate your windows; use the prefix argument to rotate the other direction"
-  (interactive "P")
-  (if (not (> (count-windows) 1))
-      (message "You can't rotate a single window!")
-    (let* ((rotate-times (prefix-numeric-value arg))
-           (direction (if (or (< rotate-times 0) (equal arg '(4)))
-                          'reverse 'identity)))
-      (dotimes (_ (abs rotate-times))
-        (dotimes (i (- (count-windows) 1))
-          (let* ((w1 (elt (funcall direction (window-list)) i))
-                 (w2 (elt (funcall direction (window-list)) (+ i 1)))
-                 (b1 (window-buffer w1))
-                 (b2 (window-buffer w2))
-                 (s1 (window-start w1))
-                 (s2 (window-start w2))
-                 (p1 (window-point w1))
-                 (p2 (window-point w2)))
-            (set-window-buffer-start-and-point w1 b2 s2 p2)
-            (set-window-buffer-start-and-point w2 b1 s1 p1)))))))
+(defun emacs-ellama-popup ()
+  "Open ellama in a popup frame."
+  (interactive)
+  (with-selected-frame
+    (make-frame '((name . "emacs-ellama-popup")
+                  (minibuffer . only)
+                  (fullscreen . 0) ; no fullscreen
+                  (undecorated . t) ; remove title bar
+                  (width . 80)
+                  (height . 11)))
 
+                  (unwind-protect (command-execute 'ellama-chat)
+                    (delete-frame))))
+
+; TODO: I prefer this over dired, but it's not working...
+(defun emacs-dirvish-popup ()
+  "Open dirvish in a popup frame."
+  (interactive)
+  (with-selected-frame
+    (make-frame '((name . "emacs-dirvish-popup")
+                  (minibuffer . only)
+                  (fullscreen . 0) ; no fullscreen
+                  (undecorated . t) ; remove title bar
+                  ;;(auto-raise . t) ; focus on this frame
+                  ;;(tool-bar-lines . 0)
+                  ;;(menu-bar-lines . 0)
+                  ;(internal-border-width . 10)
+                  (width . 80)
+                  (height . 11)))
+
+                  (command-execute 'dirvish)
+                  ))
