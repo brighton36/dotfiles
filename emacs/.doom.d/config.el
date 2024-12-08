@@ -106,8 +106,25 @@
 (require 'ellama)
 (setopt ellama-provider (make-llm-ollama :chat-model "mistral"))
 
+; gptel
+(gptel-make-ollama "Ollama"             ;Any name of your choosing
+  :host "localhost:11434"               ;Where it's running
+  :stream t                             ;Stream responses
+  :models '(mistral:latest))          ;List of models
+
+(setq
+ gptel-model 'mistral:latest
+ gptel-default-mode 'text-mode
+ gptel-backend (gptel-make-ollama "Ollama"
+                 :host "localhost:11434"
+                 :stream t
+                 :models '(mistral:latest))
+ ; This fixes a bug that prevents the gptel command from executing
+ gptel-display-buffer-action nil
+ )
+
 ; Doom Dashboard:
-;(assoc-delete-all "Open project" +doom-dashboard-menu-sections) ; Just for reference, if we want to delete something
+(assoc-delete-all "Reload last session" +doom-dashboard-menu-sections) ;TODO is this working...
 (add-to-list '+doom-dashboard-menu-sections
              '("Start Telega"
                :icon (nerd-icons-faicon "nf-fae-telegram" :face 'doom-dashboard-menu-title)

@@ -1,19 +1,5 @@
 ;-*- mode: elisp -*-
 
-(defun emacs-ellama-popup ()
-  "Open ellama in a popup frame."
-  (interactive)
-  (with-selected-frame
-    (make-frame '((name . "emacs-ellama-popup")
-                  (minibuffer . only)
-                  (fullscreen . 0) ; no fullscreen
-                  (undecorated . t) ; remove title bar
-                  (width . 80)
-                  (height . 11)))
-
-                  (unwind-protect (command-execute 'ellama-chat)
-                    (delete-frame))))
-
 ; TODO: I prefer this over dired, but it's not working...
 (defun emacs-dirvish-popup ()
   "Open dirvish in a popup frame."

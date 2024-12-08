@@ -62,3 +62,4 @@
 (package! eww)
 (package! eshell-toggle)
 (package! inf-ruby)
+(package! gptel)

@@ -1,5 +1,5 @@
 ;-*- mode: elisp -*-
-;
+
 (require 'json)
 (defun emacs-everywhere--app-info-linux-hyprland ()
   "Return information on the current active window, on a Linux Hyprland session."
