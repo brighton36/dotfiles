@@ -1,12 +1,14 @@
 [Unit]
-Description=Hyprpaper
+Description=xremap
+After=default.target
 ConditionPathExists=${XDG_RUNTIME_DIR}/hypr/${HYPRLAND_INSTANCE_SIGNATURE}.socket2.sock
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/hyprpaper
+ExecStart=/usr/bin/xremap %h/.config/xremap/config.yml --watch=device
 Restart=always
 RestartSec=1
+WorkingDirectory=%h
 
 [Install]
 WantedBy=default.target

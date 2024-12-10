@@ -1,0 +1,16 @@
+[Unit]
+Description=emacs
+ConditionPathExists=${XDG_RUNTIME_DIR}/hypr/${HYPRLAND_INSTANCE_SIGNATURE}.socket2.sock
+
+[Service]
+Type=forking
+ExecStart="%h/.guix-profile/bin/emacs" "--daemon"
+ExecStop=bash -c "/usr/bin/kill $(/usr/bin/pgrep -f '%h/.guix-profile/bin/emacs --daemon')"
+Environment=SSH_AUTH_SOCK=%t/keyring/ssh
+Restart=always
+#RestartSec=1
+#User=%i
+WorkingDirectory=%h
+
+[Install]
+WantedBy=default.target

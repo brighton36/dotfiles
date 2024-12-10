@@ -1,4 +1,4 @@
-;-*- mode: elisp -*-
+;;; mu4e.el --- Description -*- lexical-binding: t; -*-
 
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e") 
 (require 'org-msg)

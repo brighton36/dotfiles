@@ -102,27 +102,6 @@
 (require 'epa)
 (epa-file-enable)
 
-; ellama
-(require 'ellama)
-(setopt ellama-provider (make-llm-ollama :chat-model "mistral"))
-
-; gptel
-(gptel-make-ollama "Ollama"             ;Any name of your choosing
-  :host "localhost:11434"               ;Where it's running
-  :stream t                             ;Stream responses
-  :models '(mistral:latest))          ;List of models
-
-(setq
- gptel-model 'mistral:latest
- gptel-default-mode 'text-mode
- gptel-backend (gptel-make-ollama "Ollama"
-                 :host "localhost:11434"
-                 :stream t
-                 :models '(mistral:latest))
- ; This fixes a bug that prevents the gptel command from executing
- gptel-display-buffer-action nil
- )
-
 ; Doom Dashboard:
 (assoc-delete-all "Reload last session" +doom-dashboard-menu-sections) ;TODO is this working...
 (add-to-list '+doom-dashboard-menu-sections
@@ -138,11 +117,11 @@
                ;:when (modulep! mu4e)
                :action mu4e))
 (add-to-list '+doom-dashboard-menu-sections
-             '("Start ellama chat"
+             '("Start LLM chat"
                :icon (nerd-icons-faicon "nf-fa-rocketchat" :face 'doom-dashboard-menu-title)
                ; TODO
                ;:when (modulep! mu4e)
-               :action ellama-chat))
+               :action gptel))
 (add-to-list '+doom-dashboard-menu-sections
              '("New Blank Buffer"
                :icon (nerd-icons-faicon "nf-fa-file" :face 'doom-dashboard-menu-title)
@@ -179,7 +158,6 @@
 
   ;; Globals:
   :g "C-c c" #'org-capture
-  :g "C-c e" #'ellama-transient-main-menu ; See: https://willschenk.com/labnotes/2024/ai_in_emacs/
 
   ; Seemingly, :g doesn't adjust this map?
   :map global-map
@@ -207,7 +185,7 @@
       :desc "Org Capture" :n "o c" #'org-capture
       :desc "Toggle eshell popup" :n "o e" #'eshell-toggle
       :desc "Open eshell here" :n "o E" #'eshell
-      :desc "Start an ellama chat" :n "o l" #'ellama-chat
+      :desc "Start an llm session" :n "o l" #'gptel
       :desc "magit" :n "o g" #'magit
       :desc "haskell (ghci)" :n "o H" #'run-haskell
       :desc "javascript (node)" :n "o J" #'nodejs-repl
@@ -220,6 +198,7 @@
       :desc "Web browser popup" :n "o w" #'eww
       :desc "Toggle vterm popup" :n "o V" #'vterm
       :desc "Open vterm here" :n "o v" #'vterm-mode
+      :desc "Google Translate this Buffer" :n "o x" #'google-translate-buffer
       :desc "ipython " :n "o Y" #'run-python
       )
 

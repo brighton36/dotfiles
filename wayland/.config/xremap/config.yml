@@ -1,7 +1,6 @@
+virtual_modifiers:
+  - compose # Aka 'Menu'
 modmap:
-  - name: leftmeta_to_compose
-    remap:
-      leftmeta: compose
   - name: leftctrl_to_leftmeta
     remap:
       leftctrl: leftmeta
@@ -24,6 +23,28 @@ modmap:
         held: leftshift
         alone_timeout_millis: 100
 keymap:
+  - name: "Global"
+    remap:
+      # These are the menu-(numpad) keys:
+      compose-key_8: key_kpslash    # Compose-z : asterisk
+      compose-key_9: key_kpasterisk # Compose-9 : forward-slash
+
+      compose-u: key_7              # Compose-m : 7
+      compose-i: key_8              # Compose-w : 8
+      compose-o: key_9              # Compose-v : 9
+      compose-p: apostrophe         # Compose-l : minus
+
+      compose-h: key_e              # Compose-d : period
+      compose-j: key_4              # Compose-h : 4
+      compose-k: key_5              # Compose-t : 5
+      compose-l: key_6              # Compose-n : 6
+      compose-semicolon: key_kpplus # Compose-s : plus
+
+      compose-n: key_0              # Compose-b : 0
+      compose-m: key_1              # Compose-m : 1
+      compose-comma: key_2          # Compose-w : 2
+      compose-dot: key_3            # Compose-v : 3
+      compose-slash: key_kpenter    # Compose-z : enter
   - name: firefox
     application: 
       only: firefox

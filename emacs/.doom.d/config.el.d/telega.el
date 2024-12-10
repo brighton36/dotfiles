@@ -1,5 +1,14 @@
 ;-*- mode: elisp -*-
 
+; These settings are needed to support : https://zevlg.github.io/telega.el/#settings-for-emacs-as-daemon
+(setq telega-use-images 1
+      telega-emoji-font-family "Noto Color Emoji"
+      telega-emoji-use-images 1
+      telega-online-status-function #'telega-focus-state)
+
+; This line was needed in order for the systemd based daemon to work
+(require 'telega)
+
 (map!
   :g "C-c t" telega-prefix-map
 

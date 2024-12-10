@@ -188,7 +188,7 @@
     ],
     "K31": [
       "A",
-      "NONE"
+      "HOME"
     ],
     "K32": [
       "S",
@@ -196,7 +196,7 @@
     ],
     "K33": [
       "D",
-      "NONE"
+      "END"
     ],
     "K34": [
       "F",
@@ -291,11 +291,11 @@
       "FN"
     ],
     "K52": [
-      "APP",
+      "LEFT_ALT",
       "LEFT_SUPER"
     ],
     "K53": [
-      "LEFT_ALT",
+      "APP",
       "LEFT_ALT"
     ],
     "K54": [
@@ -339,7 +339,7 @@
   "layers": [
     {
       "mode": null,
-      "brightness": 0,
+      "brightness": 5,
       "color": [
         0,
         0

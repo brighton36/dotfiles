@@ -1,11 +1,12 @@
 [Unit]
-Description=Hyprpaper
+Description=Hyprmonitor
+ConditionPathExists=${XDG_RUNTIME_DIR}/hypr/${HYPRLAND_INSTANCE_SIGNATURE}.socket2.sock
 
 [Service]
 Type=simple
 ExecStart="%h/bin/hypr-helper.py" "monitor"
 Restart=always
-TimeoutStartSec=5
+RestartSec=1
 
 [Install]
 WantedBy=default.target
