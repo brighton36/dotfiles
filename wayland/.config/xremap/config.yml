@@ -1,9 +1,10 @@
 virtual_modifiers:
   - compose # Aka 'Menu'
 modmap:
-  - name: leftctrl_to_leftmeta
+  - name: ctrl_to_leftmeta
     remap:
       leftctrl: leftmeta
+      rightctrl: leftmeta
   - name: capslock_tap_to_esc_hold_to_leftctrl
     remap:
       capslock:
@@ -26,25 +27,38 @@ keymap:
   - name: "Global"
     remap:
       # These are the menu-(numpad) keys:
-      compose-key_8: key_kpslash    # Compose-z : asterisk
-      compose-key_9: key_kpasterisk # Compose-9 : forward-slash
+      compose-u: key_7                # Compose-m : 7
+      compose-o: key_9                # Compose-v : 9
+      compose-p: key_kpasterisk       # Compose-l : asterisk
+      compose-equal: key_kpslash      # Compose-] : forward-slash
 
-      compose-u: key_7              # Compose-m : 7
-      compose-i: key_8              # Compose-w : 8
-      compose-o: key_9              # Compose-v : 9
-      compose-p: apostrophe         # Compose-l : minus
+      compose-h: key_e                # Compose-d : period
+      compose-j: key_4                # Compose-h : 4
+      compose-k: key_5                # Compose-t : 5
+      compose-l: key_6                # Compose-n : 6
+      compose-semicolon: key_kpplus   # Compose-s : plus
+      # NOTE: conveniently, the minus is already mapped to the right of plus
 
-      compose-h: key_e              # Compose-d : period
-      compose-j: key_4              # Compose-h : 4
-      compose-k: key_5              # Compose-t : 5
-      compose-l: key_6              # Compose-n : 6
-      compose-semicolon: key_kpplus # Compose-s : plus
+      compose-n: key_0                # Compose-b : 0
+      compose-m: key_1                # Compose-m : 1
+      compose-comma: key_2            # Compose-w : 2
+      compose-dot: key_3              # Compose-v : 3
+      compose-slash: key_kpenter      # Compose-z : enter
 
-      compose-n: key_0              # Compose-b : 0
-      compose-m: key_1              # Compose-m : 1
-      compose-comma: key_2          # Compose-w : 2
-      compose-dot: key_3            # Compose-v : 3
-      compose-slash: key_kpenter    # Compose-z : enter
+      # These are the menu-(function) keys, which, we want for the moonlander:
+      compose-grave: f1
+      compose-key_1: f2
+      compose-key_2: f3
+      compose-key_3: f4
+      compose-key_4: f5
+      compose-key_5: f6
+      compose-key_6: f7
+      compose-key_7: f8
+      compose-key_8: f9
+      compose-key_9: f10
+      compose-key_0: f11
+      compose-minus: f12 # Compose-[ : f12
+
   - name: firefox
     application: 
       only: firefox
