@@ -28,6 +28,7 @@ keymap:
     remap:
       # These are the menu-(numpad) keys:
       compose-u: key_7                # Compose-m : 7
+      compose-i: key_8                # Compose-c : 8
       compose-o: key_9                # Compose-v : 9
       compose-p: key_kpasterisk       # Compose-l : asterisk
       compose-equal: key_kpslash      # Compose-] : forward-slash

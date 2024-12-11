@@ -1,9 +1,18 @@
-;-*- mode: elisp -*-
+;;; emacs-everywhere.el --- Description -*- lexical-binding: t; -*-
+
+; For reasons I can't explain, emacs seems to get stale environment variables when
+; run in systemd. Which, cause us problems below. This will manually set the
+; correct hyprland instance:
+(let ((instances (shell-command-to-string "/usr/bin/hyprctl instances")))
+  (save-match-data
+    (and (string-match "\\`instance \\([^:\n]+\\):" instances)
+        (setenv "HYPRLAND_INSTANCE_SIGNATURE" (match-string 1 instances) )))
+  )
 
 (require 'json)
 (defun emacs-everywhere--app-info-linux-hyprland ()
   "Return information on the current active window, on a Linux Hyprland session."
-  (let* ((json-string (emacs-everywhere--call "hyprctl" "-j" "activewindow"))
+  (let* ((json-string (emacs-everywhere--call "/usr/bin/hyprctl" "-j" "activewindow"))
          (json-object (json-read-from-string json-string))
          (window-id (cdr (assoc 'address json-object)))
          (app-name (cdr (assoc 'class json-object)))
