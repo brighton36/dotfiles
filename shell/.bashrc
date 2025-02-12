@@ -65,5 +65,4 @@ DEBEMAIL="chris@chrisderose.com"
 DEBFULLNAME="Chris DeRose"
 export DEBEMAIL DEBFULLNAME
 
-export EDITOR='vim'
 export VISUAL='vim'

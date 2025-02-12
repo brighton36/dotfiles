@@ -50,6 +50,9 @@
 
       ; ace-window
       aw-dispatch-when-more-than 1
+
+      ; lisp
+      lisp-indent-offset 2
 )
 
 ; dired - Seems like we need to set these after the mode loads
@@ -75,6 +78,10 @@
 `(avy-background-face ((t (:foreground ,"#ff0000" :background  ,"#ff00ff"))))
 '(avy-background-face ((t (:background "#750000" :foreground "#BD9800"))))
 '(avy-lead-face ((t (:background "#750000" :foreground "#BD9800" :weight bold))))
+
+; ledger-mode
+(custom-set-faces! `(ledger-font-payee-uncleared-face :foreground ,(doom-color 'green)))
+(custom-set-faces! `(ledger-font-comment-face :foreground ,(doom-color 'cyan)))
 
 ;; Random mode Preferences  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (vertico-posframe-mode 1) ; In general, we seem to like these modes
@@ -137,7 +144,7 @@
   :n "C--" #'evil-window-split
 
   ; ace-window
-  :ni "C-f" #'ace-window
+  :n "C-f" #'ace-window
 
   ;; Otherwise, In normal mode, ctrl-s will 'search' for an open buffer
   :n "C-s" #'+vertico/switch-workspace-buffer

@@ -1,12 +1,19 @@
 #!/usr/bin/env python3
 
+# Mostly this script contains all the hyprland functionality that we need, that
+# isn't natively supported by hyprland. Which, makes this a bit of a potporri
+# script. I think I prefer this uberscript, over having a dozen scripts in my
+# bin.
+
 import os, subprocess, socket, re, argparse, time
 
-OPERATIONS=['switch', 'next', 'prev', 'movespecial', 'togglespecial', 'monitor']
+OPERATIONS=['switch', 'next', 'prev', 'movespecial', 'togglespecial', 'monitor',
+            'togglebrightness']
 FIRST_WORKSPACE=1
 LAST_WORKSPACE=9
 
 HYPRCTL="/usr/bin/hyprctl"
+BRIGHTNESSCTL="/usr/bin/brightnessctl"
 
 def hyprctl(*args, **kwargs):
   cmd = [HYPRCTL]+list(map(lambda a: str(a), args))
@@ -16,6 +23,18 @@ def hyprctl(*args, **kwargs):
                                                                                 result.returncode,
                                                                                 repr(result.stdout)))
   return result.stdout
+
+def brightnessctl(*args):
+  cmd = [BRIGHTNESSCTL]+list(map(lambda a: str(a), args))
+  result = subprocess.run(cmd, capture_output=True, text=True)
+  return result.stdout
+
+def togglebrightness(device):
+  if (int(brightnessctl("-d", device, "g")) == 0):
+    brightnessctl("-d", device, "s", brightnessctl("-d", device, "m"))
+  else:
+    brightnessctl("-d", device, "s", 0)
+  return
 
 def active_workspace():
   stdout = hyprctl('activeworkspace')
@@ -103,6 +122,8 @@ match args.operation:
   case 'movespecial':
     workspace = re.match(re.compile(r'[^\(]+\((special:|)([^\)]+)\)'), active_window()['workspace'])
     move_to_workspace(workspace[2] if workspace[1] == 'special:' else "special:{}".format(workspace[2]))
+  case 'togglebrightness':
+    togglebrightness(args.operation_args[0])
   case 'togglespecial':
     focus_special_workspace(active_workspace())
   case 'monitor':
