@@ -69,9 +69,9 @@
 ; auto-dim
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-'(auto-dim-other-buffers-face ((t (:background "#EEE8D5"))))
-(custom-set-faces '(auto-dim-other-buffers-face ((t (:background "#EEE8D5")))))
-(custom-set-faces '(auto-dim-other-buffers-hide-face ((t (:extend t :background "#EEE8D5")))))
+(after! auto-dim-other-buffers
+(custom-set-faces
+  '(auto-dim-other-buffers-face ((t (:background "#EEE8D5"))))))
 
 ; avy
 ; TODO: Let's maybe change the highlight color from grey to ... red?
@@ -139,6 +139,9 @@
   :n "C-+" #'text-scale-increase
   :n "C-=" nil
 
+  ;; Disable new tab shortcut:
+  :n "C-t" nil
+
   ;; Window Splits:
   :n "C-\\" #'evil-window-vsplit
   :n "C--" #'evil-window-split
@@ -148,6 +151,7 @@
 
   ;; Otherwise, In normal mode, ctrl-s will 'search' for an open buffer
   :n "C-s" #'+vertico/switch-workspace-buffer
+  :n "C-S-s" #'consult-buffer
 
   :nv "M-n" #'+workspace/switch-right
   :nv "M-p" #'+workspace/switch-left
@@ -191,7 +195,7 @@
       :n "o b" nil
       :desc "Org Capture" :n "o c" #'org-capture
       :desc "Toggle eshell popup" :n "o e" #'eshell-toggle
-      :desc "Open eshell here" :n "o E" #'eshell
+      :desc "Open eshell here" :n "o E" #'eshell-new
       :desc "Start an llm session" :n "o l" #'gptel
       :desc "magit" :n "o g" #'magit
       :desc "haskell (ghci)" :n "o H" #'run-haskell
