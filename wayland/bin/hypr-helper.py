@@ -5,15 +5,16 @@
 # script. I think I prefer this uberscript, over having a dozen scripts in my
 # bin.
 
-import os, subprocess, socket, re, argparse, time
+import os, subprocess, socket, re, argparse, time, json
 
 OPERATIONS=['switch', 'next', 'prev', 'movespecial', 'togglespecial', 'monitor',
-            'togglebrightness']
+            'togglebrightness', 'openurl']
 FIRST_WORKSPACE=1
 LAST_WORKSPACE=9
 
 HYPRCTL="/usr/bin/hyprctl"
 BRIGHTNESSCTL="/usr/bin/brightnessctl"
+BROTAB="brotab"
 
 def hyprctl(*args, **kwargs):
   cmd = [HYPRCTL]+list(map(lambda a: str(a), args))
@@ -37,6 +38,7 @@ def togglebrightness(device):
   return
 
 def active_workspace():
+  # TODO: Switch this to -j
   stdout = hyprctl('activeworkspace')
   return int(re.search(r'^workspace ID ([^ ]+)',stdout).group(1))
 
@@ -46,6 +48,7 @@ def operation_check(arg_value, supported_operations):
   return arg_value
 
 def active_window():
+  # TODO: Switch this to -j
   parts = re.match(re.compile(r"^Window ([^ ]+)[^\n]+\n(.+)", re.MULTILINE | re.DOTALL), hyprctl('activewindow'))
   return {**{'windowid': parts[1]},
           **dict(re.findall(r'^[ \t]+([^:]+):[ ]*([^\n]+)$', parts[2], flags=re.MULTILINE))}
@@ -62,6 +65,9 @@ def monitors():
 def focus_workspace(n):
   hyprctl('dispatch', 'workspace', n, assertOk=True)
 
+def focus_window(address):
+  hyprctl('dispatch', 'focuswindow', "address:"+address, assertOk=True)
+
 def move_to_workspace(s):
   hyprctl('dispatch', 'movetoworkspacesilent', s, assertOk=True)
 
@@ -70,6 +76,39 @@ def focus_special_workspace(n):
 
 def hyprpaper_change(to):
   hyprctl('hyprpaper', 'wallpaper', ",~/.config/hypr/workspace-{}.png".format(to), assertOk=True)
+
+def hyprctl_clients():
+  return json.loads(hyprctl('clients', '-j'))
+
+def brotab_list():
+  result = subprocess.run([BROTAB, 'list'], capture_output=True, text=True)
+  if result.returncode != 0:
+    raise Exception("Error encountered when running \"brotab list\" ({}): \"{}\"".format(result.returncode,
+                                                                                         repr(result.stdout)))
+  ret = []
+  for tab in re.findall(r"([^\.]+\.[^\.]+)\.([^\t]+)\t([^\t]+)\t([^\n]+)\n", result.stdout, re.MULTILINE | re.DOTALL):
+    ret.append({'window': tab[0], 'tabno': tab[1], 'title': tab[2], 'url': tab[3]})
+  return ret
+
+def brotab_active():
+  result = subprocess.run([BROTAB, 'active'], capture_output=True, text=True)
+  if result.returncode != 0:
+    raise Exception("Error encountered when running \"brotab list\" ({}): \"{}\"".format(result.returncode,
+                                                                                         repr(result.stdout)))
+  ret = []
+  for tab in re.findall(r"([^\.]+\.[^\.]+)\.([^\t]+)\t([^\t]+)\t([^\t]+)\t([^\t]+)\t([^\n]+)\n", result.stdout, re.MULTILINE | re.DOTALL):
+    ret.append({'window': tab[0], 'tabno': tab[1], 'prefix': tab[2], 'host': tab[3], 'pid': tab[4], 'class': tab[5]})
+  return ret
+
+def brotab_open(window, url):
+  print(window)
+  print(url+'\n')
+  result = subprocess.run([BROTAB, 'open', window], input=(url+'\n'), capture_output=True, text=True)
+  if result.returncode != 0:
+    raise Exception("Error encountered when running \"brotab list\" ({}): \"{}\"".format(result.returncode,
+                                                                                         repr(result.stdout)))
+  print(result.stdout)
+
 
 def on_event(line):
   parts = re.match(re.compile(r'^([^\>]+)>>(.*)'), line)
@@ -99,6 +138,7 @@ def on_event(line):
       for m in filter( lambda m: m['focused'] != 'yes', monitors()):
         hyprctl('keyword', 'monitor', "{}, disable".format(m['port']), assertOk=True)
 
+# main()
 parser = argparse.ArgumentParser(description='A smart(er) operation handler intended for use with bind, in the hyprland.conf.')
 parser.add_argument("operation",
                     help="One of our supported operations: {}".format(', '.join(OPERATIONS)),
@@ -126,6 +166,69 @@ match args.operation:
     togglebrightness(args.operation_args[0])
   case 'togglespecial':
     focus_special_workspace(active_workspace())
+  case 'openurl':
+     # Here, we open the url in firefox. However, we check to see which windows are open, and open to the
+     # the window in the current workspace, or the closest workspace to the left. Barring that, we just
+     # spawn a firefx in the current workspace. Then we focus to that window
+    if len(args.operation_args) != 1:
+      raise Exception("Invalid operation_args. One url expected.")
+
+    clients = hyprctl_clients()
+    tabs = brotab_list()
+    active_ws = active_workspace()
+
+    # TODO : what happens if firefox is closed?
+
+    # Attach hyprland client info to our brotab windows:
+    targets = []
+    for window in brotab_active():
+      # This gets us the title and url of the active window:
+      tab = next((t for t in tabs if t['window'] == window['window'] and t['tabno'] == window['tabno']), None)
+
+      if tab is None:
+        next
+
+      # This gets ups the corresponding hyprland client info to this window
+      # This is flawed in a few ways. Mostly there's a bug, if two active windows are open to the same page
+      # (say Google). Also, swim might change the hyprland settings to display window titles differently,
+      # and then this compare could fail. But this is all we can do for now.
+      client = None
+      for c in clients:
+        if c['class'] != window['class']:
+          next
+
+        # NOTE: an empty firefox window is titled 'Mozilla Firefox' in hyprland and
+        # 'New Tab' in firefox. Not sure about chrome...
+        if ((c['title'] == 'Mozilla Firefox' and tab['title'] == 'New Tab') or
+            c['title'].startswith(tab['title'])):
+          client = c
+          break
+
+      if client is None:
+        next
+
+      targets.append({
+        'window': window['window'],
+        'tabno': window['tabno'],
+        'address': client['address'],
+        'workspace_no': client['workspace']['id'],
+        'gt_active': client['workspace']['id'] > active_ws,
+        'title': tab['title']
+      })
+
+    window = '0'
+    address = None
+    if len(targets) > 0 :
+      # This sorts windows by: current_workspace, closest workspace to the left, closest to right
+      targets.sort(key=lambda t: active_ws + t['workspace_no'] if t['gt_active'] else (active_ws - t['workspace_no']))
+      window = targets[0]['window']
+      address = targets[0]['address']
+
+    # The goal! lol:
+    brotab_open(window, args.operation_args[0])
+    if address:
+      focus_window(address)
+
   case 'monitor':
     BUFFER_SIZE = 1024
     SOCKET_PATH = "/".join([os.environ['XDG_RUNTIME_DIR'],'hypr',os.environ['HYPRLAND_INSTANCE_SIGNATURE'],'.socket2.sock'])

@@ -87,6 +87,12 @@
 (vertico-posframe-mode 1) ; In general, we seem to like these modes
 (global-subword-mode 1)   ; Iterate through CamelCase words
 
+; Winner mode, which we really only use for winner-undo (C-w C-u)
+(when (fboundp 'winner-mode) (winner-mode t))
+
+; Turns on urls in code comments
+(global-goto-address-mode)
+
 ; more reasonable window close/resize behaviors
 (customize-set-variable 'display-buffer-base-action '(
     (display-buffer-reuse-window display-buffer-same-window)
