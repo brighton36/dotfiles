@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=open_url
+Type=Application
+Exec=/home/cderose/bin/hypr-helper.py openurl %u
+Terminal=false

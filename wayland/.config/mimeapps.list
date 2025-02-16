@@ -1,0 +1,42 @@
+[Default Applications]
+x-scheme-handler/tg=org.telegram.desktop.desktop
+text/html=userapp-Firefox-3WW612.desktop
+x-scheme-handler/http=open_url.desktop
+x-scheme-handler/https=open_url.desktop
+x-scheme-handler/about=google-chrome.desktop
+x-scheme-handler/unknown=google-chrome.desktop
+x-scheme-handler/chrome=userapp-Firefox-3WW612.desktop
+application/x-extension-htm=userapp-Firefox-3WW612.desktop
+application/x-extension-html=userapp-Firefox-3WW612.desktop
+application/x-extension-shtml=userapp-Firefox-3WW612.desktop
+application/xhtml+xml=userapp-Firefox-3WW612.desktop
+application/x-extension-xhtml=userapp-Firefox-3WW612.desktop
+application/x-extension-xht=userapp-Firefox-3WW612.desktop
+x-scheme-handler/mailto=google-chrome.desktop
+application/x-xdg-protocol-tg=telegramdesktop.desktop
+application/pdf=org.gnome.Evince.desktop
+application/x-yaml=org.xfce.mousepad.desktop
+x-scheme-handler/discord-694795560288256021=discord-694795560288256021.desktop
+text/plain=org.xfce.mousepad.desktop
+application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop
+x-scheme-handler/tonsite=org.telegram.desktop.desktop
+x-scheme-handler/discord-719647875465871400=discord-719647875465871400.desktop
+
+[Added Associations]
+x-scheme-handler/http=open_url.desktop;
+x-scheme-handler/https=open_url.desktop;
+x-scheme-handler/chrome=firefox.desktop;userapp-Firefox-3WW612.desktop;
+text/html=firefox.desktop;userapp-Firefox-3WW612.desktop;
+application/x-extension-htm=firefox.desktop;userapp-Firefox-3WW612.desktop;
+application/x-extension-html=firefox.desktop;userapp-Firefox-3WW612.desktop;
+application/x-extension-shtml=firefox.desktop;userapp-Firefox-3WW612.desktop;
+application/xhtml+xml=firefox.desktop;userapp-Firefox-3WW612.desktop;
+application/x-extension-xhtml=firefox.desktop;userapp-Firefox-3WW612.desktop;
+application/x-extension-xht=firefox.desktop;userapp-Firefox-3WW612.desktop;
+x-scheme-handler/tg=userapp-Telegram Desktop-RTYKI1.desktop;userapp-Telegram Desktop-AKAHW1.desktop;org.telegram.desktop.desktop;
+application/pdf=org.gnome.Evince.desktop;
+application/x-yaml=org.xfce.mousepad.desktop;
+text/plain=org.xfce.mousepad.desktop;
+application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop;
+x-scheme-handler/tonsite=org.telegram.desktop.desktop;
+application/x-partial-download=vlc.desktop;
