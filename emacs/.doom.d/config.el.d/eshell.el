@@ -43,8 +43,8 @@
 
 (map! :after eshell
       :map eshell-mode-map
-      :ni "C-p" 'eshell-previous-matching-input-from-input
-      :ni "C-n" 'eshell-next-matching-input-from-input
+      :i "C-p" 'eshell-previous-matching-input-from-input
+      :i "C-n" 'eshell-next-matching-input-from-input
       :ni "M-n" nil
       :ni "M-p" nil
       :niv "M-m" 'eshell-bol)

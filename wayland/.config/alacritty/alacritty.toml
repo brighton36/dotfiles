@@ -23,6 +23,9 @@ red = "#dc322f"
 white = "#eee8d5"
 yellow = "#b58900"
 
+[terminal]
+shell = "/usr/bin/tmux"
+
 [colors.primary]
 background = "#fdf6e3"
 foreground = "#657b83"
@@ -66,3 +69,11 @@ y = 4
 
 [general]
 live_config_reload = true
+
+[keyboard]
+# For some reason, this just kinda works if I hold down space... sometimes...
+# I just switched the shell to tmux which is probably what we want anyway
+#bindings = [
+#{ key = "Space",  mods = "SHIFT | CONTROL", action = "ToggleViMode" },
+#]
+

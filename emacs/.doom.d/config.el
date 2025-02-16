@@ -15,6 +15,7 @@
 
       auth-sources '((:source "~/.authinfo.gpg")) ; This is used in a few places...
       visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow) ; Just a prettier indication that we're wrapping:
+      text-scale-mode-step 1.05
 
       ; doom
       doom-theme 'doom-solarized-light-cderose
@@ -26,7 +27,7 @@
       ; - `doom-serif-font' -- for the `fixed-pitch-serif' face
       fancy-splash-image (concat doom-user-dir "dashboard-cat.png")
       nerd-icons-font-family "Symbols Nerd Fonts Mono"
-			
+
       ; avy
       avy-all-windows 'all-frames
 
@@ -163,8 +164,8 @@
   :nv "M-p" #'+workspace/switch-left
 
   ;; Avy
-  :nv "C-n" #'evil-avy-goto-char-timer
-  :nv "C-g" #'evil-avy-goto-line
+  :nv "C-." #'evil-avy-goto-char-timer
+  :nv "C-l" #'evil-avy-goto-line
 
   ;; Emoji's
   :i "C-z" #'emoji-insert
@@ -175,6 +176,9 @@
 
   ;; Globals:
   :g "C-c c" #'org-capture
+
+  ;; Winner:
+  :nv "C-n" #'winner-redo ; For whatever reason, C-p cannot be declared this way
 
   ; Seemingly, :g doesn't adjust this map?
   :map global-map
@@ -195,6 +199,9 @@
   )
 
 (map! :map global-map "C-`" nil) ; We moved this to C-e
+
+;; See note above for C-n
+(evil-define-key 'normal 'global (kbd "C-p") 'winner-undo)
 
 ;; The SPC o ... customizations. Which, is kinda like my 'start' menu
 (map! :leader 
@@ -230,5 +237,19 @@
       "M-]" nil
       "C-<backspace>" nil)
 
+; NOTE: I think we want this, to allow our winner-mode to take over... I think
+(map! :map evil-state-map
+      :i "C-p" nil
+      :i "C-n" nil
+  )
+
+; This affects ruby-inf, run-python, node-js repl
+(map! :after comint
+      :map comint-mode-map
+      :i "C-p" #'comint-previous-input
+      :i "C-n" #'comint-next-input
+      :n "C-p" nil
+      :n "C-n" nil
+  )
 ;; load config.el.d ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (mapc 'load (file-expand-wildcards "~/.doom.d/config.el.d/*.el"))
