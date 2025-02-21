@@ -1,0 +1,6 @@
+# Disable ELAN touchpad acting as mouse, which prevents touch-typing
+# disable in hyprland from working
+# USB
+ATTRS{name}=="ELAN0412:00 04F3:311D Mouse", ENV{LIBINPUT_IGNORE_DEVICE}="1"
+ATTRS{name}=="ETPS/2 Elantech Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
+

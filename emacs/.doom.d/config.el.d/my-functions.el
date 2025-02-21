@@ -17,3 +17,10 @@
 ;
 ;                  (command-execute 'dirvish)
 ;                  ))
+
+; From : https://www.masteringemacs.org/article/demystifying-emacs-window-manager
+(defun mp-toggle-window-dedication ()
+  "Toggles window dedication in the selected window."
+  (interactive)
+  (set-window-dedicated-p (selected-window)
+     (not (window-dedicated-p (selected-window)))))

@@ -63,3 +63,6 @@
 (package! inf-ruby)
 (package! gptel)
 (package! google-translate)
+(package! dired-open-with)
+(package! seeing-is-believing)
+(package! ruby-test-mode)

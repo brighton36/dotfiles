@@ -25,6 +25,9 @@
            (require 'fish-completion nil t))
   (global-fish-completion-mode))
 
+; TODO This is what's causing our dashboard issues!
+(setq doom-unreal-buffer-functions '(minibufferp))
+
 (defun eshell-new()
   "Open a new instance of eshell."
   (interactive)

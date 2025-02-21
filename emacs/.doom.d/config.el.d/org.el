@@ -1,4 +1,4 @@
-;-*- mode: elisp -*-
+; org.el --- Description -*- lexical-binding: t; -*-
 
 (map! :after org 
       :map org-mode-map 

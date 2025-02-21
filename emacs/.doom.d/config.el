@@ -18,6 +18,10 @@
       text-scale-mode-step 1.05
 
       ; doom
+
+      ; This is what was causing the doom to randomly change windows to the dashboard
+      doom-unreal-buffer-functions '(minibufferp)
+
       doom-theme 'doom-solarized-light-cderose
       doom-font (font-spec :family "Cousine Nerd Font" :size 14)            ; the primary font to use
       doom-variable-pitch-font (font-spec :family "Ubuntu Nerd Font" :size 14) ; a non-monospace font (where applicable)
@@ -71,8 +75,11 @@
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (after! auto-dim-other-buffers
-(custom-set-faces
-  '(auto-dim-other-buffers-face ((t (:background "#EEE8D5"))))))
+  (custom-set-faces
+    '(auto-dim-other-buffers-face ((t (:background "#EEE8D5")))))
+  (custom-set-faces
+    '(auto-dim-other-buffers-hide ((t (:background "#EEE8D5")))))
+  )
 
 ; avy
 ; TODO: Let's maybe change the highlight color from grey to ... red?
@@ -220,8 +227,8 @@
       :desc "Start Telegram Client" :n "o t" #'telega
       :n "o T" nil
       :desc "Web browser popup" :n "o w" #'eww
-      :desc "Toggle vterm popup" :n "o V" #'vterm
-      :desc "Open vterm here" :n "o v" #'vterm-mode
+      :desc "Toggle vterm popup" :n "o v" #'vterm
+      :desc "Open vterm here" :n "o V" #'vterm-mode
       :desc "Google Translate this Buffer" :n "o x" #'google-translate-buffer
       :desc "ipython " :n "o Y" #'run-python
       )
