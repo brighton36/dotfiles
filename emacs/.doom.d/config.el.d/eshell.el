@@ -8,7 +8,7 @@
       eshell-highlight-prompt nil
       eshell-prompt-function (lambda nil
                                (concat
-                                 (propertize (user-login-name) 'face `(:foreground ,(doom-color 'green)))
+                                 (propertize (user-login-name) 'face `(:foreground ,(doom-color 'blue)))
                                  "@"
                                  (system-name)
                                  " "
@@ -16,7 +16,7 @@
                                    (if (string-prefix-p (getenv "HOME") (eshell/pwd))
                                      (concat "~" (substring (eshell/pwd) (length (getenv "HOME"))))
                                      (eshell/pwd))
-                                   'face `(:foreground ,(doom-color 'green)))
+                                   'face `(:foreground ,(doom-color 'blue)))
                                  (if (= (user-uid) 0) "# " "> ")
                                  ))
 )

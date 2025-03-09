@@ -24,3 +24,9 @@
   (interactive)
   (set-window-dedicated-p (selected-window)
      (not (window-dedicated-p (selected-window)))))
+
+(defun vterm-new (&optional arg)
+  "Open a new instance of eshell."
+  (interactive)
+  (vterm--internal #'switch-to-buffer arg)
+  )

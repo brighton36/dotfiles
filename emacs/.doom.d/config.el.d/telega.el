@@ -1,5 +1,29 @@
 ;-*- mode: elisp -*-
 
+(defun my-read-screenshot ()
+  (let ((screenshotspath "~/Pictures/Screenshots"))
+    (let ((filename (telega-completing-read "Select a screenshot: "
+                    (cl-remove-if (lambda (k) (string-match-p "^\\." k))
+                      (reverse
+                        (mapcar #'car
+                            (sort (directory-files-and-attributes screenshotspath)
+                                  #'(lambda (x y) (time-less-p (nth 6 x) (nth 6 y))))))))
+         ))
+      (when filename (concat screenshotspath "/" filename))
+    )
+  )
+)
+
+(defun my-telega-chatbuf-attach-screenshot (&optional chat)
+  (interactive) ;(list (or current-prefix-arg 1) telega-chatbuf--chat))
+
+    (let ((tmpfile (my-read-screenshot)))
+      (when (file-exists-p tmpfile)
+        (telega-chat--pop-to-buffer chat)
+        (x-focus-frame (window-frame (get-buffer-window)))
+        (telega-chatbuf-attach-media tmpfile)))
+  )
+
 ; These settings are needed to support : https://zevlg.github.io/telega.el/#settings-for-emacs-as-daemon
 (setq telega-use-images 1
       telega-emoji-font-family "Noto Color Emoji"

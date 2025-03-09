@@ -91,6 +91,9 @@
 (custom-set-faces! `(ledger-font-payee-uncleared-face :foreground ,(doom-color 'green)))
 (custom-set-faces! `(ledger-font-comment-face :foreground ,(doom-color 'cyan)))
 
+(add-hook 'ruby-mode-hook
+  (function (lambda ()
+          (setq evil-shift-width ruby-indent-level))))
 ;; Random mode Preferences  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (vertico-posframe-mode 1) ; In general, we seem to like these modes
 (global-subword-mode 1)   ; Iterate through CamelCase words
@@ -163,6 +166,10 @@
   ; ace-window
   :n "C-f" #'ace-window
 
+  ; Cursor Jumps
+  :ni "C-o" #'better-jumper-jump-backward
+  :ni "C-i" #'better-jumper-jump-forward
+
   ;; Otherwise, In normal mode, ctrl-s will 'search' for an open buffer
   :n "C-s" #'+vertico/switch-workspace-buffer
   :n "C-S-s" #'consult-buffer
@@ -228,7 +235,7 @@
       :n "o T" nil
       :desc "Web browser popup" :n "o w" #'eww
       :desc "Toggle vterm popup" :n "o v" #'vterm
-      :desc "Open vterm here" :n "o V" #'vterm-mode
+      :desc "Open vterm here" :n "o V" #'vterm-new
       :desc "Google Translate this Buffer" :n "o x" #'google-translate-buffer
       :desc "ipython " :n "o Y" #'run-python
       )

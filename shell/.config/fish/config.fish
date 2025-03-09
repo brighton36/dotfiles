@@ -1,5 +1,10 @@
 ## Bindings: ##################################################################
-fish_vi_key_bindings --no-erase
+if [ -n "$INSIDE_EMACS" ]
+  # Vterm
+  set -g fish_key_bindings "fish_default_key_bindings"
+else
+  set -g fish_key_bindings "fish_vi_key_bindings"
+end
 
 # Basic Emacs keys
 bind -M insert \cB backward-char
