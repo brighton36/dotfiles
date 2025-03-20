@@ -91,9 +91,15 @@
 (custom-set-faces! `(ledger-font-payee-uncleared-face :foreground ,(doom-color 'green)))
 (custom-set-faces! `(ledger-font-comment-face :foreground ,(doom-color 'cyan)))
 
+; auto-fill comments on all modes
+(setq-default auto-fill-function 'do-auto-fill)
+(setq comment-auto-fill-only-comments t)
+(setq-default fill-column 100)
+
 (add-hook 'ruby-mode-hook
   (function (lambda ()
           (setq evil-shift-width ruby-indent-level))))
+
 ;; Random mode Preferences  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (vertico-posframe-mode 1) ; In general, we seem to like these modes
 (global-subword-mode 1)   ; Iterate through CamelCase words
@@ -117,12 +123,24 @@
 (defun my-web-mode-hook () "Hooks for Web mode." (setq web-mode-markup-indent-offset 2))
 (add-hook 'web-mode-hook  'my-web-mode-hook)
 
-; This fixes a problem in the emacs --daemon mode, where evil-collection-debug 
-; crashes the init, due to this function not being defined. At some point
-; we'll upgrade to an emacs where this is compiled, and this hack should be 
-; removed
+; This fixes a problem in the emacs --daemon mode, where evil-collection-debug crashes the init, due
+; to this function not being defined. At some point we'll upgrade to an emacs where this is
+; compiled, and this hack should be removed
 (defun treesit-available-p () nil)
 
+; I'm trying this out...
+(savehist-mode 1)
+
+; Aider
+(use-package aider
+  :config
+  (setq aider-args (list "--no-auto-commits" "--model" "deepseek" "--api-key"
+                     (concat "deepseek=" (get-secret 'deepseek-api-key)))))
+; Not sure I want this yet...
+(global-set-key (kbd "C-c a") 'aider-transient-menu)
+(global-auto-revert-mode 1) ; this reloads the aider changes. Possibly shouldn't be in this section...
+
+; epa
 (require 'epa)
 (epa-file-enable)
 
@@ -131,7 +149,7 @@
 (add-to-list '+doom-dashboard-menu-sections
              '("Start Telega"
                :icon (nerd-icons-faicon "nf-fae-telegram" :face 'doom-dashboard-menu-title)
-               ; TODO
+              ; TODO
                ;:when (modulep! telega)
                :action telega))
 (add-to-list '+doom-dashboard-menu-sections
@@ -151,10 +169,20 @@
                :icon (nerd-icons-faicon "nf-fa-file" :face 'doom-dashboard-menu-title)
                :action +default/new-buffer))
 
+; Disable the auto-pairing of parethesis and quotes and such...
+(remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
+
 ;; Key Bindings ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (map! 
   :n "C-+" #'text-scale-increase
   :n "C-=" nil
+
+  ;; Next/Last Error
+  :ni "C->" 'next-error
+  :ni "C-<" 'previous-error
+
+  ; Disable better-jumper for tab on insert
+  :i [tab] #'indent-for-tab-command
 
   ;; Disable new tab shortcut:
   :n "C-t" nil
@@ -220,6 +248,7 @@
 ;; The SPC o ... customizations. Which, is kinda like my 'start' menu
 (map! :leader 
       :n "o b" nil
+      :desc "Aider" :n "o a" #'aider-transient-menu
       :desc "Org Capture" :n "o c" #'org-capture
       :desc "Toggle eshell popup" :n "o e" #'eshell-toggle
       :desc "Open eshell here" :n "o E" #'eshell-new

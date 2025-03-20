@@ -14,12 +14,11 @@
   )
 )
 
-(defun my-telega-chatbuf-attach-screenshot (&optional chat)
-  (interactive) ;(list (or current-prefix-arg 1) telega-chatbuf--chat))
+(defun my-telega-chatbuf-attach-screenshot ()
+  (interactive)
 
     (let ((tmpfile (my-read-screenshot)))
       (when (file-exists-p tmpfile)
-        (telega-chat--pop-to-buffer chat)
         (x-focus-frame (window-frame (get-buffer-window)))
         (telega-chatbuf-attach-media tmpfile)))
   )

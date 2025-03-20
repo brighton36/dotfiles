@@ -4,6 +4,7 @@
       eshell-prefer-lisp-functions nil
       eshell-plain-grep-behavior t
       eshell-hist-ignoredups t
+      eshell-history-append t
       eshell-banner-message ""
       eshell-highlight-prompt nil
       eshell-prompt-function (lambda nil
@@ -25,6 +26,28 @@
            (require 'fish-completion nil t))
   (global-fish-completion-mode))
 
+
+;; copied from https://stackoverflow.com/questions/13009908/eshell-search-history
+(defun my-eshell-previous-matching-input-from-input (arg)
+  "Search backwards through input history for match for current input.
+\(Previous history elements are earlier commands.)
+With prefix argument N, search for Nth previous match.
+If N is negative, search forwards for the -Nth following match."
+  (interactive "p")
+  (if (not (memq last-command '(eshell-previous-matching-input-from-input
+                eshell-next-matching-input-from-input)))
+      ;; Starting a new search
+      (setq eshell-matching-input-from-input-string
+        (buffer-substring (save-excursion (eshell-bol) (point))
+                  (point))
+        eshell-history-index nil))
+  (eshell-previous-matching-input
+   (regexp-quote eshell-matching-input-from-input-string)
+   arg))
+
+;; override eshell-previous-matching-input-from-input, because it limits the search is from the beginning.
+(advice-add 'eshell-previous-matching-input-from-input :override #'my-eshell-previous-matching-input-from-input)
+
 ; TODO This is what's causing our dashboard issues!
 (setq doom-unreal-buffer-functions '(minibufferp))
 
@@ -44,8 +67,12 @@
 (add-hook 'eshell-mode-hook (lambda ()
     (eshell/alias "ledger" "ledger --no-pager $*")))
 
+; This fixes evince not starting. Probably other programs too
+(setenv "XDG_DATA_DIRS" "/usr/share")
+
 (map! :after eshell
       :map eshell-mode-map
+      :i "<tab>" 'company-complete-common-or-cycle
       :i "C-p" 'eshell-previous-matching-input-from-input
       :i "C-n" 'eshell-next-matching-input-from-input
       :ni "M-n" nil

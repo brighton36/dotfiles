@@ -203,3 +203,10 @@
 ; ESC (number) (up or down)
 ; (setq display-line-numbers-type 'relative)
 
+; It seems like this is needed in various places, early in the init process. So,
+; I'm sticking it here for now
+(require 'json)
+(defun get-secret (key)
+  "Return the value of the json file gcal_secret for key"
+  (cdr (assoc key (json-read-file "~/.doom.d/secrets.json")))
+  )
