@@ -20,7 +20,7 @@
        ;;layout            ; auie,ctsrnm is the superior home row
 
        :completion
-       ; NOTE: the 'company' module causes the mu4e timer to fail, and must be disabled
+       ; NOTE: the 'company' module at one point caused the mu4e timer to fail, and must be disabled
        company           ; the ultimate code completion backend
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...

@@ -82,7 +82,7 @@ If FRAME is a frame, it is returned."
     (make-frame '((name . "emacs-gptel-popup") (width . 150) (height . 40) (minibuffer . f))))
   (select-frame-by-name "emacs-gptel-popup")
   ; TODO: Maybe exec the hypr-helper to assign the window to the active workspace?
-  (generate-new-buffer "*gptel*")
+  (display-buffer (generate-new-buffer "*gptel*"))
 
   (call-interactively 'my/gptel-switch-preset)
 
