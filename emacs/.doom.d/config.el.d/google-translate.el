@@ -21,7 +21,10 @@
   (let ((input-buffer (generate-new-buffer "*google-translate*")) (buffer-name "*Google Translate*")   )
     ; TODO Can I roll this into the above let?
     (display-buffer input-buffer)
-    (with-current-buffer input-buffer (interactive-google-translate-mode))
+    (with-current-buffer input-buffer
+      (set (make-local-variable 'interactive-google-translate-mode-exec-timer) nil)
+      (set (make-local-variable 'after-change-functions) nil)
+      (add-hook 'after-change-functions 'interactive-google-translate-mode-set-timer))
     ;(add-hook 'text-mode-hook #'the-function-to-add nil t)
     (let ((initial-input-window (selected-window)))
       (select-window (split-window-vertically))
@@ -58,7 +61,6 @@
 
 (defun interactive-google-translate-mode-set-timer(a b c) ; all unused
   "Setup timer for execute translate if it is still not set."
-  (message "Inside the set timer")
   (unless interactive-google-translate-mode-exec-timer
     (setq interactive-google-translate-mode-exec-timer
           (run-with-idle-timer interactive-google-translate-mode-idle-wait-time nil
@@ -68,11 +70,9 @@
 (defun interactive-google-translate-mode-enable()
   "Enable interactive-google-translate-mode."
   ; TODO If I don't use the -local, then we workish...
-  (message "Inside the enable")
   (set (make-local-variable 'interactive-google-translate-mode-exec-timer) nil)
   (set (make-local-variable 'after-change-functions) nil)
   (add-hook 'after-change-functions 'interactive-google-translate-mode-set-timer)
-  (message "end of the enable")
   )
 
 (defun interactive-google-translate-mode-disable()
