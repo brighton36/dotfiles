@@ -1,4 +1,4 @@
-;-*- mode: elisp -*-
+;;; config.el --- Description -*- lexical-binding: t; -*-
 
 ; This seems to be needed, since switching to guix:
 (add-to-list 'custom-theme-load-path "~/.doom.d/themes")
@@ -26,6 +26,8 @@
       doom-font (font-spec :family "Cousine Nerd Font" :size 14)            ; the primary font to use
       doom-variable-pitch-font (font-spec :family "Ubuntu Nerd Font" :size 14) ; a non-monospace font (where applicable)
       doom-big-font (font-spec :family "Cousine Nerd Font" :size 18)        ; use this for presentations or streaming
+
+      vertico-posframe-font "Ubuntu Nerd Font 12"
       ; NOTE: These fonts are also available:
       ;doom-symbol-font (font-spec :family "Noto Color Emoji" :size 14)        ; for unicode glyphs
       ; - `doom-serif-font' -- for the `fixed-pitch-serif' face
@@ -57,8 +59,8 @@
       aw-dispatch-when-more-than 1
 
       ; lisp
-      lisp-indent-offset 2
-)
+      lisp-indent-offset 2)
+
 
 ; dired - Seems like we need to set these after the mode loads
 (after! dired (setq dired-listing-switches "-lt"))
@@ -188,6 +190,9 @@
   ;; Disable new tab shortcut:
   :n "C-t" nil
 
+  ;; Comment
+  :n "C-;" 'comment-region
+
   ;; Window Splits:
   :n "C-\\" #'evil-window-vsplit
   :n "C--" #'evil-window-split
@@ -254,7 +259,6 @@
       :desc "Toggle eshell popup" :n "o e" #'eshell-toggle
       :desc "Open eshell here" :n "o E" #'eshell-new
       :desc "Start an llm session" :n "o l" #'gptel
-      :desc "magit" :n "o g" #'magit
       :desc "haskell (ghci)" :n "o H" #'run-haskell
       :desc "javascript (node)" :n "o J" #'nodejs-repl
       :desc "Mu4e" :n "o m" #'mu4e

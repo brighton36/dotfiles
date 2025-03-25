@@ -21,13 +21,13 @@
 
 (defvar my/gptel-presets
   ;; PRESET NAME                              MODEL                        BACKEND NAME   DIRECTIVE
-  '(("Ollama:mistral:latest"                  'mistral:latest              "Ollama"       "My local minstral llm")
-    ("DeepSeek:deepseek-reasoner"             'deepseek-reasoner           "DeepSeek"     "Default directive for Deepseek")
-    ("Anthropic:claude-3-7-sonnet-20250219"   'claude-3-7-sonnet-20250219  "Anthropic"    "The aiderchat champion")
-    ("Groq:llama-3.1-8b-instant"              'llama-3.1-8b-instant        "Groq"         "Meta's biggest's model on Groq")
-    ("Gemini:gemini-2.0-flash"                'gemini-2.0-flash            "Gemini"       "Google's flagship Gemini model")
-    ("Kagi:fastgpt"                           'fastgpt                     "Kagi"         "Kagi's non-streaming general model")
-    ("ChatGPT:gpt-4-turbo"                    'gpt-4-turbo                 "ChatGPT"      "Default directive for ChatGPT"))
+  '(("🦙 Ollama:mistral:latest"                  'mistral:latest              "Ollama"       "My local minstral llm")
+    ("🐋 DeepSeek:deepseek-reasoner"             'deepseek-reasoner           "DeepSeek"     "Default directive for Deepseek")
+    ("🗣️ Anthropic:claude-3-7-sonnet-20250219"   'claude-3-7-sonnet-20250219  "Anthropic"    "The aiderchat champion")
+    (" Groq:llama-3.1-8b-instant"              'llama-3.1-8b-instant        "Groq"         "Meta's biggest's model on Groq")
+    (" Gemini:gemini-2.0-flash"                'gemini-2.0-flash            "Gemini"       "Google's flagship Gemini model")
+    (" Kagi:fastgpt"                           'fastgpt                     "Kagi"         "Kagi's non-streaming general model")
+    ("󰭹 ChatGPT:gpt-4-turbo"                    'gpt-4-turbo                 "ChatGPT"      "Default directive for ChatGPT"))
   "List of preset combinations for gptel.")
 
 (defun my/gptel-switch-preset (preset)

@@ -60,6 +60,14 @@ keymap:
       compose-key_0: f11
       compose-minus: f12 # Compose-[ : f12
 
+  - name: evince
+    application:
+      only: evince
+    remap:
+      C-u: c-home    # C-g - Begining of Document
+      C-SHIFT-u: c-end   # C-S-g - End of Document
+      C-f: pageup    # C-u - page up
+      C-h: pagedown  # C-d - page down
   - name: firefox
     application: 
       only: firefox

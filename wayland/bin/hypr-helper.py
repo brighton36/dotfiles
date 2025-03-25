@@ -8,22 +8,24 @@
 import os, subprocess, socket, re, argparse, time, json
 
 OPERATIONS=['switch', 'next', 'prev', 'movespecial', 'togglespecial', 'monitor',
-            'togglebrightness', 'openurl']
+            'togglebrightness', 'openurl', 'togglebluetooth', 'screenshot']
 FIRST_WORKSPACE=1
 LAST_WORKSPACE=9
 
-HYPRCTL="/usr/bin/hyprctl"
-BRIGHTNESSCTL="/usr/bin/brightnessctl"
-BROTAB="brotab"
-NOTIFY="/usr/bin/notify-send"
-FIREFOX="/usr/bin/firefox"
+HYPRCTL = "/usr/bin/hyprctl"
+BRIGHTNESSCTL = "/usr/bin/brightnessctl"
+BROTAB = "brotab"
+NOTIFY = "/usr/bin/notify-send"
+FIREFOX = "/usr/bin/firefox"
+BLUETOOTHCTL = "/usr/bin/bluetoothctl"
 
-def run(*args,**kwargs):
+def run(*args, **kwargs):
   result = subprocess.run(list(map(lambda a: str(a), args)),
                           input=kwargs.get('input', None),
                           close_fds=kwargs.get('close_fds', None),
-                          capture_output=True,
-                          text=True)
+                          capture_output=kwargs.get('capture_output', True),
+                          stdout=kwargs.get('stdout', None),
+                          shell=kwargs.get('shell', False))
   if result.returncode != 0:
     raise Exception("Error running {} ({}): {}".format(args[0],
                                                        result.returncode,
@@ -43,6 +45,10 @@ def togglebrightness(device):
   else:
     run(BRIGHTNESSCTL,"-d", device, "s", 0)
   return
+
+def togglebluetooth():
+  parts = re.match(re.compile(r'.*Powered\:[ ]+([^ ]+)$', flags=re.MULTILINE | re.DOTALL), run(BLUETOOTHCTL, "show"))
+  run(BLUETOOTHCTL, "power", "off" if parts[1] == 'yes' else "on")
 
 def active_workspace():
   return int(json.loads(hyprctl('activeworkspace', '-j'))['id'])
@@ -93,6 +99,36 @@ def brotab_active():
   for tab in re.findall(r"([^\.]+\.[^\.]+)\.([^\t]+)\t([^\t]+)\t([^\t]+)\t([^\t]+)\t([^\n]+)\n", run(BROTAB, 'active'), re.MULTILINE | re.DOTALL):
     ret.append({'window': tab[0], 'tabno': tab[1], 'prefix': tab[2], 'host': tab[3], 'pid': tab[4], 'class': tab[5]})
   return ret
+
+def screenshot(domain):
+  from datetime import datetime
+
+  DIR_OUTPUT = "~/Pictures/Screenshots"
+  FILENAME = "Screenshot %Y-%m-%d %I%M%S.png"
+
+  output_path = os.path.expanduser(
+    '/'.join([DIR_OUTPUT, datetime.now().strftime(FILENAME)]))
+
+  # Now Drop shadow:
+  run('/usr/bin/convert', "png:-", "(", "-clone", "0", "-background",
+      "black", "-shadow", "80x3+5+5", ")",
+      "+swap", "-background", "none", "-layers", "merge", "+repage", output_path,
+      input=run("/usr/bin/convert", "png:-",
+        "(", "+clone", "-alpha", "extract",
+        "-draw", 'fill black polygon 0,0 0,15 15,0 fill white circle 15,15 15,0',
+        "(", "+clone", "-flip", ")", "-compose", "Multiply", "-composite",
+        "(", "+clone", "-flop", ")", "-compose", "Multiply", "-composite",
+        ")", "-alpha", "off", "-compose", "CopyOpacity", "-composite", "png:-",
+        stdout=subprocess.PIPE,
+        capture_output=False,
+        input=run("/usr/bin/hyprshot", "-m", "region", "-r", "-s", "-z",
+                  stdout=subprocess.PIPE,
+                  capture_output=False)
+        )
+      )
+
+  # And view it:
+  run('/usr/bin/feh', output_path)
 
 def on_event(line):
   parts = re.match(re.compile(r'^([^\>]+)>>(.*)'), line)
@@ -150,6 +186,8 @@ match args.operation:
     togglebrightness(args.operation_args[0])
   case 'togglespecial':
     focus_special_workspace(active_workspace())
+  case 'togglebluetooth':
+    togglebluetooth()
   case 'openurl':
     try:
       # Here, we open the url in firefox. However, we check to see which windows are open, and open to the
@@ -219,6 +257,10 @@ match args.operation:
         # Close fds spawns the process, and doesn't keep this script from terminating
         run(FIREFOX, "--new-window", args.operation_args[0], close_fds=True)
 
+  case 'screenshot':
+    if len(args.operation_args) != 1:
+      raise Exception("Invalid operation_args. A screenshot domain was expected.")
+    screenshot(args.operation_args[0])
 
   case 'monitor':
     BUFFER_SIZE = 1024
