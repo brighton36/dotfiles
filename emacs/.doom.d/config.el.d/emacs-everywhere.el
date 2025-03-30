@@ -42,7 +42,10 @@
       ;                                     "key" "--clearmodifiers" "Shift+Insert"
       ;                                     "sleep" "0.25" 
       ;                                     "keyup" "Meta_L" "Meta_R" "Alt_L" "Alt_R" "Super_L" "Super_R")
-      emacs-everywhere-paste-command (list "/usr/bin/ydotool" "key" "29:1" "42:1" "47:1" "47:0" "42:0" "29:0")
+      ; /usr/include/linux/input-event-codes.h:
+      ; 29 is leftctl, 42 is leftshift, 47 is v. The number to right of the colon is the state (on or off)
+      ; For us, we want KEY_DOT @ 52 as the Dvorak v, and KEY_CAPSLOCK @ 58 for ctrl
+      emacs-everywhere-paste-command (list "/usr/bin/ydotool" "key" "58:1" "42:1" "52:1" "52:0" "42:0" "58:0")
 )
 
 (remove-hook 'emacs-everywhere-init-hooks 'emacs-everywhere-set-frame-position)

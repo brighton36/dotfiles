@@ -23,11 +23,12 @@
       doom-unreal-buffer-functions '(minibufferp)
 
       doom-theme 'doom-solarized-light-cderose
-      doom-font (font-spec :family "Cousine Nerd Font" :size 14)            ; the primary font to use
+      ; Seems like emacs only picks up fonts in ~/.local/share/fonts/
+      doom-font (font-spec :family "Ubuntu Mono Nerd Font" :size 16)            ; the primary font to use
       doom-variable-pitch-font (font-spec :family "Ubuntu Nerd Font" :size 14) ; a non-monospace font (where applicable)
-      doom-big-font (font-spec :family "Cousine Nerd Font" :size 18)        ; use this for presentations or streaming
+      doom-big-font (font-spec :family "Ubuntu Mono Nerd Font" :size 18)        ; use this for presentations or streaming
 
-      vertico-posframe-font "Ubuntu Nerd Font 12"
+      vertico-posframe-font "Ubuntu Nerd Font 14"
       ; NOTE: These fonts are also available:
       ;doom-symbol-font (font-spec :family "Noto Color Emoji" :size 14)        ; for unicode glyphs
       ; - `doom-serif-font' -- for the `fixed-pitch-serif' face

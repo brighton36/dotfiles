@@ -40,6 +40,8 @@
     (display-buffer input-buffer)
     (call-interactively 'my/google-translate-switch-preset)
     (with-current-buffer input-buffer
+      ; TODO:
+      ;(set text-scale-mode-amount 3)
       (set (make-local-variable 'google-translate-from-anywhere-exec-timer) nil)
       (set (make-local-variable 'after-change-functions) nil)
       (add-hook 'after-change-functions 'google-translate-from-anywhere-set-timer))
