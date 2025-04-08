@@ -1,5 +1,19 @@
 ;-*- mode: elisp -*-
 
+; These settings are needed to support : https://zevlg.github.io/telega.el/#settings-for-emacs-as-daemon
+(setq telega-use-images 1
+      telega-emoji-font-family "Noto Color Emoji"
+      telega-emoji-use-images 1
+      telega-online-status-function #'telega-focus-state)
+
+; This line was needed in order for the systemd based daemon to work
+(require 'telega) ; This has to load after the setq, or else we don't seem to use-images...
+
+; TODO Let's maybe show the age in a separate column, using marginalia? Use the file entry as a guide
+; https://github.com/minad/marginalia/blob/main/marginalia.el#L87 maybe use  annotation-function in
+; the completing-read... or see if telega-completing-read supports annotation (pretty sure it does)
+; More details here: https://kisaragi-hiu.com/emacs-completion-metadata
+; and here: https://emacs.stackexchange.com/questions/74547/completing-read-search-also-in-annotations
 (defun my-read-screenshot ()
   (let ((screenshotspath "~/Pictures/Screenshots"))
     (let ((filename (telega-completing-read "Select a screenshot: "
@@ -14,8 +28,8 @@
   )
 )
 
-(defun my-telega-chatbuf-attach-screenshot ()
-  (interactive)
+(defun my-telega-chatbuf-attach-screenshot (&optional n chat)
+  (interactive (list (or current-prefix-arg 1) telega-chatbuf--chat))
 
     (let ((tmpfile (my-read-screenshot)))
       (when (file-exists-p tmpfile)
@@ -23,14 +37,8 @@
         (telega-chatbuf-attach-media tmpfile)))
   )
 
-; These settings are needed to support : https://zevlg.github.io/telega.el/#settings-for-emacs-as-daemon
-(setq telega-use-images 1
-      telega-emoji-font-family "Noto Color Emoji"
-      telega-emoji-use-images 1
-      telega-online-status-function #'telega-focus-state)
-
-; This line was needed in order for the systemd based daemon to work
-(require 'telega)
+(assoc-delete-all "screenshot" telega-chat-attach-commands)
+(add-to-list 'telega-chat-attach-commands '("screenshot" (my-permission :can_send_photos) my-telega-chatbuf-attach-screenshot) )
 
 (map!
   :g "C-c t" telega-prefix-map

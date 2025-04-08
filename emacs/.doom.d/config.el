@@ -52,6 +52,10 @@
       ; Outline 
       outline-regexp "[#\f]+"
 
+      ; minibuffer
+      resize-mini-windows nil ; TODO I *think* this fixes the issue where the minibuffer doesn't
+                              ; paint on initial draw, sometimes...
+
       ; highlight-indent
       highlight-indent-guides-method 'bitmap
       highlight-indent-guides-auto-character-face-perc 25
@@ -143,6 +147,30 @@
 ; Not sure I want this yet...
 (global-set-key (kbd "C-c a") 'aider-transient-menu)
 (global-auto-revert-mode 1) ; this reloads the aider changes. Possibly shouldn't be in this section...
+
+; completion-preview-mode
+(add-hook 'prog-mode-hook #'completion-preview-mode)
+(add-hook 'text-mode-hook #'completion-preview-mode)
+;; and in \\[shell] and friends
+(with-eval-after-load 'comint
+  (add-hook 'comint-mode-hook #'completion-preview-mode))
+
+(with-eval-after-load 'completion-preview
+  ;; Show the preview already after two symbol characters
+  (setq completion-preview-minimum-symbol-length 2))
+
+; TODO
+;  (keymap-set completion-preview-active-mode-map "M-n" #'completion-preview-next-candidate)
+;  (keymap-set completion-preview-active-mode-map "M-p" #'completion-preview-prev-candidate)
+;  ;; Convenient alternative to C-i after typing one of the above
+;  (keymap-set completion-preview-active-mode-map "M-i" #'completion-preview-insert))
+
+(custom-set-faces!
+  `(completion-preview :foreground ,"#93a1a1", :background "#eee8d5")) ; Solarized base1, base2
+
+; flyspell:
+(add-hook 'text-mode-hook 'flyspell-mode)
+(add-hook 'prog-mode-hook 'flyspell-prog-mode)
 
 ; epa
 (require 'epa)
