@@ -143,7 +143,9 @@
 (use-package aider
   :config
   (setq aider-args (list "--no-auto-commits" "--model" "claude-3-5-sonnet-latest" "--api-key"
-                     (concat "anthropic=" (get-secret 'anthropic-api-key)))))
+                     (concat "anthropic=" (get-secret 'anthropic-api-key))))
+ (require 'aider-doom))
+
 ; Not sure I want this yet...
 (global-set-key (kbd "C-c a") 'aider-transient-menu)
 (global-auto-revert-mode 1) ; this reloads the aider changes. Possibly shouldn't be in this section...

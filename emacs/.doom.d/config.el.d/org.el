@@ -26,6 +26,11 @@
 ; TODO: this is crashing the lisp: ;(set-fill-column 0)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1) (display-line-numbers-mode 0)))
 
+(setq ob-mermaid-cli-path "/usr/bin/mmdc")
+(org-babel-do-load-languages
+    'org-babel-load-languages
+    '((mermaid . t)))
+
 ; This was getting in the way of the global map shortcuts
 (after! org
   '(mapc

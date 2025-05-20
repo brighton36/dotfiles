@@ -54,7 +54,6 @@
 (package! dumb-jump)
 (package! evil-avy)
 (package! org-bullets)
-
 (package! vertico-posframe :recipe (:host github :repo "tumashu/vertico-posframe"))
 (package! svelte-mode)
 (package! emacs-fish-completion :recipe (:host github :repo "LemonBreezes/emacs-fish-completion"))
@@ -64,10 +63,7 @@
 (package! gptel)
 (package! google-translate)
 (package! dired-open-with)
-(package! seeing-is-believing)
 (package! ruby-test-mode)
-(package! aider :recipe
-  ( :host github
-    :repo "tninja/aider.el"
-    :files ("aider.el" "aider-core.el" "aider-file.el" "aider-code-change.el" "aider-discussion.el" "aider-prompt-mode.el" "aider-doom.el")))
+(package! aider :recipe ( :host github :repo "tninja/aider.el"))
 (package! google-translate)
+(package! ob-mermaid)

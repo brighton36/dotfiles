@@ -21,7 +21,7 @@ BLUETOOTHCTL = "/usr/bin/bluetoothctl"
 
 def run(*args, **kwargs):
   result = subprocess.run(list(map(lambda a: str(a), args)),
-                          input=kwargs.get('input', None),
+                          input=kwargs['input'].encode('utf-8') if 'input' in kwargs else None,
                           close_fds=kwargs.get('close_fds', None),
                           capture_output=kwargs.get('capture_output', True),
                           stdout=kwargs.get('stdout', None),
@@ -30,7 +30,7 @@ def run(*args, **kwargs):
     raise Exception("Error running {} ({}): {}".format(args[0],
                                                        result.returncode,
                                                        result.stdout))
-  return result.stdout
+  return result.stdout.decode()
 
 def hyprctl(*args, **kwargs):
   stdout = run(HYPRCTL, *args)
@@ -189,7 +189,7 @@ match args.operation:
   case 'togglebluetooth':
     togglebluetooth()
   case 'openurl':
-    try:
+#    try:
       # Here, we open the url in firefox. However, we check to see which windows are open, and open to the
       # the window in the current workspace, or the closest workspace to the left. Barring that, we just
       # spawn a firefx in the current workspace. Then we focus to that window
@@ -251,11 +251,11 @@ match args.operation:
       if address:
         focus_window(address)
 
-    except Exception as e:
-      run(NOTIFY, "hypr-helper.py openurl: ", str(e))
-      if len(args.operation_args) > 0:
-        # Close fds spawns the process, and doesn't keep this script from terminating
-        run(FIREFOX, "--new-window", args.operation_args[0], close_fds=True)
+#    except Exception as e:
+#      run(NOTIFY, "hypr-helper.py openurl: ", str(e))
+#      if len(args.operation_args) > 0:
+#        # Close fds spawns the process, and doesn't keep this script from terminating
+#        run(FIREFOX, "--new-window", args.operation_args[0], close_fds=True)
 
   case 'screenshot':
     if len(args.operation_args) != 1:
