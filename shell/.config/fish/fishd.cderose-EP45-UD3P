@@ -29,3 +29,4 @@ SET fish_pager_color_completion:normal
 SET fish_pager_color_description:555\x1eyellow
 SET fish_pager_color_prefix:cyan
 SET fish_pager_color_progress:cyan
+SET fish_user_paths:/home/cderose/\x2econfig/guix/current/bin\x1e/home/cderose/\x2elocal/bin

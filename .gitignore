@@ -2,6 +2,7 @@ emacs/.gnupg/pubring.kbx
 emacs/.gnupg/trustdb.gpg
 emacs/.gnupg/crls.d
 emacs/.gnupg/*
+emacs/.doom.d/secrets.json
 X/.config/autokey/autokey.json
 X/.config/xmobar/xmobar
 X/.config/xmobar/*.hi

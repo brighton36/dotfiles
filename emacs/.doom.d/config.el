@@ -24,9 +24,9 @@
 
       doom-theme 'doom-solarized-light-cderose
       ; Seems like emacs only picks up fonts in ~/.local/share/fonts/
-      doom-font (font-spec :family "Ubuntu Mono Nerd Font" :size 16)            ; the primary font to use
+      doom-font (font-spec :family "UbuntuMono Nerd Font" :size 16)            ; the primary font to use
       doom-variable-pitch-font (font-spec :family "Ubuntu Nerd Font" :size 14) ; a non-monospace font (where applicable)
-      doom-big-font (font-spec :family "Ubuntu Mono Nerd Font" :size 18)        ; use this for presentations or streaming
+      doom-big-font (font-spec :family "UbuntuMono Nerd Font" :size 18)        ; use this for presentations or streaming
 
       vertico-posframe-font "Ubuntu Nerd Font 14"
       ; NOTE: These fonts are also available:
@@ -39,7 +39,7 @@
       avy-all-windows 'all-frames
 
       ; vterm
-      shell-file-name "/bin/fish" 
+      shell-file-name "/bin/bash" 
       vterm-max-scrollback 10000
 
       ; emojify
@@ -331,4 +331,6 @@
       :n "C-n" nil
   )
 ;; load config.el.d ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(mapc 'load (file-expand-wildcards "~/.doom.d/config.el.d/*.el"))
+(setq configfiles  (cl-delete-if (lambda (k) (string-match-p "\\(emacs-everywhere\\|telega\\|mu4e\\)\.el$" k)) 
+                            (file-expand-wildcards "~/.doom.d/config.el.d/*.el")))
+(mapc 'load configfiles)
