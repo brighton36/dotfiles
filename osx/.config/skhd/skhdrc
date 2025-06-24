@@ -34,4 +34,5 @@ shift + cmd - space : /opt/homebrew/bin/yabai -m space --balance
 # TODO cmd -e : emacs
 # TODO: cmd - esc: lock screen
 # TODO: cmd - enter:
+# TODO cmp -p : /Applications/Firefox.app/Contents/MacOS/firefox
 cmd  - return : /Applications/iTerm.app/Contents/MacOS/iTerm2

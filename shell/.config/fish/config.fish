@@ -54,13 +54,19 @@ set fish_greeting
 set -g theme_color_scheme solarized-light
 
 ## Environment: ###############################################################
-
 export LEDGER_FILE=$HOME/ledger/chris-derose.journal
 
-set -x PATH $PATH $HOME/.local/share/gem/ruby/3.0.0/bin
+## OS specific variables #####################################################
+if test (uname) = Darwin
+  # homebrew
+  /opt/homebrew/bin/brew shellenv | source
 
-## Guix ######################################################################
-if type -q 'fenv'
-  fenv export GUIX_PROFILE="$HOME/.guix-profile"
-  fenv source "$GUIX_PROFILE/etc/profile"
+  # Move asdf to the origin:
+  fish_add_path -m $HOME/.asdf/shims
+else
+  # Guix:
+  if type -q 'fenv'
+    fenv export GUIX_PROFILE="$HOME/.guix-profile"
+    fenv source "$GUIX_PROFILE/etc/profile"
+  end
 end
