@@ -5,6 +5,7 @@
                 "rules": [
                     {
                         "description": "cmd - d to yabai float",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": {
@@ -21,6 +22,7 @@
                     },
                     {
                         "description": "cmd/cmd+shift - space to yabai split and balance",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": {
@@ -48,6 +50,7 @@
                     },
                     {
                         "description": "yabai resize to cmd-hjkl",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": {
@@ -97,6 +100,7 @@
                     },
                     {
                         "description": "yabai cmd-[/] focus prev/next & yabai cmd-option [/] swap prev/next",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": {
@@ -211,7 +215,7 @@
                         ]
                     },
                     {
-                        "description": "cmd-e open emacs",
+                        "description": "cmd-e open emacsclient",
                         "manipulators": [
                             {
                                 "from": {
@@ -219,7 +223,7 @@
                                     "modifiers": { "mandatory": ["left_command"] }
                                 },
                                 "to": [
-                                    { "shell_command": "/opt/homebrew/bin/emacs" },
+                                    { "shell_command": "/opt/homebrew/bin/emacsclient -n -c -a -emacs" },
                                     { "key_code": "vk_none" }
                                 ],
                                 "type": "basic"
