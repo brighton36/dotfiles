@@ -4,6 +4,49 @@
             "complex_modifications": {
                 "rules": [
                     {
+                        "description": "chrome bindings",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "hyphen",
+                                    "modifiers": { "mandatory": ["left_option"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "hyphen",
+                                        "modifiers": ["left_command", "left_shift"]
+                                    }
+                                ],
+                                "conditions": [
+                                    {
+                                    "type": "frontmost_application_if",
+                                    "bundle_identifiers": ["^com\\.google\\.Chrome$"]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "equal_sign",
+                                    "modifiers": { "mandatory": ["left_option"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "equal_sign",
+                                        "modifiers": ["left_command", "left_shift"]
+                                    }
+                                ],
+                                "conditions": [
+                                    {
+                                    "type": "frontmost_application_if",
+                                    "bundle_identifiers": ["^com\\.google\\.Chrome$"]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "cmd - d to yabai float",
                         "enabled": false,
                         "manipulators": [
@@ -225,43 +268,6 @@
                                 "to": [
                                     { "shell_command": "/opt/homebrew/bin/emacsclient -n -c -a -emacs" },
                                     { "key_code": "vk_none" }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "cmd-n/p to Mission Control Right/Left",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "l",
-                                    "modifiers": {
-                                        "mandatory": ["left_command"],
-                                        "optional": ["any"]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "right_arrow",
-                                        "modifiers": ["left_control"]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "r",
-                                    "modifiers": {
-                                        "mandatory": ["left_command"],
-                                        "optional": ["any"]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "left_arrow",
-                                        "modifiers": ["left_control"]
-                                    }
                                 ],
                                 "type": "basic"
                             }
