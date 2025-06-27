@@ -3,10 +3,13 @@
 
 # I'd rather be using karabiner for this. But, if I do that, the windows randomly
 # crash sometimes when calling yabai...
+# Also, a lot of features just kinda aren't supported (Move window to workspace n,
+# switch to workspace n... window alpha settings...) without System Integrity
+# protection disabled.
 
-# Change Focus
-cmd - 0x1B : /opt/homebrew/bin/yabai -m window --focus prev # [
-cmd - 0x18 : /opt/homebrew/bin/yabai -m window --focus next # ]
+# Change Focus : cmd-[ , cmd-]
+cmd - 0x1B : /opt/homebrew/bin/yabai -m window --focus prev || /opt/homebrew/bin/yabai -m window --focus last
+cmd - 0x18 : /opt/homebrew/bin/yabai -m window --focus next || /opt/homebrew/bin/yabai -m window --focus first
 
 # Swap position
 alt + cmd - 0x1B : /opt/homebrew/bin/yabai -m window --swap prev # [
@@ -16,16 +19,13 @@ alt + cmd - 0x18 : /opt/homebrew/bin/yabai -m window --swap next # ]
 cmd - d : /opt/homebrew/bin/yabai -m window --toggle float --grid 4:4:1:1:2:2
 
 # Switch workspaces
-# Disabled here, because we need System Integrity protection installed. I guess
-# See the karabiner settings for this. TODO: add cmd1-9
+# Disabled here, because we need System Integrity protection installed.
 
-# window size horizontal
-cmd - h : /opt/homebrew/bin/yabai -m window --resize left:-20:0
-cmd - l : /opt/homebrew/bin/yabai -m window --resize right:20:0
-
-# window size vertical
-cmd - j : /opt/homebrew/bin/yabai -m window --resize bottom:0:-20
-cmd - k : /opt/homebrew/bin/yabai -m window --resize top:0:20
+# Window resizing:
+cmd - h : /opt/homebrew/bin/yabai -m window west --resize right:-20:0 2> /dev/null || /opt/homebrew/bin/yabai -m window --resize right:-20:0
+cmd - j : /opt/homebrew/bin/yabai -m window north --resize bottom:0:20 2> /dev/null || /opt/homebrew/bin/yabai -m window --resize bottom:0:20
+cmd - k : /opt/homebrew/bin/yabai -m window south --resize top:0:-20 2> /dev/null || /opt/homebrew/bin/yabai -m window --resize top:0:-20
+cmd - l : /opt/homebrew/bin/yabai -m window east --resize left:20:0 2> /dev/null || /opt/homebrew/bin/yabai -m window --resize left:20:0
 
 # toggle window split type
 cmd - space : /opt/homebrew/bin/yabai -m window --toggle split
