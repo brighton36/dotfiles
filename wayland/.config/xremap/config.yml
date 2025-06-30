@@ -17,12 +17,16 @@ modmap:
         alone: tab
         held: leftalt
         alone_timeout_millis: 100
+    application: 
+      not: /Vncviewer/
   - name: leftshift_tap_to_delete_hold_to_leftshift
     remap:
       leftshift:
         alone: delete
         held: leftshift
         alone_timeout_millis: 100
+    application: 
+      not: /Vncviewer/
 keymap:
   - name: "Global"
     remap:
@@ -121,5 +125,5 @@ keymap:
     application: 
       only: /Vncviewer/
     remap:
-      C-backspace: SHIFT-f8  # Show menu
-      C-S-dot: SHIFT-insert  # C-SHIFT-v: putty paste
+      #C-backspace: SHIFT-f8  # Show menu
+      #C-S-dot: SHIFT-insert  # C-SHIFT-v: putty paste

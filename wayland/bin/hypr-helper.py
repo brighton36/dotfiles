@@ -8,7 +8,7 @@
 import os, subprocess, socket, re, argparse, time, json
 
 OPERATIONS=['switch', 'next', 'prev', 'movespecial', 'togglespecial', 'monitor',
-            'togglebrightness', 'openurl', 'togglebluetooth', 'screenshot']
+            'togglebrightness', 'openurl', 'togglebluetooth', 'toggledisplay', 'screenshot']
 FIRST_WORKSPACE=1
 LAST_WORKSPACE=9
 
@@ -21,7 +21,7 @@ BLUETOOTHCTL = "/usr/bin/bluetoothctl"
 
 def run(*args, **kwargs):
   result = subprocess.run(list(map(lambda a: str(a), args)),
-                          input=kwargs['input'].encode('utf-8') if 'input' in kwargs else None,
+                          input=kwargs['input'] if 'input' in kwargs else None,
                           close_fds=kwargs.get('close_fds', None),
                           capture_output=kwargs.get('capture_output', True),
                           stdout=kwargs.get('stdout', None),
@@ -30,7 +30,8 @@ def run(*args, **kwargs):
     raise Exception("Error running {} ({}): {}".format(args[0],
                                                        result.returncode,
                                                        result.stdout))
-  return result.stdout.decode()
+
+  return result.stdout.decode() if kwargs.get('capture_output', True) else result.stdout
 
 def hyprctl(*args, **kwargs):
   stdout = run(HYPRCTL, *args)
@@ -50,6 +51,58 @@ def togglebluetooth():
   parts = re.match(re.compile(r'.*Powered\:[ ]+([^ ]+)$', flags=re.MULTILINE | re.DOTALL), run(BLUETOOTHCTL, "show"))
   run(BLUETOOTHCTL, "power", "off" if parts[1] == 'yes' else "on")
 
+def toggledisplay():
+  # This code is kinda ugly and doesn't really work the way I want. But, I'm waiting for hyprland to just solve this.
+  # And it's just kinda buggy to use the cli for this rn, seemingly... Maybe we need to add a few
+  # calls to: hyprctl dispatch moveworkspacetomonitor {workspaceid} current
+  with open(os.path.expanduser('~/.config/hypr/hyprland.conf'), 'r') as file:
+    hyprlandConfigLines = file.read().splitlines(True)
+
+  parsed = {'declaration': [], 'expr': []}
+  endOfMonitorsI = 0 # TODO: Lets just use the max function for this down below
+  for i, line in enumerate(hyprlandConfigLines):
+    matches = re.match(r'^[ ]*([\\$]?)monitor(.*?)[ ]*\=[ ]*([\\$]?)(.*?)([ ]*#.+|)$', line)
+    if matches:
+      content = re.split(r'[ ]*,[ ]*', matches[4])
+      if i > endOfMonitorsI:
+        endOfMonitorsI = i
+      parsed['declaration' if matches[1] == '$' else 'expr'].append(
+        {
+          'line': i,
+          'content': content,
+          'varRight': matches[2] if matches[2] else None,
+          'comment': matches[5],
+          'port': content[0],
+          'isAssignment': (matches[3] == '$')
+         }
+      )
+
+  # TODO: we should probably throw and catch errors when there's a parse issue, and notify the user...
+  activePort = next(expr['content'][0] for expr in parsed['expr'] if len(expr['content']) > 1 and expr['content'][1] != 'disable')
+  if activePort:
+    activePortDeclI = [i for i, e in enumerate(parsed['declaration']) if e['content'][0] == activePort]
+    if (len(activePortDeclI) > 0):
+      activePortDeclI = activePortDeclI[0]
+      nextDecl = parsed['declaration'][(activePortDeclI + 1 if len(parsed['declaration']) > activePortDeclI + 1 else 0)]
+
+      # Which lines we'll remove
+      removeLines = [e['line'] for e in parsed['expr'] if (e['content'][0] == activePort or e['content'][0] == nextDecl['content'][0])]
+
+      # Add our replacement  lines
+      hyprlandConfigLines[endOfMonitorsI+1:endOfMonitorsI+1] = [
+        'monitor = {}\n'.format(','.join(nextDecl['content']))
+        ] + list('monitor = {},disable\n'.format(e['content'][0]) for e in parsed['declaration'] if e['content'][0] != nextDecl['content'][0])
+
+      # Remove old lines
+      for i in reversed(sorted(removeLines)):
+        del hyprlandConfigLines[i]
+
+      # Save the new Config:
+      with open(os.path.expanduser('~/.config/hypr/hyprland.conf'), 'w') as file:
+        file.write("".join(hyprlandConfigLines))
+
+      run(NOTIFY, "Switched active monitor to {}".format(nextDecl['content'][0]))
+
 def active_workspace():
   return int(json.loads(hyprctl('activeworkspace', '-j'))['id'])
 
@@ -61,10 +114,10 @@ def operation_check(arg_value, supported_operations):
 def active_window():
   return json.loads(hyprctl('activewindow', '-j'))
 
-def monitors():
+def monitors(*params):
   ret = []
   for monitor_parts in re.findall(r"^Monitor ([^ ]+) \(([^\)]+)\):\n\t([^\n]+)\n(.+?)\n\n",
-                                  hyprctl('monitors'),
+                                  hyprctl('monitors', *params),
                                   re.MULTILINE | re.DOTALL):
     ret.append( {**{'port': monitor_parts[0], 'id': monitor_parts[1], 'resolution': monitor_parts[2]},
             **dict(re.findall(r'^[ \t]+([^:]+):[ ]*(.+)$', monitor_parts[3], flags=re.MULTILINE))})
@@ -188,6 +241,8 @@ match args.operation:
     focus_special_workspace(active_workspace())
   case 'togglebluetooth':
     togglebluetooth()
+  case 'toggledisplay':
+    toggledisplay()
   case 'openurl':
 #    try:
       # Here, we open the url in firefox. However, we check to see which windows are open, and open to the
@@ -247,7 +302,7 @@ match args.operation:
         address = targets[0]['address']
 
       # The goal! lol:
-      run(BROTAB, 'open', window, input=''.join([args.operation_args[0], '\n']))
+      run(BROTAB, 'open', window, input=''.join([args.operation_args[0], '\n']).encode('utf-8'))
       if address:
         focus_window(address)
 
@@ -264,7 +319,10 @@ match args.operation:
 
   case 'monitor':
     BUFFER_SIZE = 1024
-    SOCKET_PATH = "/".join([os.environ['XDG_RUNTIME_DIR'],'hypr',os.environ['HYPRLAND_INSTANCE_SIGNATURE'],'.socket2.sock'])
+    SOCKET_PATH = "/".join([os.environ['XDG_RUNTIME_DIR'],
+                            'hypr',
+                            os.environ['HYPRLAND_INSTANCE_SIGNATURE'],
+                            '.socket2.sock'])
 
     with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as client:
       client.connect(SOCKET_PATH)

@@ -16,6 +16,7 @@
       auth-sources '((:source "~/.authinfo.gpg")) ; This is used in a few places...
       visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow) ; Just a prettier indication that we're wrapping:
       text-scale-mode-step 1.05
+      shell-file-name (executable-find "bash")
 
       ; doom
 
@@ -41,6 +42,7 @@
       ; vterm
       shell-file-name "/bin/bash" 
       vterm-max-scrollback 10000
+      vterm-shell (executable-find "fish")
 
       ; emojify
       emojify-display-style 'unicode

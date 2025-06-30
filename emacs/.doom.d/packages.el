@@ -56,7 +56,7 @@
 (package! org-bullets)
 (package! vertico-posframe :recipe (:host github :repo "tumashu/vertico-posframe"))
 (package! svelte-mode)
-(package! emacs-fish-completion :recipe (:host github :repo "LemonBreezes/emacs-fish-completion"))
+;(package! emacs-fish-completion :recipe (:host github :repo "LemonBreezes/emacs-fish-completion"))
 (package! eww)
 (package! eshell-toggle)
 (package! inf-ruby)

@@ -1,5 +1,5 @@
 ;-*- mode: elisp -*-
-(setq eshell-save-history-on-exit t
+(setq eshell-save-history-on-exit nil
       eshell-scroll-to-bottom-on-input 'all
       eshell-prefer-lisp-functions nil
       eshell-plain-grep-behavior t
@@ -22,9 +22,9 @@
                                  ))
 )
 
-(when (and (executable-find "fish")
-           (require 'fish-completion nil t))
-  (global-fish-completion-mode))
+;(when (and (executable-find "fish")
+;           (require 'fish-completion nil t))
+;  (global-fish-completion-mode))
 
 
 ;; copied from https://stackoverflow.com/questions/13009908/eshell-search-history
@@ -63,6 +63,19 @@ If N is negative, search forwards for the -Nth following match."
 
 (add-hook 'eshell-mode-hook 'my-rename-buffer-to-curdir)
 (add-hook 'eshell-directory-change-hook 'my-rename-buffer-to-curdir)
+
+; Note sure if this actually works...
+; The add-hook does, but, the eshell-write-last-dir-ring is void, and I think the newest approach is better
+;(add-hook 'eshell-exit-hook (lambda () (eshell-write-history eshell-write-last-dir-ring t)))
+(defun eshell-append-history ()
+  "Call `eshell-write-history' with the `append' parameter set to `t'."
+  (when eshell-history-ring
+    (let ((newest-cmd-ring (make-ring 1)))
+      (ring-insert newest-cmd-ring (car (ring-elements eshell-history-ring)))
+      (let ((eshell-history-ring newest-cmd-ring))
+        (eshell-write-history eshell-history-file-name t)))))
+
+(add-hook 'eshell-pre-command-hook #'eshell-append-history)
 
 (add-hook 'eshell-mode-hook (lambda ()
     (eshell/alias "ledger" "ledger --no-pager $*")))
