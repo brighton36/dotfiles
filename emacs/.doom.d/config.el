@@ -333,6 +333,12 @@
       :n "C-n" nil
   )
 ;; load config.el.d ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq configfiles  (cl-delete-if (lambda (k) (string-match-p "\\(emacs-everywhere\\|telega\\|mu4e\\)\.el$" k)) 
-                            (file-expand-wildcards "~/.doom.d/config.el.d/*.el")))
+(setq configfiles (file-expand-wildcards "~/.doom.d/config.el.d/*.el"))
+
+; Stuff that we don't use on osx... 
+(cond ((string-equal system-type "darwin")
+       (setq configfiles (cl-delete-if (lambda (k) (string-match-p "\\(emacs-everywhere\\|telega\\|mu4e\\)\.el$" k)) 
+                         configfiles))
+      )) 
+
 (mapc 'load configfiles)
