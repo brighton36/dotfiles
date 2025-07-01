@@ -9,6 +9,44 @@
                             {
                                 "from": {
                                     "key_code": "hyphen",
+                                    "modifiers": { "mandatory": ["left_option", "left_shift"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_arrow",
+                                        "modifiers": ["left_control", "left_command"]
+                                    }
+                                ],
+                                "conditions": [
+                                    {
+                                    "type": "frontmost_application_if",
+                                    "bundle_identifiers": ["^com\\.google\\.Chrome$"]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "equal_sign",
+                                    "modifiers": { "mandatory": ["left_option", "left_shift"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "right_arrow",
+                                        "modifiers": ["left_control", "left_command"]
+                                    }
+                                ],
+                                "conditions": [
+                                    {
+                                    "type": "frontmost_application_if",
+                                    "bundle_identifiers": ["^com\\.google\\.Chrome$"]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "hyphen",
                                     "modifiers": { "mandatory": ["left_option"] }
                                 },
                                 "to": [
@@ -41,151 +79,6 @@
                                     "type": "frontmost_application_if",
                                     "bundle_identifiers": ["^com\\.google\\.Chrome$"]
                                     }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "cmd - d to yabai float",
-                        "enabled": false,
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "h",
-                                    "modifiers": { "mandatory": ["left_command"] }
-                                },
-                                "to": [
-                                    { "shell_command": "/opt/homebrew/bin/yabai -m window --toggle float --grid 4:4:1:1:2:2" },
-                                    { "key_code": "vk_none" }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "cmd/cmd+shift - space to yabai split and balance",
-                        "enabled": false,
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "spacebar",
-                                    "modifiers": { "mandatory": ["left_command"] }
-                                },
-                                "to": [
-                                    { "shell_command": "/opt/homebrew/bin/yabai -m window --toggle split" },
-                                    { "key_code": "vk_none" }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "spacebar",
-                                    "modifiers": { "mandatory": ["left_command", "left_shift"] }
-                                },
-                                "to": [
-                                    { "shell_command": "/opt/homebrew/bin/yabai -m space --balance" },
-                                    { "key_code": "vk_none" }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "yabai resize to cmd-hjkl",
-                        "enabled": false,
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "j",
-                                    "modifiers": { "mandatory": ["left_command"] }
-                                },
-                                "to": [
-                                    { "shell_command": "/opt/homebrew/bin/yabai -m window --resize left:-20:0" },
-                                    { "key_code": "vk_none" }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "p",
-                                    "modifiers": { "mandatory": ["left_command"] }
-                                },
-                                "to": [
-                                    { "shell_command": "/opt/homebrew/bin/yabai -m window --resize right:20:0" },
-                                    { "key_code": "vk_none" }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "c",
-                                    "modifiers": { "mandatory": ["left_command"] }
-                                },
-                                "to": [
-                                    { "shell_command": "/opt/homebrew/bin/yabai -m window --resize bottom:0:-20" },
-                                    { "key_code": "vk_none" }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "v",
-                                    "modifiers": { "mandatory": ["left_command"] }
-                                },
-                                "to": [
-                                    { "shell_command": "/opt/homebrew/bin/yabai -m window --resize top:0:20" },
-                                    { "key_code": "vk_none" }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "yabai cmd-[/] focus prev/next & yabai cmd-option [/] swap prev/next",
-                        "enabled": false,
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "hyphen",
-                                    "modifiers": { "mandatory": ["left_command"] }
-                                },
-                                "to": [
-                                    { "shell_command": "/opt/homebrew/bin/yabai -m window --focus prev" },
-                                    { "key_code": "vk_none" }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "equal_sign",
-                                    "modifiers": { "mandatory": ["left_command"] }
-                                },
-                                "to": [
-                                    { "shell_command": "/opt/homebrew/bin/yabai -m window --focus next" },
-                                    { "key_code": "vk_none" }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "hyphen",
-                                    "modifiers": { "mandatory": ["left_command", "left_option"] }
-                                },
-                                "to": [
-                                    { "shell_command": "/opt/homebrew/bin/yabai -m window --swap prev" },
-                                    { "key_code": "vk_none" }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "equal_sign",
-                                    "modifiers": { "mandatory": ["left_command", "left_option"] }
-                                },
-                                "to": [
-                                    { "shell_command": "/opt/homebrew/bin/yabai -m window --swap next" },
-                                    { "key_code": "vk_none" }
                                 ],
                                 "type": "basic"
                             }
@@ -282,10 +175,10 @@
                                     "modifiers": { "optional": ["any"] }
                                 },
                                 "parameters": {
-                                    "basic.to_delayed_action_delay_milliseconds": 20,
-                                    "basic.to_if_held_down_threshold_milliseconds": 20
+                                    "basic.to_delayed_action_delay_milliseconds": 15,
+                                    "basic.to_if_held_down_threshold_milliseconds": 15
                                 },
-                                "to_if_alone": [{ "key_code": "delete_forward" }],
+                                "to_if_alone": [{ "key_code": "delete_forward", "halt": true }],
                                 "to_if_held_down": [{ "key_code": "left_shift" }],
                                 "type": "basic"
                             }
@@ -300,10 +193,10 @@
                                     "modifiers": { "optional": ["any"] }
                                 },
                                 "parameters": {
-                                    "basic.to_delayed_action_delay_milliseconds": 20,
-                                    "basic.to_if_held_down_threshold_milliseconds": 20
+                                    "basic.to_delayed_action_delay_milliseconds": 15,
+                                    "basic.to_if_held_down_threshold_milliseconds": 15
                                 },
-                                "to_if_alone": [{ "key_code": "tab" }],
+                                "to_if_alone": [{ "key_code": "tab", "halt": true }],
                                 "to_if_held_down": [{ "key_code": "left_option" }],
                                 "type": "basic"
                             }
@@ -318,10 +211,10 @@
                                     "modifiers": { "optional": ["any"] }
                                 },
                                 "parameters": {
-                                    "basic.to_delayed_action_delay_milliseconds": 20,
-                                    "basic.to_if_held_down_threshold_milliseconds": 20
+                                    "basic.to_delayed_action_delay_milliseconds": 15,
+                                    "basic.to_if_held_down_threshold_milliseconds": 15
                                 },
-                                "to_if_alone": [{ "key_code": "escape" }],
+                                "to_if_alone": [{ "key_code": "escape", "halt": true }],
                                 "to_if_held_down": [{ "key_code": "left_control" }],
                                 "type": "basic"
                             }
