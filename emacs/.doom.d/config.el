@@ -48,10 +48,7 @@
       emojify-display-style 'unicode
       emojify-emoji-styles '(unicode)
 
-      ; ispell
-      ispell-dictionary "en-custom"
-
-      ; Outline 
+      ; Outline
       outline-regexp "[#\f]+"
 
       ; minibuffer
@@ -256,7 +253,7 @@
   :n "C-`" nil
 
   ;; Globals:
-  :g "C-c c" #'org-capture
+  :g "C-S-c" #'org-capture
 
   ;; Winner:
   :nv "C-n" #'winner-redo ; For whatever reason, C-p cannot be declared this way

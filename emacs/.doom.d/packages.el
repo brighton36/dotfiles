@@ -67,3 +67,11 @@
 (package! aider :recipe ( :host github :repo "tninja/aider.el"))
 (package! google-translate)
 (package! ob-mermaid)
+
+;emacs-slack:
+(package! ts)
+(package! websocket)
+(package! circe)
+(package! alert)
+(package! request)
+(package! emacs-slack :recipe (:host github :repo "emacs-slack/slack"))

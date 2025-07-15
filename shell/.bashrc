@@ -42,27 +42,20 @@ export HISTCONTROL=ignoreboth
 export HISTTIMEFORMAT="%h/%d - %H:%M:%S "
 export HISTSIZE=20000
 
-# Here's some good aliases:
-alias ducks='ls -a | grep -v -e "^\.\.$" | xargs -i du -ks {} |sort -rn '
-alias rdesktop="rdesktop -g 1024x768 -m -a 8 -z -x modem -P"
-alias xtightvncviewer="xtightvncviewer -bgr233 -compresslevel 9 -depth 256 -quality 0 -x11cursor  -encodings 'tight zlib copyrect hextile corre rre raw'"
-alias vnc_listen="wine .wine/drive_c/Program\ Files/UltraVNC/vncviewer.exe -listen 5501 -8bit -encoding "tight" -256colors -autoscaling"
-
-export CVS_RSH=ssh
-
-# some more ls aliases
+# some ls aliases
 alias ll='ls -l'
 alias la='ls -A'
 alias l='ls -CF'
-
-# Svn:
-export CVS_RSH=ssh
-
-# Path stuff:
-export PATH="$PATH:/home/cderose/.gem/ruby/2.7.0/bin:~/bin"
 
 DEBEMAIL="chris@chrisderose.com"
 DEBFULLNAME="Chris DeRose"
 export DEBEMAIL DEBFULLNAME
 
 export VISUAL='vim'
+
+export PATH="$PATH:~/bin"
+
+# OSX stuff:
+if [ $(uname) = "Darwin" ]; then
+  export PATH="$HOME/.asdf/shims:$PATH"
+fi
