@@ -51,5 +51,5 @@
 )
 
 ; Seems like the newer versions of emacs causes warnings in slack mode, unless we disable that behavior in this way
-(setq eieio-backward-compatibility null)
+(setq eieio-backward-compatibility nil)
 
