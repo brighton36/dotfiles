@@ -67,6 +67,7 @@
 (package! aider :recipe ( :host github :repo "tninja/aider.el"))
 (package! google-translate)
 (package! ob-mermaid)
+(package! forge)
 
 ;emacs-slack:
 (package! ts)
