@@ -334,7 +334,7 @@
 
 ; Stuff that we don't use on osx... 
 (cond ((string-equal system-type "darwin")
-       (setq configfiles (cl-delete-if (lambda (k) (string-match-p "\\(emacs-everywhere\\|telega\\|mu4e\\)\.el$" k)) 
+       (setq configfiles (cl-delete-if (lambda (k) (string-match-p "\\(emacs-everywhere\\|telega\\)\.el$" k))
                          configfiles))
       )) 
 

@@ -48,36 +48,27 @@
   message-kill-buffer-on-exit t
   org-msg-startup "hidestars indent inlineimages"
   org-msg-greeting-fmt "\nHello %s,\n\n"
-  org-msg-recipient-names '(("chris@chrisderose.com" . "Chris DeRose"))
+  org-msg-recipient-names '(((get-secret 'mu4e-from-address) . (get-secret 'mu4e-from-fullname)))
   org-msg-greeting-name-limit 3
   org-msg-default-alternatives '((new   . (text html))
   (reply-to-html . (text html))
   (reply-to-text . (text)))
   org-msg-convert-citation t
-  org-msg-signature "
-
-  Regards,
-
-  #+begin_signature
-  --
-  *Chris Derose
-  /chris@chrisderose.com/
-  #+end_signature")
-
+  org-msg-signature (concat "\n\nRegards,\n\n#+begin_signature\n--\n*" (get-secret 'mu4e-from-fullname) "\n/" (get-secret 'mu4e-from-address) "/\n#+end_signature"))
 (org-msg-mode)
 
 (set-email-account!
   "gmail"
   '((mu4e-sent-folder       . "/[Gmail]/Sent Mail")
     (mu4e-trash-folder      . "/[Gmail]/Bin")
-    (smtpmail-smtp-user     . "cderose@derosetechnologies.com"))
+    (smtpmail-smtp-user     . (get-secret 'mu4e-smtp-username)))
   t)
 
 ; NOTE: The issue here, is that .emacs.d/modules/email/mu4e/config.el is loading after this file
 ;       so, we can just hook it here, like so:
 (after! mu4e
   (setq 
-    mu4e-get-mail-command "/usr/bin/mbsync -V cderose@derosetechnologies.com"
+    mu4e-get-mail-command (get-secret 'mu4e-get-mail-command)
     ; NOTE: I tried setting up the sync in ~/.config/systemd/user/mbsync.service
     ; Per: https://wiki.archlinux.org/title/isync#With_a_timer
     ; But I think this works better:
@@ -91,7 +82,7 @@
     mu4e-view-show-images t
     mu4e-use-fancy-chars t
     mu4e-attachment-dir "~/Downloads"
-    mu4e-compose-signature "Chris Derose\nchris@chrisderose.com\n"
+    mu4e-compose-signature (concat (get-secret 'mu4e-from-fullname) "\n" (get-secret 'mu4e-from-address) "\n")
     mu4e-headers-date-format "%y-%m-%d")
   )
 
