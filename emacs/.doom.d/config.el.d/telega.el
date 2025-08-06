@@ -1,6 +1,7 @@
 ;-*- mode: elisp -*-
 
 ; These settings are needed to support : https://zevlg.github.io/telega.el/#settings-for-emacs-as-daemon
+; TODO: try turning off these images, set them to nil.. see if that fixes the bugged emoticons
 (setq telega-use-images 1
       telega-emoji-font-family "Noto Color Emoji"
       telega-emoji-use-images 1
