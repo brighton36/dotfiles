@@ -70,9 +70,11 @@
 (package! forge)
 
 ;emacs-slack:
-(package! ts)
-(package! websocket)
-(package! circe)
-(package! alert)
-(package! request)
-(package! emacs-slack :recipe (:host github :repo "emacs-slack/slack"))
+(cond ((string-equal system-type "darwin")
+  (package! ts)
+  (package! websocket)
+  (package! circe)
+  (package! alert)
+  (package! request)
+  (package! emacs-slack :recipe (:host github :repo "emacs-slack/slack"))
+  ))

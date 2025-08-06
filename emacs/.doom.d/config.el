@@ -337,5 +337,9 @@
        (setq configfiles (cl-delete-if (lambda (k) (string-match-p "\\(emacs-everywhere\\|telega\\)\.el$" k))
                          configfiles))
       )) 
+(cond ((string-equal system-type "gnu/linux")
+       (setq configfiles (cl-delete-if (lambda (k) (string-match-p "\\(slack\\|osx\\)\.el$" k))
+                         configfiles))
+      )) 
 
 (mapc 'load configfiles)
