@@ -5,6 +5,7 @@ emacs/.gnupg/trustdb.gpg
 emacs/.gnupg/crls.d
 emacs/.gnupg/*
 emacs/.doom.d/secrets.json
+emacs/.doom.d/custom.el
 X/.config/autokey/autokey.json
 X/.config/xmobar/xmobar
 X/.config/xmobar/*.hi

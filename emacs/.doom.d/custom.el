@@ -3,8 +3,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(auto-dim-other-buffers-face ((t (:background "#EEE8D5"))))
- '(auto-dim-other-buffers-hide-face ((t (:extend t :background "#EEE8D5"))))
+ '(auto-dim-other-buffers ((t (:background "#EEE8D5"))))
+ '(auto-dim-other-buffers-face ((t (:background "#EEE8D5"))) t)
+ '(auto-dim-other-buffers-hide ((t (:background "#EEE8D5"))))
+ '(auto-dim-other-buffers-hide-face ((t (:extend t :background "#EEE8D5"))) t)
  '(fixed-pitch ((t (:family "Cousine NF" :height 130))))
  '(line-number ((t (:background "#FDF6E3"))))
  '(line-number-current-line ((t (:background "#E1DBCD"))))
@@ -37,16 +39,16 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("2b501400e19b1dd09d8b3708cefcb5227fda580754051a24e8abf3aff0601f87"
-     "dd4582661a1c6b865a33b89312c97a13a3885dc95992e2e5fc57456b4c545176"
-     "56044c5a9cc45b6ec45c0eb28df100d3f0a576f18eef33ff8ff5d32bac2d9700"
-     "d481904809c509641a1a1f1b1eb80b94c58c210145effc2631c1a7f2e4a2fdf4"
-     "34cf3305b35e3a8132a0b1bdf2c67623bc2cb05b125f8d7d26bd51fd16d547ec"
-     "88f7ee5594021c60a4a6a1c275614103de8c1435d6d08cc58882f920e0cec65e" default))
+    '("87fa3605a6501f9b90d337ed4d832213155e3a2e36a512984f83e847102a42f4"
+       "2b501400e19b1dd09d8b3708cefcb5227fda580754051a24e8abf3aff0601f87"
+       "dd4582661a1c6b865a33b89312c97a13a3885dc95992e2e5fc57456b4c545176"
+       "56044c5a9cc45b6ec45c0eb28df100d3f0a576f18eef33ff8ff5d32bac2d9700"
+       "d481904809c509641a1a1f1b1eb80b94c58c210145effc2631c1a7f2e4a2fdf4"
+       "34cf3305b35e3a8132a0b1bdf2c67623bc2cb05b125f8d7d26bd51fd16d547ec"
+       "88f7ee5594021c60a4a6a1c275614103de8c1435d6d08cc58882f920e0cec65e" default))
  '(org-safe-remote-resources
-   '("\\`https://fniessen\\.github\\.io/org-html-themes/org/theme-readtheorg\\.setup\\'"))
+    '("\\`https://fniessen\\.github\\.io/org-html-themes/org/theme-readtheorg\\.setup\\'"))
  '(safe-local-variable-values
-   '((eval color-theme-buffer-local 'oswald)
-     (eval color-theme-buffer-local 'color-theme-oswald)
-     (eval color-theme-buffer-local 'leuven)
-     (eval load-theme-buffer-local 'leuven) (eval load-theme 'leuven))))
+    '((eval color-theme-buffer-local 'oswald) (eval color-theme-buffer-local 'color-theme-oswald)
+       (eval color-theme-buffer-local 'leuven) (eval load-theme-buffer-local 'leuven)
+       (eval load-theme 'leuven))))

@@ -1,3 +1,4 @@
+;;; slack.el --- Description -*- lexical-binding: t; -*-
 
 (require 'slack)
 
@@ -10,6 +11,11 @@
      :subscribed-channels nil)
 
 (set 'slack-extra-subscribed-channels (mapcar 'intern (get-secret 'slack-subscribed-channels)))
+; TODO to set this, you can run 'slack-change-current-team' to this this to a record.., but we may not
+; need this... restart and test and see if its automatic given the above register
+;(set 'slack-current-team nil)
+(set 'slack-prefer-current-team t)
+(set 'slack-buffer-function #'switch-to-buffer)
 
 (slack-start)
 
@@ -48,6 +54,8 @@
   :map slack-message-compose-buffer-mode-map
     :n "q" 'evil-delete-buffer
     :i "C-c '" 'slack-message-send-from-buffer
+  :map slack-user-profile-buffer-mode-map
+    :n "q" 'evil-delete-buffer
 )
 
 ; Seems like the newer versions of emacs causes warnings in slack mode, unless we disable that behavior in this way

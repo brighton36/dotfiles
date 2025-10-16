@@ -4,7 +4,7 @@
 (add-to-list 'custom-theme-load-path "~/.doom.d/themes")
 
 (setq user-full-name "Chris DeRose"
-      user-mail-address "cderose@derosetechnologies.com"
+      user-mail-address (get-secret 'mu4e-from-address)
 
       load-prefer-newer t         ; Tells us to recompile the source files, when the cache is older..
       delete-by-moving-to-trash t ; Delete files to trash
@@ -23,7 +23,7 @@
       ; This is what was causing the doom to randomly change windows to the dashboard
       doom-unreal-buffer-functions '(minibufferp)
 
-      doom-theme 'doom-solarized-light-cderose
+      doom-theme 'doom-nord-light
       ; Seems like emacs only picks up fonts in ~/.local/share/fonts/
       doom-font (font-spec :family "UbuntuMono Nerd Font" :size 16)            ; the primary font to use
       doom-variable-pitch-font (font-spec :family "Ubuntu Nerd Font" :size 14) ; a non-monospace font (where applicable)
@@ -65,7 +65,6 @@
       ; lisp
       lisp-indent-offset 2)
 
-
 ; dired - Seems like we need to set these after the mode loads
 (after! dired (setq dired-listing-switches "-lt"))
 
@@ -82,9 +81,9 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (after! auto-dim-other-buffers
   (custom-set-faces
-    '(auto-dim-other-buffers-face ((t (:background "#EEE8D5")))))
+    '(auto-dim-other-buffers-face ((t (:background "#d8dee9")))))
   (custom-set-faces
-    '(auto-dim-other-buffers-hide ((t (:background "#EEE8D5")))))
+    '(auto-dim-other-buffers-hide ((t (:background "d8dee9")))))
   )
 
 ; avy
@@ -204,6 +203,9 @@
 
 ; Disable the auto-pairing of parethesis and quotes and such...
 (remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
+
+; Solaire screws with auto-dim, and just kinda sucks for me. Disable it
+(after! solaire-mode (solaire-global-mode -1))
 
 ;; Key Bindings ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (map! 
