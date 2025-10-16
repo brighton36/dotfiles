@@ -1,30 +1,20 @@
-# imap account information
-IMAPAccount cderose@derosetechnologies.com
-  Host imap.gmail.com
-  User cderose@derosetechnologies.com
+IMAPStore proton-remote
+  Host 127.0.0.1
+  Port 1143
+  User chris@chrisderose.com
   PassCmd "/usr/bin/gpg2 -q --for-your-eyes-only --no-tty -d ~/.mbsyncpass.gpg"
-  AuthMechs LOGIN
-  SSLType IMAPS
-  # During initial sync, this prevented the initial OVERQUOTA errors
-  # TODO: Comment
-  Pipelinedepth 1
-  Timeout 60
-  CertificateFile /etc/ssl/cert.pem
+  TLSType STARTTLS
+  CertificateFile ~/.config/protonmail/bridge-v3/cert.pem
 
-# remote storage (use the imap account specified above)
-IMAPStore cderose@derosetechnologies.com-remote
-  Account cderose@derosetechnologies.com
+MaildirStore proton-local
+  SubFolders Verbatim
+  Path ~/.local/share/mbsync/
+  Inbox ~/.local/share/mbsync/Inbox
 
-# local storage
-MaildirStore cderose@derosetechnologies.com-local
-  Path /mnt/nvme4tb/mail/cderose@derosetechnologies.com/
-  Inbox /mnt/nvme4tb/mail/cderose@derosetechnologies.com/Inbox
-  Subfolders Verbatim
-
-# channel to remote storage
-Channel cderose@derosetechnologies.com
-  Far :cderose@derosetechnologies.com-remote:
-  Near :cderose@derosetechnologies.com-local:
-  Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Bin"
+Channel proton
+  Far :proton-remote:
+  Near :proton-local:
+  Patterns * !Labels* !"All Mail"
   Create Both
+  Expunge Both
   SyncState *

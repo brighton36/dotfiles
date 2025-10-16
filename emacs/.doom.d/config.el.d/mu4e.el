@@ -38,9 +38,10 @@
   ; SMTP Settings:
   message-send-mail-function 'smtpmail-send-it
   smtpmail-stream-type 'starttls
-  smtpmail-default-smtp-server "smtp.gmail.com"
-  smtpmail-smtp-server "smtp.gmail.com"
-  smtpmail-smtp-service 587
+  smtpmail-default-smtp-server (get-secret 'mu4e-smtp-server)
+  smtpmail-smtp-server (get-secret 'mu4e-smtp-server)
+  smtpmail-smtp-service (get-secret 'mu4e-smtp-port)
+  smtpmail-smtp-user (get-secret 'mu4e-smtp-username)
 
   ; Org-msg settings:
   ; NOTE: I don't think I'm actually using this at the moment. But, I'd like to...
@@ -54,35 +55,40 @@
   (reply-to-html . (text html))
   (reply-to-text . (text)))
   org-msg-convert-citation t
-  org-msg-signature (concat "\n\nRegards,\n\n#+begin_signature\n--\n*" (get-secret 'mu4e-from-fullname) "\n/" (get-secret 'mu4e-from-address) "/\n#+end_signature"))
+  org-msg-signature (concat "\n\nRegards,\n\n#+begin_signature\n--\n*"
+                      (get-secret 'mu4e-from-fullname) "\n/"
+                      (get-secret 'mu4e-from-address) "/\n#+end_signature"))
 (org-msg-mode)
-
-(set-email-account!
-  "gmail"
-  '((mu4e-sent-folder       . "/[Gmail]/Sent Mail")
-    (mu4e-trash-folder      . "/[Gmail]/Bin")
-    (smtpmail-smtp-user     . (get-secret 'mu4e-smtp-username)))
-  t)
 
 ; NOTE: The issue here, is that .emacs.d/modules/email/mu4e/config.el is loading after this file
 ;       so, we can just hook it here, like so:
 (after! mu4e
   (setq 
-    mu4e-get-mail-command (get-secret 'mu4e-get-mail-command)
     ; NOTE: I tried setting up the sync in ~/.config/systemd/user/mbsync.service
     ; Per: https://wiki.archlinux.org/title/isync#With_a_timer
     ; But I think this works better:
     mu4e-update-interval 60
+
+    mu4e-change-filenames-when-moving t   ; needed for mbsync
+    mu4e-get-mail-command (get-secret 'mu4e-get-mail-command)
+    mu4e-attachment-dir  (get-secret 'mu4e-attachment-dir)
+    mu4e-sent-folder     (get-secret 'mu4e-sent-folder)
+    mu4e-drafts-folder   (get-secret 'mu4e-drafts-folder)
+    mu4e-trash-folder    (get-secret 'mu4e-trash-folder)
+    mu4e-refile-folder   (get-secret 'mu4e-refile-folder)
+
     mu4e-headers-auto-update t
     mu4e-compose-format-flowed t
     fill-flowed-encode-column 80
     mu4e-index-cleanup nil
     mu4e-view-auto-mark-as-read nil
     mu4e-index-lazy-check t
-    mu4e-view-show-images t
     mu4e-use-fancy-chars t
-    mu4e-attachment-dir "~/Downloads"
     mu4e-compose-signature (concat (get-secret 'mu4e-from-fullname) "\n" (get-secret 'mu4e-from-address) "\n")
     mu4e-headers-date-format "%y-%m-%d")
-  )
 
+  (add-to-list 'mu4e-bookmarks
+    '(:name "Inbox Unread"
+      :key  ?i
+      :query "maildir:/inbox AND flag:unread"))
+  )

@@ -3,7 +3,7 @@
 ; This seems to be needed, since switching to guix:
 (add-to-list 'custom-theme-load-path "~/.doom.d/themes")
 
-(setq user-full-name "Chris DeRose"
+(setq user-full-name (get-secret 'mu4e-from-fullname)
       user-mail-address (get-secret 'mu4e-from-address)
 
       load-prefer-newer t         ; Tells us to recompile the source files, when the cache is older..
