@@ -64,7 +64,7 @@ Can be an integer to determine the exact padding."
    ;; dark grey, base0 should be white and base8 should be black.
    (base0      '("#FFFBF0" "#FFFBF0" "white"        ))
    (base1      '("#FCF8ED" "#FCF8ED" "brightblack"  ))
-   (base2      '("#FCF7E8" "#FCF7E8" "brightblack"  ))
+   (base2      '("#EEE8D5" "#FCF7E8" "brightblack"  ))
    (base3      '("#F2E6CE" "#F2E6CE" "brightblack"  ))
    (base4      '("#E1DBCD" "#E1DBCD" "brightblack"  ))
    (base5      '("#D6D6D6" "#D6D6D6" "brightblack"  ))

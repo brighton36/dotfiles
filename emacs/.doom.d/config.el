@@ -23,7 +23,7 @@
       ; This is what was causing the doom to randomly change windows to the dashboard
       doom-unreal-buffer-functions '(minibufferp)
 
-      doom-theme 'doom-nord-light
+      doom-theme (intern (get-secret 'doom-theme))
       ; Seems like emacs only picks up fonts in ~/.local/share/fonts/
       doom-font (font-spec :family "UbuntuMono Nerd Font" :size 16)            ; the primary font to use
       doom-variable-pitch-font (font-spec :family "Ubuntu Nerd Font" :size 14) ; a non-monospace font (where applicable)
@@ -79,11 +79,12 @@
 ; auto-dim
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
+;; TODO: (doom-color 'base2)
 (after! auto-dim-other-buffers
   (custom-set-faces
-    '(auto-dim-other-buffers-face ((t (:background "#d8dee9")))))
+    '(auto-dim-other-buffers-face ((t (:background "#EEE8D5")))))
   (custom-set-faces
-    '(auto-dim-other-buffers-hide ((t (:background "d8dee9")))))
+    '(auto-dim-other-buffers-hide ((t (:background "#EEE8D5")))))
   )
 
 ; avy
