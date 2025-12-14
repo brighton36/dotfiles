@@ -1,6 +1,6 @@
 ; mu4e.el --- Description -*- lexical-binding: t; -*-
 
-(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e") 
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e/") 
 (require 'org-msg)
 
 (map! :after mu4e 

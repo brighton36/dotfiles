@@ -3,8 +3,8 @@
 
 ;(defvaralias 'js-indent-level 'tab-width)
 ;(defvaralias 'indent-tabs-mode nil)
-(add-to-list 'doom-detect-indentation-excluded-modes 'web-mode)
-(add-to-list 'doom-detect-indentation-excluded-modes 'typescript-tsx-mode)
+;(add-to-list 'doom-detect-indentation-excluded-modes 'web-mode)
+;(add-to-list 'doom-detect-indentation-excluded-modes 'typescript-tsx-mode)
 
 (setq web-mode-code-indent-offset 2)
 

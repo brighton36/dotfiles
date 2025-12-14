@@ -17,6 +17,8 @@
       visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow) ; Just a prettier indication that we're wrapping:
       text-scale-mode-step 1.05
       shell-file-name (executable-find "bash")
+      ; enable-dir-local-variables nil
+      ispell-dictionary "en-custom" ; `aspell dicts` shows you whats on your system
 
       ; doom
 
@@ -62,6 +64,9 @@
       ; ace-window
       aw-dispatch-when-more-than 1
 
+      ; tab stuff
+      tab-always-indent nil
+
       ; lisp
       lisp-indent-offset 2)
 
@@ -101,10 +106,7 @@
 (setq-default auto-fill-function 'do-auto-fill)
 (setq comment-auto-fill-only-comments t)
 (setq-default fill-column 100)
-
-(add-hook 'ruby-mode-hook
-  (function (lambda ()
-          (setq evil-shift-width ruby-indent-level))))
+(setq-default tab-width 2)
 
 ;; Random mode Preferences  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (vertico-posframe-mode 1) ; In general, we seem to like these modes
@@ -233,6 +235,9 @@
   ; ace-window
   :n "C-f" #'ace-window
 
+  ; Dumb-jummp
+  :ni "C-j" #'dumb-jump-go
+
   ; Cursor Jumps
   :ni "C-o" #'better-jumper-jump-backward
   :ni "C-i" #'better-jumper-jump-forward
@@ -243,6 +248,8 @@
 
   :nv "M-n" #'+workspace/switch-right
   :nv "M-p" #'+workspace/switch-left
+  :nv "M-S-n" #'+workspace/swap-right
+  :nv "M-S-p" #'+workspace/swap-left
 
   ;; Avy
   :nv "C-." #'evil-avy-goto-char-timer
@@ -260,6 +267,9 @@
 
   ;; Winner:
   :nv "C-n" #'winner-redo ; For whatever reason, C-p cannot be declared this way
+
+  ;; Indent-rigidly in visual mode
+  :v [tab] #'indent-rigidly
 
   ; Seemingly, :g doesn't adjust this map?
   :map global-map
@@ -322,6 +332,11 @@
 (map! :map evil-state-map
       :i "C-p" nil
       :i "C-n" nil
+  )
+
+(map! :after emmet-mode
+  :map emmet-mode-keymap
+  :v [tab] nil
   )
 
 ; This affects ruby-inf, run-python, node-js repl
