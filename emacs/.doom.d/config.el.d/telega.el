@@ -56,14 +56,20 @@
 
 (setq telega-server-libs-prefix "/usr"
       telega-use-images 1
+;      telega-chat-auto-fill-mode nil
       telega-filter-button-width 10)
 
+;; Disable chat buffer auto-fill
+;; this disables the incredibly annoying visual-line-mode, which is the cause of our crazy line wrap
+;; issues in telega chat. And setting truncate-lines to nil seems to prevent that odd wrapping issue
+;; that happens where our buffer width is a couple characters greater than the window width
+(add-hook 'telega-chat-mode-hook (lambda () (visual-line-mode -1) (setq truncate-lines nil)))
+
 (telega-notifications-mode 1)
+
 ; If you decide you want the systray icon, uncomment this:
 ;(telega-appindicator-mode 1)
 
-;; This sets our messages to wrap by default
-(add-hook 'telega-chat-mode-hook 'visual-line-mode)
 
 (set-face-attribute 'telega-msg-inline-reply nil :foreground "#556b72")
 (set-face-attribute 'telega-shadow nil :foreground "#556b72")

@@ -3,72 +3,69 @@
 ; This seems to be needed, since switching to guix:
 (add-to-list 'custom-theme-load-path "~/.doom.d/themes")
 
-(setq user-full-name (get-secret 'mu4e-from-fullname)
-      user-mail-address (get-secret 'mu4e-from-address)
+(setq
+  user-full-name (get-secret 'mu4e-from-fullname)
+  user-mail-address (get-secret 'mu4e-from-address)
 
-      load-prefer-newer t         ; Tells us to recompile the source files, when the cache is older..
-      delete-by-moving-to-trash t ; Delete files to trash
-      x-stretch-cursor t          ; Stretch cursor to the glyph width
-      undo-limit 80000000         ; Raise undo-limit to 80Mb
-      evil-want-fine-undo t       ; By default while in insert all changes are one big blob. Be more granular
-      which-key-idle-delay 0.5    ; faster which-key menu
+  load-prefer-newer t         ; Tells us to recompile the source files, when the cache is older..
+  delete-by-moving-to-trash t ; Delete files to trash
+  x-stretch-cursor t          ; Stretch cursor to the glyph width
+  undo-limit 80000000         ; Raise undo-limit to 80Mb
+  evil-want-fine-undo t       ; By default while in insert all changes are one big blob. Be more granular
+  which-key-idle-delay 0.5    ; faster which-key menu
 
-      auth-sources '((:source "~/.authinfo.gpg")) ; This is used in a few places...
-      visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow) ; Just a prettier indication that we're wrapping:
-      text-scale-mode-step 1.05
-      shell-file-name (executable-find "bash")
-      ; enable-dir-local-variables nil
-      ispell-dictionary "en-custom" ; `aspell dicts` shows you whats on your system
+  auth-sources '((:source "~/.authinfo.gpg")) ; This is used in a few places...
+  visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow) ; Just a prettier indication that we're wrapping:
+  text-scale-mode-step 1.05
+  shell-file-name (executable-find "bash")
+  ispell-dictionary "en-custom" ; `aspell dicts` shows you whats on your system
+  avy-all-windows 'all-frames
 
-      ; doom
+  ; ace-window
+  aw-dispatch-when-more-than 1
 
-      ; This is what was causing the doom to randomly change windows to the dashboard
-      doom-unreal-buffer-functions '(minibufferp)
+  ; tab stuff
+  tab-always-indent 'complete ; We may not want this, let's see
 
-      doom-theme (intern (get-secret 'doom-theme))
-      ; Seems like emacs only picks up fonts in ~/.local/share/fonts/
-      doom-font (font-spec :family "UbuntuMono Nerd Font" :size 16)            ; the primary font to use
-      doom-variable-pitch-font (font-spec :family "Ubuntu Nerd Font" :size 14) ; a non-monospace font (where applicable)
-      doom-big-font (font-spec :family "UbuntuMono Nerd Font" :size 18)        ; use this for presentations or streaming
+  ; lisp
+  lisp-indent-offset 2
 
-      vertico-posframe-font "Ubuntu Nerd Font 14"
-      ; NOTE: These fonts are also available:
-      ;doom-symbol-font (font-spec :family "Noto Color Emoji" :size 14)        ; for unicode glyphs
-      ; - `doom-serif-font' -- for the `fixed-pitch-serif' face
-      fancy-splash-image (concat doom-user-dir "dashboard-cat.png")
-      nerd-icons-font-family "Symbols Nerd Fonts Mono"
+  ; vterm
+  shell-file-name "/bin/bash" 
+  vterm-max-scrollback 10000
+  vterm-shell (executable-find "fish")
 
-      ; avy
-      avy-all-windows 'all-frames
+  ; emojify
+  emojify-display-style 'unicode
+  emojify-emoji-styles '(unicode)
 
-      ; vterm
-      shell-file-name "/bin/bash" 
-      vterm-max-scrollback 10000
-      vterm-shell (executable-find "fish")
+  ; Outline
+  outline-regexp "[#\f]+"
 
-      ; emojify
-      emojify-display-style 'unicode
-      emojify-emoji-styles '(unicode)
+  ; minibuffer
+  resize-mini-windows nil ; TODO I *think* this fixes the issue where the minibuffer doesn't
+                          ; paint on initial draw, sometimes...
 
-      ; Outline
-      outline-regexp "[#\f]+"
+  ; highlight-indent
+  highlight-indent-guides-method 'bitmap
+  highlight-indent-guides-auto-character-face-perc 25
 
-      ; minibuffer
-      resize-mini-windows nil ; TODO I *think* this fixes the issue where the minibuffer doesn't
-                              ; paint on initial draw, sometimes...
-
-      ; highlight-indent
-      highlight-indent-guides-method 'bitmap
-      highlight-indent-guides-auto-character-face-perc 25
-
-      ; ace-window
-      aw-dispatch-when-more-than 1
-
-      ; tab stuff
-      tab-always-indent nil
-
-      ; lisp
-      lisp-indent-offset 2)
+  ; doom
+  doom-unreal-buffer-functions '(minibufferp) ; This is what was causing the doom to randomly change windows to the dashboard
+  doom-theme (intern (get-secret 'doom-theme))
+ 
+ ; fonts:
+  ; Seems like emacs only picks up fonts in ~/.local/share/fonts/
+  ; NOTE: These fonts are also available:
+  ;doom-symbol-font (font-spec :family "Noto Color Emoji" :size 14)        ; for unicode glyphs
+  ; - `doom-serif-font' -- for the `fixed-pitch-serif' face
+  doom-font (font-spec :family "UbuntuMono Nerd Font" :size 16)            ; the primary font to use
+  doom-variable-pitch-font (font-spec :family "Ubuntu Nerd Font" :size 14) ; a non-monospace font (where applicable)
+  doom-big-font (font-spec :family "UbuntuMono Nerd Font" :size 18)        ; use this for presentations or streaming
+  vertico-posframe-font "Ubuntu Nerd Font 14"
+  fancy-splash-image (concat doom-user-dir "dashboard-cat.png")
+  nerd-icons-font-family "Symbols Nerd Fonts Mono"
+  )
 
 ; dired - Seems like we need to set these after the mode loads
 (after! dired (setq dired-listing-switches "-lt"))
@@ -106,7 +103,13 @@
 (setq-default auto-fill-function 'do-auto-fill)
 (setq comment-auto-fill-only-comments t)
 (setq-default fill-column 100)
+
+;; Tab related ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq-default tab-width 2)
+
+; NOTE tab-width controls evil-shift-width, which controls the visual > key
+; For whatever reason, some modes override the system tab-width. Lisp mode is one of these
+(add-hook 'emacs-lisp-mode-hook (function (lambda () (setq-local tab-width 2))))
 
 ;; Random mode Preferences  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (vertico-posframe-mode 1) ; In general, we seem to like these modes
@@ -246,10 +249,10 @@
   :n "C-s" #'+vertico/switch-workspace-buffer
   :n "C-S-s" #'consult-buffer
 
+  :nv "M-N" #'+workspace/swap-right
+  :nv "M-P" #'+workspace/swap-left
   :nv "M-n" #'+workspace/switch-right
   :nv "M-p" #'+workspace/switch-left
-  :nv "M-S-n" #'+workspace/swap-right
-  :nv "M-S-p" #'+workspace/swap-left
 
   ;; Avy
   :nv "C-." #'evil-avy-goto-char-timer
@@ -263,7 +266,8 @@
   :n "C-`" nil
 
   ;; Globals:
-  :g "C-S-c" #'org-capture
+  ;:g "C-S-c" #'org-capture ; TODO Do we want this... we changed this to close-buffer, and need a
+  ;new keystroke for org-capture.. maybe C-/ ...
 
   ;; Winner:
   :nv "C-n" #'winner-redo ; For whatever reason, C-p cannot be declared this way
@@ -278,7 +282,7 @@
     "M-[" #'evil-window-prev
     "M-}" #'evil-window-exchange
     "M-{" #'(lambda() (interactive) (evil-window-exchange -1))
-    "C-<backspace>" #'evil-window-delete
+    "C-S-c" #'evil-window-delete
 
     ;; Window Resize Up/down:
     "C-S-j" #'shrink-window

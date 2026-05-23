@@ -15,10 +15,9 @@ modmap:
     remap:
       tab:
         alone: tab
-        held: leftalt
+        # NOTE: We use right-alt because that maps to alt-gr3 in tigervnc, and 'alt' elsewhere
+        held: rightalt
         alone_timeout_millis: 100
-    application: 
-      not: /Vncviewer/
   - name: leftshift_tap_to_delete_hold_to_leftshift
     remap:
       leftshift:

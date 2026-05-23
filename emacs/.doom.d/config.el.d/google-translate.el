@@ -31,8 +31,15 @@
   (interactive)
 
   (if (not (get-a-frame "emacs-google-translate-popup"))
-    (make-frame '((name . "emacs-google-translate-popup") (width . 150) (height . 40) (minibuffer . f))))
+    (make-frame '(
+                   (name . "emacs-google-translate-popup")
+                   (width . 90)
+                   (height . 30)
+                   (minibuffer . f))
+      ))
   (select-frame-by-name "emacs-google-translate-popup")
+  (+workspace-switch "Translate" 1)
+
   ; TODO: Maybe exec the hypr-helper to assign the window to the active workspace?
 
   ; TODO Let's customize the faces a bit maybe too
