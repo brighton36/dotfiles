@@ -7,6 +7,14 @@
                         "description": "chrome bindings",
                         "manipulators": [
                             {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^com\\.google\\.Chrome$"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
                                 "from": {
                                     "key_code": "hyphen",
                                     "modifiers": { "mandatory": ["left_option", "left_shift"] }
@@ -17,15 +25,17 @@
                                         "modifiers": ["left_control", "left_command"]
                                     }
                                 ],
-                                "conditions": [
-                                    {
-                                    "type": "frontmost_application_if",
-                                    "bundle_identifiers": ["^com\\.google\\.Chrome$"]
-                                    }
-                                ],
                                 "type": "basic"
                             },
                             {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^com\\.google\\.Chrome$"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
                                 "from": {
                                     "key_code": "equal_sign",
                                     "modifiers": { "mandatory": ["left_option", "left_shift"] }
@@ -36,15 +46,17 @@
                                         "modifiers": ["left_control", "left_command"]
                                     }
                                 ],
-                                "conditions": [
-                                    {
-                                    "type": "frontmost_application_if",
-                                    "bundle_identifiers": ["^com\\.google\\.Chrome$"]
-                                    }
-                                ],
                                 "type": "basic"
                             },
                             {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^com\\.google\\.Chrome$"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
                                 "from": {
                                     "key_code": "hyphen",
                                     "modifiers": { "mandatory": ["left_option"] }
@@ -55,15 +67,17 @@
                                         "modifiers": ["left_command", "left_shift"]
                                     }
                                 ],
-                                "conditions": [
-                                    {
-                                    "type": "frontmost_application_if",
-                                    "bundle_identifiers": ["^com\\.google\\.Chrome$"]
-                                    }
-                                ],
                                 "type": "basic"
                             },
                             {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^com\\.google\\.Chrome$"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
                                 "from": {
                                     "key_code": "equal_sign",
                                     "modifiers": { "mandatory": ["left_option"] }
@@ -72,12 +86,6 @@
                                     {
                                         "key_code": "equal_sign",
                                         "modifiers": ["left_command", "left_shift"]
-                                    }
-                                ],
-                                "conditions": [
-                                    {
-                                    "type": "frontmost_application_if",
-                                    "bundle_identifiers": ["^com\\.google\\.Chrome$"]
                                     }
                                 ],
                                 "type": "basic"
@@ -167,6 +175,7 @@
                         ]
                     },
                     {
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "description": "Change left_shift to tap-del hold-shift.",
@@ -178,13 +187,19 @@
                                     "basic.to_delayed_action_delay_milliseconds": 15,
                                     "basic.to_if_held_down_threshold_milliseconds": 15
                                 },
-                                "to_if_alone": [{ "key_code": "delete_forward", "halt": true }],
+                                "to_if_alone": [
+                                    {
+                                        "halt": true,
+                                        "key_code": "delete_forward"
+                                    }
+                                ],
                                 "to_if_held_down": [{ "key_code": "left_shift" }],
                                 "type": "basic"
                             }
                         ]
                     },
                     {
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "description": "Change tab to tap-tab hold-meta.",
@@ -196,13 +211,19 @@
                                     "basic.to_delayed_action_delay_milliseconds": 15,
                                     "basic.to_if_held_down_threshold_milliseconds": 15
                                 },
-                                "to_if_alone": [{ "key_code": "tab", "halt": true }],
+                                "to_if_alone": [
+                                    {
+                                        "halt": true,
+                                        "key_code": "tab"
+                                    }
+                                ],
                                 "to_if_held_down": [{ "key_code": "left_option" }],
                                 "type": "basic"
                             }
                         ]
                     },
                     {
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "description": "Change caps_lock to tap-escape hold-control.",
@@ -214,7 +235,12 @@
                                     "basic.to_delayed_action_delay_milliseconds": 15,
                                     "basic.to_if_held_down_threshold_milliseconds": 15
                                 },
-                                "to_if_alone": [{ "key_code": "escape", "halt": true }],
+                                "to_if_alone": [
+                                    {
+                                        "halt": true,
+                                        "key_code": "escape"
+                                    }
+                                ],
                                 "to_if_held_down": [{ "key_code": "left_control" }],
                                 "type": "basic"
                             }
@@ -233,6 +259,10 @@
                         {
                             "from": { "key_code": "left_option" },
                             "to": [{ "key_code": "left_command" }]
+                        },
+                        {
+                            "from": { "key_code": "right_option" },
+                            "to": [{ "key_code": "left_option" }]
                         }
                     ]
                 }

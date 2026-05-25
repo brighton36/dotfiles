@@ -210,3 +210,11 @@
   "Return the value of the json file gcal_secret for key"
   (cdr (assoc key (json-read-file "~/.doom.d/secrets.json")))
   )
+
+; This error popped up all of a sudden:
+; Debugger entered--Lisp error: (error "Face inheritance results in inheritance cycle" gnus-group-news-low)
+; And this is the fix I found in doomemacs/themes/issues/875
+(use-package doom-themes :ensure t :defer t
+  :config
+  (setcdr (assoc 'gnus-group-news-low-empty doom-themes-base-faces)
+          '(:inherit 'gnus-group-mail-1-empty :weight 'normal)))

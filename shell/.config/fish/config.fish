@@ -70,3 +70,4 @@ else
     fenv source "$GUIX_PROFILE/etc/profile"
   end
 end
+export PATH="$HOME/.local/bin:$PATH"

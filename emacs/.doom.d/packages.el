@@ -75,5 +75,6 @@
   (package! circe)
   (package! alert)
   (package! request)
-  (package! emacs-slack :recipe (:host github :repo "emacs-slack/slack"))
+  (package! emacs-slack :recipe (:host github :repo "emacs-slack/emacs-slack"))
   ))
+

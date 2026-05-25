@@ -50,11 +50,23 @@
   highlight-indent-guides-method 'bitmap
   highlight-indent-guides-auto-character-face-perc 25
 
+  ; ace-window
+  aw-dispatch-when-more-than 1
+
+  ; tab stuff
+  tab-always-indent nil
+
+  ; dumb-jump
+  dumb-jump-force-searcher 'rg
+
+  ; lisp
+  lisp-indent-offset 2
+
   ; doom
   doom-unreal-buffer-functions '(minibufferp) ; This is what was causing the doom to randomly change windows to the dashboard
   doom-theme (intern (get-secret 'doom-theme))
  
- ; fonts:
+  ; fonts:
   ; Seems like emacs only picks up fonts in ~/.local/share/fonts/
   ; NOTE: These fonts are also available:
   ;doom-symbol-font (font-spec :family "Noto Color Emoji" :size 14)        ; for unicode glyphs
@@ -92,9 +104,9 @@
 ;; TODO: (doom-color 'base2)
 (after! auto-dim-other-buffers
   (custom-set-faces
-    '(auto-dim-other-buffers-face ((t (:background "#EEE8D5")))))
+    '(auto-dim-other-buffers-face ((t (:background "#D8DEE9")))))
   (custom-set-faces
-    '(auto-dim-other-buffers-hide ((t (:background "#EEE8D5")))))
+    '(auto-dim-other-buffers-hide ((t (:background "#D8DEE9")))))
   )
 
 ; avy
@@ -380,7 +392,7 @@
                          configfiles))
       )) 
 (cond ((string-equal system-type "gnu/linux")
-       (setq configfiles (cl-delete-if (lambda (k) (string-match-p "\\(slack\\|osx\\)\.el$" k))
+       (setq configfiles (cl-delete-if (lambda (k) (string-match-p "\\(slack\\|osx\\|apex\\)\.el$" k))
                          configfiles))
       )) 
 
