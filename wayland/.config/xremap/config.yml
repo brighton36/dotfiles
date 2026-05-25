@@ -83,6 +83,20 @@ keymap:
       M-equal: c-tab                  # M-] : next tab
       M-SHIFT-minus: c-shift-pageup   # M-{ : move tab prev
       M-SHIFT-equal: c-shift-pagedown # M-} : move tab next
+  - name: librewolf
+    application: 
+      only: librewolf
+    remap:
+      C-SHIFT-i: c-f4                 # C-SHFT-c : Closetab
+      # I think we're good with just c-shift-t
+      #C-SHIFT-backspace: c-shift-t    # Undo Close
+      C-SHIFT-p: f6                   # C-SHIFT-l : toggle location bar
+      C-l: M-right                    # C-n : forward
+      C-r: M-left                     # C-p : backward
+      M-minus: c-shift-tab            # M-[ : prev tab
+      M-equal: c-tab                  # M-] : next tab
+      M-SHIFT-minus: c-shift-pageup   # M-{ : move tab prev
+      M-SHIFT-equal: c-shift-pagedown # M-} : move tab next
   - name: Pcmanfm
     application: 
       only: Pcmanfm

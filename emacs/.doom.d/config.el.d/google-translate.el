@@ -38,7 +38,6 @@
                    (minibuffer . f))
       ))
   (select-frame-by-name "emacs-google-translate-popup")
-  (+workspace-switch "Translate" 1)
 
   ; TODO: Maybe exec the hypr-helper to assign the window to the active workspace?
 

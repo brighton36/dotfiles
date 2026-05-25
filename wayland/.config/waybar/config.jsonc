@@ -27,11 +27,11 @@
         "icon": false,
         "rewrite": {
             "(.*) — Mozilla Firefox": "Firefox [$1]",
+            "(.*) — LibreWolf": "LibreWolf [$1]",
             "(.*) — Doom Emacs": "emacs [$1]"
         },
     },
     "hyprland/workspaces": {
-        "on-click": "~/bin/hypr-ws-change.sh test",
         "format": "{icon}",
         "format-icons": {
             "default": "",

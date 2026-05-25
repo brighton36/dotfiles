@@ -78,6 +78,14 @@
   `(link :weight normal) ; Mostly this seems to affect org-mode. But, in general, I don't want links in bold
 )
 
+;; Fix gnus face inheritance cycle: doom-themes sets gnus-group-news-low-empty
+;; to inherit from gnus-group-news-low, but Emacs 31+ has the reverse, creating
+;; a cycle. Patch the doom-themes definition to break it.
+;; See: https://github.com/doomemacs/themes/issues/875
+(after! doom-themes
+  (setcdr (assoc 'gnus-group-news-low-empty doom-themes-base-faces)
+    '(:inherit 'gnus-group-mail-1-empty :weight 'normal)))
+
 ; auto-dim
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -110,6 +118,13 @@
 ; NOTE tab-width controls evil-shift-width, which controls the visual > key
 ; For whatever reason, some modes override the system tab-width. Lisp mode is one of these
 (add-hook 'emacs-lisp-mode-hook (function (lambda () (setq-local tab-width 2))))
+
+(add-hook 'python-mode-hook
+  (lambda ()
+    (setq
+      indent-tabs-mode nil
+      tab-width 4
+      python-indent-offset 4)))
 
 ;; Random mode Preferences  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (vertico-posframe-mode 1) ; In general, we seem to like these modes
@@ -170,6 +185,11 @@
 ;  (keymap-set completion-preview-active-mode-map "M-p" #'completion-preview-prev-candidate)
 ;  ;; Convenient alternative to C-i after typing one of the above
 ;  (keymap-set completion-preview-active-mode-map "M-i" #'completion-preview-insert))
+                                        ;
+; Persp-mode
+; This disables the workspaces applying on new popup frames (gptel, google-translate, etc)...
+(setq persp-emacsclient-init-frame-behaviour-override nil)
+(setq persp-init-frame-behaviour-override nil)
 
 (custom-set-faces!
   `(completion-preview :foreground ,"#93a1a1", :background "#eee8d5")) ; Solarized base1, base2

@@ -37,13 +37,11 @@
 
 (defun emacs-everywhere--major-mode-in-workspace ()
   "This hooks into the init process, to ensure that everywhere starts in it's own workspace"
-  (+workspace-switch "Everywhere" 1)
   (text-mode))
 
 (defun emacs-everywhere-final-hooks-in-workspace ()
   '(emacs-everywhere-convert-org-to-gfm
     emacs-everywhere-remove-trailing-whitespace)
-  (+workspace-kill "Everywhere" 1)
   )
 
 (setq emacs-everywhere-frame-name-format "Emacs Everywhere"
