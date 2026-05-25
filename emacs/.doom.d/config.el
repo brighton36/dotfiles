@@ -392,7 +392,7 @@
                          configfiles))
       )) 
 (cond ((string-equal system-type "gnu/linux")
-       (setq configfiles (cl-delete-if (lambda (k) (string-match-p "\\(slack\\|osx\\|apex\\)\.el$" k))
+       (setq configfiles (cl-delete-if (lambda (k) (string-match-p "\\(osx\\|apex\\)\.el$" k))
                          configfiles))
       )) 
 
