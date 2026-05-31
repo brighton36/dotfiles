@@ -1,0 +1,19 @@
+{
+  "com.tinyspeck.slackmacgap": {
+    "Zoom Out": "^-",
+    "Zoom In": "^=",
+    "Back": "^p",
+    "Forward": "^n"
+  },
+  "com.google.Chrome": {
+    "Reload This Page": "^r",
+    "Select Previous Tab": "~[",
+    "New Tab": "^t",
+    "Back": "^p",
+    "Forward": "^n",
+    "Close Tab": "^$c",
+    "Reopen Closed Tab": "^$t",
+    "Open Location...": "^l",
+    "Select Next Tab": "~]"
+  }
+}

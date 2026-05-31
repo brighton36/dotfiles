@@ -7,7 +7,9 @@ config-version = 2
 
 # You can use it to add commands that run after AeroSpace startup.
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
-after-startup-command = []
+after-startup-command = [
+#  'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0'
+]
 
 # Start AeroSpace at login
 start-at-login = true
@@ -66,12 +68,12 @@ on-mode-changed = []
 #                 See:
 #                 https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
-    inner.horizontal = 4
-    inner.vertical =   4
-    outer.left =       0
+    inner.horizontal = 10
+    inner.vertical =   10
+    outer.left =       2
     outer.bottom =     0
     outer.top =        0
-    outer.right =      0
+    outer.right =      2
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -115,10 +117,6 @@ on-mode-changed = []
     cmd-rightSquareBracket = 'focus dfs-next'
     cmd-shift-leftSquareBracket = 'swap dfs-prev'
     cmd-shift-rightSquareBracket = 'swap dfs-next'
-    #alt-h = 'focus left'
-    #alt-j = 'focus down'
-    #alt-k = 'focus up'
-    #alt-l = 'focus right'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move
     #alt-shift-h = 'move left'
