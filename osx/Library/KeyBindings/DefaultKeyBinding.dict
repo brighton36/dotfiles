@@ -15,6 +15,7 @@
     "~v"      = "pageUp:";                       /* M-v */
     "^v"      = "pageDown:";                     /* C-v */
     "~d"      = "deleteWordForward:";            /* M-d */
+    "^u"      = "deleteToBeginningOfParagraph:"; /* C-u */
     "^w"      = "deleteWordBackward:";           /* C-w */
     "~\010"   = "deleteWordBackward:";           /* M-backspace */
     "~\177"   = "deleteWordBackward:";           /* M-delete */
