@@ -302,6 +302,44 @@
                                     }
                                 ],
                                 "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^com.tinyspeck.slackmacgap$"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "p",
+                                    "modifiers": { "mandatory": ["left_control"] }
+                                },
+                                "to": [
+                                    { "shell_command": "~/bin/click_menu_item.applescript Edit Search" },
+                                    { "key_code": "vk_none" }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^com.tinyspeck.slackmacgap$"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "k",
+                                    "modifiers": { "mandatory": ["left_control"] }
+                                },
+                                "to": [
+                                    { "shell_command": "~/bin/click_menu_item.applescript Go Threads" },
+                                    { "key_code": "vk_none" }
+                                ],
+                                "type": "basic"
                             }
                         ]
                     },
