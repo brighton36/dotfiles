@@ -99,14 +99,17 @@
     '(:inherit 'gnus-group-mail-1-empty :weight 'normal)))
 
 ; auto-dim
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-;; TODO: (doom-color 'base2)
+; Turn on dimming of buffers that aren't focused
+(add-hook 'after-init-hook (lambda ()
+  (when (fboundp 'auto-dim-other-buffers-mode)
+  (auto-dim-other-buffers-mode t))))
+
 (after! auto-dim-other-buffers
-  (custom-set-faces
-    '(auto-dim-other-buffers-face ((t (:background "#D8DEE9")))))
-  (custom-set-faces
-    '(auto-dim-other-buffers-hide ((t (:background "#D8DEE9")))))
+  (message (doom-color 'base2))
+  (custom-set-faces!
+    `(auto-dim-other-buffers-face :background ,(doom-color 'base2)))
+  (custom-set-faces!
+    `(auto-dim-other-buffers-hide :background ,(doom-color 'base2)))
   )
 
 ; avy
@@ -202,9 +205,17 @@
 ; This disables the workspaces applying on new popup frames (gptel, google-translate, etc)...
 (setq persp-emacsclient-init-frame-behaviour-override nil)
 (setq persp-init-frame-behaviour-override nil)
+;(add-to-list 'persp-inhibit-switch-for 
+;  (lambda (frame) (string= (frame-parameter frame 'name) "emacs-google-translate-popup")))
+;(setq persp-inhibit-switch-for (list
+;                                      (lambda (frame) (string= (frame-parameter frame 'name) "emacs-google-translate-popup"))
+;                                      ))
 
 (custom-set-faces!
   `(completion-preview :foreground ,"#93a1a1", :background "#eee8d5")) ; Solarized base1, base2
+
+; Thes are useful
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
 ; flyspell:
 (add-hook 'text-mode-hook 'flyspell-mode)
@@ -241,9 +252,6 @@
 
 ; Disable the auto-pairing of parethesis and quotes and such...
 (remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
-
-; Solaire screws with auto-dim, and just kinda sucks for me. Disable it
-(after! solaire-mode (solaire-global-mode -1))
 
 ;; Key Bindings ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (map! 

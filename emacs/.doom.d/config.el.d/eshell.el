@@ -26,6 +26,50 @@
 ;           (require 'fish-completion nil t))
 ;  (global-fish-completion-mode))
 
+;; ICONS
+;; modified from https://www.reddit.com/r/emacs/comments/xboh0y/how_to_put_icons_into_eshell_ls/
+(defvar eshell-ls-file-keymap
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "RET") #'eshell-ls-find-file)
+    (define-key map (kbd "<return>") #'eshell-ls-find-file)
+    (define-key map [mouse-1] #'eshell-ls-find-file)
+    (define-key map (kbd "D") #'eshell-ls-delete-file)
+    map)
+  "Keys in effect when point is over a file from `eshell/ls'.")
+
+(defun lem-eshell-prettify (file)
+"Add features to listings in `eshell/ls' output.
+The features are:
+1. Add decoration like 'ls -F':
+- Mark directories with a `/'
+- Mark executables with a `*'
+2. Make each listing into a clickable link to open the
+corresponding file or directory.
+3. Add icons (requires `nerd-icons')
+This function is meant to be used as advice around
+`eshell-ls-annotate', where FILE is the cons describing the file."
+(let* ((name (car file))
+        (icon (if (eq (cadr file) t)
+                    (propertize (nerd-icons-icon-for-dir name) 'face 'eshell-ls-directory)
+                (nerd-icons-icon-for-file name)))
+        (suffix
+        (cond
+            ;; Directory
+            ((eq (cadr file) t) "/")
+            ;; Executable
+            ((and (/= (user-uid) 0) ; root can execute anything
+                (eshell-ls-applicable (cdr file) 3 #'file-executable-p (car file)))
+            "*"))))
+    (cons
+    (concat icon " "
+            (propertize name
+                        'keymap eshell-ls-file-keymap
+                        'mouse-face 'highlight
+                        'file-name (expand-file-name (substring-no-properties (car file)) default-directory))
+            (when (and suffix (not (string-suffix-p suffix name)))
+                (propertize suffix 'face 'shadow)))
+    (cdr file))))
+(advice-add #'eshell-ls-annotate :filter-return #'lem-eshell-prettify)
 
 ;; copied from https://stackoverflow.com/questions/13009908/eshell-search-history
 (defun my-eshell-previous-matching-input-from-input (arg)

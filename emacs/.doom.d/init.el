@@ -194,15 +194,6 @@
        ;;literate
        (default +bindings +smartparens))
 
-; Turn on dimming of buffers that aren't focused
-(add-hook 'after-init-hook (lambda ()
-  (when (fboundp 'auto-dim-other-buffers-mode)
-  (auto-dim-other-buffers-mode t))))
-
-; Lets try out relative line numbers:
-; ESC (number) (up or down)
-; (setq display-line-numbers-type 'relative)
-
 ; It seems like this is needed in various places, early in the init process. So,
 ; I'm sticking it here for now
 (require 'json)
@@ -211,10 +202,3 @@
   (cdr (assoc key (json-read-file "~/.doom.d/secrets.json")))
   )
 
-; This error popped up all of a sudden:
-; Debugger entered--Lisp error: (error "Face inheritance results in inheritance cycle" gnus-group-news-low)
-; And this is the fix I found in doomemacs/themes/issues/875
-(use-package doom-themes :ensure t :defer t
-  :config
-  (setcdr (assoc 'gnus-group-news-low-empty doom-themes-base-faces)
-          '(:inherit 'gnus-group-mail-1-empty :weight 'normal)))

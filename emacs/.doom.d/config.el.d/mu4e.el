@@ -92,3 +92,8 @@
       :key  ?i
       :query "maildir:/inbox AND flag:unread"))
   )
+
+; mu4e-alert
+(mu4e-alert-set-default-style 'libnotify)
+(add-hook 'after-init-hook #'mu4e-alert-enable-notifications)
+(setq mu4e-alert-email-notification-types '(subjects))

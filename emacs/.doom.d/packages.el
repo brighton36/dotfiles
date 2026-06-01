@@ -67,14 +67,6 @@
 (package! google-translate)
 (package! ob-mermaid)
 (package! forge)
-
-;emacs-slack:
-(cond ((string-equal system-type "darwin")
-  (package! ts)
-  (package! websocket)
-  (package! circe)
-  (package! alert)
-  (package! request)
-  (package! emacs-slack :recipe (:host github :repo "emacs-slack/emacs-slack"))
-  ))
-
+(package! solaire-mode :disable t) ; I have no use for this
+(package! mu4e-alert)
+(package! rainbow-delimiters)
