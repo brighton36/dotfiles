@@ -70,10 +70,10 @@ on-mode-changed = []
 [gaps]
     inner.horizontal = 10
     inner.vertical =   10
-    outer.left =       2
-    outer.bottom =     0
+    outer.left =       6
+    outer.bottom =     6
     outer.top =        0
-    outer.right =      2
+    outer.right =      6
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes

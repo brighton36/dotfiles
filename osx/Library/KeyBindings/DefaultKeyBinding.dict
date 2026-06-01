@@ -19,15 +19,12 @@
     "~\UF728" = "deleteWordForward:";            /* delete */
 
 
-    "^/"      = "undo:";                         /* C-/ */
-    "^_"      = "undo:";                         /* C-_ */
     "^@"      = "setMark:";                      /* C-@ */
     "^ "      = "setMark:";                      /* C-space */
     "^v"      = "pageDown:";                     /* C-v */
     "^u"      = "deleteToBeginningOfParagraph:"; /* C-u */
     "^w"      = "deleteWordBackward:";           /* C-w */
     "^t"      = "transpose:";                    /* C-t */
-    "^g"      = "_cancelKey:";                   /* C-g */
     "^a"      = "moveToBeginningOfLine:";        /* C-a */
     "^e"      = "moveToEndOfLine:";              /* C-e */   
     "^x"      = "cut:";

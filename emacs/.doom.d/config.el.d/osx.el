@@ -4,7 +4,7 @@
 (setq ns-use-native-fullscreen t)
 
 ; Hide the titlebar:
-(add-to-list 'default-frame-alist '(undecorated . t))
+(add-to-list 'default-frame-alist '(undecorated-round . t))
 
 ; GPG seems to need this
 (setenv "GPG_AGENT_INFO" nil)
