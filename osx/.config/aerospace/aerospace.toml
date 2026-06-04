@@ -112,6 +112,11 @@ on-mode-changed = []
     # end tell'
     # '''
 
+    cmd-w = 'close --quit-if-last-window'
+    cmd-m = 'macos-native-minimize'
+    cmd-shift-m = 'macos-native-fullscreen'
+    cmd-t = 'flatten-workspace-tree' # I don't actually think this does anything for us
+
     # See: https://nikitabobko.github.io/AeroSpace/commands#layout
     cmd-space = 'layout tiles horizontal vertical'
     #alt-comma = 'layout accordion horizontal vertical'

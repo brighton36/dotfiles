@@ -143,15 +143,15 @@
                         ]
                     },
                     {
-                        "description": "cmd-f open firefox",
+                        "description": "cmd-l open librewolf",
                         "manipulators": [
                             {
                                 "from": {
-                                    "key_code": "y",
+                                    "key_code": "p",
                                     "modifiers": { "mandatory": ["left_command"] }
                                 },
                                 "to": [
-                                    { "shell_command": "open -na 'Google Chrome' --args --new-window" },
+                                    { "shell_command": "open -na 'Librewolf' --args --new-window" },
                                     { "key_code": "vk_none" }
                                 ],
                                 "type": "basic"
@@ -344,76 +344,156 @@
                         ]
                     },
                     {
-                        "enabled": false,
+                        "description": "librewolf shortcuts",
                         "manipulators": [
                             {
-                                "description": "Change left_shift to tap-del hold-shift.",
-                                "from": {
-                                    "key_code": "left_shift",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "parameters": {
-                                    "basic.to_delayed_action_delay_milliseconds": 15,
-                                    "basic.to_if_held_down_threshold_milliseconds": 15
-                                },
-                                "to_if_alone": [
+                                "conditions": [
                                     {
-                                        "halt": true,
-                                        "key_code": "delete_forward"
+                                        "bundle_identifiers": [
+                                            "^net.librewolf.librewolf$"
+                                        ],
+                                        "type": "frontmost_application_if"
                                     }
                                 ],
-                                "to_if_held_down": [{ "key_code": "left_shift" }],
+                                "from": {
+                                    "key_code": "hyphen",
+                                    "modifiers": { "mandatory": ["left_option"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "page_up",
+                                        "modifiers": ["left_control"]
+                                    }
+                                ],
                                 "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "enabled": false,
-                        "manipulators": [
+                            },
                             {
-                                "description": "Change tab to tap-tab hold-meta.",
-                                "from": {
-                                    "key_code": "tab",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "parameters": {
-                                    "basic.to_delayed_action_delay_milliseconds": 15,
-                                    "basic.to_if_held_down_threshold_milliseconds": 15
-                                },
-                                "to_if_alone": [
+                                "conditions": [
                                     {
-                                        "halt": true,
-                                        "key_code": "tab"
+                                        "bundle_identifiers": [
+                                            "^net.librewolf.librewolf$"
+                                        ],
+                                        "type": "frontmost_application_if"
                                     }
                                 ],
-                                "to_if_held_down": [{ "key_code": "left_option" }],
+                                "from": {
+                                    "key_code": "equal_sign",
+                                    "modifiers": { "mandatory": ["left_option"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "page_down",
+                                        "modifiers": ["left_control"]
+                                    }
+                                ],
                                 "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "enabled": false,
-                        "manipulators": [
+                            },
                             {
-                                "description": "Change caps_lock to tap-escape hold-control.",
-                                "from": {
-                                    "key_code": "caps_lock",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "parameters": {
-                                    "basic.to_delayed_action_delay_milliseconds": 15,
-                                    "basic.to_if_held_down_threshold_milliseconds": 15
-                                },
-                                "to_if_alone": [
+                                "conditions": [
                                     {
-                                        "halt": true,
-                                        "key_code": "escape"
+                                        "bundle_identifiers": [
+                                            "^net.librewolf.librewolf$"
+                                        ],
+                                        "type": "frontmost_application_if"
                                     }
                                 ],
-                                "to_if_held_down": [{ "key_code": "left_control" }],
+                                "from": {
+                                    "key_code": "hyphen",
+                                    "modifiers": { "mandatory": ["left_shift", "left_option"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "page_up",
+                                        "modifiers": ["left_shift", "left_control"]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^net.librewolf.librewolf$"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "equal_sign",
+                                    "modifiers": { "mandatory": ["left_shift", "left_option"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "page_down",
+                                        "modifiers": ["left_shift", "left_control"]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^net.librewolf.librewolf$"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "r",
+                                    "modifiers": { "mandatory": ["left_control"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_arrow",
+                                        "modifiers": ["left_command"]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^net.librewolf.librewolf$"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "l",
+                                    "modifiers": { "mandatory": ["left_control"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "right_arrow",
+                                        "modifiers": ["left_command"]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^net.librewolf.librewolf$"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "p",
+                                    "modifiers": { "mandatory": ["left_shift", "left_control"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "f6",
+                                        "modifiers": []
+                                    }
+                                ],
                                 "type": "basic"
                             }
-                        ]
+                          ]
                     }
                 ]
             },
