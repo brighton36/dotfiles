@@ -127,7 +127,7 @@
                         ]
                     },
                     {
-                        "description": "cmd-return open iterm2",
+                        "description": "cmd-return open alacritty",
                         "manipulators": [
                             {
                                 "from": {
@@ -135,7 +135,7 @@
                                     "modifiers": { "mandatory": ["left_command"] }
                                 },
                                 "to": [
-                                    { "shell_command": "/Applications/iTerm.app/Contents/MacOS/iTerm2" },
+                                    { "shell_command": "open -na 'Alacritty'" },
                                     { "key_code": "vk_none" }
                                 ],
                                 "type": "basic"
@@ -168,6 +168,22 @@
                                 },
                                 "to": [
                                     { "shell_command": "open -a 'Emacs Client.app'" },
+                                    { "key_code": "vk_none" }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "cmd-backspace hide mouse",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "delete_or_backspace",
+                                    "modifiers": { "mandatory": ["left_command"] }
+                                },
+                                "to": [
+                                    { "shell_command": "~/bin/hide_mouse.applescript" },
                                     { "key_code": "vk_none" }
                                 ],
                                 "type": "basic"
