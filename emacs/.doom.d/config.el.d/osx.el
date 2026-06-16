@@ -3,9 +3,6 @@
 ; Native OSX full screen
 (setq ns-use-native-fullscreen t)
 
-; Hide the titlebar:
-; TODO: If I set this to undecorated-round... the cursor stops working? hmm  
-(add-to-list 'default-frame-alist '(undecorated . t))
 
 ; GPG seems to need this
 (setenv "GPG_AGENT_INFO" nil)

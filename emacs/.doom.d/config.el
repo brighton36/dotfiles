@@ -345,8 +345,10 @@
       :desc "Org Capture" :n "o c" #'org-capture
       :desc "Toggle eshell popup" :n "o e" #'eshell-toggle
       :desc "Open eshell here" :n "o E" #'eshell-new
+      :desc "Forge list issues" :n "o L" #'forge-list-issues
       :desc "Start an llm session" :n "o l" #'gptel
       :desc "haskell (ghci)" :n "o H" #'run-haskell
+      :desc "Jira Issues" :n "o I" #'jira-issues
       :desc "javascript (node)" :n "o J" #'nodejs-repl
       :desc "Mu4e" :n "o m" #'mu4e
       :desc "New blank buffer" :n "o n" #'+default/new-buffer
@@ -399,8 +401,9 @@
        (setq configfiles (cl-delete-if (lambda (k) (string-match-p "\\(emacs-everywhere\\|telega\\)\.el$" k))
                          configfiles))
       )) 
+; Stuff that we don't use on linux... 
 (cond ((string-equal system-type "gnu/linux")
-       (setq configfiles (cl-delete-if (lambda (k) (string-match-p "\\(osx\\)\.el$" k))
+       (setq configfiles (cl-delete-if (lambda (k) (string-match-p "\\(osx\\|jira\\)\.el$" k))
                          configfiles))
       )) 
 

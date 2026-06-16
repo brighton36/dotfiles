@@ -202,3 +202,10 @@
   (cdr (assoc key (json-read-file "~/.doom.d/secrets.json")))
   )
 
+
+; Hide the titlebar:
+; Seems like this has to run during 'early init' in order for round corners
+; to work on osx. You can remove the -round if the cursor is weird, and/or
+; you want square corners instead of round ones
+(cond ((string-equal system-type "darwin")
+  (add-to-list 'default-frame-alist '(undecorated-round . t)))) 

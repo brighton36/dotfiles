@@ -2,29 +2,29 @@
 
 # Default colors
 [colors.primary]
-background = '#2E3440'
-foreground = '#4c566a'
+background = '#ECEFF4'
+foreground = '#3b4252'
 
 # Normal colors
 [colors.normal]
-black   = '#3B4252'
-red     = '#BF616A'
-green   = '#A3BE8C'
-yellow  = '#EBCB8B'
-blue    = '#81A1C1'
-magenta = '#B48EAD'
-cyan    = '#88C0D0'
-white   = '#E5E9F0'
+black   = '#D8DEE9'
+red     = '#99324B'
+green   = '#4F894C'
+yellow  = '#9A7500'
+blue    = '#3B6EA8'
+magenta = '#97365B'
+cyan    = '#398EAC'
+white   = '#D8DEE9'
 
 # Bright colors
 [colors.bright]
-black   = '#4C566A'
-red     = '#BF616A'
-green   = '#A3BE8C'
-yellow  = '#EBCB8B'
-blue    = '#81A1C1'
-magenta = '#B48EAD'
-cyan    = '#8FBCBB'
+black   = '#D8DEE9'
+red     = '#99324B'
+green   = '#4F894C'
+yellow  = '#9A7500'
+blue    = '#3B6EA8'
+magenta = '#97365B'
+cyan    = '#398EAC'
 white   = '#ECEFF4'
 
 [cursor]
@@ -38,7 +38,7 @@ shape = "Block"
 TERM = "xterm-256color"
 
 [font]
-size = 16.0
+size = 16
 
 [font.glyph_offset]
 x = 0
@@ -51,15 +51,18 @@ family = "UbuntuMono Nerd Font"
 x = 0
 y = 0
 
+[font.bold]
+style = "Regular"
+
 [scrolling]
-history = 10000
+history = 50000
 
 [selection]
 save_to_clipboard = true
 
 [window]
 dynamic_padding = true
-decorations = "None"
+decorations = "buttonless"
 option_as_alt = "Both"
 
 [window.padding]

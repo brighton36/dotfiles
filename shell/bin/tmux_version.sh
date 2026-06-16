@@ -4,6 +4,10 @@ ECHO="echo"
 SED="sed"
 BC="/usr/bin/bc"
 TMUX="/usr/bin/tmux"
+if [ ! -f $TMUX ]; then
+  # osx homebrew path:
+  TMUX="/opt/homebrew/bin/tmux"
+fi
 
 if [ ! $# -eq 2 ]; then
   echo "Invalid Parameters. Two arguments are required."

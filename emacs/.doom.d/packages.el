@@ -70,3 +70,4 @@
 (package! solaire-mode :disable t) ; I have no use for this
 (package! mu4e-alert)
 (package! rainbow-delimiters)
+(package! jira)
