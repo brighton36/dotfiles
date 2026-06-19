@@ -169,6 +169,10 @@ on-mode-changed = []
     # See: https://nikitabobko.github.io/AeroSpace/commands#mode
     cmd-tab = 'mode service'
 
+[[on-window-detected]]
+   if.window-title-regex-substring = 'emacs-.+-popup'
+   run = ['layout floating']
+
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 [mode.service.binding]

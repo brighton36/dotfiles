@@ -71,3 +71,6 @@
 (package! mu4e-alert)
 (package! rainbow-delimiters)
 (package! jira)
+(package! shell-maker)
+(package! acp)
+(package! agent-shell)

@@ -222,7 +222,6 @@
 (add-hook 'prog-mode-hook 'flyspell-prog-mode)
 
 ; epa
-(require 'epa)
 (epa-file-enable)
 
 ; Doom Dashboard:
@@ -342,7 +341,7 @@
 (map! :leader 
       :n "o b" nil
       :desc "Aider" :n "o a" #'aider-transient-menu
-      :desc "Org Capture" :n "o c" #'org-capture
+      :desc "Agent-shell" :n "o C" #'agent-shell
       :desc "Toggle eshell popup" :n "o e" #'eshell-toggle
       :desc "Open eshell here" :n "o E" #'eshell-new
       :desc "Forge list issues" :n "o L" #'forge-list-issues
@@ -398,7 +397,7 @@
 
 ; Stuff that we don't use on osx... 
 (cond ((string-equal system-type "darwin")
-       (setq configfiles (cl-delete-if (lambda (k) (string-match-p "\\(emacs-everywhere\\|telega\\)\.el$" k))
+       (setq configfiles (cl-delete-if (lambda (k) (string-match-p "\\(telega\\)\.el$" k))
                          configfiles))
       )) 
 ; Stuff that we don't use on linux... 

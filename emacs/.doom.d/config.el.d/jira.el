@@ -6,20 +6,24 @@
   jira-token-is-personal-access-token nil
   jira-api-version 3
   jira-username (get-secret 'jira-username)
-  jira-token (get-secret 'jira-token))
+  jira-token (get-secret 'jira-token)
+  jira-issues-max-results 60
+  jira-issues-table-fields '(:key :issue-type-name :status-name :assignee-name :summary)
+  jira-issues-sort-key '("Status" . t)
+  )
 
 ;;; Configure jire.el for Evil mode keybindings
 (map!
   :map jira-issues-mode-map
-  :n "g?" 'jira-issues-actions-menu
-  :n "gl" 'jira-issues-menu
-  :n "gt" '(lambda () (interactive) (jira-issues--jump-to-tempo))
-  :n "gf" '(lambda () (interactive) (jira-detail-find-issue-by-key))
-  :n "gc" '(lambda () (interactive) (jira-actions-copy-issues-id-to-clipboard (jira-utils-marked-item)))
-  :n "gC" 'jira-actions-change-issue-menu
-  :n "gi" '(lambda () (interactive) (jira-detail-show-issue (jira-utils-marked-item)))
-  :n "go" '(lambda () (interactive) (jira-actions-open-issue (jira-utils-marked-item)))
-  :n "gw" 'jira-actions-add-worklog-menu)
+  :desc "jira Actions" :n "i?" 'jira-issues-actions-menu
+  :desc "jira Issues" :n "il" 'jira-issues-menu
+  :desc "jira Jump to Tempo" :n "it" '(lambda () (interactive) (jira-issues--jump-to-tempo))
+  :desc "jira Find Issue" :n "if" '(lambda () (interactive) (jira-detail-find-issue-by-key))
+  :desc "jira Copy Key to Clipboard" :n "ic" '(lambda () (interactive) (jira-actions-copy-issues-id-to-clipboard (jira-utils-marked-item)))
+  :desc "jira Change Issue" :n "iC" 'jira-actions-change-issue-menu
+  :desc "jira Show Issue" :n "ii" '(lambda () (interactive) (jira-detail-show-issue (jira-utils-marked-item)))
+  :desc "jira Open Issue in browser" :n "io" '(lambda () (interactive) (jira-actions-open-issue (jira-utils-marked-item)))
+  :desc "jira Add Worklog" :n "iw" 'jira-actions-add-worklog-menu)
 
 (map!
   :map jira-detail-mode-map
