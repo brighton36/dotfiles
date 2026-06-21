@@ -143,7 +143,14 @@
 
 ;; Random mode Preferences  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (vertico-posframe-mode 1) ; In general, we seem to like these modes
+
 (global-subword-mode 1)   ; Iterate through CamelCase words
+
+(setq
+  nyan-animate-nyancat t
+  nyan-wavy-trail t
+  nyan-animation-frame-interval 0.25)
+(nyan-mode 1)
 
 ; Winner mode, which we really only use for winner-undo (C-w C-u)
 (when (fboundp 'winner-mode) (winner-mode t))
@@ -298,7 +305,7 @@
   :nv "C-l" #'evil-avy-goto-line
 
   ;; Emoji's
-  :i "C-z" #'emoji-insert
+  :i "C-z" #'emojify-insert-emoji
 
   ;; popup
   :n "C-e" #'+popup/toggle
@@ -358,6 +365,7 @@
       :desc "Web browser popup" :n "o w" #'eww
       :desc "Toggle vterm popup" :n "o v" #'vterm
       :desc "Open vterm here" :n "o V" #'vterm-new
+      :desc "Open Wasabi" :n "o w" #'wasabi
       :desc "Google Translate this Buffer" :n "o x" #'google-translate-buffer
       :desc "ipython " :n "o Y" #'run-python
       )

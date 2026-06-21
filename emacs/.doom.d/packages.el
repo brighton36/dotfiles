@@ -74,3 +74,5 @@
 (package! shell-maker)
 (package! acp)
 (package! agent-shell)
+(package! wasabi :recipe (:host github :repo "xenodium/wasabi"))
+(package! nyan-mode)
