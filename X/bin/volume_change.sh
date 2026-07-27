@@ -9,10 +9,10 @@ msgTag="myvolume"
 
 case $1 in
   up)
-    /usr/bin/pactl -- set-sink-volume 0 "+10%"
+    /usr/bin/pactl -- set-sink-volume 0 "+5%"
     ;;
   down)
-    /usr/bin/pactl -- set-sink-volume 0 "-10%"
+    /usr/bin/pactl -- set-sink-volume 0 "-5%"
     ;;
   mute)
     /usr/bin/pactl -- set-sink-mute 0 toggle

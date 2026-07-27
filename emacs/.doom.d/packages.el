@@ -70,9 +70,12 @@
 (package! solaire-mode :disable t) ; I have no use for this
 (package! mu4e-alert)
 (package! rainbow-delimiters)
-(package! jira)
+(cond ((string-equal system-type "darwin") (package! jira)))
 (package! shell-maker)
 (package! acp)
 (package! agent-shell)
 (package! wasabi :recipe (:host github :repo "xenodium/wasabi"))
 (package! nyan-mode)
+(package! expand-region)
+(package! window-stool :recipe (:host github :repo "jaszhe/window-stool" :files ("*.el")))
+(package! robe)

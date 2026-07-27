@@ -1,9 +1,8 @@
 ;;; ruby.el --- Description -*- lexical-binding: t; -*-
 
-(add-hook 'compilation-finish-functions
-          (lambda (buf strg)
-            (switch-to-buffer-other-window "*compilation*")
-            (read-only-mode)
-            (goto-char (point-max))
-            (local-set-key (kbd "q")
-                           (lambda () (interactive) (quit-restore-window)))))
+; ruby
+(global-robe-mode)
+(eval-after-load 'company '(push 'company-robe company-backends))
+
+; Auto-start robe for rdoc and completion-at-point
+(add-hook 'ruby-mode-hook #'robe-start)

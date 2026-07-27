@@ -105,7 +105,6 @@
   (auto-dim-other-buffers-mode t))))
 
 (after! auto-dim-other-buffers
-  (message (doom-color 'base2))
   (custom-set-faces!
     `(auto-dim-other-buffers-face :background ,(doom-color 'base2)))
   (custom-set-faces!
@@ -126,6 +125,7 @@
 (setq-default auto-fill-function 'do-auto-fill)
 (setq comment-auto-fill-only-comments t)
 (setq-default fill-column 100)
+
 
 ;; Tab related ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq-default tab-width 2)
@@ -152,6 +152,9 @@
   nyan-animation-frame-interval 0.25)
 (nyan-mode 1)
 
+
+(add-hook 'prog-mode-hook #'window-stool-mode)
+
 ; Winner mode, which we really only use for winner-undo (C-w C-u)
 (when (fboundp 'winner-mode) (winner-mode t))
 
@@ -174,10 +177,17 @@
 ; This fixes a problem in the emacs --daemon mode, where evil-collection-debug crashes the init, due
 ; to this function not being defined. At some point we'll upgrade to an emacs where this is
 ; compiled, and this hack should be removed
-(defun treesit-available-p () nil)
+; I think emacs31 fixed this... keeping around in case I'm wrong...
+;(defun treesit-available-p () nil)
+; Emacs-31.. not sure this does what we want
+(setopt treesit-enable-modes t)
+(setq treesit-auto-install-grammar 'always)
 
 ; I'm trying this out...
 (savehist-mode 1)
+
+(setq-default history-length 1000)
+(setq-default prescient-history-length 1000)
 
 ; Aider
 ; Alternatively: "--model" "deepseek" "--api-key" (concat "deepseek=" (get-secret 'deepseek-api-key))
@@ -191,22 +201,21 @@
 (global-set-key (kbd "C-c a") 'aider-transient-menu)
 (global-auto-revert-mode 1) ; this reloads the aider changes. Possibly shouldn't be in this section...
 
-; completion-preview-mode
-(add-hook 'prog-mode-hook #'completion-preview-mode)
-(add-hook 'text-mode-hook #'completion-preview-mode)
-;; and in \\[shell] and friends
-(with-eval-after-load 'comint
-  (add-hook 'comint-mode-hook #'completion-preview-mode))
 
-(with-eval-after-load 'completion-preview
-  ;; Show the preview already after two symbol characters
-  (setq completion-preview-minimum-symbol-length 2))
+(setq evil-goggles-pulse t)
+(setq evil-goggles-duration 0.500) ;; default is 0.200
+(custom-set-faces! '(evil-goggles-default-face :background unspecified :inherit highlight))
 
-; TODO
-;  (keymap-set completion-preview-active-mode-map "M-n" #'completion-preview-next-candidate)
-;  (keymap-set completion-preview-active-mode-map "M-p" #'completion-preview-prev-candidate)
-;  ;; Convenient alternative to C-i after typing one of the above
-;  (keymap-set completion-preview-active-mode-map "M-i" #'completion-preview-insert))
+;; Continue Comments.
+(setopt comment-multi-line t)
+(advice-add 'newline-and-indent :before-until
+            (lambda (&rest _)
+              (interactive "*")
+              (when-let (((nth 4 (syntax-ppss (point))))
+                         ((functionp comment-line-break-function))
+                         (fill-prefix " *"))
+                (funcall comment-line-break-function nil)
+                t)))
                                         ;
 ; Persp-mode
 ; This disables the workspaces applying on new popup frames (gptel, google-translate, etc)...
@@ -218,10 +227,7 @@
 ;                                      (lambda (frame) (string= (frame-parameter frame 'name) "emacs-google-translate-popup"))
 ;                                      ))
 
-(custom-set-faces!
-  `(completion-preview :foreground ,"#93a1a1", :background "#eee8d5")) ; Solarized base1, base2
-
-; Thes are useful
+; These are useful
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
 ; flyspell:
@@ -232,28 +238,28 @@
 (epa-file-enable)
 
 ; Doom Dashboard:
-(assoc-delete-all "Reload last session" +doom-dashboard-menu-sections) ;TODO is this working...
-(add-to-list '+doom-dashboard-menu-sections
+(assoc-delete-all "Reload last session" +dashboard-menu-sections) ;TODO is this working...
+(add-to-list '+dashboard-menu-sections
              '("Start Telega"
-               :icon (nerd-icons-faicon "nf-fae-telegram" :face 'doom-dashboard-menu-title)
+               :icon (nerd-icons-faicon "nf-fae-telegram" :face 'dashboard-menu-title)
               ; TODO
                ;:when (modulep! telega)
                :action telega))
-(add-to-list '+doom-dashboard-menu-sections
+(add-to-list '+dashboard-menu-sections
              '("Start mu4e"
-               :icon (nerd-icons-codicon "nf-cod-mail" :face 'doom-dashboard-menu-title)
+               :icon (nerd-icons-codicon "nf-cod-mail" :face 'dashboard-menu-title)
                ; TODO
                ;:when (modulep! mu4e)
                :action mu4e))
-(add-to-list '+doom-dashboard-menu-sections
+(add-to-list '+dashboard-menu-sections
              '("Start LLM chat"
-               :icon (nerd-icons-faicon "nf-fa-rocketchat" :face 'doom-dashboard-menu-title)
+               :icon (nerd-icons-faicon "nf-fa-rocketchat" :face 'dashboard-menu-title)
                ; TODO
                ;:when (modulep! mu4e)
                :action gptel))
-(add-to-list '+doom-dashboard-menu-sections
+(add-to-list '+dashboard-menu-sections
              '("New Blank Buffer"
-               :icon (nerd-icons-faicon "nf-fa-file" :face 'doom-dashboard-menu-title)
+               :icon (nerd-icons-faicon "nf-fa-file" :face 'dashboard-menu-title)
                :action +default/new-buffer))
 
 ; Disable the auto-pairing of parethesis and quotes and such...
@@ -276,6 +282,9 @@
 
   ;; Comment
   :n "C-;" 'comment-region
+
+  ;; expand-region
+  :n "C-x" 'er/expand-region
 
   ;; Window Splits:
   :n "C-\\" #'evil-window-vsplit
@@ -311,6 +320,9 @@
   :n "C-e" #'+popup/toggle
   :n "C-`" nil
 
+  ;; Dirvish-side
+  :n "C-'" #'dirvish-side
+
   ;; Globals:
   ;:g "C-S-c" #'org-capture ; TODO Do we want this... we changed this to close-buffer, and need a
   ;new keystroke for org-capture.. maybe C-/ ...
@@ -326,11 +338,11 @@
     ; Window management
     "M-]" #'evil-window-next
     "M-[" #'evil-window-prev
-    "M-}" #'evil-window-exchange
-    "M-{" #'(lambda() (interactive) (evil-window-exchange -1))
+    "M-}" #'rotate-windows
+    "M-{" #'rotate-windows-back
     "C-S-c" #'evil-window-delete
 
-    ;; Window Resize Up/down:
+   ;; Window Resize Up/down:
     "C-S-j" #'shrink-window
     "C-S-k" #'enlarge-window
 
@@ -356,10 +368,11 @@
       :desc "haskell (ghci)" :n "o H" #'run-haskell
       :desc "Jira Issues" :n "o I" #'jira-issues
       :desc "javascript (node)" :n "o J" #'nodejs-repl
+      :desc "elisp" :n "o L" #'ielm
       :desc "Mu4e" :n "o m" #'mu4e
       :desc "New blank buffer" :n "o n" #'+default/new-buffer
       :n "o r" nil
-      :desc "irb" :n "o R" #'inf-ruby
+      :desc "irb" :n "o R" #'inf-ruby-console-auto
       :desc "Start Telegram Client" :n "o t" #'telega
       :n "o T" nil
       :desc "Web browser popup" :n "o w" #'eww

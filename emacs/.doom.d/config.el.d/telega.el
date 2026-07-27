@@ -64,7 +64,7 @@
 ;; which is the cause of our crazy line wrap issues in telega chat. And setting
 ;; truncate-lines to nil seems to prevent that odd wrapping issue that happens where our
 ;; buffer width is a couple characters greater than the window width
-(add-hook 'telega-chat-mode-hook (lambda () (visual-line-mode -1) (visual-fill-column-mode -1) (setq truncate-lines nil)))
+(add-hook 'telega-chat-mode-hook (lambda () (visual-line-mode -1) (visual-fill-column-mode -1) (auto-fill-mode -1) (setq truncate-lines nil)))
 
 (telega-notifications-mode 1)
 
