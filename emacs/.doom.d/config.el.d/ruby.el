@@ -5,4 +5,4 @@
 (eval-after-load 'company '(push 'company-robe company-backends))
 
 ; Auto-start robe for rdoc and completion-at-point
-(add-hook 'ruby-mode-hook #'robe-start)
+(add-hook 'ruby-mode-hook (lambda () (ignore-errors (robe-start))))
