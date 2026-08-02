@@ -216,6 +216,9 @@
                          (fill-prefix " *"))
                 (funcall comment-line-break-function nil)
                 t)))
+
+; lsp-mode
+(add-hook 'prog-mode-hook #'lsp-deferred)
                                         ;
 ; Persp-mode
 ; This disables the workspaces applying on new popup frames (gptel, google-translate, etc)...
@@ -241,25 +244,25 @@
 (assoc-delete-all "Reload last session" +dashboard-menu-sections) ;TODO is this working...
 (add-to-list '+dashboard-menu-sections
              '("Start Telega"
-               :icon (nerd-icons-faicon "nf-fae-telegram" :face 'dashboard-menu-title)
+               :icon (nerd-icons-faicon "nf-fae-telegram" :face '+dashboard-menu-title)
               ; TODO
                ;:when (modulep! telega)
                :action telega))
 (add-to-list '+dashboard-menu-sections
              '("Start mu4e"
-               :icon (nerd-icons-codicon "nf-cod-mail" :face 'dashboard-menu-title)
+               :icon (nerd-icons-codicon "nf-cod-mail" :face '+dashboard-menu-title)
                ; TODO
                ;:when (modulep! mu4e)
                :action mu4e))
 (add-to-list '+dashboard-menu-sections
              '("Start LLM chat"
-               :icon (nerd-icons-faicon "nf-fa-rocketchat" :face 'dashboard-menu-title)
+               :icon (nerd-icons-faicon "nf-fa-rocketchat" :face '+dashboard-menu-title)
                ; TODO
                ;:when (modulep! mu4e)
                :action gptel))
 (add-to-list '+dashboard-menu-sections
              '("New Blank Buffer"
-               :icon (nerd-icons-faicon "nf-fa-file" :face 'dashboard-menu-title)
+               :icon (nerd-icons-faicon "nf-fa-file" :face '+dashboard-menu-title)
                :action +default/new-buffer))
 
 ; Disable the auto-pairing of parethesis and quotes and such...
@@ -417,12 +420,12 @@
 (setq configfiles (file-expand-wildcards "~/.doom.d/config.el.d/*.el"))
 
 ; Stuff that we don't use on osx... 
-(cond ((string-equal system-type "darwin")
+(cond ((featurep :system 'macos)
        (setq configfiles (cl-delete-if (lambda (k) (string-match-p "\\(telega\\)\.el$" k))
                          configfiles))
       )) 
 ; Stuff that we don't use on linux... 
-(cond ((string-equal system-type "gnu/linux")
+(cond ((featurep :system 'macos)
        (setq configfiles (cl-delete-if (lambda (k) (string-match-p "\\(osx\\|jira\\)\.el$" k))
                          configfiles))
       )) 

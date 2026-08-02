@@ -124,24 +124,6 @@ If N is negative, search forwards for the -Nth following match."
 (add-hook 'eshell-mode-hook (lambda ()
     (eshell/alias "ledger" "ledger --no-pager $*")))
 
-(defun company-eshell-history (command &optional arg &rest ignored)
-  (interactive (list 'interactive))
-  (cl-case command
-    (interactive (company-begin-backend 'company-eshell-history))
-    (prefix (and (eq major-mode 'eshell-mode)
-                 (let ((word (company-grab-word)))
-                   (save-excursion
-                     (eshell-bol)
-                     (and (looking-at-p (s-concat word "$")) word)))))
-    (candidates (cl-remove-duplicates
-                 (->> (ring-elements eshell-history-ring)
-                      (cl-remove-if-not (lambda (item) (s-prefix-p arg item)))
-                      (mapcar 's-trim))
-                 :test 'string=))
-    (sorted t)))
-
-(eval-after-load 'company '(push 'company-eshell-history company-backends))
-
 ; This fixes evince not starting. Probably other programs too
 (setenv "XDG_DATA_DIRS" "/usr/share")
 

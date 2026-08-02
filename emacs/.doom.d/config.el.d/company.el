@@ -11,26 +11,33 @@
   company-frontends '(company-pseudo-tooltip-frontend company-preview-frontend company-echo-metadata-frontend)
   company-tooltip-flip-when-above t)
 
+; Not sure about some of this...
 ;(set-company-backend!
 ;  '(text-mode markdown-mode gfm-mode)
 ;  '(:seperate company-ispell company-files company-yasnippet))
 
-; completion-preview-mode
-;(add-hook 'prog-mode-hook #'completion-preview-mode)
-;(add-hook 'text-mode-hook #'completion-preview-mode)
-;; and in \\[shell] and friends
-;(with-eval-after-load 'comint
-;  (add-hook 'comint-mode-hook #'completion-preview-mode))
+(company-quickhelp-mode)
 
-;(with-eval-after-load 'completion-preview
-  ;; Show the preview already after two symbol characters
-;  (setq completion-preview-minimum-symbol-length 2))
+; Seems like we arrive here before the themes load...
+(add-hook 'doom-load-theme-hook
+  (lambda () (setq company-quickhelp-color-background (doom-color 'base2))))
 
-;  (keymap-set completion-preview-active-mode-map "M-n" #'completion-preview-next-candidate)
-;  (keymap-set completion-preview-active-mode-map "M-p" #'completion-preview-prev-candidate)
-  ;; Convenient alternative to C-i after typing one of the above
-;  (keymap-set completion-preview-active-mode-map "M-i" #'completion-preview-insert))
 
-;(custom-set-faces!
-;  `(completion-preview :foreground ,"#93a1a1", :background "#eee8d5")) ; Solarized base1, base2
+; eshell history:
+(defun company-eshell-history (command &optional arg &rest ignored)
+  (interactive (list 'interactive))
+  (cl-case command
+    (interactive (company-begin-backend 'company-eshell-history))
+    (prefix (and (eq major-mode 'eshell-mode)
+              (let ((line (buffer-substring-no-properties
+                            (save-excursion (eshell-bol) (point))
+                            (point))))
+                (and (not (string-empty-p line)) line))))
+    (candidates (cl-remove-duplicates
+                  (->> (ring-elements eshell-history-ring)
+                    (cl-remove-if-not (lambda (item) (s-prefix-p arg item)))
+                    (mapcar 's-trim))
+                  :test 'string=))
+    (sorted t)))
 
+(eval-after-load 'company '(push 'company-eshell-history company-backends))

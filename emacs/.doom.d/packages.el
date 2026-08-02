@@ -70,7 +70,7 @@
 (package! solaire-mode :disable t) ; I have no use for this
 (package! mu4e-alert)
 (package! rainbow-delimiters)
-(cond ((string-equal system-type "darwin") (package! jira)))
+(cond ((featurep :system 'macos) (package! jira)))
 (package! shell-maker)
 (package! acp)
 (package! agent-shell)
@@ -78,4 +78,5 @@
 (package! nyan-mode)
 (package! expand-region)
 (package! window-stool :recipe (:host github :repo "jaszhe/window-stool" :files ("*.el")))
+(package! company-quickhelp)
 (package! robe)
