@@ -218,7 +218,11 @@
                 t)))
 
 ; lsp-mode
-(add-hook 'prog-mode-hook #'lsp-deferred)
+(add-hook 'prog-mode-hook
+  (lambda ()
+    (unless (derived-mode-p 'ruby-mode 'emacs-lisp-mode)
+      (lsp-deferred))))
+
                                         ;
 ; Persp-mode
 ; This disables the workspaces applying on new popup frames (gptel, google-translate, etc)...
