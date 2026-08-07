@@ -1,7 +1,5 @@
 ;;; my-functions.el --- Description -*- lexical-binding: t; -*-
 
-                                        ; test
-                                        ;
 ;(defun emacs-dirvish-popup ()
 ;  "Open dirvish in a popup frame."
 ;  (interactive)
