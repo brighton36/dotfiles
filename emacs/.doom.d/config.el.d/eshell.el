@@ -1,5 +1,5 @@
 ;-*- mode: elisp -*-
-(setq eshell-save-history-on-exit nil
+(setq eshell-save-history-on-exit t
       eshell-scroll-to-bottom-on-input 'all
       eshell-prefer-lisp-functions nil
       eshell-plain-grep-behavior t

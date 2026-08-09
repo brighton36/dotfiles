@@ -64,6 +64,14 @@ If FRAME is a frame, it is returned."
             "Function `get-frame-name': Arg neither a string nor a frame: `%s'"
             frame))))
 
+(defun my/move-frame-to-active-hyprland-workspace ()
+  "Move the current frame to Hyprland's active workspace."
+  (let ((ws (string-trim (shell-command-to-string
+                           "hyprctl activeworkspace -j | jq -r .id"))))
+    (when (and ws (not (string-empty-p ws)))
+      (call-process "hyprctl" nil 0 nil
+                    "dispatch" "movetoworkspacesilent" ws))))
+
 (defun my/llm-from-anywhere ()
   (interactive)
   ; This loads the frame without the dashboard, probably useful elsewhere.... see if it works better with
@@ -80,9 +88,8 @@ If FRAME is a frame, it is returned."
 
   (if (not (get-a-frame "emacs-gptel-popup"))
     (make-frame '((name . "emacs-gptel-popup") (width . 150) (height . 40) (minibuffer . f))))
+  (my/move-frame-to-active-hyprland-workspace)
   (select-frame-by-name "emacs-gptel-popup")
-  
-  ; TODO: Maybe exec the hypr-helper to assign the window to the active workspace?
   (display-buffer (generate-new-buffer "*gptel*"))
 
   (call-interactively 'my/gptel-switch-preset)

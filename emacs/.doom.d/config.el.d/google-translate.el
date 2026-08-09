@@ -37,9 +37,8 @@
                    (height . 30)
                    (minibuffer . f))
       ))
+  (my/move-frame-to-active-hyprland-workspace)
   (select-frame-by-name "emacs-google-translate-popup")
-
-  ; TODO: Maybe exec the hypr-helper to assign the window to the active workspace?
 
   ; TODO Let's customize the faces a bit maybe too
   (let ((input-buffer (generate-new-buffer "*google-translate*")) (buffer-name "*Google Translate*")   )

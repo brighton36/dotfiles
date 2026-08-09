@@ -228,11 +228,14 @@
 ; This disables the workspaces applying on new popup frames (gptel, google-translate, etc)...
 (setq persp-emacsclient-init-frame-behaviour-override nil)
 (setq persp-init-frame-behaviour-override nil)
-;(add-to-list 'persp-inhibit-switch-for 
-;  (lambda (frame) (string= (frame-parameter frame 'name) "emacs-google-translate-popup")))
-;(setq persp-inhibit-switch-for (list
-;                                      (lambda (frame) (string= (frame-parameter frame 'name) "emacs-google-translate-popup"))
-;                                      ))
+
+; Hide workspace display in modeline for popup frames
+(defun my/+workspace-display-popup (orig &rest args)
+  (if (string-match-p "\\(?:popup\\|everywhere\\|dmenu\\|capture\\)"
+                      (or (frame-parameter nil 'name) ""))
+      ""
+    (apply orig args)))
+(advice-add '+workspace/display :around #'my/+workspace-display-popup)
 
 ; These are useful
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
