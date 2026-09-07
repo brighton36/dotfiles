@@ -574,6 +574,60 @@
                                 "type": "basic"
                             }
                           ]
+                    },
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Change left_shift to tap-del hold-shift.",
+                                "from": {
+                                    "key_code": "left_shift",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "parameters": {
+                                    "basic.to_delayed_action_delay_milliseconds": 15,
+                                    "basic.to_if_held_down_threshold_milliseconds": 15
+                                },
+                                "to_if_alone": [{ "key_code": "delete_forward", "halt": true }],
+                                "to_if_held_down": [{ "key_code": "left_shift" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Change tab to tap-tab hold-meta.",
+                                "from": {
+                                    "key_code": "tab",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "parameters": {
+                                    "basic.to_delayed_action_delay_milliseconds": 15,
+                                    "basic.to_if_held_down_threshold_milliseconds": 15
+                                },
+                                "to_if_alone": [{ "key_code": "tab", "halt": true }],
+                                "to_if_held_down": [{ "key_code": "left_option" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Change caps_lock to tap-escape hold-control.",
+                                "from": {
+                                    "key_code": "caps_lock",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "parameters": {
+                                    "basic.to_delayed_action_delay_milliseconds": 15,
+                                    "basic.to_if_held_down_threshold_milliseconds": 15
+                                },
+                                "to_if_alone": [{ "key_code": "escape", "halt": true }],
+                                "to_if_held_down": [{ "key_code": "left_control" }],
+                                "type": "basic"
+                            }
+                        ]
                     }
                 ]
             },
