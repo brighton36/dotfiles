@@ -40,4 +40,4 @@
                   :test 'string=))
     (sorted t)))
 
-(eval-after-load 'company '(push 'company-eshell-history company-backends))
+(eval-after-load 'company '(push '(company-eshell-history :with company-capf) company-backends))

@@ -5,9 +5,9 @@
 ------------------
 ---- MONITORS ----
 ------------------
-hl.monitor({ output = "Unknown-1", disabled = true })               -- Unknown autodetect
-hl.monitor({ output = "DP-1", mode = "3440x1440@60", position = "0x0", scale = 1.0 }) -- External Dell
-hl.monitor({ output = "eDP-1", disabled = true })                   -- Laptop panel
+-- hl.monitor({ output = "Unknown-1", disabled = true })               -- Unknown autodetect
+-- hl.monitor({ output = "DP-1", mode = "3440x1440@60", position = "0x0", scale = 1.0 }) -- External Dell
+hl.monitor({ output = "eDP-1", scale = 1.0 })--, disabled = true })                   -- Laptop panel
 
 ---------------------
 ---- MY PROGRAMS ----
@@ -17,7 +17,7 @@ local emacs     = os.getenv("HOME") .. "/.guix-profile/bin/emacsclient"
 local helper    = os.getenv("HOME") .. "/bin/hypr-helper.py"
 
 -------------------
----- AUTOSTART ----
+------ Events -----
 -------------------
 -- TODO: some of these should move into user services, the way we did hyprpaper
 hl.on("hyprland.start", function()
@@ -25,6 +25,12 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("waybar")
     hl.exec_cmd("/usr/bin/blueman-applet")
     hl.exec_cmd("/usr/bin/nm-applet")
+    -- TODO: DRY this into a function:
+    hl.exec_cmd("hyprctl hyprpaper wallpaper ,~/.config/hypr/workspace-1.png")
+end)
+
+hl.on("workspace.active", function(ws)
+  hl.exec_cmd("hyprctl hyprpaper wallpaper ,~/.config/hypr/workspace-" .. ws.name .. ".png")
 end)
 
 -------------------------------
@@ -115,7 +121,7 @@ hl.config({
         kb_rules   = "",
 
         follow_mouse = 0,
-        sensitivity  = 0.5, -- -1.0 - 1.0, 0 means no modification
+        sensitivity  = 0.0, -- -1.0 - 1.0, 0 means no modification
 
         touchpad = {
             natural_scroll      = false,
@@ -173,8 +179,8 @@ hl.bind(mainMod .. " + Z",      hl.dsp.exec_cmd("/usr/bin/rofimoji -s light -a t
 hl.bind(mainMod .. " + D", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + W", hl.dsp.window.center())
 hl.bind(mainMod .. " + A", hl.dsp.window.pin({ action = "toggle" }))
-hl.bind(mainMod .. " + M",         hl.dsp.exec_cmd(helper .. " movespecial"))
-hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exec_cmd(helper .. " togglespecial"))
+hl.bind(mainMod .. " + M",         hl.dsp.window.move({workspace = "e:special"})) -- TODO
+hl.bind(mainMod .. " + SHIFT + M", hl.dsp.workspace.toggle_special("e:special"))
 hl.bind(mainMod .. " + bracketright",      hl.dsp.window.cycle_next())
 hl.bind(mainMod .. " + bracketleft",       hl.dsp.window.cycle_next({ next = false }))
 hl.bind(mainMod .. " + SHIFT + bracketright", hl.dsp.layout("swapnext"))
@@ -192,19 +198,17 @@ hl.bind(mainMod .. " + SHIFT + J", hl.dsp.window.resize({ x = 0,   y = 60,  rela
 hl.bind(mainMod .. " + SHIFT + K", hl.dsp.window.resize({ x = 0,   y = -60, relative = true }))
 hl.bind(mainMod .. " + SHIFT + L", hl.dsp.window.resize({ x = 60,  y = 0,   relative = true }))
 
--- Switch workspaces with mainMod + [1-9] (via hypr-helper)
 for i = 1, 9 do
-    hl.bind(mainMod .. " + " .. i, hl.dsp.exec_cmd(helper .. " switch " .. i))
+  -- Switch workspaces with mainMod + [1-9] (via hypr-helper)
+  hl.bind(mainMod .. " + " .. i, hl.dsp.focus({workspace = 'e+1'}))
+
+  -- Move active window to a workspace with mainMod + SHIFT + [1-9] (silent: don't follow)
+  hl.bind(mainMod .. " + SHIFT + " .. i, hl.dsp.window.move({ workspace = i, follow = false }))
 end
 
 -- Scroll through existing workspaces with mainMod + n/p
-hl.bind(mainMod .. " + N", hl.dsp.exec_cmd(helper .. " next"))
-hl.bind(mainMod .. " + P", hl.dsp.exec_cmd(helper .. " prev"))
-
--- Move active window to a workspace with mainMod + SHIFT + [1-9] (silent: don't follow)
-for i = 1, 9 do
-    hl.bind(mainMod .. " + SHIFT + " .. i, hl.dsp.window.move({ workspace = i, follow = false }))
-end
+hl.bind(mainMod .. " + N", hl.dsp.focus({workspace = 'e+1'}))
+hl.bind(mainMod .. " + P",hl.dsp.focus({workspace = 'e-1'}))
 
 -- Move/resize windows with mainMod + LMB/RMB and dragging
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
@@ -240,7 +244,14 @@ hl.bind("Scroll_Lock", hl.dsp.exec_cmd(helper .. " togglebluetooth"), mediaOpts)
 hl.bind("insert", hl.dsp.exec_cmd("/usr/bin/systemctl suspend"), mediaOpts)
 
 --------------------------------
----- WINDOWS AND WORKSPACES ----
+------- WORKSPACE RULES -------
+--------------------------------
+for i = 1, 9 do
+  hl.workspace_rule({ workspace = i, persistent = true })
+end
+
+--------------------------------
+------- WINDOWS RULES  ---------
 --------------------------------
 hl.window_rule({
     name  = "dmenu-position",
@@ -295,45 +306,5 @@ hl.window_rule({
 ---- PLUGINS ----
 -----------------
 hl.config({
-    plugin = {
-        hyprtrails = {
-            color = "rgba(073642aa)",
-        },
 
-        ["dynamic-cursors"] = {
-            enabled   = true,
-            mode      = "tilt", -- tilt | rotate | stretch | none
-            threshold = 2,
-
-            tilt = {
-                limit    = 5000,
-                ["function"] = "negative_quadratic", -- linear | quadratic | negative_quadratic
-            },
-
-            stretch = {
-                limit    = 3000,
-                ["function"] = "quadratic",
-            },
-
-            shake = {
-                enabled   = true,
-                nearest   = true,
-                threshold = 3.0,
-                base      = 2.0,
-                speed     = 4.0,
-                influence = 0.0,
-                limit     = 3.0,
-                timeout   = 2000,
-                effects   = true,
-                ipc       = false,
-            },
-
-            hyprcursor = {
-                nearest    = true,
-                enabled    = true,
-                resolution = -1,
-                fallback   = "clientside",
-            },
-        },
-    },
 })

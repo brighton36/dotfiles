@@ -154,6 +154,7 @@
 
 
 (add-hook 'prog-mode-hook #'window-stool-mode)
+(setq window-stool-n-from-top 3)
 
 ; Winner mode, which we really only use for winner-undo (C-w C-u)
 (when (fboundp 'winner-mode) (winner-mode t))

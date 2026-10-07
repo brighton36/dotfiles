@@ -7,14 +7,12 @@
 
 import os
 import subprocess
-import socket
 import re
 import argparse
 import json
 
-OPERATIONS = ['switch', 'next', 'prev', 'movespecial', 'togglespecial',
-              'monitor', 'togglebrightness', 'openurl',
-              'togglebluetooth', 'toggledisplay', 'screenshot']
+OPERATIONS = ['togglebrightness', 'openurl', 'togglebluetooth',
+              'toggledisplay', 'screenshot']
 FIRST_WORKSPACE = 1
 LAST_WORKSPACE = 9
 
@@ -42,12 +40,15 @@ def run(*args, **kwargs):
                                                            result.returncode,
                                                            result.stdout))
 
-    return result.stdout.decode() if kwargs.get('capture_output', True) else result.stdout
+    if kwargs.get('capture_output', True):
+        return result.stdout.decode()
+    else:
+        result.stdout
 
 
 def hyprctl(*args, **kwargs):
     stdout = run(HYPRCTL, *args)
-    # TODO: It might be smarter to just support a assertOutput=/^ok$/ param to run...
+    # TODO: It might be smarter to just support a assertOutput=/^ok$/ param...
     if (kwargs.get("assertOk") and not re.match(r'^ok$', stdout)):
         raise Exception("Error in hyprctl: {}".format(stdout))
     return stdout
@@ -70,9 +71,11 @@ def togglebluetooth():
 
 
 def toggledisplay():
-    # This code is kinda ugly and doesn't really work the way I want. But, I'm waiting for hyprland to just solve this.
-    # And it's just kinda buggy to use the cli for this rn, seemingly... Maybe we need to add a few
-    # calls to: hyprctl dispatch moveworkspacetomonitor {workspaceid} current
+    # This code is kinda ugly and doesn't really work the way I want. But, I'm
+    # waiting for hyprland to just solve this.
+    # And it's just kinda buggy to use the cli for this rn, seemingly... Maybe
+    # we need to add a few calls to:
+    # hyprctl dispatch moveworkspacetomonitor {workspaceid} current
     with open(os.path.expanduser('~/.config/hypr/hyprland.conf'), 'r') as file:
         hyprlandConfigLines = file.read().splitlines(True)
 
@@ -136,10 +139,6 @@ def operation_check(arg_value, supported_operations):
     return arg_value
 
 
-def active_window():
-    return json.loads(hyprctl('activewindow', '-j'))
-
-
 def monitors(*params):
     ret = []
     for monitor_parts in re.findall(r"^Monitor ([^ ]+) \(([^\)]+)\):\n\t([^\n]+)\n(.+?)\n\n",
@@ -150,26 +149,8 @@ def monitors(*params):
     return ret
 
 
-def focus_workspace(n):
-    hyprctl('dispatch', 'workspace', n, assertOk=True)
-    hyprpaper_change(n)
-
-
 def focus_window(address):
     hyprctl('dispatch', 'focuswindow', "address:"+address, assertOk=True)
-
-
-def move_to_workspace(s):
-    hyprctl('dispatch', 'movetoworkspacesilent', s, assertOk=True)
-
-
-def focus_special_workspace(n):
-    hyprctl('dispatch', 'togglespecialworkspace', n, assertOk=True)
-
-
-def hyprpaper_change(to):
-    hyprctl('hyprpaper', 'wallpaper',
-            ",~/.config/hypr/workspace-{}.png".format(to), assertOk=True)
 
 
 def hyprctl_clients():
@@ -181,7 +162,6 @@ def brotab_list():
     for tab in re.findall(r"([^\.]+\.[^\.]+)\.([^\t]+)\t([^\t]+)\t([^\n]+)\n", run(BROTAB, 'list'), re.MULTILINE | re.DOTALL):
         ret.append({'window': tab[0], 'tabno': tab[1], 'title': tab[2], 'url': tab[3]})
     return ret
-
 
 def brotab_active():
     ret = []
@@ -217,35 +197,6 @@ def screenshot(domain):
 
     # And view it:
     run('/usr/bin/feh', output_path)
-
-
-def on_event(line):
-    parts = re.match(re.compile(r'^([^\>]+)>>(.*)'), line)
-
-    match parts[1]:
-        case 'workspace':
-            # This override is here to support the configreloaded. Where, for some reason hyprland triggers a spurious workspace
-            # switch after monitor disable
-            to = on_event.override_workspace if hasattr(on_event, 'override_workspace') and on_event.override_workspace else parts[2]
-            on_event.override_workspace = None
-
-            # NOTE at the time of writing, this feature doesn't work: hyprctl keyword misc:background_color 65535
-            #      so we instead use wallpapers.
-            hyprpaper_change(to)
-        case 'activespecial':
-            specialparts = re.match(re.compile(r'^(?:special:([\d]*)|),'), parts[2])
-            if specialparts[1]:
-                hyprpaper_change(specialparts[1]+"special")
-            else:
-                active = active_workspace()
-                hyprpaper_change(active)
-        case 'configreloaded':
-            # Set the background, which, triggers after the monitor is destroyed, in 'workspace' above:
-            on_event.override_workspace=active_workspace()
-
-            # Disable any monitor that isn't focused:
-            for m in filter( lambda m: m['focused'] != 'yes', monitors()):
-                hyprctl('keyword', 'monitor', "{}, disable".format(m['port']), assertOk=True)
 
 
 def open_url(url):
@@ -326,23 +277,8 @@ parser.add_argument('operation_args',
 args = parser.parse_args()
 
 match args.operation:
-    case 'switch':
-        if len(args.operation_args) != 1 or not re.match(r'^[\d]$', args.operation_args[0]):
-            raise Exception("Invalid operation_args. One single digit number expected.")
-        focus_workspace(int(args.operation_args[0]))
-    case 'next':
-        active = active_workspace()
-        focus_workspace(FIRST_WORKSPACE if (active == LAST_WORKSPACE) else active+1)
-    case 'prev':
-        active = active_workspace()
-        focus_workspace(LAST_WORKSPACE if (active == FIRST_WORKSPACE) else active-1)
-    case 'movespecial':
-        workspace = re.match(re.compile(r'^(special:|)([\d]+)'), active_window()['workspace']['name'])
-        move_to_workspace(workspace[2] if workspace[1] else "special:{}".format(workspace[2]))
     case 'togglebrightness':
         togglebrightness(args.operation_args[0])
-    case 'togglespecial':
-        focus_special_workspace(active_workspace())
     case 'togglebluetooth':
         togglebluetooth()
     case 'toggledisplay':
@@ -355,27 +291,5 @@ match args.operation:
         if len(args.operation_args) != 1:
             raise Exception("Invalid operation_args. A screenshot domain was expected.")
         screenshot(args.operation_args[0])
-
-    case 'monitor':
-        BUFFER_SIZE = 1024
-        SOCKET_PATH = "/".join([os.environ['XDG_RUNTIME_DIR'],
-                                'hypr',
-                                os.environ['HYPRLAND_INSTANCE_SIGNATURE'],
-                                '.socket2.sock'])
-
-        with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as client:
-            client.connect(SOCKET_PATH)
-
-            buf = ""
-            while True:
-                buf += client.recv(BUFFER_SIZE).decode('utf-8', 'ignore')
-
-                lines = buf.splitlines(True)
-                buf = "" if lines[-1][-1] == "\n" else lines.pop()
-
-                for line in lines: on_event(line)
-
-            client.close()
-
     case _:
         raise Exception("Unable to execute operation. This should never happen")
