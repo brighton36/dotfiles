@@ -11,17 +11,14 @@ import re
 import argparse
 import json
 
-OPERATIONS = ['togglebrightness', 'openurl', 'togglebluetooth',
-              'toggledisplay', 'screenshot']
+OPERATIONS = ['openurl', 'screenshot']
 FIRST_WORKSPACE = 1
 LAST_WORKSPACE = 9
 
 HYPRCTL = "/usr/bin/hyprctl"
-BRIGHTNESSCTL = "/usr/bin/brightnessctl"
 BROTAB = "brotab"
 NOTIFY = "/usr/bin/notify-send"
 FIREFOX = "/usr/bin/librewolf"
-BLUETOOTHCTL = "/usr/bin/bluetoothctl"
 
 BROWSER_WINDOW_TITLE = 'LibreWolf'
 
@@ -54,81 +51,6 @@ def hyprctl(*args, **kwargs):
     return stdout
 
 
-def togglebrightness(device):
-    if (int(run(BRIGHTNESSCTL, "-d", device, "g")) == 0):
-        run(BRIGHTNESSCTL, "-d", device, "s", run(BRIGHTNESSCTL, "-d", device,
-                                                  "m"))
-    else:
-        run(BRIGHTNESSCTL, "-d", device, "s", 0)
-    return
-
-
-def togglebluetooth():
-    parts = re.match(re.compile(r'.*Powered\:[ ]+([^ ]+)$',
-                                flags=re.MULTILINE | re.DOTALL),
-                     run(BLUETOOTHCTL, "show"))
-    run(BLUETOOTHCTL, "power", "off" if parts[1] == 'yes' else "on")
-
-
-def toggledisplay():
-    # This code is kinda ugly and doesn't really work the way I want. But, I'm
-    # waiting for hyprland to just solve this.
-    # And it's just kinda buggy to use the cli for this rn, seemingly... Maybe
-    # we need to add a few calls to:
-    # hyprctl dispatch moveworkspacetomonitor {workspaceid} current
-    with open(os.path.expanduser('~/.config/hypr/hyprland.conf'), 'r') as file:
-        hyprlandConfigLines = file.read().splitlines(True)
-
-    parsed = {'declaration': [], 'expr': []}
-    endOfMonitorsI = 0  # TODO: Lets just use the max function for this below
-    for i, line in enumerate(hyprlandConfigLines):
-        matches = re.match(
-            r'^[ ]*([\\$]?)monitor(.*?)[ ]*\=[ ]*([\\$]?)(.*?)([ ]*#.+|)$',
-            line
-        )
-        if matches:
-            content = re.split(r'[ ]*,[ ]*', matches[4])
-            if i > endOfMonitorsI:
-                endOfMonitorsI = i
-            parsed['declaration' if matches[1] == '$' else 'expr'].append(
-                {
-                    'line': i,
-                    'content': content,
-                    'varRight': matches[2] if matches[2] else None,
-                    'comment': matches[5],
-                    'port': content[0],
-                    'isAssignment': (matches[3] == '$')
-                }
-            )
-
-    # TODO: we should probably throw and catch errors when there's a parse
-    # issue, and notify the user...
-    activePort = next(expr['content'][0] for expr in parsed['expr'] if len(expr['content']) > 1 and expr['content'][1] != 'disable')
-    if activePort:
-        activePortDeclI = [i for i, e in enumerate(parsed['declaration']) if e['content'][0] == activePort]
-        if (len(activePortDeclI) > 0):
-            activePortDeclI = activePortDeclI[0]
-            nextDecl = parsed['declaration'][(activePortDeclI + 1 if len(parsed['declaration']) > activePortDeclI + 1 else 0)]
-
-            # Which lines we'll remove
-            removeLines = [e['line'] for e in parsed['expr'] if (e['content'][0] == activePort or e['content'][0] == nextDecl['content'][0])]
-
-            # Add our replacement  lines
-            hyprlandConfigLines[endOfMonitorsI+1:endOfMonitorsI+1] = [
-                'monitor = {}\n'.format(','.join(nextDecl['content']))
-                ] + list('monitor = {},disable\n'.format(e['content'][0]) for e in parsed['declaration'] if e['content'][0] != nextDecl['content'][0])
-
-            # Remove old lines
-            for i in reversed(sorted(removeLines)):
-                del hyprlandConfigLines[i]
-
-            # Save the new Config:
-            with open(os.path.expanduser('~/.config/hypr/hyprland.conf'), 'w') as file:
-                file.write("".join(hyprlandConfigLines))
-
-            run(NOTIFY, "Switched active monitor to {}".format(nextDecl['content'][0]))
-
-
 def active_workspace():
     return int(json.loads(hyprctl('activeworkspace', '-j'))['id'])
 
@@ -139,18 +61,10 @@ def operation_check(arg_value, supported_operations):
     return arg_value
 
 
-def monitors(*params):
-    ret = []
-    for monitor_parts in re.findall(r"^Monitor ([^ ]+) \(([^\)]+)\):\n\t([^\n]+)\n(.+?)\n\n",
-                                    hyprctl('monitors', *params),
-                                    re.MULTILINE | re.DOTALL):
-        ret.append({**{'port': monitor_parts[0], 'id': monitor_parts[1], 'resolution': monitor_parts[2]},
-                    **dict(re.findall(r'^[ \t]+([^:]+):[ ]*(.+)$', monitor_parts[3], flags=re.MULTILINE))})
-    return ret
-
-
 def focus_window(address):
-    hyprctl('dispatch', 'focuswindow', "address:"+address, assertOk=True)
+    # Since 0.55 (lua), `hyprctl dispatch` evaluates its argument as a lua
+    # dispatcher expression; old `dispatch focuswindow address:0x...` is dead.
+    hyprctl('dispatch', "hl.dsp.focus({{ window = 'address:{}' }})".format(address), assertOk=True)
 
 
 def hyprctl_clients():
@@ -180,10 +94,10 @@ def screenshot(domain):
         '/'.join([DIR_OUTPUT, datetime.now().strftime(FILENAME)]))
 
     # Now Drop shadow:
-    run('/usr/bin/convert', "png:-", "(", "-clone", "0", "-background",
+    run("/usr/bin/magick", "convert", "png:-", "(", "-clone", "0", "-background",
         "black", "-shadow", "80x3+5+5", ")",
         "+swap", "-background", "none", "-layers", "merge", "+repage", output_path,
-        input=run("/usr/bin/convert", "png:-",
+        input=run("/usr/bin/magick", "convert", "png:-",
                   "(", "+clone", "-alpha", "extract",
                   "-draw", 'fill black polygon 0,0 0,15 15,0 fill white circle 15,15 15,0',
                   "(", "+clone", "-flip", ")", "-compose", "Multiply", "-composite",
@@ -267,7 +181,7 @@ def open_url(url):
 
 
 # main()
-parser = argparse.ArgumentParser(description='A smart(er) operation handler intended for use with bind, in the hyprland.conf.')
+parser = argparse.ArgumentParser(description='A smart(er) operation handler intended for use with bind, in the hyprland.lua.')
 parser.add_argument("operation",
                     help="One of our supported operations: {}".format(', '.join(OPERATIONS)),
                     type=lambda v: operation_check(v, OPERATIONS))
@@ -277,12 +191,6 @@ parser.add_argument('operation_args',
 args = parser.parse_args()
 
 match args.operation:
-    case 'togglebrightness':
-        togglebrightness(args.operation_args[0])
-    case 'togglebluetooth':
-        togglebluetooth()
-    case 'toggledisplay':
-        toggledisplay()
     case 'openurl':
         if len(args.operation_args) != 1:
             raise Exception("Invalid operation_args. One url expected.")

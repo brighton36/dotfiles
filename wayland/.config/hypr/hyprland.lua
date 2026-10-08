@@ -16,21 +16,34 @@ local terminal  = "/usr/bin/alacritty"
 local emacs     = os.getenv("HOME") .. "/.guix-profile/bin/emacsclient"
 local helper    = os.getenv("HOME") .. "/bin/hypr-helper.py"
 
+-------------------------
+---- HELPER FUNCTIONS ----
+-------------------------
+-- Live in include/helper_functions.lua (require resolves relative to the
+-- config dir). Add new helpers there, then destructure them here.
+local helpers           = require("include/helper_functions")
+local toggle_brightness = helpers.toggle_brightness
+local toggle_bluetooth  = helpers.toggle_bluetooth
+local cycle_display     = helpers.cycle_display
+
 -------------------
 ------ Events -----
 -------------------
+local function set_wallpaper(n)
+    hl.exec_cmd("hyprctl hyprpaper wallpaper ,~/.config/hypr/workspace-" .. n .. ".png")
+end
+
 -- TODO: some of these should move into user services, the way we did hyprpaper
 hl.on("hyprland.start", function()
     hl.exec_cmd("hypridle")
     hl.exec_cmd("waybar")
     hl.exec_cmd("/usr/bin/blueman-applet")
     hl.exec_cmd("/usr/bin/nm-applet")
-    -- TODO: DRY this into a function:
-    hl.exec_cmd("hyprctl hyprpaper wallpaper ,~/.config/hypr/workspace-1.png")
+    set_wallpaper(1)
 end)
 
 hl.on("workspace.active", function(ws)
-  hl.exec_cmd("hyprctl hyprpaper wallpaper ,~/.config/hypr/workspace-" .. ws.name .. ".png")
+    set_wallpaper(ws.name)
 end)
 
 -------------------------------
@@ -218,12 +231,13 @@ hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 local mediaOpts = { locked = true, repeating = true }
 -- F1
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd(emacs .. [[ -n -c -e "(command-execute 'dirvish)"]]), mediaOpts)
--- F2 TODO: cycle_display
-hl.bind("XF86AudioNext", hl.dsp.exec_cmd(helper .. " toggledisplay"), mediaOpts)
+-- F2 cycle display: laptop -> external -> both (locked but NOT repeating —
+-- holding the key shouldn't skip through states)
+hl.bind("XF86AudioNext", cycle_display, { locked = true })
 -- F3
 hl.bind("XF86AudioMute", hl.dsp.exec_cmd("~/bin/volume_change.sh mute"), mediaOpts)
 -- F4
-hl.bind("XF86AudioPlay", hl.dsp.exec_cmd(helper .. " togglebrightness system76_acpi::kbd_backlight"), mediaOpts)
+hl.bind("XF86AudioPlay", function() toggle_brightness("system76_acpi::kbd_backlight") end, mediaOpts)
 -- F5
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("~/bin/volume_change.sh down"), mediaOpts)
 -- F6
@@ -239,7 +253,7 @@ hl.bind("pause",       hl.dsp.exec_cmd(helper .. " screenshot region"))
 hl.bind("SHIFT + pause", hl.dsp.exec_cmd("dunstify -u normal 'TODO: Bind Full Screenshot'"))
 hl.bind("ALT + pause",   hl.dsp.exec_cmd("dunstify -u normal 'TODO: Bind Window Screenshot'"))
 -- F11
-hl.bind("Scroll_Lock", hl.dsp.exec_cmd(helper .. " togglebluetooth"), mediaOpts)
+hl.bind("Scroll_Lock", toggle_bluetooth, mediaOpts)
 -- F12
 hl.bind("insert", hl.dsp.exec_cmd("/usr/bin/systemctl suspend"), mediaOpts)
 
