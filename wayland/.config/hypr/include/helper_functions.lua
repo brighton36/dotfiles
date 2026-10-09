@@ -89,4 +89,35 @@ function M.cycle_display()
     end
 end
 
+-- Send the focused window to the special workspace paired with the current
+-- numbered workspace (on ws 3 -> window goes to special:3). No-op when
+-- already on a special workspace.
+function M.send_to_special()
+    local ws = hl.get_active_workspace()
+    local n = ws and not ws.special and tonumber(ws.name) or nil
+    if n then
+        -- follow = false: stash silently, don't open/follow into the special ws
+        hl.dispatch(hl.dsp.window.move({ workspace = "special:" .. n, follow = false }))
+    end
+end
+
+-- Toggle between numbered workspace N and its special:N.
+-- From N -> open special:N; from special:N -> focus N (deterministic, unlike
+-- toggle_special's "return to previous" behavior).
+function M.toggle_special_ws()
+    local ws = hl.get_active_workspace()
+    if not ws then return end
+    if ws.special then
+        local n = ws.name:match("^special:(%d+)$")
+        if n then
+            hl.dispatch(hl.dsp.focus({ workspace = tonumber(n) }))
+        end
+    else
+        local n = tonumber(ws.name)
+        if n then
+            hl.dispatch(hl.dsp.workspace.toggle_special(tostring(n)))
+        end
+    end
+end
+
 return M

@@ -25,6 +25,8 @@ local helpers           = require("include/helper_functions")
 local toggle_brightness = helpers.toggle_brightness
 local toggle_bluetooth  = helpers.toggle_bluetooth
 local cycle_display     = helpers.cycle_display
+local send_to_special   = helpers.send_to_special
+local toggle_special_ws = helpers.toggle_special_ws
 
 -------------------
 ------ Events -----
@@ -192,8 +194,8 @@ hl.bind(mainMod .. " + Z",      hl.dsp.exec_cmd("/usr/bin/rofimoji -s light -a t
 hl.bind(mainMod .. " + D", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + W", hl.dsp.window.center())
 hl.bind(mainMod .. " + A", hl.dsp.window.pin({ action = "toggle" }))
-hl.bind(mainMod .. " + M",         hl.dsp.window.move({workspace = "e:special"})) -- TODO
-hl.bind(mainMod .. " + SHIFT + M", hl.dsp.workspace.toggle_special("e:special"))
+hl.bind(mainMod .. " + M",         send_to_special)     -- window -> special:N for current ws N
+hl.bind(mainMod .. " + SHIFT + M", toggle_special_ws)   -- N <-> special:N
 hl.bind(mainMod .. " + bracketright",      hl.dsp.window.cycle_next())
 hl.bind(mainMod .. " + bracketleft",       hl.dsp.window.cycle_next({ next = false }))
 hl.bind(mainMod .. " + SHIFT + bracketright", hl.dsp.layout("swapnext"))
@@ -212,8 +214,8 @@ hl.bind(mainMod .. " + SHIFT + K", hl.dsp.window.resize({ x = 0,   y = -60, rela
 hl.bind(mainMod .. " + SHIFT + L", hl.dsp.window.resize({ x = 60,  y = 0,   relative = true }))
 
 for i = 1, 9 do
-  -- Switch workspaces with mainMod + [1-9] (via hypr-helper)
-  hl.bind(mainMod .. " + " .. i, hl.dsp.focus({workspace = 'e+1'}))
+  -- Switch workspaces with mainMod + [1-9]
+  hl.bind(mainMod .. " + " .. i, hl.dsp.focus({ workspace = i }))
 
   -- Move active window to a workspace with mainMod + SHIFT + [1-9] (silent: don't follow)
   hl.bind(mainMod .. " + SHIFT + " .. i, hl.dsp.window.move({ workspace = i, follow = false }))
@@ -262,7 +264,11 @@ hl.bind("insert", hl.dsp.exec_cmd("/usr/bin/systemctl suspend"), mediaOpts)
 --------------------------------
 for i = 1, 9 do
   hl.workspace_rule({ workspace = i, persistent = true })
+  -- One named special workspace per numbered workspace (special:1..special:9).
+  -- Not persistent: created on demand, destroyed when emptied.
+  hl.workspace_rule({ workspace = "special:" .. i })
 end
+
 
 --------------------------------
 ------- WINDOWS RULES  ---------
