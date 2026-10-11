@@ -26,6 +26,7 @@ video/mp4=vlc.desktop
 image/jpeg=userapp-feh-B6MBD3.desktop
 image/webp=userapp-feh-5WOAD3.desktop
 application/x-tmdx=freeoffice-textmaker.desktop
+image/png=userapp-feh-LGG3W3.desktop
 
 [Added Associations]
 x-scheme-handler/http=open_url.desktop;
@@ -50,5 +51,6 @@ video/x-matroska=vlc.desktop;
 image/jpeg=userapp-feh-B6MBD3.desktop;
 image/webp=userapp-feh-5WOAD3.desktop;
 application/x-tmdx=freeoffice-textmaker.desktop;
+image/png=userapp-feh-LGG3W3.desktop;
 
 [Removed Associations]

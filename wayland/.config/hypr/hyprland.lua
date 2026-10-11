@@ -251,9 +251,9 @@ hl.bind("XF86AudioStop",      hl.dsp.exec_cmd("hyprpicker --autocopy --render-in
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl s 5%-"), mediaOpts)
 hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("brightnessctl s +5%"), mediaOpts)
 -- F10
-hl.bind("pause",       hl.dsp.exec_cmd(helper .. " screenshot region"))
-hl.bind("SHIFT + pause", hl.dsp.exec_cmd("dunstify -u normal 'TODO: Bind Full Screenshot'"))
-hl.bind("ALT + pause",   hl.dsp.exec_cmd("dunstify -u normal 'TODO: Bind Window Screenshot'"))
+hl.bind("pause",         function() hl.plugin.hyprcapture.open("region") end)
+hl.bind("SHIFT + pause", function() hl.plugin.hyprcapture.open_editor("region") end)
+hl.bind("ALT + pause",   function() hl.plugin.hyprcapture.open("fullscreen") end)
 -- F11
 hl.bind("Scroll_Lock", toggle_bluetooth, mediaOpts)
 -- F12
@@ -326,5 +326,59 @@ hl.window_rule({
 ---- PLUGINS ----
 -----------------
 hl.config({
-
+    plugin = {
+        hyprcapture = {
+            default_mode = "region",
+            fullscreen_scope = "all",
+            overlay_scope = "fix",
+            window_background = "follow-system",
+            window_border = "keep",
+            window_shadow = "keep",
+            notification_backend = "hyprland",
+            screenshot_notification = true,
+            notification_title_template = "Screenshot captured",
+            notification_body_template = "Saved {filename} ({window_title})",
+            save = true,
+            clipboard = true,
+            show_thumbnail = true,
+            language = "auto",
+            remember_settings = false,
+            allow_quick = false,
+            confirm_before_capture = false,
+            fusion_mode = false,
+            capture_fullscreen_clients_as_monitor = false,
+            dynamic_window_metadata = true,
+            window_wheel_scroll = true,
+            window_wheel_scope = "workspace",
+            fullscreen_preview_rounding = "auto",
+            save_dir = "$XDG_PICTURES_DIR/Screenshots",
+            filename_template = "Screenshot %Y-%m-%d %I%M%S.png",
+            record_save_dir = "$XDG_VIDEOS_DIR/Pictures/Screenshots",
+            record_filename_template = "Recording %Y-%m-%d %I%M%S.png",
+            record_format = "mp4",
+            record_transparent_format = "webm",
+            record_fps = 30,
+            record_fps_options = "15 24 30 60",
+            record_window_fps_limit = 12,
+            record_window_real_bg_fps_limit = 8,
+            record_audio = "off",
+            record_audio_output = "auto",
+            record_audio_input = "default",
+            record_codec = "auto",
+            record_transparent_codec = "auto",
+            record_solid_alpha = false,
+            record_preset = "veryfast",
+            record_gsr_flags = "",
+            record_window_backend = "auto",
+            record_max_seconds = 0,
+            record_countdown_seconds = 0,
+            include_cursor = true,
+            thumbnail_timeout_ms = 5000,
+            thumbnail_monitor = "active",
+            watermark = "",
+            watermark_position = "central",
+            watermark_width = "20%",
+            watermark_offset = "0 0",
+        },
+    },
 })

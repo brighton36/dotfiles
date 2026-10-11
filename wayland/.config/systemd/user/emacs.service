@@ -1,15 +1,20 @@
 [Unit]
 Description=emacs
-ConditionPathExists=${XDG_RUNTIME_DIR}/hypr/${HYPRLAND_INSTANCE_SIGNATURE}.socket2.sock
+# Only start inside a Hyprland session: %t/hypr only exists while Hyprland runs.
+# (Note: ConditionPathExists does NOT expand ${ENV_VARS} — only % specifiers.)
+ConditionPathExists=%t/hypr
 
 [Service]
 Type=forking
+# Guix emacs resolves its execdir/native-lisp path by searching PATH for itself;
+# without ~/.guix-profile/bin first in PATH it finds /usr/bin/emacs (pacman) and
+# dies on "Error using execdir /usr/bin/". Put the guix profile first.
+Environment="PATH=%h/.guix-profile/bin:%h/.local/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/bin:/sbin"
 ExecStart="%h/.guix-profile/bin/emacs" "--daemon"
 ExecStop=bash -c "/usr/bin/kill $(/usr/bin/pgrep -f 'emacs --daemon')"
 Environment=SSH_AUTH_SOCK=%t/keyring/ssh
 Restart=always
 #RestartSec=1
-#User=%i
 WorkingDirectory=%h
 
 [Install]

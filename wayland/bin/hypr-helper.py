@@ -11,9 +11,7 @@ import re
 import argparse
 import json
 
-OPERATIONS = ['openurl', 'screenshot']
-FIRST_WORKSPACE = 1
-LAST_WORKSPACE = 9
+OPERATIONS = ['openurl']
 
 HYPRCTL = "/usr/bin/hyprctl"
 BROTAB = "brotab"
@@ -82,35 +80,6 @@ def brotab_active():
     for tab in re.findall(r"([^\.]+\.[^\.]+)\.([^\t]+)\t([^\t]+)\t([^\t]+)\t([^\t]+)\t([^\n]+)\n", run(BROTAB, 'active'), re.MULTILINE | re.DOTALL):
         ret.append({'window': tab[0], 'tabno': tab[1], 'prefix': tab[2], 'host': tab[3], 'pid': tab[4], 'class': tab[5]})
     return ret
-
-
-def screenshot(domain):
-    from datetime import datetime
-
-    DIR_OUTPUT = "~/Pictures/Screenshots"
-    FILENAME = "Screenshot %Y-%m-%d %I%M%S.png"
-
-    output_path = os.path.expanduser(
-        '/'.join([DIR_OUTPUT, datetime.now().strftime(FILENAME)]))
-
-    # Now Drop shadow:
-    run("/usr/bin/magick", "convert", "png:-", "(", "-clone", "0", "-background",
-        "black", "-shadow", "80x3+5+5", ")",
-        "+swap", "-background", "none", "-layers", "merge", "+repage", output_path,
-        input=run("/usr/bin/magick", "convert", "png:-",
-                  "(", "+clone", "-alpha", "extract",
-                  "-draw", 'fill black polygon 0,0 0,15 15,0 fill white circle 15,15 15,0',
-                  "(", "+clone", "-flip", ")", "-compose", "Multiply", "-composite",
-                  "(", "+clone", "-flop", ")", "-compose", "Multiply", "-composite",
-                  ")", "-alpha", "off", "-compose", "CopyOpacity", "-composite", "png:-",
-                  stdout=subprocess.PIPE,
-                  capture_output=False,
-                  input=run("/usr/bin/hyprshot", "-m", "region", "-r", "-s", "-z",
-                            stdout=subprocess.PIPE,
-                            capture_output=False)))
-
-    # And view it:
-    run('/usr/bin/feh', output_path)
 
 
 def open_url(url):
@@ -195,9 +164,5 @@ match args.operation:
         if len(args.operation_args) != 1:
             raise Exception("Invalid operation_args. One url expected.")
         open_url(args.operation_args[0])
-    case 'screenshot':
-        if len(args.operation_args) != 1:
-            raise Exception("Invalid operation_args. A screenshot domain was expected.")
-        screenshot(args.operation_args[0])
     case _:
         raise Exception("Unable to execute operation. This should never happen")
