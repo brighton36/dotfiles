@@ -21,7 +21,7 @@ function M.notify(text)
     hl.notification.create({ text = text, timeout = 3000 })
 end
 
--- Toggle a brightness device between off and max (was hypr-helper.py togglebrightness)
+-- Toggle a brightness device between off and max
 function M.toggle_brightness(device)
     local cur = tonumber(M.sh_read("brightnessctl -d '" .. device .. "' g")) or 0
     if cur == 0 then
@@ -32,7 +32,7 @@ function M.toggle_brightness(device)
     end
 end
 
--- Toggle bluetooth power (was hypr-helper.py togglebluetooth)
+-- Toggle bluetooth power
 function M.toggle_bluetooth()
     local powered = M.sh_read("bluetoothctl show"):match("Powered:%s+(%S+)")
     if powered then
@@ -52,7 +52,7 @@ local function external_output()
     return nil
 end
 
--- Cycle display mode: laptop -> external -> both (was hypr-helper.py toggledisplay).
+-- Cycle display mode: laptop -> external -> both.
 -- State is derived from the actual monitor layout each press, so it can't drift
 -- (hotplug, lid close, etc). Applying hl.monitor() rules at runtime schedules a
 -- monitor reload; safe here because one monitor always stays active.
@@ -99,6 +99,11 @@ function M.send_to_special()
         -- follow = false: stash silently, don't open/follow into the special ws
         hl.dispatch(hl.dsp.window.move({ workspace = "special:" .. n, follow = false }))
     end
+end
+
+
+function M.set_wallpaper(n)
+    hl.exec_cmd("hyprctl hyprpaper wallpaper ,~/.config/hypr/workspace-" .. n .. ".png")
 end
 
 -- Toggle between numbered workspace N and its special:N.

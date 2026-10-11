@@ -12,40 +12,31 @@ hl.monitor({ output = "eDP-1", scale = 1.0 })--, disabled = true })             
 ---------------------
 ---- MY PROGRAMS ----
 ---------------------
-local terminal  = "/usr/bin/alacritty"
-local emacs     = os.getenv("HOME") .. "/.guix-profile/bin/emacsclient"
-local helper    = os.getenv("HOME") .. "/bin/hypr-helper.py"
+local terminal = "/usr/bin/alacritty"
+local emacs = os.getenv("HOME") .. "/.guix-profile/bin/emacsclient"
 
 -------------------------
 ---- HELPER FUNCTIONS ----
 -------------------------
 -- Live in include/helper_functions.lua (require resolves relative to the
 -- config dir). Add new helpers there, then destructure them here.
-local helpers           = require("include/helper_functions")
-local toggle_brightness = helpers.toggle_brightness
-local toggle_bluetooth  = helpers.toggle_bluetooth
-local cycle_display     = helpers.cycle_display
-local send_to_special   = helpers.send_to_special
-local toggle_special_ws = helpers.toggle_special_ws
+local helpers = require("include/helper_functions")
 
 -------------------
 ------ Events -----
 -------------------
-local function set_wallpaper(n)
-    hl.exec_cmd("hyprctl hyprpaper wallpaper ,~/.config/hypr/workspace-" .. n .. ".png")
-end
 
--- TODO: some of these should move into user services, the way we did hyprpaper
 hl.on("hyprland.start", function()
+    helpers.set_wallpaper(1)
+    -- TODO: some of these should move into user services, the way we did hyprpaper
     hl.exec_cmd("hypridle")
     hl.exec_cmd("waybar")
     hl.exec_cmd("/usr/bin/blueman-applet")
     hl.exec_cmd("/usr/bin/nm-applet")
-    set_wallpaper(1)
 end)
 
 hl.on("workspace.active", function(ws)
-    set_wallpaper(ws.name)
+    helpers.set_wallpaper(ws.name)
 end)
 
 -------------------------------
@@ -194,8 +185,8 @@ hl.bind(mainMod .. " + Z",      hl.dsp.exec_cmd("/usr/bin/rofimoji -s light -a t
 hl.bind(mainMod .. " + D", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + W", hl.dsp.window.center())
 hl.bind(mainMod .. " + A", hl.dsp.window.pin({ action = "toggle" }))
-hl.bind(mainMod .. " + M",         send_to_special)     -- window -> special:N for current ws N
-hl.bind(mainMod .. " + SHIFT + M", toggle_special_ws)   -- N <-> special:N
+hl.bind(mainMod .. " + M",         helpers.send_to_special)     -- window -> special:N for current ws N
+hl.bind(mainMod .. " + SHIFT + M", helpers.toggle_special_ws)   -- N <-> special:N
 hl.bind(mainMod .. " + bracketright",      hl.dsp.window.cycle_next())
 hl.bind(mainMod .. " + bracketleft",       hl.dsp.window.cycle_next({ next = false }))
 hl.bind(mainMod .. " + SHIFT + bracketright", hl.dsp.layout("swapnext"))
@@ -235,11 +226,11 @@ local mediaOpts = { locked = true, repeating = true }
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd(emacs .. [[ -n -c -e "(command-execute 'dirvish)"]]), mediaOpts)
 -- F2 cycle display: laptop -> external -> both (locked but NOT repeating —
 -- holding the key shouldn't skip through states)
-hl.bind("XF86AudioNext", cycle_display, { locked = true })
+hl.bind("XF86AudioNext", helpers.cycle_display, { locked = true })
 -- F3
 hl.bind("XF86AudioMute", hl.dsp.exec_cmd("~/bin/volume_change.sh mute"), mediaOpts)
 -- F4
-hl.bind("XF86AudioPlay", function() toggle_brightness("system76_acpi::kbd_backlight") end, mediaOpts)
+hl.bind("XF86AudioPlay", function() helpers.toggle_brightness("system76_acpi::kbd_backlight") end, mediaOpts)
 -- F5
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("~/bin/volume_change.sh down"), mediaOpts)
 -- F6
@@ -255,7 +246,7 @@ hl.bind("pause",         function() hl.plugin.hyprcapture.open("region") end)
 hl.bind("SHIFT + pause", function() hl.plugin.hyprcapture.open_editor("region") end)
 hl.bind("ALT + pause",   function() hl.plugin.hyprcapture.open("fullscreen") end)
 -- F11
-hl.bind("Scroll_Lock", toggle_bluetooth, mediaOpts)
+hl.bind("Scroll_Lock", helpers.toggle_bluetooth, mediaOpts)
 -- F12
 hl.bind("insert", hl.dsp.exec_cmd("/usr/bin/systemctl suspend"), mediaOpts)
 

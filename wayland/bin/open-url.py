@@ -1,17 +1,14 @@
 #!/usr/bin/env python3
 
-# Mostly this script contains all the hyprland functionality that we need, that
-# isn't natively supported by hyprland. Which, makes this a bit of a potporri
-# script. I think I prefer this uberscript, over having a dozen scripts in my
-# bin.
+# This script routes a given url, to the browser window that's 'closest'.
+# Proximity is determined by whether any mozilla windows are available on
+# the current display. And, lacking that, we take the closest workspace
+# and focus to it after dispatch.
 
-import os
 import subprocess
 import re
 import argparse
 import json
-
-OPERATIONS = ['openurl']
 
 HYPRCTL = "/usr/bin/hyprctl"
 BROTAB = "brotab"
@@ -53,12 +50,6 @@ def active_workspace():
     return int(json.loads(hyprctl('activeworkspace', '-j'))['id'])
 
 
-def operation_check(arg_value, supported_operations):
-    if not arg_value in supported_operations:
-        raise argparse.ArgumentTypeError("Unrecognized operation \"{}\".".format(arg_value))
-    return arg_value
-
-
 def focus_window(address):
     # Since 0.55 (lua), `hyprctl dispatch` evaluates its argument as a lua
     # dispatcher expression; old `dispatch focuswindow address:0x...` is dead.
@@ -74,6 +65,7 @@ def brotab_list():
     for tab in re.findall(r"([^\.]+\.[^\.]+)\.([^\t]+)\t([^\t]+)\t([^\n]+)\n", run(BROTAB, 'list'), re.MULTILINE | re.DOTALL):
         ret.append({'window': tab[0], 'tabno': tab[1], 'title': tab[2], 'url': tab[3]})
     return ret
+
 
 def brotab_active():
     ret = []
@@ -143,26 +135,20 @@ def open_url(url):
             focus_window(address)
 
     except Exception as e:
-        run(NOTIFY, "hypr-helper.py openurl: ", str(e))
+        run(NOTIFY, "open-url.py openurl: ", str(e))
         if len(args.operation_args) > 0:
             # Close fds spawns the process, and doesn't keep this script from terminating
             run(FIREFOX, "--new-window", args.operation_args[0], close_fds=True)
 
 
 # main()
-parser = argparse.ArgumentParser(description='A smart(er) operation handler intended for use with bind, in the hyprland.lua.')
-parser.add_argument("operation",
-                    help="One of our supported operations: {}".format(', '.join(OPERATIONS)),
-                    type=lambda v: operation_check(v, OPERATIONS))
+parser = argparse.ArgumentParser(description='A smarter way to open urls in the (mozilla) webbrowser, based on brotab')
 parser.add_argument('operation_args',
                     help="(Optional) A variable number of arguments, provided to the operation.",
                     nargs=argparse.REMAINDER)
 args = parser.parse_args()
 
-match args.operation:
-    case 'openurl':
-        if len(args.operation_args) != 1:
-            raise Exception("Invalid operation_args. One url expected.")
-        open_url(args.operation_args[0])
-    case _:
-        raise Exception("Unable to execute operation. This should never happen")
+if len(args.operation_args) > 0:
+    open_url(args.operation_args[0])
+else:
+    raise Exception("Invalid operation_args. One url expected.")

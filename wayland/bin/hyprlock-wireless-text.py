@@ -7,7 +7,6 @@ NMCLI="/usr/bin/nmcli"
 IWCONFIG="/usr/bin/iwconfig"
 BLUETOOTHCTL="/usr/bin/bluetoothctl"
 
-# we should probably DRY this one function out with hypr-helper.py...
 def operation_check(arg_value, supported_operations):
   if not arg_value in supported_operations:
     raise argparse.ArgumentTypeError("Unrecognized operation \"{}\".".format(arg_value))
