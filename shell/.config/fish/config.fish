@@ -51,7 +51,7 @@ end
 ## Theme: #####################################################################
 set fish_greeting
 
-set -g theme_color_scheme solarized-light
+fish_config theme choose solarized
 
 ## Environment: ###############################################################
 export LEDGER_FILE=$HOME/ledger/chris-derose.journal

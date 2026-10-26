@@ -5,9 +5,8 @@
 ------------------
 ---- MONITORS ----
 ------------------
--- hl.monitor({ output = "Unknown-1", disabled = true })               -- Unknown autodetect
--- hl.monitor({ output = "DP-1", mode = "3440x1440@60", position = "0x0", scale = 1.0 }) -- External Dell
-hl.monitor({ output = "eDP-1", scale = 1.0 })--, disabled = true })                   -- Laptop panel
+hl.monitor({ output = "DP-1", mode = "3440x1440@60", position = "0x0", scale = 1.0 }) -- External Dell
+hl.monitor({ output = "eDP-1", scale = 1.0, disabled = true })                   -- Laptop panel
 
 ---------------------
 ---- MY PROGRAMS ----
@@ -33,6 +32,13 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("waybar")
     hl.exec_cmd("/usr/bin/blueman-applet")
     hl.exec_cmd("/usr/bin/nm-applet")
+    -- hyprpm does NOT auto-load enabled plugins at boot; without this the
+    -- pause binds + plugin block error out until `hyprpm enable` is run by
+    -- hand. The sleep gives Hyprland's IPC socket a head start on hyprpm's
+    -- hyprctl calls (safe: it's an external process, not a popen in-callback).
+    hl.exec_cmd("sleep 1 && hyprpm reload -n")
+    -- gaps/borders for the current display setup (external up -> big, laptop -> compact)
+    helpers.apply_mode_gaps("external")
 end)
 
 hl.on("workspace.active", function(ws)
@@ -52,13 +58,16 @@ hl.env("WLR_NO_HARDWARE_CURSORS", "1")
 -----------------------
 hl.config({
     general = {
-        -- These look great on the external display:
-        -- gaps_in = 10, gaps_out = 6, border_size = 6
-        -- TODO: figure out how to auto-switch based on monitor?
-        -- These look better on the laptop:
-        gaps_in     = 4,
+        -- We boot external-only now (laptop panel disabled in the MONITORS
+        -- block above), so the static config carries the EXTERNAL gap set.
+        -- These are the values that actually commit at startup: a runtime
+        -- hl.config() from the hyprland.start handler loses to the static
+        -- block's own load pass, so don't rely on apply_mode_gaps() here —
+        -- change THESE numbers. apply_mode_gaps() only matters when the
+        -- display mode changes at runtime (the disabled F2 cycle path).
+        gaps_in     = 10,
         gaps_out    = 6,
-        border_size = 4,
+        border_size = 6,
 
         col = {
             active_border   = "rgba(073642ff)", -- base02
@@ -226,15 +235,31 @@ local mediaOpts = { locked = true, repeating = true }
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd(emacs .. [[ -n -c -e "(command-execute 'dirvish)"]]), mediaOpts)
 -- F2 cycle display: laptop -> external -> both (locked but NOT repeating —
 -- holding the key shouldn't skip through states)
-hl.bind("XF86AudioNext", helpers.cycle_display, { locked = true })
+--
+-- PENDING UPSTREAM FIX (as of Hyprland 0.56.2) — F2 display cycling DISABLED:
+-- the off->on re-enable hits a known Aquamarine wedge (hyprwm/aquamarine#240
+-- / #382, Hyprland discussion #13224) — disabling a connector with an
+-- in-flight page-flip can leave its flip-pending flag stale, so the
+-- re-enable's modeset is rejected ("Cannot commit when a page-flip is
+-- awaiting") and the display stays black until a full compositor restart.
+-- A 500ms re-enable delay (hl.timer) was tried and did NOT dodge the wedge on
+-- this i915 Tiger Lake machine. helpers.cycle_display (include/
+-- helper_functions.lua) is kept in plain immediate form (disables first,
+-- unit-tested) so re-enabling is one line once the fix ships.
+-- WHEN THE FIX SHIPS: uncomment the cycle_display bind, delete the
+-- notification stand-in, and drop this note.
+-- hl.bind("XF86AudioNext", helpers.cycle_display, { locked = true })
+hl.bind("XF86AudioNext", function()
+    hl.notification.create({ text = "Screen cycle unimplemented — pending upstream fix", timeout = 5000 })
+end, { locked = true })
 -- F3
-hl.bind("XF86AudioMute", hl.dsp.exec_cmd("~/bin/volume_change.sh mute"), mediaOpts)
+hl.bind("XF86AudioMute", function() helpers.volume_change("mute") end, mediaOpts)
 -- F4
 hl.bind("XF86AudioPlay", function() helpers.toggle_brightness("system76_acpi::kbd_backlight") end, mediaOpts)
 -- F5
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("~/bin/volume_change.sh down"), mediaOpts)
+hl.bind("XF86AudioLowerVolume", function() helpers.volume_change("down") end, mediaOpts)
 -- F6
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("~/bin/volume_change.sh up"), mediaOpts)
+hl.bind("XF86AudioRaiseVolume", function() helpers.volume_change("up") end, mediaOpts)
 -- F7: built-in keyboard sends TouchpadToggle; moonlander sends Stop
 hl.bind("XF86TouchpadToggle", hl.dsp.exec_cmd("hyprpicker --autocopy --render-inactive"), mediaOpts)
 hl.bind("XF86AudioStop",      hl.dsp.exec_cmd("hyprpicker --autocopy --render-inactive"), mediaOpts)

@@ -80,3 +80,4 @@
 (package! window-stool :recipe (:host github :repo "jaszhe/window-stool" :files ("*.el")))
 (package! company-quickhelp)
 (package! robe)
+(package! org-present) ; presentations from org buffers (NonGNU ELPA)
