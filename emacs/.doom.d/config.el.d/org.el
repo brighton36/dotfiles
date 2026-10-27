@@ -90,6 +90,35 @@
  '(variable-pitch ((t (:family "Ubuntu Light" :height 170))))
  '(fixed-pitch ((t ( :family "Cousine NF" :height 130)))))
 
+;; The two faces above are overwritten before they are ever seen: Doom's
+;; `doom-init-fonts-h' copies `doom-font' onto `fixed-pitch' (and
+;; `doom-variable-pitch-font' onto `variable-pitch') with an ABSOLUTE :height,
+;; on every frame the server creates, and rewrites the `user' theme entry for
+;; both as it does it.  An absolute height is a fixed point size, and
+;; `text-scale-mode' -- which is what `org-present-big' / C-c C-= drive --
+;; only remaps the `default' face.  So everything that inherits these two
+;; faces (org-code, org-table, org-block, org-verbatim, org-indent, org-tag,
+;; org-meta-line, org-special-keyword, org-property-value) kept its normal size
+;; in a presentation while the rest of the buffer grew.
+;; A RELATIVE height is a multiple of whatever `default' resolves to, so it
+;; grows with the rest.  Deriving it from the sizes Doom just installed keeps
+;; the on-screen look identical outside a presentation, and keeps working if
+;; `doom-font' / `doom-variable-pitch-font' are resized later.
+(defun my-pitch-face-heights (&optional frame)
+  "Let fixed-pitch/variable-pitch text follow `text-scale-mode'."
+  (let ((frame (if (framep frame) frame (selected-frame)))
+        (default (face-attribute 'default :height (if (framep frame) frame (selected-frame)))))
+    (dolist (face '(fixed-pitch variable-pitch))
+      (let ((height (face-attribute face :height frame)))
+        ;; Only the absolute sizes Doom installs are converted, so re-running
+        ;; this on an already-relative frame is a no-op.
+        (when (and (integerp default) (integerp height))
+          (set-face-attribute face frame :height (/ (float height) default)))))))
+
+(add-hook (if (daemonp) 'server-after-make-frame-hook 'after-init-hook)
+          #'my-pitch-face-heights)          ; after doom's font init, which is at -100
+(add-hook 'after-make-frame-functions #'my-pitch-face-heights) ; M-x make-frame
+
 (defun my-adjoin-to-list-or-symbol (element list-or-symbol)
   (let ((list (if (not (listp list-or-symbol))
                   (list list-or-symbol)

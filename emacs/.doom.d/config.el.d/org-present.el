@@ -25,16 +25,12 @@
   (defun org-present-setup ()
     "Presentation look for `org-present'."
     (org-present-big)
-    (org-display-inline-images)
-    (org-present-hide-cursor)
-    (org-present-read-only))
+    (org-display-inline-images))
 
   (defun org-present-teardown ()
     "Undo `org-present-setup'."
     (org-present-small)
-    (org-remove-inline-images)
-    (org-present-show-cursor)
-    (org-present-read-write))
+    (org-remove-inline-images))
 
   (add-hook 'org-present-mode-hook #'org-present-setup)
   (add-hook 'org-present-mode-quit-hook #'org-present-teardown))
