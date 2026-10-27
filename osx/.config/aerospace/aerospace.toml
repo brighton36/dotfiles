@@ -119,6 +119,7 @@ on-mode-changed = []
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#layout
     cmd-space = 'layout tiles horizontal vertical'
+    cmd-shift-space = 'layout floating tiling'
     #alt-comma = 'layout accordion horizontal vertical'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#focus
